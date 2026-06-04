@@ -123,7 +123,7 @@
         { id: 'm3_4', vi: 'Quý Châu Lộ', en: 'Guizhou Road', cn: '贵州大道', tw: '貴州大道', th: 'ถนนกุ้ยโจว' },
         { id: 'm3_5', vi: 'Trụ Sở Chính Alpha', en: 'Alpha HQ', cn: '阿尔法总部', tw: '阿爾法總部', th: 'ศูนย์บัญชาการอัลฟ่า' },
         { id: 'm3_6', vi: 'Quyết chiến! Đôi Mắt Miền Biển', en: 'Duel! Ocean Eye', cn: '决战！海滨之眼', tw: '決戰！海濱之眼', th: 'ศึกตัดสิน! ดวงตาแห่งท้องทะเล' },
-        { id: 'm3_7', vi: 'Thiên Cung Tầm Mộng', en: 'Dream Palace', cn: '寻梦天宫', tw: '尋夢天宮', th: 'วังในฝัน' },
+        { id: 'm3_7', vi: 'Thiên Cung Tầm Mộng', en: 'Dream Palace', cn: '寻梦天宫', tw: '尋夢天宫', th: 'วังในฝัน' },
         { id: 'm3_8', vi: 'Căn Cứ Siêu Huyền', en: 'Super Base', cn: '超级基地', tw: '超級基地', th: 'ฐานทัพซุปเปอร์' },
         { id: 'm3_9', vi: 'Bóng Hình Eden', en: 'Eden Illusion', cn: '伊甸幻象', tw: '伊甸幻象', th: 'เงาแห่งอีเดน' },
         { id: 'm3_10', vi: 'Tuyệt Cảnh Giang Sơn', en: 'Scenic Rivers', cn: '绝色江西', tw: '絕色江西', th: 'ทิวทัศน์แม่น้ำ' },
@@ -135,9 +135,10 @@
     ];
 
     const getMapName = (id, lang) => {
+      const mapLang = lang === 'th' ? 'en' : lang;
       for (const group of MAP_POOL) {
         const found = group.maps.find(m => m.id === id);
-        if (found) return found[lang];
+        if (found) return found[mapLang];
       }
       return '';
     };
@@ -202,7 +203,7 @@
       const currentName = currentMapId ? getMapName(currentMapId, lang) : '';
 
       return (
-        <div ref={wrapperRef} className="relative w-full z-30">
+        <div ref={wrapperRef} className={`relative w-full ${isOpen ? 'z-50' : 'z-20'}`}>
           <div 
             onClick={() => setIsOpen(!isOpen)}
             className={`w-full flex items-center justify-between bg-slate-950/80 border ${isOpen ? 'border-red-500 ring-1 ring-red-500' : 'border-slate-700 hover:border-slate-500'} rounded px-2 py-1.5 cursor-pointer transition-all`}
@@ -233,7 +234,8 @@
                   -- {t.selectMap} --
                 </div>
                 {MAP_POOL.map(group => {
-                  const filteredMaps = group.maps.filter(m => m[lang].toLowerCase().includes(searchTerm.toLowerCase()));
+                  const mapLang = lang === 'th' ? 'en' : lang;
+                  const filteredMaps = group.maps.filter(m => m[mapLang].toLowerCase().includes(searchTerm.toLowerCase()));
                   if (filteredMaps.length === 0) return null;
                   
                   return (
@@ -255,7 +257,7 @@
                               'text-slate-300 hover:bg-slate-800 cursor-pointer'
                             }`}
                           >
-                            {m[lang]}
+                            {m[mapLang]}
                           </div>
                         );
                       })}
