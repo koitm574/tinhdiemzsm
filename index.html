@@ -16,7 +16,7 @@
   <!-- Import ExcelJS for Professional Export -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
 
-  <!-- Import Tesseract.js for AI OCR -->
+  <!-- Import Tesseract.js for AI OCR (Version 5) -->
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
   
   <!-- Import Fonts -->
@@ -305,11 +305,12 @@
       const [ocrTargetGame, setOcrTargetGame] = useState(null);
       const [ocrLoading, setOcrLoading] = useState(false);
       const [ocrProgress, setOcrProgress] = useState(0);
+      const [ocrStatus, setOcrStatus] = useState('');
 
       // Paste image event listener for OCR
       useEffect(() => {
         const handlePaste = (e) => {
-          if (!ocrModalOpen || ocrLoading) return;
+          if (!ocrModalOpen || ocrLoading || ocrTargetGame === null) return;
           const items = e.clipboardData.items;
           for (let i = 0; i < items.length; i++) {
             if (items[i].type.indexOf('image') !== -1) {
@@ -321,22 +322,28 @@
         };
         window.addEventListener('paste', handlePaste);
         return () => window.removeEventListener('paste', handlePaste);
-      }, [ocrModalOpen, ocrLoading]);
+      }, [ocrModalOpen, ocrLoading, ocrTargetGame, games, players, t.defPlayer]);
 
       // Process OCR Image
       const processImage = async (file) => {
         setOcrLoading(true);
         setOcrProgress(0);
+        setOcrStatus('ĐANG TẢI AI...');
         try {
-          const worker = await window.Tesseract.createWorker({
+          // Tesseract.js v5 Syntax
+          const worker = await window.Tesseract.createWorker('eng+vie', 1, {
             logger: m => {
               if (m.status === 'recognizing text') {
-                setOcrProgress(Math.floor(m.progress * 100));
+                setOcrStatus('AI ĐANG ĐỌC ẢNH...');
+              } else if (m.status.includes('loading') || m.status.includes('downloading')) {
+                setOcrStatus('ĐANG TẢI DỮ LIỆU...');
+              } else {
+                setOcrStatus('ĐANG KHỞI TẠO AI...');
               }
+              setOcrProgress(Math.floor((m.progress || 0) * 100));
             }
           });
-          await worker.loadLanguage('eng+vie');
-          await worker.initialize('eng+vie');
+
           const { data: { text } } = await worker.recognize(file);
           await worker.terminate();
 
@@ -669,8 +676,8 @@
                   {ocrLoading ? (
                     <div className="flex flex-col items-center gap-3">
                       <div className="w-12 h-12 border-4 border-cyan-500/30 border-t-cyan-500 rounded-full animate-spin"></div>
-                      <div className="text-cyan-400 font-bold tracking-widest animate-pulse">AI ĐANG ĐỌC... {ocrProgress}%</div>
-                      <p className="text-xs text-slate-500">Vui lòng không đóng cửa sổ này</p>
+                      <div className="text-cyan-400 font-bold tracking-widest animate-pulse uppercase">{ocrStatus} {ocrProgress}%</div>
+                      <p className="text-xs text-slate-500">Lần quét đầu tiên có thể mất 10-20s để tải dữ liệu ngôn ngữ.</p>
                     </div>
                   ) : (
                     <>
