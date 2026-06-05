@@ -15,6 +15,9 @@
   
   <!-- Import ExcelJS for Professional Export -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
+
+  <!-- Import Tesseract.js for AI OCR -->
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
   
   <!-- Import Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -65,10 +68,11 @@
     const Plus = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><path d="M12 5v14m-7-7h14"></path></svg>;
     const Trash2 = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><path d="M3 6h18m-2 0v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6m3 0V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2m-6 5v6m4-6v6"></path></svg>;
     const XIcon = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>;
-    const Globe = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"></path></svg>;
+    const Globe = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>;
     const Download = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>;
     const ChevronDown = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><polyline points="6 9 12 15 18 9"></polyline></svg>;
     const InfoIcon = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>;
+    const Scan = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path><rect x="7" y="7" width="10" height="10" rx="1"></rect></svg>;
 
     // --- MAP POOL ---
     const MAP_POOL = [
@@ -135,11 +139,11 @@
 
     // --- DICTIONARY ---
     const TRANSLATIONS = {
-      vi: { title: "HỆ THỐNG TÍNH ĐIỂM THEO GIÂY", subtitle: "Thiết kế và phát triển bởi koi", addPlayer: "Thêm VĐV", addMatch: "Thêm Trận", reset: "Làm mới", export: "Xuất Excel", no: "STT", match: "TRẬN ĐẤU", kingMap: "King Map", total: "TỔNG ĐIỂM", leaderboard: "BẢNG XẾP HẠNG", pts: "PTS", errMaxP: "Giải đấu giới hạn tối đa 6 VĐV!", errMinP: "Bảng thi đấu cần ít nhất 2 VĐV!", errMaxG: `Giải đấu giới hạn tối đa ${MAX_GAMES} Trận!`, delP: "Bạn muốn xóa {0} khỏi giải đấu?", errMinG: "Phải có ít nhất 1 Trận đấu!", delG: "Bạn có muốn xóa Trận {0}?", confirmReset: "🚨 LÀM MỚI BẢNG ĐIỂM?\nMọi dữ liệu sẽ bị xóa và quay về trạng thái mặc định.", defPlayer: "VDV", defGame: "Game", selectMap: "Tìm & Chọn Map", searchPh: "Nhập tên map...", infoBtn: "Hướng Dẫn", infoTitle: "CƠ CHẾ TÍNH ĐIỂM & SỬ DỤNG", i1: "Nhập nhanh: Gõ thẳng số (VD: nhập 10704 hệ thống sẽ hiểu là 1:07.04).", i2: "Về nhất: 11 điểm.", i3: "King Map: Mỗi người chơi được chọn King Map cho mình. Về nhất đúng King Map của mình sẽ được +12 điểm.", i4: "Người về sau sẽ bị trừ dần điểm theo độ trễ thời gian:", i5: "Không hoàn thành (nhập X): 0 điểm." },
-      en: { title: "SECOND-BASED SCORING SYSTEM", subtitle: "Designed and developed by koi", addPlayer: "Add Player", addMatch: "Add Match", reset: "Reset", export: "Export Excel", no: "No.", match: "MATCH", kingMap: "King Map", total: "TOTAL SCORE", leaderboard: "LEADERBOARD", pts: "PTS", errMaxP: "Maximum 6 players allowed!", errMinP: "Need at least 2 players!", errMaxG: `Maximum ${MAX_GAMES} matches allowed!`, delP: "Remove {0} from the tournament?", errMinG: "Need at least 1 match!", delG: "Delete Game {0}?", confirmReset: "🚨 RESET SCOREBOARD?\nAll data will be wiped and returned to default.", defPlayer: "Player", defGame: "Match", selectMap: "Search Map", searchPh: "Type map name...", infoBtn: "Guide", infoTitle: "SCORING RULES & USAGE", i1: "Quick Input: Type numbers directly (e.g., 10704 becomes 1:07.04).", i2: "1st Place: 11 points.", i3: "King Map: Players choose their own King Map. 1st place on their chosen King Map gets +12 points.", i4: "Subsequent players lose points based on time gap:", i5: "DNF (type X): 0 points." },
-      cn: { title: "秒数计分系统", subtitle: "由 koi 设计与开发", addPlayer: "添加选手", addMatch: "添加比赛", reset: "重置", export: "导出表格", no: "序号", match: "比赛", kingMap: "王牌赛道", total: "总分", leaderboard: "排行榜", pts: "分", errMaxP: "最多允许 6 名选手！", errMinP: "至少需要 2 名选手！", errMaxG: `最多允许 ${MAX_GAMES} 场比赛！`, delP: "是否将 {0} 移出比赛？", errMinG: "至少需要 1 场比赛！", delG: "确定要删除 第{0}场 吗？", confirmReset: "🚨 重置计分板？\n所有数据将被清除并恢复为默认状态。", defPlayer: "选手", defGame: "比赛", selectMap: "搜索赛道", searchPh: "输入赛道名称...", infoBtn: "指南", infoTitle: "计分规则与使用方法", i1: "快速输入: 直接输入数字（例：10704 会自动转为 1:07.04）。", i2: "第一名：11分。", i3: "王牌赛道：选手可选择自己的王牌赛道。获得第一名可得 12分。", i4: "后续选手根据落后时间扣分：", i5: "未完成（输入 X）：0分。" },
-      tw: { title: "秒數計分系統", subtitle: "由 koi 設計與開發", addPlayer: "新增選手", addMatch: "新增比賽", reset: "重置", export: "匯出表格", no: "序號", match: "比賽", kingMap: "王牌賽道", total: "總分", leaderboard: "排行榜", pts: "分", errMaxP: "最多允許 6 名選手！", errMinP: "至少需要 2 名選手！", errMaxG: `最多允許 ${MAX_GAMES} 場比賽！`, delP: "是否將 {0} 移出比賽？", errMinG: "至少需要 1 場比賽！", delG: "確定要刪除 第{0}場 嗎？", confirmReset: "🚨 重置計分板？\n所有數據將被清除並恢復為預設狀態。", defPlayer: "選手", defGame: "比賽", selectMap: "搜尋賽道", searchPh: "輸入賽道名稱...", infoBtn: "指南", infoTitle: "計分規則與使用方法", i1: "快速輸入: 直接輸入數字（例：10704 會自動轉為 1:07.04）。", i2: "第一名：11分。", i3: "王牌賽道：選手可選擇自己的王牌賽道。獲得第一名可得 12分。", i4: "後續選手根據落後時間扣分：", i5: "未完成（輸入 X）：0分。" },
-      th: { title: "ระบบการนับคะแนนตามวินาที", subtitle: "ออกแบบและพัฒนาโดย koi", addPlayer: "เพิ่มผู้เล่น", addMatch: "เพิ่มแข่ง", reset: "รีเซ็ต", export: "ส่งออก Excel", no: "ลำดับ", match: "การแข่งขัน", kingMap: "แผนที่คิง", total: "คะแนนรวม", leaderboard: "ตารางคะแนน", pts: "แต้ม", errMaxP: "อนุญาตสูงสุด 6 คน!", errMinP: "ต้องมีอย่างน้อย 2 คน!", errMaxG: `อนุญาตสูงสุด ${MAX_GAMES} นัด!`, delP: "ลบ {0} ออกหรือไม่?", errMinG: "ต้องมีอย่างน้อย 1 นัด!", delG: "ลบ เกมที่ {0} หรือไม่?", confirmReset: "🚨 รีเซ็ตกระดานคะแนน?\nข้อมูลทั้งหมดจะถูกลบและกลับสู่ค่าเริ่มต้น", defPlayer: "ผู้เล่น", defGame: "เกม", selectMap: "ค้นหาแผนที่", searchPh: "พิมพ์ชื่อแผนที่...", infoBtn: "คู่มือ", infoTitle: "กฎการให้คะแนนและการใช้งาน", i1: "ป้อนข้อมูลด่วน: พิมพ์ตัวเลข (เช่น 10704 จะกลายเป็น 1:07.04)", i2: "อันดับ 1: 11 แต้ม", i3: "King Map: ผู้เล่นเลือก King Map ของตัวเอง หากได้อันดับ 1 ใน King Map จะได้ +12 แต้ม", i4: "ผู้เล่นคนอื่นจะถูกหักคะแนนตามช่องว่างเวลา:", i5: "ไม่จบการแข่งขัน (พิมพ์ X): 0 แต้ม" }
+      vi: { title: "HỆ THỐNG TÍNH ĐIỂM THEO GIÂY", subtitle: "Thiết kế và phát triển bởi koi", addPlayer: "Thêm VĐV", addMatch: "Thêm Trận", reset: "Làm mới", export: "Xuất Excel", no: "STT", match: "TRẬN ĐẤU", kingMap: "King Map", total: "TỔNG ĐIỂM", leaderboard: "BẢNG XẾP HẠNG", pts: "PTS", errMaxP: "Giải đấu giới hạn tối đa 6 VĐV!", errMinP: "Bảng thi đấu cần ít nhất 2 VĐV!", errMaxG: `Giải đấu giới hạn tối đa ${MAX_GAMES} Trận!`, delP: "Bạn muốn xóa {0} khỏi giải đấu?", errMinG: "Phải có ít nhất 1 Trận đấu!", delG: "Bạn có muốn xóa Trận {0}?", confirmReset: "🚨 LÀM MỚI BẢNG ĐIỂM?\nMọi dữ liệu sẽ bị xóa và quay về trạng thái mặc định.", defPlayer: "VDV", defGame: "Game", selectMap: "Tìm & Chọn Map", searchPh: "Nhập tên map...", infoBtn: "Hướng Dẫn", infoTitle: "CƠ CHẾ TÍNH ĐIỂM & SỬ DỤNG", i1: "Nhập nhanh: Gõ thẳng số (VD: nhập 10704 hệ thống sẽ hiểu là 1:07.04).", i2: "Về nhất: 11 điểm.", i3: "King Map: Mỗi người chơi được chọn King Map cho mình. Về nhất đúng King Map của mình sẽ được +12 điểm.", i4: "Người về sau sẽ bị trừ dần điểm theo độ trễ thời gian:", i5: "Không hoàn thành (nhập X): 0 điểm.", scanBtn: "Quét Ảnh AI", scanTitle: "QUÉT ẢNH KẾT QUẢ", scanDesc: "Tải ảnh lên hoặc bấm Ctrl+V để dán ảnh bảng kết quả. AI sẽ tìm tên VĐV và tự động điền thời gian!", scanUpload: "Chọn Ảnh...", scanWarn: "Lưu ý: Bạn BẮT BUỘC phải đổi tên cột VĐV thành tên thật trước khi quét!" },
+      en: { title: "SECOND-BASED SCORING SYSTEM", subtitle: "Designed and developed by koi", addPlayer: "Add Player", addMatch: "Add Match", reset: "Reset", export: "Export Excel", no: "No.", match: "MATCH", kingMap: "King Map", total: "TOTAL SCORE", leaderboard: "LEADERBOARD", pts: "PTS", errMaxP: "Maximum 6 players allowed!", errMinP: "Need at least 2 players!", errMaxG: `Maximum ${MAX_GAMES} matches allowed!`, delP: "Remove {0} from the tournament?", errMinG: "Need at least 1 match!", delG: "Delete Game {0}?", confirmReset: "🚨 RESET SCOREBOARD?\nAll data will be wiped and returned to default.", defPlayer: "Player", defGame: "Match", selectMap: "Search Map", searchPh: "Type map name...", infoBtn: "Guide", infoTitle: "SCORING RULES & USAGE", i1: "Quick Input: Type numbers directly (e.g., 10704 becomes 1:07.04).", i2: "1st Place: 11 points.", i3: "King Map: Players choose their own King Map. 1st place on their chosen King Map gets +12 points.", i4: "Subsequent players lose points based on time gap:", i5: "DNF (type X): 0 points.", scanBtn: "AI Scan", scanTitle: "SCAN RESULTS IMAGE", scanDesc: "Upload or press Ctrl+V to paste screenshot. AI will find player names and auto-fill times!", scanUpload: "Select Image...", scanWarn: "Note: You MUST rename the Player columns to real names before scanning!" },
+      cn: { title: "秒数计分系统", subtitle: "由 koi 设计与开发", addPlayer: "添加选手", addMatch: "添加比赛", reset: "重置", export: "导出表格", no: "序号", match: "比赛", kingMap: "王牌赛道", total: "总分", leaderboard: "排行榜", pts: "分", errMaxP: "最多允许 6 名选手！", errMinP: "至少需要 2 名选手！", errMaxG: `最多允许 ${MAX_GAMES} 场比赛！`, delP: "是否将 {0} 移出比赛？", errMinG: "至少需要 1 场比赛！", delG: "确定要删除 第{0}场 吗？", confirmReset: "🚨 重置计分板？\n所有数据将被清除并恢复为默认状态。", defPlayer: "选手", defGame: "比赛", selectMap: "搜索赛道", searchPh: "输入赛道名称...", infoBtn: "指南", infoTitle: "计分规则与使用方法", i1: "快速输入: 直接输入数字（例：10704 会自动转为 1:07.04）。", i2: "第一名：11分。", i3: "王牌赛道：选手可选择自己的王牌赛道。获得第一名可得 12分。", i4: "后续选手根据落后时间扣分：", i5: "未完成（输入 X）：0分。", scanBtn: "AI扫描", scanTitle: "扫描结果图片", scanDesc: "上传或按Ctrl+V粘贴截图。AI会自动识别玩家名称并填入时间！", scanUpload: "选择图片...", scanWarn: "注意：在扫描之前，您必须将玩家列的名称更改为真实名称！" },
+      tw: { title: "秒數計分系統", subtitle: "由 koi 設計與開發", addPlayer: "新增選手", addMatch: "新增比賽", reset: "重置", export: "匯出表格", no: "序號", match: "比賽", kingMap: "王牌賽道", total: "總分", leaderboard: "排行榜", pts: "分", errMaxP: "最多允許 6 名選手！", errMinP: "至少需要 2 名選手！", errMaxG: `最多允許 ${MAX_GAMES} 場比賽！`, delP: "是否將 {0} 移出比賽？", errMinG: "至少需要 1 場比賽！", delG: "確定要刪除 第{0}場 嗎？", confirmReset: "🚨 重置計分板？\n所有數據將被清除並恢復為預設狀態。", defPlayer: "選手", defGame: "比賽", selectMap: "搜尋賽道", searchPh: "輸入賽道名稱...", infoBtn: "指南", infoTitle: "計分規則與使用方法", i1: "快速輸入: 直接輸入數字（例：10704 會自動轉為 1:07.04）。", i2: "第一名：11分。", i3: "王牌賽道：選手可選擇自己的王牌賽道。獲得第一名可得 12分。", i4: "後續選手根據落後時間扣分：", i5: "未完成（輸入 X）：0分。", scanBtn: "AI掃描", scanTitle: "掃描結果圖片", scanDesc: "上傳或按Ctrl+V貼上截圖。AI會自動識別玩家名稱並填入時間！", scanUpload: "選擇圖片...", scanWarn: "注意：在掃描之前，您必須將玩家列的名稱更改為真實名稱！" },
+      th: { title: "ระบบการนับคะแนนตามวินาที", subtitle: "ออกแบบและพัฒนาโดย koi", addPlayer: "เพิ่มผู้เล่น", addMatch: "เพิ่มแข่ง", reset: "รีเซ็ต", export: "ส่งออก Excel", no: "ลำดับ", match: "การแข่งขัน", kingMap: "แผนที่คิง", total: "คะแนนรวม", leaderboard: "ตารางคะแนน", pts: "แต้ม", errMaxP: "อนุญาตสูงสุด 6 คน!", errMinP: "ต้องมีอย่างน้อย 2 คน!", errMaxG: `อนุญาตสูงสุด ${MAX_GAMES} นัด!`, delP: "ลบ {0} ออกหรือไม่?", errMinG: "ต้องมีอย่างน้อย 1 นัด!", delG: "ลบ เกมที่ {0} หรือไม่?", confirmReset: "🚨 รีเซ็ตกระดานคะแนน?\nข้อมูลทั้งหมดจะถูกลบและกลับสู่ค่าเริ่มต้น", defPlayer: "ผู้เล่น", defGame: "เกม", selectMap: "ค้นหาแผนที่", searchPh: "พิมพ์ชื่อแผนที่...", infoBtn: "คู่มือ", infoTitle: "กฎการให้คะแนนและการใช้งาน", i1: "ป้อนข้อมูลด่วน: พิมพ์ตัวเลข (เช่น 10704 จะกลายเป็น 1:07.04)", i2: "อันดับ 1: 11 แต้ม", i3: "King Map: ผู้เล่นเลือก King Map ของตัวเอง หากได้อันดับ 1 ใน King Map จะได้ +12 แต้ม", i4: "ผู้เล่นคนอื่นจะถูกหักคะแนนตามช่องว่างเวลา:", i5: "ไม่จบการแข่งขัน (พิมพ์ X): 0 แต้ม", scanBtn: "สแกน AI", scanTitle: "สแกนรูปผลลัพธ์", scanDesc: "อัปโหลดหรือกด Ctrl+V เพื่อวางรูปภาพ AI จะค้นหาชื่อและเติมเวลาให้เอง!", scanUpload: "เลือกรูปภาพ...", scanWarn: "ข้อควรระวัง: คุณต้องเปลี่ยนชื่อคอลัมน์ผู้เล่นเป็นชื่อจริงก่อนสแกน!" }
     };
 
     const getMapName = (id, lang) => {
@@ -276,18 +280,18 @@
 
     function App() {
       // --- STATE ---
-      const [lang, setLang] = useState(() => localStorage.getItem('zsm_lang_v11') || 'vi');
+      const [lang, setLang] = useState(() => localStorage.getItem('zsm_lang_v12') || 'vi');
       const t = TRANSLATIONS[lang];
       const [showInfo, setShowInfo] = useState(false);
 
       const [players, setPlayers] = useState(() => {
-        const saved = localStorage.getItem('zsm_players_v11');
+        const saved = localStorage.getItem('zsm_players_v12');
         if (saved) { try { return JSON.parse(saved); } catch(e) {} }
         return [`${t.defPlayer} 1`, `${t.defPlayer} 2`, `${t.defPlayer} 3`, `${t.defPlayer} 4`];
       });
 
       const [games, setGames] = useState(() => {
-        const saved = localStorage.getItem('zsm_games_v11');
+        const saved = localStorage.getItem('zsm_games_v12');
         if (saved) { try { return JSON.parse(saved); } catch(e) {} }
         return Array(9).fill(null).map((_, i) => ({
           id: Date.now() + i,
@@ -295,6 +299,96 @@
           times: Array(4).fill('')
         }));
       });
+
+      // --- OCR AI STATE ---
+      const [ocrModalOpen, setOcrModalOpen] = useState(false);
+      const [ocrTargetGame, setOcrTargetGame] = useState(null);
+      const [ocrLoading, setOcrLoading] = useState(false);
+      const [ocrProgress, setOcrProgress] = useState(0);
+
+      // Paste image event listener for OCR
+      useEffect(() => {
+        const handlePaste = (e) => {
+          if (!ocrModalOpen || ocrLoading) return;
+          const items = e.clipboardData.items;
+          for (let i = 0; i < items.length; i++) {
+            if (items[i].type.indexOf('image') !== -1) {
+              const blob = items[i].getAsFile();
+              processImage(blob);
+              break;
+            }
+          }
+        };
+        window.addEventListener('paste', handlePaste);
+        return () => window.removeEventListener('paste', handlePaste);
+      }, [ocrModalOpen, ocrLoading]);
+
+      // Process OCR Image
+      const processImage = async (file) => {
+        setOcrLoading(true);
+        setOcrProgress(0);
+        try {
+          const worker = await window.Tesseract.createWorker({
+            logger: m => {
+              if (m.status === 'recognizing text') {
+                setOcrProgress(Math.floor(m.progress * 100));
+              }
+            }
+          });
+          await worker.loadLanguage('eng+vie');
+          await worker.initialize('eng+vie');
+          const { data: { text } } = await worker.recognize(file);
+          await worker.terminate();
+
+          // Match text with players
+          const lines = text.split('\n');
+          const newGames = [...games];
+          const currentTimes = [...newGames[ocrTargetGame].times];
+          let matchedCount = 0;
+
+          players.forEach((player, pIdx) => {
+            // Ignore default names like "VDV 1"
+            if (!player || player.startsWith(t.defPlayer)) return; 
+
+            const cleanPlayerName = player.toLowerCase().replace(/\s/g, '');
+            
+            const matchedLine = lines.find(line => {
+              const cleanLine = line.toLowerCase().replace(/\s/g, '');
+              return cleanLine.includes(cleanPlayerName);
+            });
+
+            if (matchedLine) {
+              // Extract time: looks for formats like 01:12:57 or 01.12.57
+              const timeMatch = matchedLine.match(/\b\d{1,2}[:.;]\d{2}[:.;]\d{2}\b/);
+              if (timeMatch) {
+                const cleanTime = timeMatch[0].replace(/[;.]/g, ':'); // Convert 01.12.57 to 01:12:57
+                currentTimes[pIdx] = cleanTime;
+                matchedCount++;
+              } else if (/chưaxong|dnf|未完成|ไม่จบ|lose/i.test(matchedLine.replace(/\s/g, ''))) {
+                currentTimes[pIdx] = 'X';
+                matchedCount++;
+              }
+            }
+          });
+
+          newGames[ocrTargetGame].times = currentTimes.map(time => formatTimeDisplay(time));
+          setGames(newGames);
+          
+          setOcrModalOpen(false);
+          alert(`✅ Quét thành công! Đã tìm thấy và điền thời gian cho ${matchedCount} VĐV.`);
+
+        } catch (error) {
+          console.error(error);
+          alert('❌ Lỗi khi đọc ảnh. Vui lòng thử lại!');
+        } finally {
+          setOcrLoading(false);
+        }
+      };
+
+      const openOcr = (gameIndex) => {
+        setOcrTargetGame(gameIndex);
+        setOcrModalOpen(true);
+      };
 
       // --- DYNAMIC TRANSLATION HOOK ---
       useEffect(() => {
@@ -312,9 +406,9 @@
       }, [lang]);
 
       // --- AUTO SAVE ---
-      useEffect(() => { localStorage.setItem('zsm_lang_v11', lang); }, [lang]);
-      useEffect(() => { localStorage.setItem('zsm_players_v11', JSON.stringify(players)); }, [players]);
-      useEffect(() => { localStorage.setItem('zsm_games_v11', JSON.stringify(games)); }, [games]);
+      useEffect(() => { localStorage.setItem('zsm_lang_v12', lang); }, [lang]);
+      useEffect(() => { localStorage.setItem('zsm_players_v12', JSON.stringify(players)); }, [players]);
+      useEffect(() => { localStorage.setItem('zsm_games_v12', JSON.stringify(games)); }, [games]);
 
       // --- EVENTS ---
       const handleTimeChange = (gIndex, pIndex, val) => {
@@ -561,6 +655,42 @@
             </div>
           )}
 
+          {/* OCR AI MODAL */}
+          {ocrModalOpen && (
+            <div className="fixed inset-0 z-[110] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-slide-up" onClick={() => !ocrLoading && setOcrModalOpen(false)}>
+              <div className="bg-slate-900 border border-slate-700 rounded-xl max-w-md w-full shadow-[0_0_40px_rgba(59,130,246,0.3)] overflow-hidden" onClick={e => e.stopPropagation()}>
+                <div className="bg-slate-950 px-4 py-3 border-b border-slate-800 flex justify-between items-center">
+                  <h3 className="font-black text-cyan-400 italic tracking-widest uppercase flex items-center gap-2">
+                    <Scan size={18} /> {t.scanTitle}
+                  </h3>
+                  {!ocrLoading && <button onClick={() => setOcrModalOpen(false)} className="text-slate-400 hover:text-red-500 transition-colors"><XIcon size={20}/></button>}
+                </div>
+                <div className="p-6 flex flex-col items-center justify-center gap-4 text-center">
+                  {ocrLoading ? (
+                    <div className="flex flex-col items-center gap-3">
+                      <div className="w-12 h-12 border-4 border-cyan-500/30 border-t-cyan-500 rounded-full animate-spin"></div>
+                      <div className="text-cyan-400 font-bold tracking-widest animate-pulse">AI ĐANG ĐỌC... {ocrProgress}%</div>
+                      <p className="text-xs text-slate-500">Vui lòng không đóng cửa sổ này</p>
+                    </div>
+                  ) : (
+                    <>
+                      <p className="text-sm text-slate-300 font-medium">{t.scanDesc}</p>
+                      <div className="w-full relative border-2 border-dashed border-slate-600 rounded-lg bg-slate-950/50 hover:bg-slate-800/50 transition-colors group">
+                        <input type="file" accept="image/*" onChange={(e) => { if(e.target.files[0]) processImage(e.target.files[0]); }} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
+                        <div className="py-8 flex flex-col items-center pointer-events-none">
+                          <Scan size={32} className="text-slate-500 group-hover:text-cyan-400 transition-colors mb-2" />
+                          <span className="text-slate-400 group-hover:text-cyan-300 font-bold tracking-wide">{t.scanUpload}</span>
+                          <span className="text-xs text-slate-600 mt-1">hoặc Ctrl + V để Dán</span>
+                        </div>
+                      </div>
+                      <p className="text-xs text-red-400 font-bold italic mt-2">{t.scanWarn}</p>
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* LANG SELECTOR */}
           <div className="absolute top-2 right-2 md:top-4 md:right-4 z-50 flex items-center gap-2 bg-slate-900/80 border border-slate-700 px-2 md:px-3 py-1.5 rounded-full backdrop-blur-md shadow-lg transition-transform hover:scale-105">
             <Globe size={14} className="text-slate-400 hidden sm:block" />
@@ -643,9 +773,14 @@
                               <div className="flex flex-col gap-0.5 md:gap-1">
                                 <div className="flex items-center justify-between">
                                   <span className="text-[9px] md:text-[10px] text-slate-500 font-bold uppercase tracking-widest">{t.defGame} {gIndex + 1}</span>
-                                  <button onClick={() => removeGame(gIndex)} className="text-slate-600 hover:text-red-500 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer flex-shrink-0" title={t.delG.replace('{0}', gIndex + 1)}>
-                                    <Trash2 size={12} className="md:w-[14px] md:h-[14px]"/>
-                                  </button>
+                                  <div className="flex items-center gap-2">
+                                    <button onClick={() => openOcr(gIndex)} className="text-cyan-600 hover:text-cyan-400 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer flex-shrink-0" title={t.scanBtn}>
+                                      <Scan size={14} className="md:w-[16px] md:h-[16px]"/>
+                                    </button>
+                                    <button onClick={() => removeGame(gIndex)} className="text-slate-600 hover:text-red-500 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer flex-shrink-0" title={t.delG.replace('{0}', gIndex + 1)}>
+                                      <Trash2 size={12} className="md:w-[14px] md:h-[14px]"/>
+                                    </button>
+                                  </div>
                                 </div>
                                 <SearchableMapSelect 
                                   gameIndex={gIndex} currentMapId={game.mapId} selectedMaps={selectedMaps}
