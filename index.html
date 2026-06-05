@@ -328,50 +328,71 @@
       const processImage = async (file) => {
         setOcrLoading(true);
         setOcrProgress(0);
-        setOcrStatus('ĐANG TẢI AI...');
+        setOcrStatus('ĐANG KHỞI TẠO AI...');
         try {
-          // Tesseract.js v5 Syntax
-          const worker = await window.Tesseract.createWorker('eng+vie', 1, {
+          const worker = await window.Tesseract.createWorker({
             logger: m => {
               if (m.status === 'recognizing text') {
                 setOcrStatus('AI ĐANG ĐỌC ẢNH...');
-              } else if (m.status.includes('loading') || m.status.includes('downloading')) {
-                setOcrStatus('ĐANG TẢI DỮ LIỆU...');
               } else {
-                setOcrStatus('ĐANG KHỞI TẠO AI...');
+                setOcrStatus('ĐANG TẢI DỮ LIỆU...');
               }
               setOcrProgress(Math.floor((m.progress || 0) * 100));
             }
           });
 
+          await worker.loadLanguage('eng+vie');
+          await worker.initialize('eng+vie');
+          
+          // Bắt buộc AI đọc theo định dạng hàng ngang của bảng (Rất quan trọng)
+          await worker.setParameters({
+            tessedit_pageseg_mode: '6',
+          });
+
           const { data: { text } } = await worker.recognize(file);
           await worker.terminate();
 
-          // Match text with players
           const lines = text.split('\n');
           const newGames = [...games];
           const currentTimes = [...newGames[ocrTargetGame].times];
           let matchedCount = 0;
 
+          // Hàm tìm kiếm mờ (Fuzzy Search): Cho phép AI đọc sai/thiếu 1 ký tự đối với tên VĐV
+          const fuzzySearch = (line, word) => {
+            if (line.includes(word)) return true;
+            if (word.length <= 3) return false; // Tên ngắn 3 chữ trở xuống bắt buộc đúng 100%
+            
+            for (let i = 0; i < word.length; i++) {
+              const regexStr = word.slice(0, i) + '.?' + word.slice(i + 1);
+              const regex = new RegExp(regexStr, 'i');
+              if (regex.test(line)) return true;
+            }
+            return false;
+          };
+
           players.forEach((player, pIdx) => {
-            // Ignore default names like "VDV 1"
             if (!player || player.startsWith(t.defPlayer)) return; 
 
             const cleanPlayerName = player.toLowerCase().replace(/\s/g, '');
             
             const matchedLine = lines.find(line => {
               const cleanLine = line.toLowerCase().replace(/\s/g, '');
-              return cleanLine.includes(cleanPlayerName);
+              return fuzzySearch(cleanLine, cleanPlayerName);
             });
 
             if (matchedLine) {
-              // Extract time: looks for formats like 01:12:57 or 01.12.57
-              const timeMatch = matchedLine.match(/\b\d{1,2}[:.;]\d{2}[:.;]\d{2}\b/);
+              const cleanLine = matchedLine.toLowerCase().replace(/\s/g, '');
+              // Fix lỗi AI nhìn chữ O thành số 0
+              const lineForTime = cleanLine.replace(/o/g, '0');
+              
+              // Lọc thời gian: không dùng \b nữa để tránh lỗi do xóa khoảng trắng
+              const timeMatch = lineForTime.match(/\d{1,2}[:.;,]\d{1,2}[:.;,]\d{1,2}/);
+              
               if (timeMatch) {
-                const cleanTime = timeMatch[0].replace(/[;.]/g, ':'); // Convert 01.12.57 to 01:12:57
+                const cleanTime = timeMatch[0].replace(/[;.,]/g, ':'); 
                 currentTimes[pIdx] = cleanTime;
                 matchedCount++;
-              } else if (/chưaxong|dnf|未完成|ไม่จบ|lose/i.test(matchedLine.replace(/\s/g, ''))) {
+              } else if (/(chưaxong|chuaxong|dnf|未完成|ไม่จบ|lose|quit)/i.test(cleanLine)) {
                 currentTimes[pIdx] = 'X';
                 matchedCount++;
               }
