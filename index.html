@@ -65,9 +65,10 @@
     const Plus = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><path d="M12 5v14m-7-7h14"></path></svg>;
     const Trash2 = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><path d="M3 6h18m-2 0v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6m3 0V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2m-6 5v6m4-6v6"></path></svg>;
     const XIcon = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>;
-    const Globe = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"></path></svg>;
+    const Globe = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>;
     const Download = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>;
     const ChevronDown = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><polyline points="6 9 12 15 18 9"></polyline></svg>;
+    const InfoIcon = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>;
 
     // --- MAP POOL ---
     const MAP_POOL = [
@@ -85,7 +86,7 @@
         { id: 'm5_3', vi: 'Mạc Cao Quật', en: 'Mogao Grottoes', cn: '莫高窟', tw: '莫高窟', th: 'ถ้ำมั่วเกา' },
         { id: 'm5_4', vi: 'Atlantis', en: 'Atlantis', cn: '亚特兰蒂斯', tw: '亞特蘭提斯', th: 'แอตแลนติส' },
         { id: 'm5_5', vi: 'Atlantis (Ngược)', en: 'Atlantis(Reversed)', cn: '亚特兰蒂斯(反向)', tw: '亞特蘭提斯(反向)', th: 'แอตแลนติส(ย้อนกลับ)' },
-        { id: 'm5_6', vi: 'Chuyến đi huyền thoại', en: 'Epic Legend', cn: '传奇之旅', tw: '傳奇之旅', th: 'การเดินทางในตำนาน' },
+        { id: 'm5_6', vi: 'Chuyến Đi Huyền Thoại', en: 'Epic Legend', cn: '传奇之旅', tw: '傳奇之旅', th: 'การเดินทางในตำนาน' },
         { id: 'm5_7', vi: 'Núi Mùa Thu', en: 'Scenic Hills', cn: '秋名山', tw: '秋名山', th: 'ภูเขาฤดูใบไม้ร่วง' },
         { id: 'm5_8', vi: 'Công Trường Phố Cổ', en: 'Old Street Construction', cn: '老街工地', tw: '老街工地', th: 'เขตก่อสร้างเมืองเก่า' },
         { id: 'm5_9', vi: 'Thành Lá Đỏ', en: 'Crimson Leaves Town', cn: '红叶城', tw: '紅葉城', th: 'เมืองใบไม้แดง' },
@@ -109,7 +110,7 @@
         { id: 'm4_15', vi: 'Mây Cuộn Cổng Trời', en: 'Clouds Heavenly Gate', cn: '云游天府', tw: '雲遊天府', th: 'เมฆาม้วนประตูสวรรค์' }
       ]},
       { stars: 3, maps: [
-        { id: 'm3_1', vi: 'Thành Phố 11', en: 'City 11', cn: '十一城', tw: '十一城', th: 'เมือง 11' },
+        { id: 'm3_1', vi: 'Thành Phố 11', en: 'City11', cn: '十一城', tw: '十一城', th: 'เมือง 11' },
         { id: 'm3_2', vi: 'Ngư Trường', en: 'North Sea', cn: '渔场', tw: '漁場', th: 'ประมง' },
         { id: 'm3_3', vi: 'TROY-Xưởng Nung Chảy', en: 'TROY - Smeltery', cn: '特洛伊-熔炉车间', tw: '特洛伊-熔爐車間', th: 'TROY-โรงหลอม' },
         { id: 'm3_4', vi: 'Quý Châu Lộ', en: 'All the way to Qian', cn: '贵州大道', tw: '貴州大道', th: 'ถนนกุ้ยโจว' },
@@ -134,11 +135,11 @@
 
     // --- DICTIONARY ---
     const TRANSLATIONS = {
-      vi: { title: "HỆ THỐNG TÍNH ĐIỂM THEO GIÂY", subtitle: "Thiết kế và phát triển bởi koi", addPlayer: "Thêm VĐV", addMatch: "Thêm Trận", reset: "Làm mới", export: "Xuất Excel", no: "STT", match: "TRẬN ĐẤU", kingMap: "King Map", total: "TỔNG ĐIỂM", leaderboard: "BẢNG XẾP HẠNG", pts: "PTS", errMaxP: "Giải đấu giới hạn tối đa 6 VĐV!", errMinP: "Bảng thi đấu cần ít nhất 2 VĐV!", errMaxG: `Giải đấu giới hạn tối đa ${MAX_GAMES} Trận!`, delP: "Bạn muốn xóa {0} khỏi giải đấu?", errMinG: "Phải có ít nhất 1 Trận đấu!", delG: "Bạn có muốn xóa Trận {0}?", confirmReset: "🚨 LÀM MỚI BẢNG ĐIỂM?\nMọi dữ liệu sẽ bị xóa và quay về trạng thái mặc định.", defPlayer: "VDV", defGame: "Game", selectMap: "Tìm & Chọn Map", searchPh: "Nhập tên map..." },
-      en: { title: "SECOND-BASED SCORING SYSTEM", subtitle: "Designed and developed by koi", addPlayer: "Add Player", addMatch: "Add Match", reset: "Reset Board", export: "Export Excel", no: "No.", match: "MATCH", kingMap: "King Map", total: "TOTAL SCORE", leaderboard: "LEADERBOARD", pts: "PTS", errMaxP: "Maximum 6 players allowed!", errMinP: "Need at least 2 players!", errMaxG: `Maximum ${MAX_GAMES} matches allowed!`, delP: "Remove {0} from the tournament?", errMinG: "Need at least 1 match!", delG: "Delete Game {0}?", confirmReset: "🚨 RESET SCOREBOARD?\nAll data will be wiped and returned to default.", defPlayer: "Player", defGame: "Match", selectMap: "Search Map", searchPh: "Type map name..." },
-      cn: { title: "秒数计分系统", subtitle: "由 koi 设计与开发", addPlayer: "添加选手", addMatch: "添加比赛", reset: "重置计分板", export: "导出表格", no: "序号", match: "比赛", kingMap: "王牌赛道", total: "总分", leaderboard: "排行榜", pts: "分", errMaxP: "最多允许 6 名选手！", errMinP: "至少需要 2 名选手！", errMaxG: `最多允许 ${MAX_GAMES} 场比赛！`, delP: "是否将 {0} 移出比赛？", errMinG: "至少需要 1 场比赛！", delG: "确定要删除 第{0}场 吗？", confirmReset: "🚨 重置计分板？\n所有数据将被清除并恢复为默认状态。", defPlayer: "选手", defGame: "比赛", selectMap: "搜索赛道", searchPh: "输入赛道名称..." },
-      tw: { title: "秒數計分系統", subtitle: "由 koi 設計與開發", addPlayer: "新增選手", addMatch: "新增比賽", reset: "重置計分板", export: "匯出表格", no: "序號", match: "比賽", kingMap: "王牌賽道", total: "總分", leaderboard: "排行榜", pts: "分", errMaxP: "最多允許 6 名選手！", errMinP: "至少需要 2 名選手！", errMaxG: `最多允許 ${MAX_GAMES} 場比賽！`, delP: "是否將 {0} 移出比賽？", errMinG: "至少需要 1 場比賽！", delG: "確定要刪除 第{0}場 嗎？", confirmReset: "🚨 重置計分板？\n所有數據將被清除並恢復為預設狀態。", defPlayer: "選手", defGame: "比賽", selectMap: "搜尋賽道", searchPh: "輸入賽道名稱..." },
-      th: { title: "ระบบการนับคะแนนตามวินาที", subtitle: "ออกแบบและพัฒนาโดย koi", addPlayer: "เพิ่มผู้เล่น", addMatch: "เพิ่มแข่ง", reset: "รีเซ็ต", export: "ส่งออก Excel", no: "ลำดับ", match: "การแข่งขัน", kingMap: "แผนที่คิง", total: "คะแนนรวม", leaderboard: "ตารางคะแนน", pts: "แต้ม", errMaxP: "อนุญาตสูงสุด 6 คน!", errMinP: "ต้องมีอย่างน้อย 2 คน!", errMaxG: `อนุญาตสูงสุด ${MAX_GAMES} นัด!`, delP: "ลบ {0} ออกหรือไม่?", errMinG: "ต้องมีอย่างน้อย 1 นัด!", delG: "ลบ เกมที่ {0} หรือไม่?", confirmReset: "🚨 รีเซ็ตกระดานคะแนน?\nข้อมูลทั้งหมดจะถูกลบและกลับสู่ค่าเริ่มต้น", defPlayer: "ผู้เล่น", defGame: "เกม", selectMap: "ค้นหาแผนที่", searchPh: "พิมพ์ชื่อแผนที่..." }
+      vi: { title: "HỆ THỐNG TÍNH ĐIỂM THEO GIÂY", subtitle: "Thiết kế và phát triển bởi koi", addPlayer: "Thêm VĐV", addMatch: "Thêm Trận", reset: "Làm mới", export: "Xuất Excel", no: "STT", match: "TRẬN ĐẤU", kingMap: "King Map", total: "TỔNG ĐIỂM", leaderboard: "BẢNG XẾP HẠNG", pts: "PTS", errMaxP: "Giải đấu giới hạn tối đa 6 VĐV!", errMinP: "Bảng thi đấu cần ít nhất 2 VĐV!", errMaxG: `Giải đấu giới hạn tối đa ${MAX_GAMES} Trận!`, delP: "Bạn muốn xóa {0} khỏi giải đấu?", errMinG: "Phải có ít nhất 1 Trận đấu!", delG: "Bạn có muốn xóa Trận {0}?", confirmReset: "🚨 LÀM MỚI BẢNG ĐIỂM?\nMọi dữ liệu sẽ bị xóa và quay về trạng thái mặc định.", defPlayer: "VDV", defGame: "Game", selectMap: "Tìm & Chọn Map", searchPh: "Nhập tên map...", infoBtn: "Hướng Dẫn", infoTitle: "CƠ CHẾ TÍNH ĐIỂM & SỬ DỤNG", i1: "Nhập nhanh: Gõ thẳng số (VD: nhập 10704 hệ thống sẽ hiểu là 1:07.04).", i2: "Về nhất: 11 điểm.", i3: "King Map: Trước mỗi trận sẽ chỉ định King Map cho từng người. Về nhất đúng King Map của mình sẽ được +12 điểm.", i4: "Người về sau sẽ bị trừ dần điểm theo độ trễ thời gian:", i5: "Không hoàn thành (nhập X): 0 điểm." },
+      en: { title: "SECOND-BASED SCORING SYSTEM", subtitle: "Designed and developed by koi", addPlayer: "Add Player", addMatch: "Add Match", reset: "Reset", export: "Export Excel", no: "No.", match: "MATCH", kingMap: "King Map", total: "TOTAL SCORE", leaderboard: "LEADERBOARD", pts: "PTS", errMaxP: "Maximum 6 players allowed!", errMinP: "Need at least 2 players!", errMaxG: `Maximum ${MAX_GAMES} matches allowed!`, delP: "Remove {0} from the tournament?", errMinG: "Need at least 1 match!", delG: "Delete Game {0}?", confirmReset: "🚨 RESET SCOREBOARD?\nAll data will be wiped and returned to default.", defPlayer: "Player", defGame: "Match", selectMap: "Search Map", searchPh: "Type map name...", infoBtn: "Guide", infoTitle: "SCORING RULES & USAGE", i1: "Quick Input: Type numbers directly (e.g., 10704 becomes 1:07.04).", i2: "1st Place: 11 points.", i3: "King Map: 1st place on assigned King Map gets +12 points.", i4: "Subsequent players lose points based on time gap:", i5: "DNF (type X): 0 points." },
+      cn: { title: "秒数计分系统", subtitle: "由 koi 设计与开发", addPlayer: "添加选手", addMatch: "添加比赛", reset: "重置", export: "导出表格", no: "序号", match: "比赛", kingMap: "王牌赛道", total: "总分", leaderboard: "排行榜", pts: "分", errMaxP: "最多允许 6 名选手！", errMinP: "至少需要 2 名选手！", errMaxG: `最多允许 ${MAX_GAMES} 场比赛！`, delP: "是否将 {0} 移出比赛？", errMinG: "至少需要 1 场比赛！", delG: "确定要删除 第{0}场 吗？", confirmReset: "🚨 重置计分板？\n所有数据将被清除并恢复为默认状态。", defPlayer: "选手", defGame: "比赛", selectMap: "搜索赛道", searchPh: "输入赛道名称...", infoBtn: "指南", infoTitle: "计分规则与使用方法", i1: "快速输入: 直接输入数字（例：10704 会自动转为 1:07.04）。", i2: "第一名：11分。", i3: "王牌赛道：在指定的王牌赛道获得第一名，可得 12分。", i4: "后续选手根据落后时间扣分：", i5: "未完成（输入 X）：0分。" },
+      tw: { title: "秒數計分系統", subtitle: "由 koi 設計與開發", addPlayer: "新增選手", addMatch: "新增比賽", reset: "重置", export: "匯出表格", no: "序號", match: "比賽", kingMap: "王牌賽道", total: "總分", leaderboard: "排行榜", pts: "分", errMaxP: "最多允許 6 名選手！", errMinP: "至少需要 2 名選手！", errMaxG: `最多允許 ${MAX_GAMES} 場比賽！`, delP: "是否將 {0} 移出比賽？", errMinG: "至少需要 1 場比賽！", delG: "確定要刪除 第{0}場 嗎？", confirmReset: "🚨 重置計分板？\n所有數據將被清除並恢復為預設狀態。", defPlayer: "選手", defGame: "比賽", selectMap: "搜尋賽道", searchPh: "輸入賽道名稱...", infoBtn: "指南", infoTitle: "計分規則與使用方法", i1: "快速輸入: 直接輸入數字（例：10704 會自動轉為 1:07.04）。", i2: "第一名：11分。", i3: "王牌賽道：在指定的王牌賽道獲得第一名，可得 12分。", i4: "後續選手根據落後時間扣分：", i5: "未完成（輸入 X）：0分。" },
+      th: { title: "ระบบการนับคะแนนตามวินาที", subtitle: "ออกแบบและพัฒนาโดย koi", addPlayer: "เพิ่มผู้เล่น", addMatch: "เพิ่มแข่ง", reset: "รีเซ็ต", export: "ส่งออก Excel", no: "ลำดับ", match: "การแข่งขัน", kingMap: "แผนที่คิง", total: "คะแนนรวม", leaderboard: "ตารางคะแนน", pts: "แต้ม", errMaxP: "อนุญาตสูงสุด 6 คน!", errMinP: "ต้องมีอย่างน้อย 2 คน!", errMaxG: `อนุญาตสูงสุด ${MAX_GAMES} นัด!`, delP: "ลบ {0} ออกหรือไม่?", errMinG: "ต้องมีอย่างน้อย 1 นัด!", delG: "ลบ เกมที่ {0} หรือไม่?", confirmReset: "🚨 รีเซ็ตกระดานคะแนน?\nข้อมูลทั้งหมดจะถูกลบและกลับสู่ค่าเริ่มต้น", defPlayer: "ผู้เล่น", defGame: "เกม", selectMap: "ค้นหาแผนที่", searchPh: "พิมพ์ชื่อแผนที่...", infoBtn: "คู่มือ", infoTitle: "กฎการให้คะแนนและการใช้งาน", i1: "ป้อนข้อมูลด่วน: พิมพ์ตัวเลข (เช่น 10704 จะกลายเป็น 1:07.04)", i2: "อันดับ 1: 11 แต้ม", i3: "King Map: หากได้อันดับ 1 ใน King Map จะได้ +12 แต้ม", i4: "ผู้เล่นคนอื่นจะถูกหักคะแนนตามช่องว่างเวลา:", i5: "ไม่จบการแข่งขัน (พิมพ์ X): 0 แต้ม" }
     };
 
     const getMapName = (id, lang) => {
@@ -275,17 +276,18 @@
 
     function App() {
       // --- STATE ---
-      const [lang, setLang] = useState(() => localStorage.getItem('zsm_lang_v10') || 'vi');
+      const [lang, setLang] = useState(() => localStorage.getItem('zsm_lang_v11') || 'vi');
       const t = TRANSLATIONS[lang];
+      const [showInfo, setShowInfo] = useState(false);
 
       const [players, setPlayers] = useState(() => {
-        const saved = localStorage.getItem('zsm_players_v10');
+        const saved = localStorage.getItem('zsm_players_v11');
         if (saved) { try { return JSON.parse(saved); } catch(e) {} }
         return [`${t.defPlayer} 1`, `${t.defPlayer} 2`, `${t.defPlayer} 3`, `${t.defPlayer} 4`];
       });
 
       const [games, setGames] = useState(() => {
-        const saved = localStorage.getItem('zsm_games_v10');
+        const saved = localStorage.getItem('zsm_games_v11');
         if (saved) { try { return JSON.parse(saved); } catch(e) {} }
         return Array(9).fill(null).map((_, i) => ({
           id: Date.now() + i,
@@ -310,9 +312,9 @@
       }, [lang]);
 
       // --- AUTO SAVE ---
-      useEffect(() => { localStorage.setItem('zsm_lang_v10', lang); }, [lang]);
-      useEffect(() => { localStorage.setItem('zsm_players_v10', JSON.stringify(players)); }, [players]);
-      useEffect(() => { localStorage.setItem('zsm_games_v10', JSON.stringify(games)); }, [games]);
+      useEffect(() => { localStorage.setItem('zsm_lang_v11', lang); }, [lang]);
+      useEffect(() => { localStorage.setItem('zsm_players_v11', JSON.stringify(players)); }, [players]);
+      useEffect(() => { localStorage.setItem('zsm_games_v11', JSON.stringify(games)); }, [games]);
 
       // --- EVENTS ---
       const handleTimeChange = (gIndex, pIndex, val) => {
@@ -529,6 +531,36 @@
       return (
         <div className="min-h-screen relative overflow-x-hidden pb-20">
           
+          {/* INFO MODAL */}
+          {showInfo && (
+            <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-slide-up" onClick={() => setShowInfo(false)}>
+              <div className="bg-slate-900 border border-slate-700 rounded-xl max-w-md w-full shadow-[0_0_40px_rgba(220,38,38,0.2)] overflow-hidden" onClick={e => e.stopPropagation()}>
+                <div className="bg-slate-950 px-4 py-3 border-b border-slate-800 flex justify-between items-center">
+                  <h3 className="font-black text-amber-400 italic tracking-widest uppercase">{t.infoTitle}</h3>
+                  <button onClick={() => setShowInfo(false)} className="text-slate-400 hover:text-red-500 transition-colors"><XIcon size={20}/></button>
+                </div>
+                <div className="p-5 text-[13px] md:text-sm text-slate-300 space-y-3 font-medium">
+                  <div className="flex gap-2 items-start"><span className="text-cyan-400">⌨️</span> <p>{t.i1}</p></div>
+                  <div className="flex gap-2 items-start"><span className="text-amber-400">🥇</span> <p>{t.i2}</p></div>
+                  <div className="flex gap-2 items-start"><span className="text-red-400">👑</span> <p>{t.i3}</p></div>
+                  <div className="flex gap-2 items-start"><span className="text-slate-400">⏱️</span> 
+                    <div>
+                      <p>{t.i4}</p>
+                      <ul className="mt-2 ml-1 px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-slate-400 font-mono space-y-1 w-fit">
+                        <li>+0.01s - 0.99s: 10 {t.pts}</li>
+                        <li>+1.00s - 1.99s:  9 {t.pts}</li>
+                        <li>+2.00s - 2.99s:  8 {t.pts}</li>
+                        <li>...</li>
+                        <li>+9.00s - 9.99s:  1 {t.pts}</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="flex gap-2 items-start"><span className="text-red-500">❌</span> <p>{t.i5}</p></div>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* LANG SELECTOR */}
           <div className="absolute top-2 right-2 md:top-4 md:right-4 z-50 flex items-center gap-2 bg-slate-900/80 border border-slate-700 px-2 md:px-3 py-1.5 rounded-full backdrop-blur-md shadow-lg transition-transform hover:scale-105">
             <Globe size={14} className="text-slate-400 hidden sm:block" />
@@ -559,6 +591,9 @@
               <p className="text-slate-400 text-[10px] md:text-sm tracking-[0.1em] md:tracking-[0.2em] uppercase font-bold">{t.subtitle}</p>
               
               <div className="mt-6 flex flex-wrap justify-center gap-2 md:gap-4 relative z-20">
+                <button onClick={() => setShowInfo(true)} className="flex items-center justify-center gap-1 md:gap-2 px-3 py-2 md:px-5 md:py-2.5 bg-amber-900/50 border border-amber-500/50 text-amber-300 hover:bg-amber-600 hover:text-white hover:-translate-y-1 hover:shadow-[0_5px_15px_rgba(245,158,11,0.4)] active:scale-95 font-bold rounded transition-all duration-300 uppercase text-[10px] md:text-xs tracking-wider flex-1 sm:flex-none">
+                  <InfoIcon size={14}/> <span className="hidden sm:inline">{t.infoBtn}</span>
+                </button>
                 <button onClick={addPlayer} className="flex items-center justify-center gap-1 md:gap-2 px-3 py-2 md:px-5 md:py-2.5 bg-blue-900/50 border border-blue-500/50 text-blue-300 hover:bg-blue-600 hover:text-white hover:-translate-y-1 hover:shadow-[0_5px_15px_rgba(59,130,246,0.4)] active:scale-95 font-bold rounded transition-all duration-300 uppercase text-[10px] md:text-xs tracking-wider flex-1 sm:flex-none">
                   <Plus size={14}/> <span className="hidden sm:inline">{t.addPlayer}</span>
                 </button>
