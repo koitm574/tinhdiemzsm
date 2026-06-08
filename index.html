@@ -34,6 +34,19 @@
   </script>
 
   <style>
+    /* THU PHÓNG GIAO DIỆN (ZOOM 90%) THEO YÊU CẦU */
+    html {
+      zoom: 0.9;
+    }
+    /* Hỗ trợ cho Firefox */
+    @-moz-document url-prefix() {
+      html {
+        transform: scale(0.9);
+        transform-origin: top center;
+        width: 111.11%;
+      }
+    }
+
     @keyframes slideUpFade {
       from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
@@ -70,7 +83,7 @@
     const ChevronDown = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><polyline points="6 9 12 15 18 9"></polyline></svg>;
     const InfoIcon = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>;
 
-    // --- MAP POOL ---
+    // --- MAP POOL (CẬP NHẬT TÊN CHUẨN QQ SPEED THEO ẢNH) ---
     const MAP_POOL = [
       { stars: 7, maps: [
         { id: 'm7_1', vi: 'Sân Bay Siêu Tốc', en: 'Space Station', cn: '极速空港', tw: '極速空港', th: 'สปีดพอร์ต' },
@@ -85,9 +98,9 @@
         { id: 'm5_2', vi: 'Mỏ Khoáng Hoang Dã', en: 'Wild West', cn: '狂野矿山', tw: '狂野礦山', th: 'เหมืองแร่ป่าเถื่อน' },
         { id: 'm5_3', vi: 'Mạc Cao Quật', en: 'Mogao Grottoes', cn: '莫高窟', tw: '莫高窟', th: 'ถ้ำมั่วเกา' },
         { id: 'm5_4', vi: 'Atlantis', en: 'Atlantis', cn: '亚特兰蒂斯', tw: '亞特蘭提斯', th: 'แอตแลนติส' },
-        { id: 'm5_5', vi: 'Atlantis (Ngược)', en: 'Atlantis(Reversed)', cn: '亚特兰蒂斯(反向)', tw: '亞特蘭提斯(反向)', th: 'แอตแลนติส(ย้อนกลับ)' },
+        { id: 'm5_5', vi: 'Atlantis (Ngược)', en: 'Atlantis(Reversed)', cn: '亚特兰蒂斯（反向）', tw: '亞特蘭提斯(反向)', th: 'แอตแลนติส(ย้อนกลับ)' },
         { id: 'm5_6', vi: 'Chuyến Đi Huyền Thoại', en: 'Epic Legend', cn: '传奇之旅', tw: '傳奇之旅', th: 'การเดินทางในตำนาน' },
-        { id: 'm5_7', vi: 'Núi Mùa Thu', en: 'Scenic Hills', cn: '秋名山', tw: '秋名山', th: 'ภูเขาฤดูใบไม้ร่วง' },
+        { id: 'm5_7', vi: 'Núi Mùa Thu', en: 'Scenic Hills', cn: '秋之物语', tw: '秋名山', th: 'ภูเขาฤดูใบไม้ร่วง' },
         { id: 'm5_8', vi: 'Công Trường Phố Cổ', en: 'Old Street Construction', cn: '老街工地', tw: '老街工地', th: 'เขตก่อสร้างเมืองเก่า' },
         { id: 'm5_9', vi: 'Thành Lá Đỏ', en: 'Crimson Leaves Town', cn: '红叶城', tw: '紅葉城', th: 'เมืองใบไม้แดง' },
         { id: 'm5_10', vi: 'Vực Sâu Băng Giá', en: 'Snow Chasm', cn: '冰川深渊', tw: '冰川深淵', th: 'หุบเหวน้ำแข็ง' }
@@ -112,15 +125,15 @@
       { stars: 3, maps: [
         { id: 'm3_1', vi: 'Thành Phố 11', en: 'City 11', cn: '十一城', tw: '十一城', th: 'เมือง 11' },
         { id: 'm3_2', vi: 'Ngư Trường', en: 'North Sea', cn: '渔场', tw: '漁場', th: 'ประมง' },
-        { id: 'm3_3', vi: 'TROY-Xưởng Nung Chảy', en: 'TROY - Smeltery', cn: '特洛伊-熔炉车间', tw: '特洛伊-熔爐車間', th: 'TROY-โรงหลอม' },
-        { id: 'm3_4', vi: 'Quý Châu Lộ', en: 'All the way to Qian', cn: '贵州大道', tw: '貴州大道', th: 'ถนนกุ้ยโจว' },
+        { id: 'm3_3', vi: 'TROY-Xưởng Nung Chảy', en: 'TROY - Smeltery', cn: '熔炉车间', tw: '特洛伊-熔爐車間', th: 'TROY-โรงหลอม' },
+        { id: 'm3_4', vi: 'Quý Châu Lộ', en: 'All the way to Qian', cn: '一路向黔', tw: '貴州大道', th: 'ถนนกุ้ยโจว' },
         { id: 'm3_5', vi: 'Trụ Sở Chính Alpha', en: 'Alpha Headquarters', cn: '阿尔法总部', tw: '阿爾法總部', th: 'ศูนย์บัญชาการอัลฟ่า' },
         { id: 'm3_6', vi: 'Quyết chiến! Đôi Mắt Miền Biển', en: 'Decisive Battle! Eye of the Sea', cn: '决战！海滨之眼', tw: '決戰！海濱之眼', th: 'ศึกตัดสิน! ดวงตาแห่งท้องทะเล' },
         { id: 'm3_7', vi: 'Thiên Cung Tầm Mộng', en: 'Dream of Heavenly Palace', cn: '寻梦天宫', tw: '尋夢天宫', th: 'วังในฝัน' },
-        { id: 'm3_8', vi: 'Căn Cứ Siêu Huyền', en: 'Superstring Base', cn: '超级基地', tw: '超級基地', th: 'ฐานทัพซุปเปอร์' },
+        { id: 'm3_8', vi: 'Căn Cứ Siêu Huyền', en: 'Superstring Base', cn: '超弦基地', tw: '超級基地', th: 'ฐานทัพซุปเปอร์' },
         { id: 'm3_9', vi: 'Bóng Hình Eden', en: 'Glimpses of Eden', cn: '伊甸幻象', tw: '伊甸幻象', th: 'เงาแห่งอีเดน' },
         { id: 'm3_10', vi: 'Tuyệt Cảnh Giang Sơn', en: 'Stunning Jiangxi', cn: '绝色江西', tw: '絕色江西', th: 'ทิวทัศน์แม่น้ำ' },
-        { id: 'm3_11', vi: 'Vành Đai Troy', en: 'The Circular City of Troy', cn: '特洛伊城', tw: '特洛伊城', th: 'เมืองทรอย' },
+        { id: 'm3_11', vi: 'Vành Đai Troy', en: 'The Circular City of Troy', cn: '特洛伊环城', tw: '特洛伊城', th: 'เมืองทรอย' },
         { id: 'm3_12', vi: 'Hồ Long Tinh', en: 'Dragon Crystal Lake', cn: '龙晶湖', tw: '龍晶湖', th: 'ทะเลสาบมังกรคริสตัล' },
         { id: 'm3_13', vi: 'Vụ Sơn Ngũ Hành', en: 'Wushan Five Elements', cn: '雾山五行', tw: '霧山五行', th: 'ภูเขาหมอกห้าธาตุ' },
         { id: 'm3_14', vi: 'Bờ Biển Lãng Mạn', en: 'Romantic Seaside', cn: '浪漫海岸', tw: '浪漫海岸', th: 'ชายหาดโรแมนติก' }
@@ -128,7 +141,7 @@
     ];
 
     // --- GAME CONSTANTS & LIMITS ---
-    const MAX_GAMES = MAP_POOL.reduce((total, group) => total + group.maps.length, 0); // Dynamically calculated
+    const MAX_GAMES = MAP_POOL.reduce((total, group) => total + group.maps.length, 0); // Tự động lấy tối đa bằng tổng số map
     const NORMAL_TOP_SCORE = 11;
     const KING_TOP_SCORE = 12;
     const MAX_PLAYERS = 6;
@@ -142,6 +155,7 @@
       th: { title: "ระบบการนับคะแนนตามวินาที", subtitle: "ออกแบบและพัฒนาโดย koi", addPlayer: "เพิ่มผู้เล่น", addMatch: "เพิ่มแข่ง", reset: "รีเซ็ต", export: "ส่งออก Excel", no: "ลำดับ", match: "การแข่งขัน", kingMap: "แผนที่คิง", total: "คะแนนรวม", leaderboard: "ตารางคะแนน", pts: "แต้ม", errMaxP: "อนุญาตสูงสุด 6 คน!", errMinP: "ต้องมีอย่างน้อย 2 คน!", errMaxG: `อนุญาตสูงสุด ${MAX_GAMES} นัด!`, delP: "ลบ {0} ออกหรือไม่?", errMinG: "ต้องมีอย่างน้อย 1 นัด!", delG: "ลบ เกมที่ {0} หรือไม่?", confirmReset: "🚨 รีเซ็ตกระดานคะแนน?\nข้อมูลทั้งหมดจะถูกลบและกลับสู่ค่าเริ่มต้น", defPlayer: "ผู้เล่น", defGame: "เกม", selectMap: "ค้นหาแผนที่", searchPh: "พิมพ์ชื่อแผนที่...", infoBtn: "คู่มือ", infoTitle: "กฎการให้คะแนนและการใช้งาน", i1: "ป้อนข้อมูลด่วน: พิมพ์ตัวเลข (เช่น 10704 จะกลายเป็น 1:07.04)", i2: "อันดับ 1: 11 แต้ม", i3: "King Map: ผู้เล่นเลือก King Map ของตัวเอง หากได้อันดับ 1 ใน King Map จะได้ +12 แต้ม", i4: "ผู้เล่นคนอื่นจะถูกหักคะแนนตามช่องว่างเวลา:", i5: "ไม่จบการแข่งขัน (พิมพ์ X): 0 แต้ม" }
     };
 
+    // Lấy tên map chuẩn theo từng ngôn ngữ (Thái Lan dùng map tiếng Anh)
     const getMapName = (id, lang) => {
       const mapLang = lang === 'th' ? 'en' : lang;
       for (const group of MAP_POOL) {
@@ -186,7 +200,7 @@
       return `${m}:${s.toString().padStart(2, '0')}.${c.toString().padStart(2, '0')}`;
     };
 
-    // --- CUSTOM SEARCHABLE DROPDOWN ---
+    // --- CUSTOM SEARCHABLE DROPDOWN CHUYÊN NGHIỆP ---
     const SearchableMapSelect = ({ gameIndex, currentMapId, selectedMaps, onChange, lang, t }) => {
       const [isOpen, setIsOpen] = useState(false);
       const [searchTerm, setSearchTerm] = useState('');
@@ -206,7 +220,8 @@
       const currentName = currentMapId ? getMapName(currentMapId, lang) : '';
 
       return (
-        <div ref={wrapperRef} className={`relative w-full ${isOpen ? 'z-50' : 'z-20'}`}>
+        // z-[100] giúp khung xổ xuống luôn nằm đè lên mọi thứ khác
+        <div ref={wrapperRef} className={`relative w-full ${isOpen ? 'z-[100]' : 'z-20'}`}>
           <div 
             onClick={() => setIsOpen(!isOpen)}
             className={`w-full flex items-center justify-between bg-slate-950/80 border ${isOpen ? 'border-red-500 ring-1 ring-red-500' : 'border-slate-700 hover:border-slate-500'} rounded px-2 py-1.5 cursor-pointer transition-all`}
@@ -218,7 +233,7 @@
           </div>
 
           {isOpen && (
-            <div className="absolute top-full left-0 mt-1 w-[200px] md:w-full min-w-[160px] bg-slate-900 border border-slate-700 rounded-md shadow-2xl max-h-60 overflow-y-auto z-50">
+            <div className="absolute top-full left-0 mt-1 w-[200px] md:w-full min-w-[160px] bg-slate-900 border border-slate-700 rounded-md shadow-2xl max-h-60 overflow-y-auto z-[100]">
               <div className="sticky top-0 bg-slate-900 p-2 border-b border-slate-700">
                 <input 
                   type="text"
@@ -276,18 +291,18 @@
 
     function App() {
       // --- STATE ---
-      const [lang, setLang] = useState(() => localStorage.getItem('zsm_lang_v11') || 'vi');
+      const [lang, setLang] = useState(() => localStorage.getItem('zsm_lang_v10_final') || 'vi');
       const t = TRANSLATIONS[lang];
       const [showInfo, setShowInfo] = useState(false);
 
       const [players, setPlayers] = useState(() => {
-        const saved = localStorage.getItem('zsm_players_v11');
+        const saved = localStorage.getItem('zsm_players_v10_final');
         if (saved) { try { return JSON.parse(saved); } catch(e) {} }
         return [`${t.defPlayer} 1`, `${t.defPlayer} 2`, `${t.defPlayer} 3`, `${t.defPlayer} 4`];
       });
 
       const [games, setGames] = useState(() => {
-        const saved = localStorage.getItem('zsm_games_v11');
+        const saved = localStorage.getItem('zsm_games_v10_final');
         if (saved) { try { return JSON.parse(saved); } catch(e) {} }
         return Array(9).fill(null).map((_, i) => ({
           id: Date.now() + i,
@@ -312,9 +327,9 @@
       }, [lang]);
 
       // --- AUTO SAVE ---
-      useEffect(() => { localStorage.setItem('zsm_lang_v11', lang); }, [lang]);
-      useEffect(() => { localStorage.setItem('zsm_players_v11', JSON.stringify(players)); }, [players]);
-      useEffect(() => { localStorage.setItem('zsm_games_v11', JSON.stringify(games)); }, [games]);
+      useEffect(() => { localStorage.setItem('zsm_lang_v10_final', lang); }, [lang]);
+      useEffect(() => { localStorage.setItem('zsm_players_v10_final', JSON.stringify(players)); }, [players]);
+      useEffect(() => { localStorage.setItem('zsm_games_v10_final', JSON.stringify(games)); }, [games]);
 
       // --- EVENTS ---
       const handleTimeChange = (gIndex, pIndex, val) => {
@@ -367,7 +382,6 @@
         const workbook = new ExcelJS.Workbook();
         const sheet = workbook.addWorksheet('Leaderboard');
 
-        // 1. Tiêu đề
         const lastColIndex = 2 + (players.length * 2);
         sheet.mergeCells(1, 1, 1, lastColIndex);
         const titleCell = sheet.getCell(1, 1);
@@ -377,7 +391,6 @@
         titleCell.alignment = { horizontal: 'center', vertical: 'middle' };
         sheet.getRow(1).height = 40;
 
-        // 2. Dòng Tiêu đề Cột
         sheet.getCell(2, 1).value = t.no;
         sheet.getCell(2, 2).value = t.match;
         sheet.getCell(2, 1).font = { bold: true };
@@ -399,12 +412,10 @@
           sheet.getCell(3, ptsCol).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFE2EFDA' } }; 
         });
 
-        // Căn giữa dòng 2 & 3
         sheet.getRow(2).alignment = { horizontal: 'center', vertical: 'middle' };
         sheet.getRow(3).alignment = { horizontal: 'center', vertical: 'middle' };
         sheet.getRow(2).height = 25;
 
-        // 3. Đổ Dữ Liệu
         games.forEach((game, gIndex) => {
           const rowNum = 4 + gIndex;
           sheet.getCell(rowNum, 1).value = gIndex + 1;
@@ -424,10 +435,9 @@
             sheet.getCell(rowNum, timeCol).alignment = { horizontal: 'center' };
             sheet.getCell(rowNum, ptsCol).alignment = { horizontal: 'center' };
 
-            // Bôi màu Best Time & King Map
             if (calcs[pIdx].isBest) {
-              const bgColor = calcs[pIdx].isKingMap ? 'FFFF6666' : 'FFFFFF99'; // Đỏ hoặc Vàng
-              const fontColor = calcs[pIdx].isKingMap ? 'FF9C0006' : 'FF000000'; // Chữ đỏ đậm hoặc đen
+              const bgColor = calcs[pIdx].isKingMap ? 'FFFF6666' : 'FFFFFF99'; 
+              const fontColor = calcs[pIdx].isKingMap ? 'FF9C0006' : 'FF000000'; 
               
               sheet.getCell(rowNum, timeCol).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: bgColor } };
               sheet.getCell(rowNum, ptsCol).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: bgColor } };
@@ -436,7 +446,6 @@
           });
         });
 
-        // 4. Dòng Tổng Điểm
         const totalRow = 4 + games.length;
         sheet.mergeCells(totalRow, 1, totalRow, 2);
         const totalLabelCell = sheet.getCell(totalRow, 1);
@@ -455,15 +464,13 @@
           tCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFF2CC' } }; 
         });
 
-        // Style Columns Width
         sheet.getColumn(1).width = 8;
         sheet.getColumn(2).width = 30;
         players.forEach((_, i) => {
-          sheet.getColumn(3 + (i * 2)).width = 12; // Time col
-          sheet.getColumn(4 + (i * 2)).width = 8;  // Pts col
+          sheet.getColumn(3 + (i * 2)).width = 12;
+          sheet.getColumn(4 + (i * 2)).width = 8; 
         });
 
-        // Kẻ khung
         sheet.eachRow((row, rowNumber) => {
           if (rowNumber > 1) {
             row.eachCell((cell) => {
@@ -475,7 +482,6 @@
           }
         });
 
-        // Tải file
         const buffer = await workbook.xlsx.writeBuffer();
         const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
         const url = window.URL.createObjectURL(blob);
