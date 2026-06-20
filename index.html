@@ -163,11 +163,11 @@
 
     // --- DICTIONARY ---
     const TRANSLATIONS = {
-      vi: { title: "HỆ THỐNG TÍNH ĐIỂM THEO GIÂY", subtitle: "Thiết kế và phát triển bởi koi", addPlayer: "Thêm VĐV", addMatch: "Thêm Trận", reset: "Làm mới", export: "Xuất Excel", no: "STT", match: "TRẬN ĐẤU", kingMap: "King Map", total: "TỔNG ĐIỂM", leaderboard: "BẢNG XẾP HẠNG", pts: "PTS", errMaxP: "Giải đấu giới hạn tối đa 6 VĐV!", errMinP: "Bảng thi đấu cần ít nhất 2 VĐV!", errMaxG: `Giải đấu giới hạn tối đa ${MAX_GAMES} Trận!`, delP: "Bạn muốn xóa {0} khỏi giải đấu?", errMinG: "Phải có ít nhất 1 Trận đấu!", delG: "Bạn có muốn xóa Trận {0}?", confirmReset: "🚨 LÀM MỚI BẢNG ĐIỂM?\nMọi dữ liệu sẽ bị xóa và quay về trạng thái mặc định.", defPlayer: "VDV", defGame: "Game", selectMap: "Tìm & Chọn Map", searchPh: "Nhập tên map...", infoBtn: "Hướng Dẫn", infoTitle: "CƠ CHẾ TÍNH ĐIỂM & SỬ DỤNG", i1: "Nhập nhanh: Gõ thẳng số (VD: nhập 10704 hệ thống sẽ hiểu là 1:07.04).", i2: "Về nhất: 11 điểm.", i3: "King Map: Mỗi người chơi được chọn King Map cho mình. Về nhất đúng King Map của mình sẽ được +12 điểm.", i4: "Người về sau sẽ bị trừ dần điểm theo độ trễ thời gian:", i5: "Không hoàn thành (nhập X): 0 điểm.", soloMode: "Đua Đơn", teamMode: "Đua Đội", indivTotal: "ĐIỂM CÁ NHÂN", teamTotal: "TỔNG ĐIỂM ĐỘI", team1: "ĐỘI XANH", team2: "ĐỘI ĐỎ" },
-      en: { title: "SECOND-BASED SCORING SYSTEM", subtitle: "Designed and developed by koi", addPlayer: "Add Player", addMatch: "Add Match", reset: "Reset", export: "Export Excel", no: "No.", match: "MATCH", kingMap: "King Map", total: "TOTAL SCORE", leaderboard: "LEADERBOARD", pts: "PTS", errMaxP: "Maximum 6 players allowed!", errMinP: "Need at least 2 players!", errMaxG: `Maximum ${MAX_GAMES} matches allowed!`, delP: "Remove {0} from the tournament?", errMinG: "Need at least 1 match!", delG: "Delete Game {0}?", confirmReset: "🚨 RESET SCOREBOARD?\nAll data will be wiped and returned to default.", defPlayer: "Player", defGame: "Match", selectMap: "Search Map", searchPh: "Type map name...", infoBtn: "Guide", infoTitle: "SCORING RULES & USAGE", i1: "Quick Input: Type numbers directly (e.g., 10704 becomes 1:07.04).", i2: "1st Place: 11 points.", i3: "King Map: Players choose their own King Map. 1st place on their chosen King Map gets +12 points.", i4: "Subsequent players lose points based on time gap:", i5: "DNF (type X): 0 points.", soloMode: "Solo Mode", teamMode: "Team Mode", indivTotal: "INDIV. SCORE", teamTotal: "TEAM TOTAL", team1: "BLUE TEAM", team2: "RED TEAM" },
-      cn: { title: "秒数计分系统", subtitle: "由 koi 设计与开发", addPlayer: "添加选手", addMatch: "添加比赛", reset: "重置", export: "导出表格", no: "序号", match: "比赛", kingMap: "王牌赛道", total: "总分", leaderboard: "排行榜", pts: "分", errMaxP: "最多允许 6 名选手！", errMinP: "至少需要 2 名选手！", errMaxG: `最多允许 ${MAX_GAMES} 场比赛！`, delP: "是否将 {0} 移出比赛？", errMinG: "至少需要 1 场比赛！", delG: "确定要删除 第{0}场 吗？", confirmReset: "🚨 重置计分板？\n所有数据将被清除并恢复为默认状态。", defPlayer: "选手", defGame: "比赛", selectMap: "搜索赛道", searchPh: "输入赛道名称...", infoBtn: "指南", infoTitle: "计分规则与使用方法", i1: "快速输入: 直接输入数字（例：10704 会自动转为 1:07.04）。", i2: "第一名：11分。", i3: "王牌赛道：选手可选择自己的王牌赛道。获得第一名可得 12分。", i4: "后续选手根据落后时间扣分：", i5: "未完成（输入 X）：0分。", soloMode: "单人赛", teamMode: "组队赛", indivTotal: "个人总分", teamTotal: "队伍总分", team1: "蓝队", team2: "红队" },
-      tw: { title: "秒數計分系統", subtitle: "由 koi 設計與開發", addPlayer: "新增選手", addMatch: "新增比賽", reset: "重置", export: "匯出表格", no: "序號", match: "比賽", kingMap: "王牌賽道", total: "總分", leaderboard: "排行榜", pts: "分", errMaxP: "最多允許 6 名選手！", errMinP: "至少需要 2 名選手！", errMaxG: `最多允許 ${MAX_GAMES} 場比賽！`, delP: "是否將 {0} 移出比賽？", errMinG: "至少需要 1 場比賽！", delG: "確定要刪除 第{0}場 嗎？", confirmReset: "🚨 重置計分板？\n所有數據將被清除並恢復為預設狀態。", defPlayer: "選手", defGame: "比賽", selectMap: "搜尋賽道", searchPh: "輸入賽道名稱...", infoBtn: "指南", infoTitle: "計分規則與使用方法", i1: "快速輸入: 直接輸入數字（例：10704 會自動轉為 1:07.04）。", i2: "第一名：11分。", i3: "王牌賽道：選手可選擇自己的王牌賽道。獲得第一名可得 12分。", i4: "後續選手根據落後時間扣分：", i5: "未完成（輸入 X）：0分。", soloMode: "單人賽", teamMode: "組隊賽", indivTotal: "個人總分", teamTotal: "隊伍總分", team1: "藍隊", team2: "紅隊" },
-      th: { title: "ระบบการนับคะแนนตามวินาที", subtitle: "ออกแบบและพัฒนาโดย koi", addPlayer: "เพิ่มผู้เล่น", addMatch: "เพิ่มแข่ง", reset: "รีเซ็ต", export: "ส่งออก Excel", no: "ลำดับ", match: "การแข่งขัน", kingMap: "แผนที่คิง", total: "คะแนนรวม", leaderboard: "ตารางคะแนน", pts: "แต้ม", errMaxP: "อนุญาตสูงสุด 6 คน!", errMinP: "ต้องมีอย่างน้อย 2 คน!", errMaxG: `อนุญาตสูงสุด ${MAX_GAMES} นัด!`, delP: "ลบ {0} ออกหรือไม่?", errMinG: "ต้องมีอย่างน้อย 1 นัด!", delG: "ลบ เกมที่ {0} หรือไม่?", confirmReset: "🚨 รีเซ็ตกระดานคะแนน?\nข้อมูลทั้งหมดจะถูกลบและกลับสู่ค่าเริ่มต้น", defPlayer: "ผู้เล่น", defGame: "เกม", selectMap: "ค้นหาแผนที่", searchPh: "พิมพ์ชื่อแผนที่...", infoBtn: "คู่มือ", infoTitle: "กฎการให้คะแนนและการใช้งาน", i1: "ป้อนข้อมูลด่วน: พิมพ์ตัวเลข (เช่น 10704 จะกลายเป็น 1:07.04)", i2: "อันดับ 1: 11 แต้ม", i3: "King Map: ผู้เล่นเลือก King Map ของตัวเอง หากได้อันดับ 1 ใน King Map จะได้ +12 แต้ม", i4: "ผู้เล่นคนอื่นจะถูกหักคะแนนตามช่องว่างเวลา:", i5: "ไม่จบการแข่งขัน (พิมพ์ X): 0 แต้ม", soloMode: "แข่งเดี่ยว", teamMode: "แข่งทีม", indivTotal: "คะแนนส่วนตัว", teamTotal: "คะแนนทีมรวม", team1: "ทีมสีน้ำเงิน", team2: "ทีมสีแดง" }
+      vi: { title: "HỆ THỐNG TÍNH ĐIỂM THEO GIÂY", subtitle: "Thiết kế và phát triển bởi koi", addPlayer: "Thêm VĐV", addMatch: "Thêm Trận", reset: "Làm mới", export: "Xuất Excel", no: "STT", match: "TRẬN ĐẤU", kingMap: "King Map", total: "TỔNG ĐIỂM", leaderboard: "BẢNG XẾP HẠNG", pts: "PTS", errMaxP: "Giải đấu giới hạn tối đa 6 VĐV!", errMinP: "Bảng thi đấu cần ít nhất 2 VĐV!", errMaxG: `Giải đấu giới hạn tối đa ${MAX_GAMES} Trận!`, delP: "Bạn muốn xóa {0} khỏi giải đấu?", errMinG: "Phải có ít nhất 1 Trận đấu!", delG: "Bạn có muốn xóa Trận {0}?", confirmReset: "🚨 LÀM MỚI BẢNG ĐIỂM?\nMọi dữ liệu sẽ bị xóa và quay về trạng thái mặc định.", defPlayer: "VDV", defGame: "Game", selectMap: "Tìm & Chọn Map", searchPh: "Nhập tên map...", infoBtn: "Hướng Dẫn", infoTitle: "CƠ CHẾ TÍNH ĐIỂM & SỬ DỤNG", i1: "Nhập nhanh: Gõ thẳng số (VD: nhập 10704 hệ thống sẽ hiểu là 1:07.04).", i2: "Về nhất: 11 điểm.", i3: "King Map: Mỗi người chơi được chọn King Map cho mình. Về nhất đúng King Map của mình sẽ được +12 điểm.", i4: "Người về sau sẽ bị trừ dần điểm theo độ trễ thời gian:", i5: "Không hoàn thành (nhập X): 0 điểm.", soloMode: "Đua Đơn", teamMode: "Đua Đội", indivTotal: "ĐIỂM CÁ NHÂN", teamTotal: "TỔNG ĐIỂM ĐỘI", team1: "ĐỘI XANH", team2: "ĐỘI ĐỎ", i6: "Quyền chọn Map: Trận 2 đến N là King Map của từng VĐV/Đội. Các trận sau: Đua đơn -> VĐV hạng 2 chọn. Đua đội -> Đội có tổng điểm thấp hơn chọn. (Hòa điểm -> xét người/đội có điểm thấp hơn ở map liền trước).", map1Pick: "TRẬN 1: MAP CHỈ ĐỊNH (KHÔNG CÓ QUYỀN CHỌN)", kingMapPick: "TRẬN {0}: KING MAP CỦA {1}", normalPick: "TRẬN {0}: LƯỢT CHỌN MAP CỦA {1}" },
+      en: { title: "SECOND-BASED SCORING SYSTEM", subtitle: "Designed and developed by koi", addPlayer: "Add Player", addMatch: "Add Match", reset: "Reset", export: "Export Excel", no: "No.", match: "MATCH", kingMap: "King Map", total: "TOTAL SCORE", leaderboard: "LEADERBOARD", pts: "PTS", errMaxP: "Maximum 6 players allowed!", errMinP: "Need at least 2 players!", errMaxG: `Maximum ${MAX_GAMES} matches allowed!`, delP: "Remove {0} from the tournament?", errMinG: "Need at least 1 match!", delG: "Delete Game {0}?", confirmReset: "🚨 RESET SCOREBOARD?\nAll data will be wiped and returned to default.", defPlayer: "Player", defGame: "Match", selectMap: "Search Map", searchPh: "Type map name...", infoBtn: "Guide", infoTitle: "SCORING RULES & USAGE", i1: "Quick Input: Type numbers directly (e.g., 10704 becomes 1:07.04).", i2: "1st Place: 11 points.", i3: "King Map: Players choose their own King Map. 1st place on their chosen King Map gets +12 points.", i4: "Subsequent players lose points based on time gap:", i5: "DNF (type X): 0 points.", soloMode: "Solo Mode", teamMode: "Team Mode", indivTotal: "INDIV. SCORE", teamTotal: "TEAM TOTAL", team1: "BLUE TEAM", team2: "RED TEAM", i6: "Map Picking: Matches 2 to N are King Maps. After: Solo -> 2nd place player picks. Team -> Team with lower total score picks. (If tied, the one with lower score in the previous map picks).", map1Pick: "MATCH 1: DESIGNATED MAP", kingMapPick: "MATCH {0}: {1}'S KING MAP", normalPick: "MATCH {0}: {1}'S PICK" },
+      cn: { title: "秒数计分系统", subtitle: "由 koi 设计与开发", addPlayer: "添加选手", addMatch: "添加比赛", reset: "重置", export: "导出表格", no: "序号", match: "比赛", kingMap: "王牌赛道", total: "总分", leaderboard: "排行榜", pts: "分", errMaxP: "最多允许 6 名选手！", errMinP: "至少需要 2 名选手！", errMaxG: `最多允许 ${MAX_GAMES} 场比赛！`, delP: "是否将 {0} 移出比赛？", errMinG: "至少需要 1 场比赛！", delG: "确定要删除 第{0}场 吗？", confirmReset: "🚨 重置计分板？\n所有数据将被清除并恢复为默认状态。", defPlayer: "选手", defGame: "比赛", selectMap: "搜索赛道", searchPh: "输入赛道名称...", infoBtn: "指南", infoTitle: "计分规则与使用方法", i1: "快速输入: 直接输入数字（例：10704 会自动转为 1:07.04）。", i2: "第一名：11分。", i3: "王牌赛道：选手可选择自己的王牌赛道。获得第一名可得 12分。", i4: "后续选手根据落后时间扣分：", i5: "未完成（输入 X）：0分。", soloMode: "单人赛", teamMode: "组队赛", indivTotal: "个人总分", teamTotal: "队伍总分", team1: "蓝队", team2: "红队", i6: "选图规则: 第2到N局为王牌赛道。之后：单人赛 -> 总分第二的选手选图。组队赛 -> 总分较低的队伍选图。(若同分，则上一局得分较低者选图)。", map1Pick: "第1局：官方指定赛道", kingMapPick: "第{0}局：{1} 的王牌赛道", normalPick: "第{0}局：由 {1} 选图" },
+      tw: { title: "秒數計分系統", subtitle: "由 koi 設計與開發", addPlayer: "新增選手", addMatch: "新增比賽", reset: "重置", export: "匯出表格", no: "序號", match: "比賽", kingMap: "王牌賽道", total: "總分", leaderboard: "排行榜", pts: "分", errMaxP: "最多允許 6 名選手！", errMinP: "至少需要 2 名選手！", errMaxG: `最多允許 ${MAX_GAMES} 場比賽！`, delP: "是否將 {0} 移出比賽？", errMinG: "至少需要 1 場比賽！", delG: "確定要刪除 第{0}場 嗎？", confirmReset: "🚨 重置計分板？\n所有數據將被清除並恢復為預設狀態。", defPlayer: "選手", defGame: "比賽", selectMap: "搜尋賽道", searchPh: "輸入賽道名稱...", infoBtn: "指南", infoTitle: "計分規則與使用方法", i1: "快速輸入: 直接輸入數字（例：10704 會自動轉為 1:07.04）。", i2: "第一名：11分。", i3: "王牌賽道：選手可選擇自己的王牌賽道。獲得第一名可得 12分。", i4: "後續選手根據落後時間扣分：", i5: "未完成（輸入 X）：0分。", soloMode: "單人賽", teamMode: "組隊賽", indivTotal: "個人總分", teamTotal: "隊伍總分", team1: "藍隊", team2: "紅隊", i6: "選圖規則: 第2到N局為王牌賽道。之後：單人賽 -> 總分第二的選手選圖。組隊賽 -> 總分較低的隊伍選圖。(若同分，則上一局得分較低者選圖)。", map1Pick: "第1局：官方指定賽道", kingMapPick: "第{0}局：{1} 的王牌賽道", normalPick: "第{0}局：由 {1} 選圖" },
+      th: { title: "ระบบการนับคะแนนตามวินาที", subtitle: "ออกแบบและพัฒนาโดย koi", addPlayer: "เพิ่มผู้เล่น", addMatch: "เพิ่มแข่ง", reset: "รีเซ็ต", export: "ส่งออก Excel", no: "ลำดับ", match: "การแข่งขัน", kingMap: "แผนที่คิง", total: "คะแนนรวม", leaderboard: "ตารางคะแนน", pts: "แต้ม", errMaxP: "อนุญาตสูงสุด 6 คน!", errMinP: "ต้องมีอย่างน้อย 2 คน!", errMaxG: `อนุญาตสูงสุด ${MAX_GAMES} นัด!`, delP: "ลบ {0} ออกหรือไม่?", errMinG: "ต้องมีอย่างน้อย 1 นัด!", delG: "ลบ เกมที่ {0} หรือไม่?", confirmReset: "🚨 รีเซ็ตกระดานคะแนน?\nข้อมูลทั้งหมดจะถูกลบและกลับสู่ค่าเริ่มต้น", defPlayer: "ผู้เล่น", defGame: "เกม", selectMap: "ค้นหาแผนที่", searchPh: "พิมพ์ชื่อแผนที่...", infoBtn: "คู่มือ", infoTitle: "กฎการให้คะแนนและการใช้งาน", i1: "ป้อนข้อมูลด่วน: พิมพ์ตัวเลข (เช่น 10704 จะกลายเป็น 1:07.04)", i2: "อันดับ 1: 11 แต้ม", i3: "King Map: ผู้เล่นเลือก King Map ของตัวเอง หากได้อันดับ 1 ใน King Map จะได้ +12 แต้ม", i4: "ผู้เล่นคนอื่นจะถูกหักคะแนนตามช่องว่างเวลา:", i5: "ไม่จบการแข่งขัน (พิมพ์ X): 0 แต้ม", soloMode: "แข่งเดี่ยว", teamMode: "แข่งทีม", indivTotal: "คะแนนส่วนตัว", teamTotal: "คะแนนทีมรวม", team1: "ทีมสีน้ำเงิน", team2: "ทีมสีแดง", i6: "การเลือกแผนที่: แมตช์ 2 ถึง N คือ King Maps หลังจากนั้น: เดี่ยว -> ผู้เล่นอันดับ 2 เลือก ทีม -> ทีมที่มีคะแนนรวมต่ำกว่าเลือก (หากเสมอ ให้คนที่คะแนนน้อยกว่าในแมตช์ก่อนหน้าเลือก)", map1Pick: "แมตช์ 1: แผนที่ที่กำหนด", kingMapPick: "แมตช์ {0}: KING MAP ของ {1}", normalPick: "แมตช์ {0}: สิทธิ์การเลือกของ {1}" }
     };
 
     // Lấy tên map chuẩn theo từng ngôn ngữ (Thái Lan dùng map tiếng Anh)
@@ -618,6 +618,67 @@
         }
       }, [players, totals, isTeamMode]);
 
+      // --- LOGIC TÌM LƯỢT CHỌN MAP TIẾP THEO ---
+      const nextPickerData = useMemo(() => {
+        const nextIdx = games.findIndex(g => g.times.every(time => !time || time.trim() === ''));
+        if (nextIdx === -1) return { show: false }; 
+        if (nextIdx === 0) return { show: true, text: t.map1Pick }; 
+
+        if (nextIdx >= 1 && nextIdx < players.length + 1) {
+            const pickerName = players[nextIdx - 1];
+            return { show: true, text: t.kingMapPick.replace('{0}', nextIdx + 1).replace('{1}', pickerName), pIndex: nextIdx - 1 };
+        }
+
+        const actualLastGameIndex = nextIdx - 1; 
+        
+        if (isTeamMode) {
+            const t1Score = totals.filter((_, i) => i % 2 === 0).reduce((a, b) => a + b, 0);
+            const t2Score = totals.filter((_, i) => i % 2 === 1).reduce((a, b) => a + b, 0);
+            let isT1 = true;
+
+            if (t1Score < t2Score) {
+                isT1 = true;
+            } else if (t2Score < t1Score) {
+                isT1 = false;
+            } else {
+                const lastGameCalcs = getGameCalculations(actualLastGameIndex, games[actualLastGameIndex].times);
+                const lastT1Score = lastGameCalcs.filter((_, i) => i % 2 === 0).reduce((a, b) => a + b.score, 0);
+                const lastT2Score = lastGameCalcs.filter((_, i) => i % 2 === 1).reduce((a, b) => a + b.score, 0);
+                isT1 = lastT1Score <= lastT2Score;
+            }
+
+            const teamName = isT1 ? t.team1 : t.team2;
+            const colorClass = isT1 ? 'text-blue-400' : 'text-red-400';
+            return { show: true, text: t.normalPick.replace('{0}', nextIdx + 1).replace('{1}', teamName), isT1, colorClass };
+        } else {
+            const lastGameCalcs = getGameCalculations(actualLastGameIndex, games[actualLastGameIndex].times);
+            const pStats = players.map((_, i) => ({
+                index: i,
+                total: totals[i],
+                lastScore: lastGameCalcs[i].score
+            }));
+
+            pStats.sort((a, b) => b.total - a.total);
+            if (pStats.length < 2) return { show: false };
+
+            let targetPlayers = [];
+            if (pStats[0].total === pStats[1].total) {
+                const topScore = pStats[0].total;
+                targetPlayers = pStats.filter(p => p.total === topScore);
+            } else {
+                const secondScore = pStats[1].total;
+                targetPlayers = pStats.filter(p => p.total === secondScore);
+            }
+
+            // Tie breaker: low score in the previous game wins the pick
+            targetPlayers.sort((a, b) => a.lastScore - b.lastScore);
+            const pickerIndex = targetPlayers[0].index;
+            const pickerName = players[pickerIndex];
+
+            return { show: true, text: t.normalPick.replace('{0}', nextIdx + 1).replace('{1}', pickerName), pIndex: pickerIndex };
+        }
+      }, [games, totals, players, isTeamMode, lang, t]);
+
       return (
         <div className="min-h-screen relative overflow-x-hidden pb-20">
           
@@ -629,7 +690,7 @@
                   <h3 className="font-black text-amber-400 italic tracking-widest uppercase">{t.infoTitle}</h3>
                   <button onClick={() => setShowInfo(false)} className="text-slate-400 hover:text-red-500 transition-colors"><XIcon size={20}/></button>
                 </div>
-                <div className="p-5 text-[13px] md:text-sm text-slate-300 space-y-3 font-medium">
+                <div className="p-5 text-[13px] md:text-sm text-slate-300 space-y-3 font-medium max-h-[70vh] overflow-y-auto hide-scrollbar">
                   <div className="flex gap-2 items-start"><span className="text-cyan-400">⌨️</span> <p>{t.i1}</p></div>
                   <div className="flex gap-2 items-start"><span className="text-amber-400">🥇</span> <p>{t.i2}</p></div>
                   <div className="flex gap-2 items-start"><span className="text-red-400">👑</span> <p>{t.i3}</p></div>
@@ -645,6 +706,7 @@
                       </ul>
                     </div>
                   </div>
+                  <div className="flex gap-2 items-start"><span className="text-purple-400">🎯</span> <p>{t.i6}</p></div>
                   <div className="flex gap-2 items-start"><span className="text-red-500">❌</span> <p>{t.i5}</p></div>
                 </div>
               </div>
@@ -703,6 +765,16 @@
               </div>
             </header>
 
+            {/* BANNER THÔNG BÁO LƯỢT CHỌN MAP */}
+            {nextPickerData && nextPickerData.show && (
+              <div className="mb-6 max-w-2xl mx-auto bg-gradient-to-r from-purple-900/40 via-fuchsia-900/40 to-purple-900/40 border border-purple-500/30 rounded-lg p-2 md:p-3 text-center shadow-[0_0_20px_rgba(168,85,247,0.2)] backdrop-blur-sm relative z-20 animate-[slideUpFade_0.5s_ease-out_forwards]">
+                <span className={`font-black uppercase tracking-widest text-[11px] md:text-sm drop-shadow-[0_0_10px_rgba(255,255,255,0.3)] ${nextPickerData.colorClass || 'text-purple-300'}`}>
+                  <span className="animate-pulse inline-block mr-1">🎯</span> 
+                  {nextPickerData.text}
+                </span>
+              </div>
+            )}
+
             <div className="grid lg:grid-cols-4 gap-4 md:gap-6">
               
               <div className="lg:col-span-3 bg-slate-900/70 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.8)] overflow-hidden animate-slide-up delay-100 flex flex-col max-h-[75vh]">
@@ -712,18 +784,27 @@
                       <tr>
                         <th className="px-1 md:px-2 py-3 text-center w-8 md:w-12 text-slate-500 font-bold">{t.no}</th>
                         <th className="px-1 md:px-2 py-3 text-left w-24 md:w-48 tracking-widest text-slate-300 font-bold whitespace-nowrap">{t.match}</th>
-                        {players.map((p, i) => (
-                          <th key={i} className={`px-1 md:px-2 py-3 min-w-[80px] md:min-w-[140px] relative group border-b-2 ${isTeamMode ? (i%2===0 ? 'border-blue-500/50 bg-blue-900/10' : 'border-red-500/50 bg-red-900/10') : 'border-transparent'}`}>
-                            <input 
-                              type="text" value={p}
-                              onChange={(e) => { const n=[...players]; n[i]=e.target.value; setPlayers(n); }}
-                              className={`w-full bg-transparent border-b-2 border-slate-700 focus:border-${isTeamMode ? (i%2===0 ? 'blue-500' : 'red-500') : 'red-500'} outline-none text-center pb-1 text-sm md:text-lg font-bold transition-all duration-300 hover:border-slate-500 ${isTeamMode ? (i%2===0 ? 'text-blue-100' : 'text-red-100') : 'text-white'}`}
-                            />
-                            <button onClick={() => removePlayer(i)} className="absolute top-1 right-1 p-1 text-slate-500 hover:text-white hover:bg-red-500 opacity-100 md:opacity-0 group-hover:opacity-100 transition-all bg-slate-800 rounded-full border border-slate-700 shadow-lg">
-                              <XIcon size={10}/>
-                            </button>
-                          </th>
-                        ))}
+                        {players.map((p, i) => {
+                          const isPicker = nextPickerData && nextPickerData.show && (nextPickerData.pIndex === i || (nextPickerData.isT1 !== undefined && nextPickerData.isT1 === (i%2===0)));
+                          return (
+                            <th key={i} className={`px-1 md:px-2 py-3 min-w-[80px] md:min-w-[140px] relative group border-b-2 ${isTeamMode ? (i%2===0 ? 'border-blue-500/50 bg-blue-900/10' : 'border-red-500/50 bg-red-900/10') : 'border-transparent'}`}>
+                              {isPicker && (
+                                <div className="absolute -top-3 md:-top-4 left-1/2 -translate-x-1/2 bg-purple-600 text-white text-[8px] md:text-[10px] font-black px-1.5 py-0.5 rounded shadow-[0_0_15px_#9333ea] flex items-center gap-1 z-20 whitespace-nowrap animate-bounce border border-purple-400">
+                                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="w-2 h-2 md:w-3 md:h-3"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle></svg>
+                                  PICK
+                                </div>
+                              )}
+                              <input 
+                                type="text" value={p}
+                                onChange={(e) => { const n=[...players]; n[i]=e.target.value; setPlayers(n); }}
+                                className={`w-full bg-transparent border-b-2 border-slate-700 focus:border-${isTeamMode ? (i%2===0 ? 'blue-500' : 'red-500') : 'red-500'} outline-none text-center pb-1 text-sm md:text-lg font-bold transition-all duration-300 hover:border-slate-500 ${isTeamMode ? (i%2===0 ? 'text-blue-100' : 'text-red-100') : 'text-white'}`}
+                              />
+                              <button onClick={() => removePlayer(i)} className="absolute top-1 right-1 p-1 text-slate-500 hover:text-white hover:bg-red-500 opacity-100 md:opacity-0 group-hover:opacity-100 transition-all bg-slate-800 rounded-full border border-slate-700 shadow-lg">
+                                <XIcon size={10}/>
+                              </button>
+                            </th>
+                          );
+                        })}
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-800/50">
