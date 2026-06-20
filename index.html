@@ -632,50 +632,51 @@
         const actualLastGameIndex = nextIdx - 1; 
         
         if (isTeamMode) {
-            const t1Score = totals.filter((_, i) => i % 2 === 0).reduce((a, b) => a + b, 0);
-            const t2Score = totals.filter((_, i) => i % 2 === 1).reduce((a, b) => a + b, 0);
-            let isT1 = true;
+          const t1Score = totals.filter((_, i) => i % 2 === 0).reduce((a, b) => a + b, 0);
+          const t2Score = totals.filter((_, i) => i % 2 === 1).reduce((a, b) => a + b, 0);
+          let isT1 = true;
 
-            if (t1Score < t2Score) {
-                isT1 = true;
-            } else if (t2Score < t1Score) {
-                isT1 = false;
-            } else {
-                const lastGameCalcs = getGameCalculations(actualLastGameIndex, games[actualLastGameIndex].times);
-                const lastT1Score = lastGameCalcs.filter((_, i) => i % 2 === 0).reduce((a, b) => a + b.score, 0);
-                const lastT2Score = lastGameCalcs.filter((_, i) => i % 2 === 1).reduce((a, b) => a + b.score, 0);
-                isT1 = lastT1Score <= lastT2Score;
-            }
+          if (t1Score < t2Score) {
+              isT1 = true;
+          } else if (t2Score < t1Score) {
+              isT1 = false;
+          } else {
+              const lastGameCalcs = getGameCalculations(actualLastGameIndex, games[actualLastGameIndex].times);
+              const lastT1Score = lastGameCalcs.filter((_, i) => i % 2 === 0).reduce((a, b) => a + b.score, 0);
+              const lastT2Score = lastGameCalcs.filter((_, i) => i % 2 === 1).reduce((a, b) => a + b.score, 0);
+              isT1 = lastT1Score <= lastT2Score;
+          }
 
-            const teamName = isT1 ? t.team1 : t.team2;
-            const colorClass = isT1 ? 'text-blue-400' : 'text-red-400';
-            return { show: true, text: t.normalPick.replace('{0}', nextIdx + 1).replace('{1}', teamName), isT1, colorClass };
+          const teamName = isT1 ? t.team1 : t.team2;
+          const colorClass = isT1 ? 'text-blue-400' : 'text-red-400';
+          return { show: true, text: t.normalPick.replace('{0}', nextIdx + 1).replace('{1}', teamName), isT1, colorClass };
         } else {
-            const lastGameCalcs = getGameCalculations(actualLastGameIndex, games[actualLastGameIndex].times);
-            const pStats = players.map((_, i) => ({
-                index: i,
-                total: totals[i],
-                lastScore: lastGameCalcs[i].score
-            }));
+          // SỬA LỖI LOGIC: Dùng exact time (thời gian mili-giây) thay vì điểm số để phân định chính xác ai chậm hơn
+          const lastGameTimes = games[actualLastGameIndex].times.map(parseTime);
+          const pStats = players.map((_, i) => ({
+              index: i,
+              total: totals[i],
+              lastTimeMs: lastGameTimes[i] === null ? Infinity : lastGameTimes[i] // Infinity cho ai ko hoàn thành (DNF)
+          }));
 
-            pStats.sort((a, b) => b.total - a.total);
-            if (pStats.length < 2) return { show: false };
+          pStats.sort((a, b) => b.total - a.total);
+          if (pStats.length < 2) return { show: false };
 
-            let targetPlayers = [];
-            if (pStats[0].total === pStats[1].total) {
-                const topScore = pStats[0].total;
-                targetPlayers = pStats.filter(p => p.total === topScore);
-            } else {
-                const secondScore = pStats[1].total;
-                targetPlayers = pStats.filter(p => p.total === secondScore);
-            }
+          let targetPlayers = [];
+          if (pStats[0].total === pStats[1].total) {
+              const topScore = pStats[0].total;
+              targetPlayers = pStats.filter(p => p.total === topScore);
+          } else {
+              const secondScore = pStats[1].total;
+              targetPlayers = pStats.filter(p => p.total === secondScore);
+          }
 
-            // Tie breaker: low score in the previous game wins the pick
-            targetPlayers.sort((a, b) => a.lastScore - b.lastScore);
-            const pickerIndex = targetPlayers[0].index;
-            const pickerName = players[pickerIndex];
+          // Tie breaker: Thời gian map trước CÀNG CAO (chạy chậm hơn) -> Về đích xếp hạng thấp hơn -> Nhận quyền Pick map
+          targetPlayers.sort((a, b) => b.lastTimeMs - a.lastTimeMs);
+          const pickerIndex = targetPlayers[0].index;
+          const pickerName = players[pickerIndex];
 
-            return { show: true, text: t.normalPick.replace('{0}', nextIdx + 1).replace('{1}', pickerName), pIndex: pickerIndex };
+          return { show: true, text: t.normalPick.replace('{0}', nextIdx + 1).replace('{1}', pickerName), pIndex: pickerIndex };
         }
       }, [games, totals, players, isTeamMode, lang, t]);
 
@@ -765,10 +766,10 @@
               </div>
             </header>
 
-            {/* BANNER THÔNG BÁO LƯỢT CHỌN MAP */}
+            {/* BANNER THÔNG BÁO LƯỢT CHỌN MAP (Đã được làm mỏng lại) */}
             {nextPickerData && nextPickerData.show && (
-              <div className="mb-6 max-w-2xl mx-auto bg-gradient-to-r from-purple-900/40 via-fuchsia-900/40 to-purple-900/40 border border-purple-500/30 rounded-lg p-2 md:p-3 text-center shadow-[0_0_20px_rgba(168,85,247,0.2)] backdrop-blur-sm relative z-20 animate-[slideUpFade_0.5s_ease-out_forwards]">
-                <span className={`font-black uppercase tracking-widest text-[11px] md:text-sm drop-shadow-[0_0_10px_rgba(255,255,255,0.3)] ${nextPickerData.colorClass || 'text-purple-300'}`}>
+              <div className="mb-4 max-w-lg mx-auto bg-gradient-to-r from-purple-900/40 via-fuchsia-900/40 to-purple-900/40 border border-purple-500/30 rounded p-1.5 md:p-2 text-center shadow-[0_0_15px_rgba(168,85,247,0.2)] backdrop-blur-sm relative z-20 animate-[slideUpFade_0.5s_ease-out_forwards]">
+                <span className={`font-black uppercase tracking-widest text-[10px] md:text-xs drop-shadow-[0_0_10px_rgba(255,255,255,0.3)] ${nextPickerData.colorClass || 'text-purple-300'}`}>
                   <span className="animate-pulse inline-block mr-1">🎯</span> 
                   {nextPickerData.text}
                 </span>
@@ -787,22 +788,19 @@
                         {players.map((p, i) => {
                           const isPicker = nextPickerData && nextPickerData.show && (nextPickerData.pIndex === i || (nextPickerData.isT1 !== undefined && nextPickerData.isT1 === (i%2===0)));
                           return (
-                            <th key={i} className={`px-1 md:px-2 py-2 min-w-[80px] md:min-w-[140px] relative group border-b-2 align-bottom ${isTeamMode ? (i%2===0 ? 'border-blue-500/50 bg-blue-900/10' : 'border-red-500/50 bg-red-900/10') : 'border-transparent'}`}>
-                              <div className="flex flex-col items-center justify-end h-full mt-1">
-                                {isPicker ? (
-                                  <div className="text-purple-400 text-[10px] md:text-xs font-black uppercase tracking-widest flex items-center justify-center gap-1 animate-pulse mb-1">
-                                    🎯 PICK
-                                  </div>
-                                ) : (
-                                  <div className="h-[16px] md:h-[20px] mb-1"></div>
-                                )}
-                                <input 
-                                  type="text" value={p}
-                                  onChange={(e) => { const n=[...players]; n[i]=e.target.value; setPlayers(n); }}
-                                  className={`w-full bg-transparent border-b-2 border-slate-700 focus:border-${isTeamMode ? (i%2===0 ? 'blue-500' : 'red-500') : 'red-500'} outline-none text-center pb-1 text-sm md:text-lg font-bold transition-all duration-300 hover:border-slate-500 ${isTeamMode ? (i%2===0 ? 'text-blue-100' : 'text-red-100') : 'text-white'}`}
-                                />
-                              </div>
-                              <button onClick={() => removePlayer(i)} className="absolute top-2 right-1 p-1 text-slate-500 hover:text-white hover:bg-red-500 opacity-100 md:opacity-0 group-hover:opacity-100 transition-all bg-slate-800 rounded-full border border-slate-700 shadow-lg z-10">
+                            <th key={i} className={`px-1 md:px-2 py-3 min-w-[80px] md:min-w-[140px] relative group border-b-2 transition-colors duration-300 ${isPicker ? 'bg-purple-900/20 border-purple-500' : isTeamMode ? (i%2===0 ? 'border-blue-500/50 bg-blue-900/10' : 'border-red-500/50 bg-red-900/10') : 'border-transparent'}`}>
+                              {/* HUY HIỆU NẰM GÓC Ô, KHÔNG LÀM GIÃN BẢNG */}
+                              {isPicker && (
+                                <div className="absolute top-1 left-1 md:left-2 text-[8px] md:text-[9px] bg-purple-600 text-white px-1.5 py-0.5 rounded animate-pulse shadow-[0_0_8px_#9333ea] z-10 pointer-events-none font-black tracking-widest flex items-center gap-0.5">
+                                  <span>🎯</span> <span className="hidden sm:inline">PICK</span>
+                                </div>
+                              )}
+                              <input 
+                                type="text" value={p}
+                                onChange={(e) => { const n=[...players]; n[i]=e.target.value; setPlayers(n); }}
+                                className={`w-full bg-transparent border-b-2 focus:border-${isPicker ? 'purple-400' : isTeamMode ? (i%2===0 ? 'blue-500' : 'red-500') : 'red-500'} outline-none text-center pb-1 text-sm md:text-lg font-bold transition-all duration-300 hover:border-slate-500 ${isPicker ? 'text-purple-300 border-purple-500/50' : isTeamMode ? (i%2===0 ? 'text-blue-100 border-slate-700' : 'text-red-100 border-slate-700') : 'text-white border-slate-700'}`}
+                              />
+                              <button onClick={() => removePlayer(i)} className="absolute top-1 right-1 p-1 text-slate-500 hover:text-white hover:bg-red-500 opacity-100 md:opacity-0 group-hover:opacity-100 transition-all bg-slate-800 rounded-full border border-slate-700 shadow-lg z-10">
                                 <XIcon size={10}/>
                               </button>
                             </th>
