@@ -10,7 +10,7 @@
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   
-  <!-- Cấu hình Babel để ép sử dụng React Classic Runtime -->
+  <!-- Cấu hình Babel để ép sử dụng React Classic Runtime (khắc phục lỗi pragma & import) -->
   <script>
     Babel.registerPreset('react-classic', {
       presets: [
@@ -22,7 +22,7 @@
   <!-- Import Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <!-- Import ExcelJS -->
+  <!-- Import ExcelJS for Professional Export -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
   
   <!-- Import Fonts -->
@@ -36,13 +36,6 @@
         extend: {
           fontFamily: {
             sans: ['"Chakra Petch"', '"Noto Sans SC"', '"Noto Sans TC"', '"Noto Sans Thai"', 'sans-serif'],
-          },
-          colors: {
-            brand: {
-              cyan: '#13c0eb',
-              dark: '#263655',
-              yellow: '#fce300'
-            }
           }
         }
       }
@@ -50,21 +43,36 @@
   </script>
 
   <style>
-    html { zoom: 0.9; }
+    /* THU PHÓNG GIAO DIỆN (ZOOM 90%) THEO YÊU CẦU */
+    html {
+      zoom: 0.9;
+    }
+    /* Hỗ trợ cho Firefox */
     @-moz-document url-prefix() {
-      html { transform: scale(0.9); transform-origin: top center; width: 111.11%; }
+      html {
+        transform: scale(0.9);
+        transform-origin: top center;
+        width: 111.11%;
+      }
     }
 
     @keyframes slideUpFade {
       from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    .animate-slide-up { animation: slideUpFade 0.6s ease-out forwards; opacity: 0; }
+    .animate-slide-up {
+      animation: slideUpFade 0.6s ease-out forwards;
+      opacity: 0;
+    }
+    .delay-100 { animation-delay: 0.1s; }
+    .delay-200 { animation-delay: 0.2s; }
     
     ::-webkit-scrollbar { width: 8px; height: 8px; }
     ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.5); }
     ::-webkit-scrollbar-thumb { background: rgba(51, 65, 85, 0.8); border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: rgba(71, 85, 105, 1); }
+
+    /* Hide scrollbar for elements but keep functionality */
     .hide-scrollbar::-webkit-scrollbar { display: none; }
     .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -86,6 +94,7 @@
   <script type="text/babel" data-presets="react-classic,env">
     const { useState, useMemo, useEffect, useRef } = React;
 
+    // --- ICONS ---
     const Flag = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>;
     const Crown = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="currentColor" className={className} width={size} height={size}><path d="M5.5 20h13a1.5 1.5 0 0 0 1.5-1.5v-1a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 4 17.5v1A1.5 1.5 0 0 0 5.5 20zm14-5.5L16 4l-4 7-4-7-3.5 10.5h15z"></path></svg>;
     const Flame = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>;
@@ -102,6 +111,7 @@
     const MonitorPlay = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line><polygon points="10 8 15 10 10 12 10 8"></polygon></svg>;
     const WheelIcon = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle><line x1="12" y1="2" x2="12" y2="8"></line><line x1="12" y1="16" x2="12" y2="22"></line><line x1="2" y1="12" x2="8" y2="12"></line><line x1="16" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"></line><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"></line><line x1="4.93" y1="19.07" x2="9.17" y2="14.83"></line><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"></line></svg>;
 
+    // --- MAP POOL ---
     const MAP_POOL = [
       { stars: 7, maps: [
         { id: 'm7_1', vi: 'Sân Bay Siêu Tốc', en: 'Space Station', cn: '极速空港', tw: '極速空港', th: 'สปีดพอร์ต' },
@@ -158,21 +168,27 @@
       ]}
     ];
 
+    // --- GAME CONSTANTS & LIMITS ---
     const MAX_GAMES = MAP_POOL.reduce((total, group) => total + group.maps.length, 0); 
     const NORMAL_TOP_SCORE = 11;
     const KING_TOP_SCORE = 12;
     const MAX_PLAYERS = 6;
 
+    // --- DICTIONARY ---
     const TRANSLATIONS = {
-      vi: { title: "HỆ THỐNG TÍNH ĐIỂM THEO GIÂY", subtitle: "Thiết kế và phát triển bởi koi", addPlayer: "Thêm VĐV", addMatch: "Thêm Trận", reset: "Làm mới", export: "Xuất Excel", no: "STT", match: "TRẬN ĐẤU", kingMap: "King Map", total: "TỔNG ĐIỂM", leaderboard: "BẢNG XẾP HẠNG", pts: "PTS", errMaxP: "Giải đấu giới hạn tối đa 6 VĐV!", errMinP: "Bảng thi đấu cần ít nhất 2 VĐV!", errMaxG: `Giải đấu giới hạn tối đa ${MAX_GAMES} Trận!`, delP: "Bạn muốn xóa {0} khỏi giải đấu?", errMinG: "Phải có ít nhất 1 Trận đấu!", delG: "Bạn có muốn xóa Trận {0}?", confirmReset: "🚨 LÀM MỚI BẢNG ĐIỂM?\nMọi dữ liệu sẽ bị xóa và quay về trạng thái mặc định.", defPlayer: "VDV", defGame: "Game", selectMap: "Tìm & Chọn Map", searchPh: "Nhập tên map...", infoBtn: "Hướng Dẫn", infoTitle: "CƠ CHẾ TÍNH ĐIỂM & SỬ DỤNG", i1: "Nhập nhanh: Gõ thẳng số (VD: nhập 10704 hệ thống sẽ hiểu là 1:07.04).", i2: "Về nhất: 11 điểm.", i3: "King Map: Mỗi người chơi được chọn King Map cho mình. Về nhất đúng King Map của mình sẽ được +12 điểm.", i4: "Người về sau sẽ bị trừ dần điểm theo độ trễ thời gian:", i5: "Không hoàn thành (nhập X): 0 điểm.", soloMode: "Đua Đơn", teamMode: "Đua Đội", indivTotal: "ĐIỂM CÁ NHÂN", teamTotal: "TỔNG ĐIỂM ĐỘI", team1: "ĐỘI XANH", team2: "ĐỘI ĐỎ", map1Pick: "MAP CHỈ ĐỊNH", kingMapPick: "KING MAP {0}", normalPick: "LƯỢT CHỌN: {0}", broadcastBtn: "Giao Diện Livestream" },
-      en: { title: "SECOND-BASED SCORING SYSTEM", subtitle: "Designed and developed by koi", addPlayer: "Add Player", addMatch: "Add Match", reset: "Reset", export: "Export Excel", no: "No.", match: "MATCH", kingMap: "King Map", total: "TOTAL SCORE", leaderboard: "LEADERBOARD", pts: "PTS", errMaxP: "Maximum 6 players allowed!", errMinP: "Need at least 2 players!", errMaxG: `Maximum ${MAX_GAMES} matches allowed!`, delP: "Remove {0} from the tournament?", errMinG: "Need at least 1 match!", delG: "Delete Game {0}?", confirmReset: "🚨 RESET SCOREBOARD?\nAll data will be wiped and returned to default.", defPlayer: "Player", defGame: "Match", selectMap: "Search Map", searchPh: "Type map name...", infoBtn: "Guide", infoTitle: "SCORING RULES & USAGE", i1: "Quick Input: Type numbers directly (e.g., 10704 becomes 1:07.04).", i2: "1st Place: 11 points.", i3: "King Map: Players choose their own King Map. 1st place on their chosen King Map gets +12 points.", i4: "Subsequent players lose points based on time gap:", i5: "DNF (type X): 0 points.", soloMode: "Solo Mode", teamMode: "Team Mode", indivTotal: "INDIV. SCORE", teamTotal: "TEAM TOTAL", team1: "BLUE TEAM", team2: "RED TEAM", map1Pick: "DESIGNATED MAP", kingMapPick: "{0}'S KING MAP", normalPick: "{0}'S PICK", broadcastBtn: "Broadcast View" }
+      vi: { title: "HỆ THỐNG TÍNH ĐIỂM THEO GIÂY", subtitle: "Thiết kế và phát triển bởi koi", addPlayer: "Thêm VĐV", addMatch: "Thêm Trận", reset: "Làm mới", export: "Xuất Excel", no: "STT", match: "TRẬN ĐẤU", kingMap: "King Map", total: "TỔNG ĐIỂM", leaderboard: "BẢNG XẾP HẠNG", pts: "PTS", errMaxP: "Giải đấu giới hạn tối đa 6 VĐV!", errMinP: "Bảng thi đấu cần ít nhất 2 VĐV!", errMaxG: `Giải đấu giới hạn tối đa ${MAX_GAMES} Trận!`, delP: "Bạn muốn xóa {0} khỏi giải đấu?", errMinG: "Phải có ít nhất 1 Trận đấu!", delG: "Bạn có muốn xóa Trận {0}?", confirmReset: "🚨 LÀM MỚI BẢNG ĐIỂM?\nMọi dữ liệu sẽ bị xóa và quay về trạng thái mặc định.", defPlayer: "VDV", defGame: "Game", selectMap: "Tìm & Chọn Map", searchPh: "Nhập tên map...", infoBtn: "Hướng Dẫn", infoTitle: "CƠ CHẾ TÍNH ĐIỂM & SỬ DỤNG", i1: "Nhập nhanh: Gõ thẳng số (VD: nhập 10704 hệ thống sẽ hiểu là 1:07.04).", i2: "Về nhất: 11 điểm.", i3: "King Map: Mỗi người chơi được chọn King Map cho mình. Về nhất đúng King Map của mình sẽ được +12 điểm.", i4: "Người về sau sẽ bị trừ dần điểm theo độ trễ thời gian:", i5: "Không hoàn thành (nhập X): 0 điểm.", soloMode: "Đua Đơn", teamMode: "Đua Đội", indivTotal: "ĐIỂM CÁ NHÂN", teamTotal: "TỔNG ĐIỂM ĐỘI", team1: "ĐỘI XANH", team2: "ĐỘI ĐỎ", i6: "Quyền chọn Map: Trận 2 đến N là King Map của từng VĐV/Đội. Các trận sau: Đua đơn -> VĐV hạng 2 chọn. Đua đội -> Đội có tổng điểm thấp hơn chọn. (Hòa điểm -> xét người/đội có điểm thấp hơn ở map liền trước).", map1Pick: "TRẬN 1: MAP CHỈ ĐỊNH (KHÔNG CÓ QUYỀN CHỌN)", kingMapPick: "TRẬN {0}: KING MAP CỦA {1}", normalPick: "TRẬN {0}: LƯỢT CHỌN MAP CỦA {1}", broadcastBtn: "Giao Diện Livestream" },
+      en: { title: "SECOND-BASED SCORING SYSTEM", subtitle: "Designed and developed by koi", addPlayer: "Add Player", addMatch: "Add Match", reset: "Reset", export: "Export Excel", no: "No.", match: "MATCH", kingMap: "King Map", total: "TOTAL SCORE", leaderboard: "LEADERBOARD", pts: "PTS", errMaxP: "Maximum 6 players allowed!", errMinP: "Need at least 2 players!", errMaxG: `Maximum ${MAX_GAMES} matches allowed!`, delP: "Remove {0} from the tournament?", errMinG: "Need at least 1 match!", delG: "Delete Game {0}?", confirmReset: "🚨 RESET SCOREBOARD?\nAll data will be wiped and returned to default.", defPlayer: "Player", defGame: "Match", selectMap: "Search Map", searchPh: "Type map name...", infoBtn: "Guide", infoTitle: "SCORING RULES & USAGE", i1: "Quick Input: Type numbers directly (e.g., 10704 becomes 1:07.04).", i2: "1st Place: 11 points.", i3: "King Map: Players choose their own King Map. 1st place on their chosen King Map gets +12 points.", i4: "Subsequent players lose points based on time gap:", i5: "DNF (type X): 0 points.", soloMode: "Solo Mode", teamMode: "Team Mode", indivTotal: "INDIV. SCORE", teamTotal: "TEAM TOTAL", team1: "BLUE TEAM", team2: "RED TEAM", i6: "Map Picking: Matches 2 to N are King Maps. After: Solo -> 2nd place player picks. Team -> Team with lower total score picks. (If tied, the one with lower score in the previous map picks).", map1Pick: "MATCH 1: DESIGNATED MAP", kingMapPick: "MATCH {0}: {1}'S KING MAP", normalPick: "MATCH {0}: {1}'S PICK", broadcastBtn: "Broadcast View" },
+      cn: { title: "秒数计分系统", subtitle: "由 koi 设计与开发", addPlayer: "添加选手", addMatch: "添加比赛", reset: "重置", export: "导出表格", no: "序号", match: "比赛", kingMap: "王牌赛道", total: "总分", leaderboard: "排行榜", pts: "分", errMaxP: "最多允许 6 名选手！", errMinP: "至少需要 2 名选手！", errMaxG: `最多允许 ${MAX_GAMES} 场比赛！`, delP: "是否将 {0} 移出比赛？", errMinG: "至少需要 1 场比赛！", delG: "确定要删除 第{0}场 吗？", confirmReset: "🚨 重置计分板？\n所有数据将被清除并恢复为默认状态。", defPlayer: "选手", defGame: "比赛", selectMap: "搜索赛道", searchPh: "输入赛道名称...", infoBtn: "指南", infoTitle: "计分规则与使用方法", i1: "快速输入: 直接输入数字（例：10704 会自动转为 1:07.04）。", i2: "第一名：11分。", i3: "王牌赛道：选手可选择自己的王牌赛道。获得第一名可得 12分。", i4: "后续选手根据落后时间扣分：", i5: "未完成（输入 X）：0分。", soloMode: "单人赛", teamMode: "组队赛", indivTotal: "个人总分", teamTotal: "队伍总分", team1: "蓝队", team2: "红队", i6: "选图规则: 第2到N局为王牌赛道。之后：单人赛 -> 总分第二的选手选图。组队赛 -> 总分较低的队伍选图。(若同分，则上一局得分较低者选图)。", map1Pick: "第1局：官方指定赛道", kingMapPick: "第{0}局：{1} 的王牌赛道", normalPick: "第{0}局：由 {1} 选图", broadcastBtn: "直播界面" },
+      tw: { title: "秒數計分系統", subtitle: "由 koi 設計與開發", addPlayer: "新增選手", addMatch: "新增比賽", reset: "重置", export: "匯出表格", no: "序號", match: "比賽", kingMap: "王牌賽道", total: "總分", leaderboard: "排行榜", pts: "分", errMaxP: "最多允許 6 名選手！", errMinP: "至少需要 2 名選手！", errMaxG: `最多允許 ${MAX_GAMES} 場比賽！`, delP: "是否將 {0} 移出比賽？", errMinG: "至少需要 1 場比賽！", delG: "確定要刪除 第{0}場 嗎？", confirmReset: "🚨 重置計分板？\n所有數據將被清除並恢復為預設狀態。", defPlayer: "選手", defGame: "比賽", selectMap: "搜尋賽道", searchPh: "輸入賽道名稱...", infoBtn: "指南", infoTitle: "計分規則與使用方法", i1: "快速輸入: 直接輸入數字（例：10704 會自動轉為 1:07.04）。", i2: "第一名：11分。", i3: "王牌賽道：選手可選擇自己的王牌賽道。獲得第一名可得 12分。", i4: "後續選手根據落後時間扣分：", i5: "未完成（輸入 X）：0分。", soloMode: "單人賽", teamMode: "組隊賽", indivTotal: "個人總分", teamTotal: "隊伍總分", team1: "藍隊", team2: "紅隊", i6: "選圖規則: 第2到N局為王牌賽道。之後：單人賽 -> 總分第二的選手選圖。組隊賽 -> 總分較低的隊伍選圖。(若同分，則上一局得分較低者選圖)。", map1Pick: "第1局：官方指定賽道", kingMapPick: "第{0}局：{1} 的王牌賽道", normalPick: "第{0}局：由 {1} 選圖", broadcastBtn: "直播介面" },
+      th: { title: "ระบบการนับคะแนนตามวินาที", subtitle: "ออกแบบและพัฒนาโดย koi", addPlayer: "เพิ่มผู้เล่น", addMatch: "เพิ่มแข่ง", reset: "รีเซ็ต", export: "ส่งออก Excel", no: "ลำดับ", match: "การแข่งขัน", kingMap: "แผนที่คิง", total: "คะแนนรวม", leaderboard: "ตารางคะแนน", pts: "แต้ม", errMaxP: "อนุญาตสูงสุด 6 คน!", errMinP: "ต้องมีอย่างน้อย 2 คน!", errMaxG: `อนุญาตสูงสุด ${MAX_GAMES} นัด!`, delP: "ลบ {0} ออกหรือไม่?", errMinG: "ต้องมีอย่างน้อย 1 นัด!", delG: "ลบ เกมที่ {0} หรือไม่?", confirmReset: "🚨 รีเซ็ตกระดานคะแนน?\nข้อมูลทั้งหมดจะถูกลบและกลับสู่ค่าเริ่มต้น", defPlayer: "ผู้เล่น", defGame: "เกม", selectMap: "ค้นหาแผนที่", searchPh: "พิมพ์ชื่อแผนที่...", infoBtn: "คู่มือ", infoTitle: "กฎการให้คะแนนและการใช้งาน", i1: "ป้อนข้อมูลด่วน: พิมพ์ตัวเลข (เช่น 10704 จะกลายเป็น 1:07.04)", i2: "อันดับ 1: 11 แต้ม", i3: "King Map: ผู้เล่นเลือก King Map ของตัวเอง หากได้อันดับ 1 ใน King Map จะได้ +12 แต้ม", i4: "ผู้เล่นคนอื่นจะถูกหักคะแนนตามช่องว่างเวลา:", i5: "ไม่จบการแข่งขัน (พิมพ์ X): 0 แต้ม", soloMode: "แข่งเดี่ยว", teamMode: "แข่งทีม", indivTotal: "คะแนนส่วนตัว", teamTotal: "คะแนนทีมรวม", team1: "ทีมสีน้ำเงิน", team2: "ทีมสีแดง", i6: "การเลือกแผนที่: แมตช์ 2 ถึง N คือ King Maps หลังจากนั้น: เดี่ยว -> ผู้เล่นอันดับ 2 เลือก ทีม -> ทีมที่มีคะแนนรวมต่ำกว่าเลือก (หากเสมอ ให้คนที่คะแนนน้อยกว่าในแมตช์ก่อนหน้าเลือก)", map1Pick: "แมตช์ 1: แผนที่ที่กำหนด", kingMapPick: "แมตช์ {0}: KING MAP ของ {1}", normalPick: "แมตช์ {0}: สิทธิ์การเลือกของ {1}", broadcastBtn: "มุมมองถ่ายทอดสด" }
     };
 
+    // Lấy tên map chuẩn theo từng ngôn ngữ (Thái Lan dùng map tiếng Anh)
     const getMapName = (id, lang) => {
-      const mapLang = (lang === 'th' || !TRANSLATIONS[lang]) ? 'en' : lang;
+      const mapLang = lang === 'th' ? 'en' : lang;
       for (const group of MAP_POOL) {
         const found = group.maps.find(m => m.id === id);
-        if (found) return found[mapLang] || found['en'];
+        if (found) return found[mapLang];
       }
       return '';
     };
@@ -222,6 +238,7 @@
       return `linear-gradient(135deg, hsl(${h1}, 40%, 30%), hsl(${h2}, 50%, 20%))`;
     };
 
+    // --- CUSTOM SEARCHABLE DROPDOWN CHUYÊN NGHIỆP ---
     const SearchableMapSelect = ({ gameIndex, currentMapId, selectedMaps, onChange, lang, t }) => {
       const [isOpen, setIsOpen] = useState(false);
       const [searchTerm, setSearchTerm] = useState('');
@@ -244,9 +261,9 @@
         <div ref={wrapperRef} className={`relative w-full ${isOpen ? 'z-[100]' : 'z-20'}`}>
           <div 
             onClick={() => setIsOpen(!isOpen)}
-            className={`w-full flex items-center justify-between bg-[#0f172a] border ${isOpen ? 'border-red-500' : 'border-slate-700 hover:border-slate-500'} rounded px-2 py-1.5 cursor-pointer transition-all`}
+            className={`w-full flex items-center justify-between bg-slate-950/80 border ${isOpen ? 'border-red-500 ring-1 ring-red-500' : 'border-slate-700 hover:border-slate-500'} rounded px-2 py-1.5 cursor-pointer transition-all`}
           >
-            <span className={`text-[10px] md:text-xs font-bold truncate ${currentName ? 'text-cyan-400' : 'text-slate-500'}`}>
+            <span className={`text-[10px] md:text-xs font-bold truncate ${currentName ? 'text-cyan-300' : 'text-slate-500'}`}>
               {currentName || t.selectMap}
             </span>
             <ChevronDown size={14} className={`text-slate-400 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
@@ -255,21 +272,48 @@
           {isOpen && (
             <div className="absolute top-full left-0 mt-1 w-[200px] md:w-full min-w-[160px] bg-slate-900 border border-slate-700 rounded-md shadow-2xl max-h-60 overflow-y-auto z-[100]">
               <div className="sticky top-0 bg-slate-900 p-2 border-b border-slate-700">
-                <input type="text" autoFocus placeholder={t.searchPh} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="w-full bg-slate-950 border border-slate-700 rounded px-2 py-1 text-xs text-white outline-none focus:border-red-500" />
+                <input 
+                  type="text"
+                  autoFocus
+                  placeholder={t.searchPh}
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full bg-slate-950 border border-slate-700 rounded px-2 py-1 text-xs text-white outline-none focus:border-red-500"
+                />
               </div>
               <div className="p-1">
-                <div className="px-2 py-1.5 text-xs text-slate-400 hover:bg-slate-800 rounded cursor-pointer mb-1" onClick={() => { onChange(''); setIsOpen(false); setSearchTerm(''); }}>-- {t.selectMap} --</div>
+                <div 
+                  className="px-2 py-1.5 text-xs text-slate-400 hover:bg-slate-800 rounded cursor-pointer mb-1"
+                  onClick={() => { onChange(''); setIsOpen(false); setSearchTerm(''); }}
+                >
+                  -- {t.selectMap} --
+                </div>
                 {MAP_POOL.map(group => {
-                  const mapLang = (lang === 'th' || !TRANSLATIONS[lang]) ? 'en' : lang;
-                  const filteredMaps = group.maps.filter(m => (m[mapLang]||m['en']).toLowerCase().includes(searchTerm.toLowerCase()));
+                  const mapLang = lang === 'th' ? 'en' : lang;
+                  const filteredMaps = group.maps.filter(m => m[mapLang].toLowerCase().includes(searchTerm.toLowerCase()));
                   if (filteredMaps.length === 0) return null;
+                  
                   return (
                     <div key={group.stars} className="mb-2">
-                      <div className="px-2 py-1 text-[10px] font-black text-red-500 uppercase bg-slate-950/50">{`★`.repeat(group.stars)} {group.stars} {lang==='vi'?'Sao':'Stars'}</div>
+                      <div className="px-2 py-1 text-[10px] font-black text-red-500 uppercase bg-slate-950/50">
+                        {`★`.repeat(group.stars)} {group.stars} {lang==='vi'?'Sao':lang==='en'?'Stars':'星'}
+                      </div>
                       {filteredMaps.map(m => {
                         const isSelectedByOther = selectedMaps.includes(m.id) && m.id !== currentMapId;
                         return (
-                          <div key={m.id} onClick={() => { if (!isSelectedByOther) { onChange(m.id); setIsOpen(false); setSearchTerm(''); } }} className={`px-2 py-1.5 text-xs rounded transition-colors ${isSelectedByOther ? 'text-slate-600 cursor-not-allowed line-through' : m.id === currentMapId ? 'bg-red-900/40 text-red-400 font-bold' : 'text-slate-300 hover:bg-slate-800 cursor-pointer'}`}>{m[mapLang]||m['en']}</div>
+                          <div 
+                            key={m.id}
+                            onClick={() => {
+                              if (!isSelectedByOther) { onChange(m.id); setIsOpen(false); setSearchTerm(''); }
+                            }}
+                            className={`px-2 py-1.5 text-xs rounded transition-colors ${
+                              isSelectedByOther ? 'text-slate-600 cursor-not-allowed line-through' :
+                              m.id === currentMapId ? 'bg-red-900/40 text-red-400 font-bold' :
+                              'text-slate-300 hover:bg-slate-800 cursor-pointer'
+                            }`}
+                          >
+                            {m[mapLang]}
+                          </div>
                         );
                       })}
                     </div>
@@ -282,8 +326,8 @@
       );
     };
 
+    // --- GIAO DIỆN LIVESTREAM TÍCH HỢP ---
     const BroadcastOverlay = ({ players, games, totals, getGameCalculations, lang, t, isTeamMode, onClose }) => {
-      // Đảm bảo hiển thị tối thiểu 9 Round, tối đa bằng số games hiện tại nếu > 9
       const displayRounds = Math.max(9, games.length);
       const rounds = Array.from({ length: displayRounds }).map((_, i) => games[i] || null);
 
@@ -291,7 +335,7 @@
         <div className="fixed inset-0 z-[999] bg-[#f0f4f8] flex flex-col font-sans overflow-hidden animate-slide-up">
           {/* Header Bảng Livestream */}
           <div className="relative w-full h-[15vh] min-h-[80px] flex items-center justify-between px-10 bg-white shadow-sm border-b border-gray-200">
-            <div className="text-xl font-black italic text-brand-cyan tracking-widest uppercase">
+            <div className="text-xl font-black italic text-[#13c0eb] tracking-widest uppercase">
               Q Q S P E E D
             </div>
             
@@ -301,8 +345,8 @@
               </div>
               <div className="relative z-10 text-5xl font-black italic text-[#263655] tracking-tight flex items-end">
                 RESULT
-                <div className="absolute -bottom-1 left-0 w-full h-1.5 bg-brand-cyan"></div>
-                <span className="absolute -right-12 -bottom-4 text-4xl font-[cursive] text-brand-yellow drop-shadow-md transform -rotate-12">Speed</span>
+                <div className="absolute -bottom-1 left-0 w-full h-1.5 bg-[#13c0eb]"></div>
+                <span className="absolute -right-12 -bottom-4 text-4xl font-[cursive] text-[#fce300] drop-shadow-md transform -rotate-12">Speed</span>
               </div>
             </div>
 
@@ -313,10 +357,10 @@
 
           {/* Main Grid Livestream */}
           <div className="flex-1 w-full max-w-[1800px] mx-auto p-6 flex flex-col justify-center">
-            <div className="w-full bg-brand-dark rounded-xl overflow-hidden shadow-2xl flex flex-col h-[75vh]">
+            <div className="w-full bg-[#263655] rounded-xl overflow-hidden shadow-2xl flex flex-col h-[75vh]">
               
               {/* Vòng Đấu Header */}
-              <div className="w-full bg-brand-cyan flex">
+              <div className="w-full bg-[#13c0eb] flex">
                 {rounds.map((_, i) => (
                   <div key={`header_${i}`} className="flex-1 py-3 text-center border-r border-white/20 last:border-r-0">
                     <span className="text-white font-black italic text-xl tracking-wider shadow-sm">ROUND {i + 1}</span>
@@ -331,9 +375,8 @@
                   const calcs = isPlayed ? getGameCalculations(gIndex, game.times) : [];
                   
                   if (!isPlayed) {
-                     // Giao diện khi ván chưa đua (Icon lốp xe)
                      return (
-                      <div key={`empty_${gIndex}`} className="flex-1 flex flex-col border-r border-[#1a253a] bg-brand-dark relative bg-stripes">
+                      <div key={`empty_${gIndex}`} className="flex-1 flex flex-col border-r border-[#1a253a] bg-[#263655] relative bg-stripes">
                          <div className="absolute inset-0 flex items-center justify-center opacity-[0.05]">
                            <WheelIcon size={120} />
                          </div>
@@ -341,28 +384,26 @@
                      );
                   }
 
-                  // Giao diện khi ván đã đua
                   const bgStyle = { background: getMapGradient(game.mapId) };
                   const mapName = game.mapId ? getMapName(game.mapId, lang) : '';
 
                   return (
                     <div key={`play_${gIndex}`} className="flex-1 flex flex-col relative border-r border-[#1a253a]" style={bgStyle}>
-                      <div className="absolute inset-0 bg-black/50 z-0"></div> {/* Lớp phủ tối */}
+                      <div className="absolute inset-0 bg-black/50 z-0"></div> 
                       
-                      {/* Vùng chứa từng Player */}
                       <div className="relative z-10 flex-1 flex flex-col py-4">
                         {game.times.map((time, pIndex) => {
                           const c = calcs[pIndex];
                           const playerName = players[pIndex];
                           const isTop = c.isBest && c.score > 0;
-                          const textColor = isTop ? 'text-brand-yellow' : 'text-slate-300';
+                          const textColor = isTop ? 'text-[#fce300]' : 'text-slate-300';
                           
                           return (
                             <div key={`g${gIndex}_p${pIndex}`} className="flex-1 flex flex-col items-center justify-center relative">
-                               {c.isKingMap && isTop && <Crown size={16} className="text-brand-yellow absolute top-0 animate-bounce drop-shadow-[0_0_5px_rgba(252,227,0,0.8)]"/>}
+                               {c.isKingMap && isTop && <Crown size={16} className="text-[#fce300] absolute top-0 animate-bounce drop-shadow-[0_0_5px_rgba(252,227,0,0.8)]"/>}
                                <span className={`text-[13px] md:text-[15px] font-bold truncate w-[90%] text-center mt-3 ${textColor}`}>{playerName}</span>
                                {time ? (
-                                  <span className={`text-xl md:text-3xl font-black mt-1 ${isTop ? 'text-brand-yellow drop-shadow-[0_0_8px_rgba(252,227,0,0.5)]' : 'text-white'}`}>
+                                  <span className={`text-xl md:text-3xl font-black mt-1 ${isTop ? 'text-[#fce300] drop-shadow-[0_0_8px_rgba(252,227,0,0.5)]' : 'text-white'}`}>
                                     +{c.score}
                                   </span>
                                ) : (
@@ -373,7 +414,6 @@
                         })}
                       </div>
 
-                      {/* Tên Map dưới cùng */}
                       <div className="relative z-10 h-10 bg-gradient-to-t from-black/80 to-transparent flex items-end justify-center pb-2 px-2">
                         <span className="text-[9px] md:text-[11px] font-black text-white uppercase tracking-widest truncate text-center w-full">{mapName}</span>
                       </div>
@@ -383,9 +423,8 @@
               </div>
 
               {/* Footer Tổng Điểm */}
-              <div className="w-full bg-brand-cyan flex">
+              <div className="w-full bg-[#13c0eb] flex">
                 {isTeamMode ? (
-                   // Giao diện Tổng điểm Đội (Xanh / Đỏ)
                    Array.from({ length: Math.ceil(players.length / 2) }).map((_, i) => {
                       const teamScore = (totals[i * 2] || 0) + (totals[i * 2 + 1] || 0);
                       const isBlue = i % 2 === 0;
@@ -399,7 +438,6 @@
                       )
                    })
                 ) : (
-                   // Giao diện Tổng điểm Cá nhân
                    players.map((p, i) => (
                     <div key={`foot_p_${i}`} className="flex-1 py-3 flex flex-col items-center justify-center border-r border-white/20 last:border-r-0">
                       <span className="text-white/90 font-bold text-[13px] md:text-[15px] truncate max-w-[90%]">{p}</span>
@@ -410,8 +448,7 @@
               </div>
             </div>
 
-            {/* Dòng chữ dưới cùng */}
-            <div className="text-center mt-6 text-2xl font-black italic tracking-[0.5em] text-brand-dark uppercase opacity-80">
+            <div className="text-center mt-6 text-2xl font-black italic tracking-[0.5em] text-[#263655] uppercase opacity-80">
               2025 ASIAN CUP
             </div>
           </div>
@@ -420,43 +457,54 @@
     };
 
     function App() {
-      const [lang, setLang] = useState(() => localStorage.getItem('zsm_lang_v11') || (TRANSLATIONS['vi'] ? 'vi' : 'en'));
-      const t = TRANSLATIONS[lang] || TRANSLATIONS['en'];
-      
+      // --- STATE ---
+      const [lang, setLang] = useState(() => localStorage.getItem('zsm_lang_v10_final') || 'vi');
+      const t = TRANSLATIONS[lang];
       const [showInfo, setShowInfo] = useState(false);
       const [showBroadcast, setShowBroadcast] = useState(false);
-      const [isTeamMode, setIsTeamMode] = useState(() => localStorage.getItem('zsm_team_v11') === 'true');
+      
+      const [isTeamMode, setIsTeamMode] = useState(() => {
+        return localStorage.getItem('zsm_team_mode_v10') === 'true';
+      });
 
       const [players, setPlayers] = useState(() => {
-        const saved = localStorage.getItem('zsm_players_v11');
+        const saved = localStorage.getItem('zsm_players_v10_final');
         if (saved) { try { return JSON.parse(saved); } catch(e) {} }
         return [`${t.defPlayer} 1`, `${t.defPlayer} 2`, `${t.defPlayer} 3`, `${t.defPlayer} 4`];
       });
 
       const [games, setGames] = useState(() => {
-        const saved = localStorage.getItem('zsm_games_v11');
+        const saved = localStorage.getItem('zsm_games_v10_final');
         if (saved) { try { return JSON.parse(saved); } catch(e) {} }
-        return Array(9).fill(null).map((_, i) => ({ id: Date.now() + i, mapId: "", times: Array(4).fill('') }));
+        return Array(9).fill(null).map((_, i) => ({
+          id: Date.now() + i,
+          mapId: "",
+          times: Array(4).fill('')
+        }));
       });
 
+      // --- DYNAMIC TRANSLATION HOOK ---
       useEffect(() => {
         const allDefP = Object.values(TRANSLATIONS).map(tr => tr.defPlayer);
+        const currentT = TRANSLATIONS[lang];
         setPlayers(prev => prev.map(p => {
           for (let def of allDefP) {
             if (p.startsWith(def + ' ')) {
               const num = p.replace(def + ' ', '');
-              if (!isNaN(num)) return `${t.defPlayer} ${num}`;
+              if (!isNaN(num)) return `${currentT.defPlayer} ${num}`;
             }
           }
           return p;
         }));
       }, [lang]);
 
-      useEffect(() => { localStorage.setItem('zsm_lang_v11', lang); }, [lang]);
-      useEffect(() => { localStorage.setItem('zsm_team_v11', isTeamMode); }, [isTeamMode]);
-      useEffect(() => { localStorage.setItem('zsm_players_v11', JSON.stringify(players)); }, [players]);
-      useEffect(() => { localStorage.setItem('zsm_games_v11', JSON.stringify(games)); }, [games]);
+      // --- AUTO SAVE ---
+      useEffect(() => { localStorage.setItem('zsm_lang_v10_final', lang); }, [lang]);
+      useEffect(() => { localStorage.setItem('zsm_team_mode_v10', isTeamMode); }, [isTeamMode]);
+      useEffect(() => { localStorage.setItem('zsm_players_v10_final', JSON.stringify(players)); }, [players]);
+      useEffect(() => { localStorage.setItem('zsm_games_v10_final', JSON.stringify(games)); }, [games]);
 
+      // --- EVENTS ---
       const handleTimeChange = (gIndex, pIndex, val) => {
         const newGames = [...games]; newGames[gIndex].times[pIndex] = val; setGames(newGames);
       };
@@ -497,8 +545,12 @@
         }
       };
 
-      const selectedMaps = useMemo(() => games.map(g => g.mapId).filter(id => id !== ""), [games]);
+      // --- Map List to Block Duplicates ---
+      const selectedMaps = useMemo(() => {
+        return games.map(g => g.mapId).filter(id => id !== "");
+      }, [games]);
 
+      // --- EXPORT PROFESSIONAL EXCEL WITH EXCELJS ---
       const exportProfessionalExcel = async () => {
         const workbook = new ExcelJS.Workbook();
         const sheet = workbook.addWorksheet('Leaderboard');
@@ -520,14 +572,19 @@
         players.forEach((p, i) => {
           const timeCol = 3 + (i * 2);
           const ptsCol = 4 + (i * 2);
+          
           sheet.mergeCells(2, timeCol, 2, ptsCol);
           const pCell = sheet.getCell(2, timeCol);
           pCell.value = p;
-          let headerColor = 'FFDDEBF7';
-          if (isTeamMode) headerColor = (i % 2 === 0) ? 'FFBFDBFE' : 'FFFECACA';
+          
+          // Phân màu cột VĐV trong Excel nếu là Team Mode
+          let headerColor = 'FFDDEBF7'; // Mặc định xanh nhạt
+          if (isTeamMode) headerColor = (i % 2 === 0) ? 'FFBFDBFE' : 'FFFECACA'; // Blue-200 hoặc Red-200
+          
           pCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: headerColor } }; 
           pCell.font = { bold: true };
           pCell.alignment = { horizontal: 'center' };
+
           sheet.getCell(3, timeCol).value = "Time";
           sheet.getCell(3, ptsCol).value = t.pts;
           sheet.getCell(3, ptsCol).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFE2EFDA' } }; 
@@ -540,6 +597,7 @@
         games.forEach((game, gIndex) => {
           const rowNum = 4 + gIndex;
           sheet.getCell(rowNum, 1).value = gIndex + 1;
+          
           const mapName = game.mapId ? getMapName(game.mapId, lang) : '';
           sheet.getCell(rowNum, 2).value = `${t.defGame} ${gIndex + 1}${mapName ? ` - ${mapName}` : ''}`;
           
@@ -548,14 +606,17 @@
             const timeCol = 3 + (pIdx * 2);
             const ptsCol = 4 + (pIdx * 2);
             const score = calcs[pIdx].score;
+            
             sheet.getCell(rowNum, timeCol).value = time || "-";
             sheet.getCell(rowNum, ptsCol).value = time ? score : 0;
+
             sheet.getCell(rowNum, timeCol).alignment = { horizontal: 'center' };
             sheet.getCell(rowNum, ptsCol).alignment = { horizontal: 'center' };
 
             if (calcs[pIdx].isBest) {
               const bgColor = calcs[pIdx].isKingMap ? 'FFFF6666' : 'FFFFFF99'; 
               const fontColor = calcs[pIdx].isKingMap ? 'FF9C0006' : 'FF000000'; 
+              
               sheet.getCell(rowNum, timeCol).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: bgColor } };
               sheet.getCell(rowNum, ptsCol).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: bgColor } };
               sheet.getCell(rowNum, ptsCol).font = { bold: true, color: { argb: fontColor } };
@@ -583,6 +644,7 @@
 
         let lastRowIndex = totalRow;
 
+        // XỬ LÝ ROW TỔNG ĐIỂM ĐỘI (CHẾ ĐỘ XEN KẼ)
         if (isTeamMode) {
           lastRowIndex = totalRow + 1;
           const team1Score = totals.filter((_, i) => i % 2 === 0).reduce((a, b) => a + b, 0);
@@ -592,27 +654,30 @@
           const teamLabelCell = sheet.getCell(lastRowIndex, 1);
           teamLabelCell.value = t.teamTotal;
           teamLabelCell.font = { bold: true, size: 14, color: { argb: 'FFFFFFFF' } };
-          teamLabelCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF334155' } };
+          teamLabelCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF334155' } }; // Slate-700
           teamLabelCell.alignment = { horizontal: 'right', vertical: 'middle' };
 
           const totalCols = players.length * 2;
           const halfCols = Math.floor(totalCols / 2);
           
+          // Team 1 (Blue)
           sheet.mergeCells(lastRowIndex, 3, lastRowIndex, 2 + halfCols);
           const t1Cell = sheet.getCell(lastRowIndex, 3);
           t1Cell.value = `${t.team1}: ${team1Score}`;
           t1Cell.font = { bold: true, size: 16, color: { argb: 'FFFFFFFF' } };
           t1Cell.alignment = { horizontal: 'center', vertical: 'middle' };
-          t1Cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF1D4ED8' } };
+          t1Cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF1D4ED8' } }; // blue-700
 
+          // Team 2 (Red)
           if (players.length > 1) {
             sheet.mergeCells(lastRowIndex, 3 + halfCols, lastRowIndex, 2 + totalCols);
             const t2Cell = sheet.getCell(lastRowIndex, 3 + halfCols);
             t2Cell.value = `${t.team2}: ${team2Score}`;
             t2Cell.font = { bold: true, size: 16, color: { argb: 'FFFFFFFF' } };
             t2Cell.alignment = { horizontal: 'center', vertical: 'middle' };
-            t2Cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFB91C1C' } };
+            t2Cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFB91C1C' } }; // red-700
           }
+          
           sheet.getRow(lastRowIndex).height = 30;
         }
 
@@ -626,7 +691,10 @@
         sheet.eachRow((row, rowNumber) => {
           if (rowNumber > 1 && rowNumber <= lastRowIndex) {
             row.eachCell((cell) => {
-              cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
+              cell.border = {
+                top: { style: 'thin' }, left: { style: 'thin' },
+                bottom: { style: 'thin' }, right: { style: 'thin' }
+              };
             });
           }
         });
@@ -641,6 +709,7 @@
         window.URL.revokeObjectURL(url);
       };
 
+      // --- LOGIC TÍNH ĐIỂM ---
       const getGameCalculations = (gameIndex, times) => {
         const parsed = times.map(parseTime);
         const valids = parsed.filter(t => t !== null);
@@ -673,14 +742,45 @@
         return sums;
       }, [games, players]);
 
+      // --- LOGIC BẢNG XẾP HẠNG THEO CHẾ ĐỘ XEN KẼ ---
+      const activeLeaderboard = useMemo(() => {
+        if (isTeamMode) {
+          const team1Score = totals.filter((_, i) => i % 2 === 0).reduce((a, b) => a + b, 0);
+          const team2Score = totals.filter((_, i) => i % 2 === 1).reduce((a, b) => a + b, 0);
+          
+          const teams = [
+            { id: 'team1', name: t.team1, playersStr: players.filter((_, i) => i % 2 === 0).join(' & '), score: team1Score, isT1: true },
+            { id: 'team2', name: t.team2, playersStr: players.filter((_, i) => i % 2 === 1).join(' & '), score: team2Score, isT1: false }
+          ];
+          
+          // Tránh lỗi hiển thị đội 2 nếu chỉ có 1 người test (không thực tế nhưng chống lỗi UI)
+          if (players.length < 2) teams.pop();
+
+          const sorted = teams.sort((a, b) => b.score - a.score);
+          let currentRank = 1;
+          return sorted.map((item, index) => {
+            if (index > 0 && item.score < sorted[index - 1].score) currentRank = index + 1; 
+            return { ...item, rank: currentRank };
+          });
+        } else {
+          const sorted = players.map((name, i) => ({ name, score: totals[i], id: `p_${i}` })).sort((a, b) => b.score - a.score);
+          let currentRank = 1;
+          return sorted.map((item, index) => {
+            if (index > 0 && item.score < sorted[index - 1].score) currentRank = index + 1; 
+            return { ...item, rank: currentRank };
+          });
+        }
+      }, [players, totals, isTeamMode]);
+
+      // --- LOGIC TÌM LƯỢT CHỌN MAP TIẾP THEO ---
       const nextPickerData = useMemo(() => {
         const nextIdx = games.findIndex(g => g.times.every(time => !time || time.trim() === ''));
         if (nextIdx === -1) return { show: false }; 
-        if (nextIdx === 0) return { show: false }; 
+        if (nextIdx === 0) return { show: true, text: t.map1Pick }; 
 
         if (nextIdx >= 1 && nextIdx < players.length + 1) {
             const pickerName = players[nextIdx - 1];
-            return { show: true, pIndex: nextIdx - 1 };
+            return { show: true, text: t.kingMapPick.replace('{0}', nextIdx + 1).replace('{1}', pickerName), pIndex: nextIdx - 1 };
         }
 
         const actualLastGameIndex = nextIdx - 1; 
@@ -690,58 +790,49 @@
           const t2Score = totals.filter((_, i) => i % 2 === 1).reduce((a, b) => a + b, 0);
           let isT1 = true;
 
-          if (t1Score < t2Score) isT1 = true;
-          else if (t2Score < t1Score) isT1 = false;
-          else {
+          if (t1Score < t2Score) {
+              isT1 = true;
+          } else if (t2Score < t1Score) {
+              isT1 = false;
+          } else {
               const lastGameCalcs = getGameCalculations(actualLastGameIndex, games[actualLastGameIndex].times);
               const lastT1Score = lastGameCalcs.filter((_, i) => i % 2 === 0).reduce((a, b) => a + b.score, 0);
               const lastT2Score = lastGameCalcs.filter((_, i) => i % 2 === 1).reduce((a, b) => a + b.score, 0);
               isT1 = lastT1Score <= lastT2Score;
           }
-          return { show: true, isT1 };
+
+          const teamName = isT1 ? t.team1 : t.team2;
+          const colorClass = isT1 ? 'text-blue-400' : 'text-red-400';
+          return { show: true, text: t.normalPick.replace('{0}', nextIdx + 1).replace('{1}', teamName), isT1, colorClass };
         } else {
+          // SỬA LỖI LOGIC: Dùng exact time (thời gian mili-giây) thay vì điểm số để phân định chính xác ai chậm hơn
           const lastGameTimes = games[actualLastGameIndex].times.map(parseTime);
           const pStats = players.map((_, i) => ({
-              index: i, total: totals[i], lastTimeMs: lastGameTimes[i] === null ? Infinity : lastGameTimes[i]
+              index: i,
+              total: totals[i],
+              lastTimeMs: lastGameTimes[i] === null ? Infinity : lastGameTimes[i] // Infinity cho ai ko hoàn thành (DNF)
           }));
 
           pStats.sort((a, b) => b.total - a.total);
           if (pStats.length < 2) return { show: false };
 
           let targetPlayers = [];
-          if (pStats[0].total === pStats[1].total) targetPlayers = pStats.filter(p => p.total === pStats[0].total);
-          else targetPlayers = pStats.filter(p => p.total === pStats[1].total);
+          if (pStats[0].total === pStats[1].total) {
+              const topScore = pStats[0].total;
+              targetPlayers = pStats.filter(p => p.total === topScore);
+          } else {
+              const secondScore = pStats[1].total;
+              targetPlayers = pStats.filter(p => p.total === secondScore);
+          }
 
+          // Tie breaker: Thời gian map trước CÀNG CAO (chạy chậm hơn) -> Về đích xếp hạng thấp hơn -> Nhận quyền Pick map
           targetPlayers.sort((a, b) => b.lastTimeMs - a.lastTimeMs);
           const pickerIndex = targetPlayers[0].index;
-          return { show: true, pIndex: pickerIndex };
-        }
-      }, [games, totals, players, isTeamMode]);
+          const pickerName = players[pickerIndex];
 
-      const activeLeaderboard = useMemo(() => {
-        if (isTeamMode) {
-          const team1Score = totals.filter((_, i) => i % 2 === 0).reduce((a, b) => a + b, 0);
-          const team2Score = totals.filter((_, i) => i % 2 === 1).reduce((a, b) => a + b, 0);
-          const teams = [
-            { id: 'team1', name: t.team1, playersStr: players.filter((_, i) => i % 2 === 0).join(' & '), score: team1Score, isT1: true },
-            { id: 'team2', name: t.team2, playersStr: players.filter((_, i) => i % 2 === 1).join(' & '), score: team2Score, isT1: false }
-          ];
-          if (players.length < 2) teams.pop();
-          const sorted = teams.sort((a, b) => b.score - a.score);
-          let currentRank = 1;
-          return sorted.map((item, index) => {
-            if (index > 0 && item.score < sorted[index - 1].score) currentRank = index + 1; 
-            return { ...item, rank: currentRank };
-          });
-        } else {
-          const sorted = players.map((name, i) => ({ name, score: totals[i], id: `p_${i}`, oIndex: i })).sort((a, b) => b.score - a.score);
-          let currentRank = 1;
-          return sorted.map((item, index) => {
-            if (index > 0 && item.score < sorted[index - 1].score) currentRank = index + 1; 
-            return { ...item, rank: currentRank };
-          });
+          return { show: true, text: t.normalPick.replace('{0}', nextIdx + 1).replace('{1}', pickerName), pIndex: pickerIndex };
         }
-      }, [players, totals, isTeamMode]);
+      }, [games, totals, players, isTeamMode, lang, t]);
 
       return (
         <div className="min-h-screen relative overflow-x-hidden pb-20">
@@ -759,6 +850,7 @@
             />
           )}
 
+          {/* INFO MODAL */}
           {showInfo && (
             <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-slide-up" onClick={() => setShowInfo(false)}>
               <div className="bg-slate-900 border border-slate-700 rounded-xl max-w-md w-full shadow-[0_0_40px_rgba(220,38,38,0.2)] overflow-hidden" onClick={e => e.stopPropagation()}>
@@ -766,7 +858,7 @@
                   <h3 className="font-black text-amber-400 italic tracking-widest uppercase">{t.infoTitle}</h3>
                   <button onClick={() => setShowInfo(false)} className="text-slate-400 hover:text-red-500 transition-colors"><XIcon size={20}/></button>
                 </div>
-                <div className="p-5 text-[13px] md:text-sm text-slate-300 space-y-3 font-medium">
+                <div className="p-5 text-[13px] md:text-sm text-slate-300 space-y-3 font-medium max-h-[70vh] overflow-y-auto hide-scrollbar">
                   <div className="flex gap-2 items-start"><span className="text-cyan-400">⌨️</span> <p>{t.i1}</p></div>
                   <div className="flex gap-2 items-start"><span className="text-amber-400">🥇</span> <p>{t.i2}</p></div>
                   <div className="flex gap-2 items-start"><span className="text-red-400">👑</span> <p>{t.i3}</p></div>
@@ -776,17 +868,20 @@
                       <ul className="mt-2 ml-1 px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-slate-400 font-mono space-y-1 w-fit">
                         <li>+0.01s - 0.99s: 10 {t.pts}</li>
                         <li>+1.00s - 1.99s:  9 {t.pts}</li>
+                        <li>+2.00s - 2.99s:  8 {t.pts}</li>
                         <li>...</li>
                         <li>+9.00s - 9.99s:  1 {t.pts}</li>
                       </ul>
                     </div>
                   </div>
+                  <div className="flex gap-2 items-start"><span className="text-purple-400">🎯</span> <p>{t.i6}</p></div>
                   <div className="flex gap-2 items-start"><span className="text-red-500">❌</span> <p>{t.i5}</p></div>
                 </div>
               </div>
             </div>
           )}
 
+          {/* LANG SELECTOR */}
           <div className="absolute top-2 right-2 md:top-4 md:right-4 z-50 flex items-center gap-2 bg-slate-900/80 border border-slate-700 px-2 md:px-3 py-1.5 rounded-full backdrop-blur-md shadow-lg transition-transform hover:scale-105">
             <Globe size={14} className="text-slate-400 hidden sm:block" />
             <select value={lang} onChange={(e) => setLang(e.target.value)} className="bg-transparent text-slate-300 text-[10px] md:text-xs font-bold outline-none cursor-pointer appearance-none pr-1 md:pr-2">
@@ -794,6 +889,7 @@
             </select>
           </div>
 
+          {/* EFFECTS & BACKGROUND */}
           <div className="fixed inset-0 pointer-events-none z-0">
             <div className="absolute inset-0 bg-[url('https://storage.googleapis.com/chat-staging-context-data/context-images/image_4f4785.jpg')] bg-cover bg-center opacity-40"></div>
             <div className="absolute inset-0 bg-[#050510]/80 backdrop-blur-sm"></div>
@@ -819,23 +915,23 @@
                   <MonitorPlay size={16}/> <span className="hidden sm:inline">{t.broadcastBtn}</span>
                 </button>
                 <div className="w-full sm:w-px sm:h-10 bg-slate-700/50 my-1 sm:my-0"></div>
-                <button onClick={() => setShowInfo(true)} className="flex items-center justify-center gap-1 md:gap-2 px-3 py-2 md:px-5 md:py-2.5 bg-amber-900/50 border border-amber-500/50 text-amber-300 hover:bg-amber-600 hover:text-white hover:-translate-y-1 active:scale-95 font-bold rounded transition-all duration-300 uppercase text-[10px] md:text-xs">
+                <button onClick={() => setShowInfo(true)} className="flex items-center justify-center gap-1 md:gap-2 px-3 py-2 md:px-5 md:py-2.5 bg-amber-900/50 border border-amber-500/50 text-amber-300 hover:bg-amber-600 hover:text-white hover:-translate-y-1 hover:shadow-[0_5px_15px_rgba(245,158,11,0.4)] active:scale-95 font-bold rounded transition-all duration-300 uppercase text-[10px] md:text-xs tracking-wider flex-1 sm:flex-none">
                   <InfoIcon size={14}/> <span className="hidden sm:inline">{t.infoBtn}</span>
                 </button>
-                <button onClick={() => setIsTeamMode(!isTeamMode)} className="flex items-center justify-center gap-1 md:gap-2 px-3 py-2 md:px-5 md:py-2.5 bg-rose-900/50 border border-rose-500/50 text-rose-300 hover:bg-rose-600 hover:text-white hover:-translate-y-1 active:scale-95 font-bold rounded transition-all duration-300 uppercase text-[10px] md:text-xs">
+                <button onClick={() => setIsTeamMode(!isTeamMode)} className="flex items-center justify-center gap-1 md:gap-2 px-3 py-2 md:px-5 md:py-2.5 bg-rose-900/50 border border-rose-500/50 text-rose-300 hover:bg-rose-600 hover:text-white hover:-translate-y-1 hover:shadow-[0_5px_15px_rgba(225,29,72,0.4)] active:scale-95 font-bold rounded transition-all duration-300 uppercase text-[10px] md:text-xs tracking-wider flex-1 sm:flex-none">
                   {isTeamMode ? <User size={14}/> : <Users size={14}/>} <span className="hidden sm:inline">{isTeamMode ? t.soloMode : t.teamMode}</span>
                 </button>
-                <button onClick={addPlayer} className="flex items-center justify-center gap-1 md:gap-2 px-3 py-2 md:px-5 md:py-2.5 bg-blue-900/50 border border-blue-500/50 text-blue-300 hover:bg-blue-600 hover:text-white hover:-translate-y-1 active:scale-95 font-bold rounded transition-all duration-300 uppercase text-[10px] md:text-xs">
+                <button onClick={addPlayer} className="flex items-center justify-center gap-1 md:gap-2 px-3 py-2 md:px-5 md:py-2.5 bg-blue-900/50 border border-blue-500/50 text-blue-300 hover:bg-blue-600 hover:text-white hover:-translate-y-1 hover:shadow-[0_5px_15px_rgba(59,130,246,0.4)] active:scale-95 font-bold rounded transition-all duration-300 uppercase text-[10px] md:text-xs tracking-wider flex-1 sm:flex-none">
                   <Plus size={14}/> <span className="hidden sm:inline">{t.addPlayer}</span>
                 </button>
-                <button onClick={addGame} className="flex items-center justify-center gap-1 md:gap-2 px-3 py-2 md:px-5 md:py-2.5 bg-purple-900/50 border border-purple-500/50 text-purple-300 hover:bg-purple-600 hover:text-white hover:-translate-y-1 active:scale-95 font-bold rounded transition-all duration-300 uppercase text-[10px] md:text-xs">
+                <button onClick={addGame} className="flex items-center justify-center gap-1 md:gap-2 px-3 py-2 md:px-5 md:py-2.5 bg-purple-900/50 border border-purple-500/50 text-purple-300 hover:bg-purple-600 hover:text-white hover:-translate-y-1 hover:shadow-[0_5px_15px_rgba(168,85,247,0.4)] active:scale-95 font-bold rounded transition-all duration-300 uppercase text-[10px] md:text-xs tracking-wider flex-1 sm:flex-none">
                   <Plus size={14}/> <span className="hidden sm:inline">{t.addMatch}</span>
                 </button>
                 <div className="w-full sm:w-px sm:h-10 bg-slate-700/50 my-1 sm:my-0"></div>
-                <button onClick={exportProfessionalExcel} className="flex items-center justify-center gap-1 md:gap-2 px-3 py-2 md:px-5 md:py-2.5 bg-green-900/50 border border-green-500/50 text-green-300 hover:bg-green-600 hover:text-white hover:-translate-y-1 active:scale-95 font-bold rounded transition-all duration-300 uppercase text-[10px] md:text-xs">
+                <button onClick={exportProfessionalExcel} className="flex items-center justify-center gap-1 md:gap-2 px-3 py-2 md:px-5 md:py-2.5 bg-green-900/50 border border-green-500/50 text-green-300 hover:bg-green-600 hover:text-white hover:-translate-y-1 hover:shadow-[0_5px_15px_rgba(34,197,94,0.4)] active:scale-95 font-bold rounded transition-all duration-300 uppercase text-[10px] md:text-xs tracking-wider flex-1 sm:flex-none">
                   <Download size={14}/> {t.export}
                 </button>
-                <button onClick={clearAll} className="flex items-center justify-center gap-1 md:gap-2 px-3 py-2 md:px-5 md:py-2.5 bg-slate-900 border border-slate-700 text-slate-300 hover:text-red-400 hover:border-red-500 hover:bg-red-900/30 hover:-translate-y-1 active:scale-95 font-bold rounded transition-all duration-300 uppercase text-[10px] md:text-xs group">
+                <button onClick={clearAll} className="flex items-center justify-center gap-1 md:gap-2 px-3 py-2 md:px-5 md:py-2.5 bg-slate-900 border border-slate-700 text-slate-300 hover:text-red-400 hover:border-red-500 hover:bg-red-900/30 hover:-translate-y-1 hover:shadow-[0_5px_15px_rgba(239,68,68,0.4)] active:scale-95 font-bold rounded transition-all duration-300 uppercase text-[10px] md:text-xs tracking-wider flex-1 sm:flex-none group">
                   <RefreshCcw size={14} className="group-hover:-rotate-180 transition-transform duration-700"/> {t.reset}
                 </button>
               </div>
@@ -851,15 +947,21 @@
                         <th className="px-1 md:px-2 py-3 text-center w-8 md:w-12 text-slate-500 font-bold">{t.no}</th>
                         <th className="px-1 md:px-2 py-3 text-left w-24 md:w-48 tracking-widest text-slate-300 font-bold whitespace-nowrap">{t.match}</th>
                         {players.map((p, i) => {
-                          const isPicker = nextPickerData && nextPickerData.show && (!isTeamMode && nextPickerData.pIndex === i);
+                          const isPicker = nextPickerData && nextPickerData.show && (nextPickerData.pIndex === i || (nextPickerData.isT1 !== undefined && nextPickerData.isT1 === (i%2===0)));
                           return (
-                            <th key={i} className={`px-1 md:px-2 py-3 min-w-[80px] md:min-w-[140px] relative group border-b-2 bg-[#0f172a] ${isTeamMode ? (i%2===0 ? 'border-blue-500/50' : 'border-red-500/50') : 'border-transparent'}`}>
+                            <th key={i} className={`px-1 md:px-2 py-3 min-w-[80px] md:min-w-[140px] relative group border-b-2 bg-[#0f172a] ${isPicker ? 'bg-purple-900/30 border-purple-500' : isTeamMode ? (i%2===0 ? 'border-blue-500/50 bg-blue-900/10' : 'border-red-500/50 bg-red-900/10') : 'border-slate-800 bg-[#0f172a]'}`}>
+                              {/* HUY HIỆU NẰM GÓC Ô, KHÔNG LÀM GIÃN BẢNG */}
+                              {isPicker && (
+                                <div className="absolute top-1 left-1 md:left-2 text-[8px] md:text-[9px] bg-purple-600 text-white px-1.5 py-0.5 rounded animate-pulse shadow-[0_0_8px_#9333ea] z-10 pointer-events-none font-black tracking-widest flex items-center gap-0.5">
+                                  <span>🎯</span> <span className="hidden sm:inline">PICK</span>
+                                </div>
+                              )}
                               <input 
                                 type="text" value={p}
                                 onChange={(e) => { const n=[...players]; n[i]=e.target.value; setPlayers(n); }}
-                                className={`w-full bg-transparent border-b-2 border-slate-700 focus:border-${isTeamMode ? (i%2===0 ? 'blue-500' : 'red-500') : 'red-500'} outline-none text-center pb-1 text-sm md:text-lg font-bold transition-all duration-300 hover:border-slate-500 ${isTeamMode ? (i%2===0 ? 'text-blue-100' : 'text-red-100') : 'text-white'}`}
+                                className={`w-full bg-transparent border-b-2 outline-none text-center pb-1 text-sm md:text-lg font-bold hover:border-slate-400 ${isPicker ? 'text-purple-300 border-purple-500 focus:border-purple-400' : isTeamMode ? (i%2===0 ? 'text-blue-100 border-slate-700 focus:border-blue-500' : 'text-red-100 border-slate-700 focus:border-red-500') : 'text-white border-slate-700 focus:border-cyan-400'}`}
                               />
-                              <button onClick={() => removePlayer(i)} className="absolute top-1 right-1 p-1 text-slate-500 hover:text-white hover:bg-red-500 opacity-100 md:opacity-0 group-hover:opacity-100 transition-all bg-slate-800 rounded-full border border-slate-700 shadow-lg">
+                              <button onClick={() => removePlayer(i)} className="absolute top-1 right-1 p-1 text-slate-500 hover:text-white hover:bg-red-500 opacity-100 md:opacity-0 group-hover:opacity-100 transition-all bg-slate-800 rounded-full border border-slate-700 shadow-lg z-10">
                                 <XIcon size={10}/>
                               </button>
                             </th>
