@@ -131,7 +131,7 @@
         { id: 'm5_7', vi: 'Núi Mùa Thu', en: 'Scenic Hills', cn: '秋之物语', tw: '秋名山', th: 'ภูเขาฤดูใบไม้ร่วง' },
         { id: 'm5_8', vi: 'Công Trường Phố Cổ', en: 'Old Street Construction', cn: '老街工地', tw: '老街工地', th: 'เขตก่อสร้างเมืองเก่า' },
         { id: 'm5_9', vi: 'Thành Lá Đỏ', en: 'Crimson Leaves Town', cn: '红叶城', tw: '紅葉城', th: 'เมืองใบไม้แดง' },
-        { id: 'm5_10', vi: 'Vực Sâu Băng Giá', en: 'Snow Chasm', cn: '冰川深渊', tw: '冰川深淵', th: 'หุบเหวน้ำแข็ง' }
+        { id: 'm5_10', vi: 'Vực Sâu Băng Giá', en: 'Snow Chasm', cn: '冰川深渊', tw: '冰川深渊', th: 'หุบเหวน้ำแข็ง' }
       ]},
       { stars: 4, maps: [
         { id: 'm4_1', vi: 'Tây Hồ', en: 'West Lake', cn: '西湖', tw: '西湖', th: 'ทะเลสาบซีหู' },
@@ -361,27 +361,28 @@
             <div className="w-full bg-[#263655] rounded-xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] flex flex-col h-[75vh]">
               
               {/* VÙNG CUỘN NGANG DÀNH RIÊNG CHO HEADER VÀ NỘI DUNG MAP */}
-              <div className="flex-1 overflow-x-auto hide-scrollbar flex flex-col bg-[#1a253a]">
+              {/* overflow-y-hidden tuyệt đối ngăn chặn việc cột map cuộn lên xuống */}
+              <div className="flex-1 overflow-x-auto overflow-y-hidden hide-scrollbar flex flex-col bg-[#1a253a]">
                 <div className="flex flex-col h-full min-w-max">
                   
                   {/* Vòng Đấu Header */}
-                  <div className="flex bg-[#13c0eb] sticky top-0 z-30 shadow-md">
+                  <div className="flex bg-[#13c0eb] sticky top-0 z-30 shadow-md shrink-0">
                     {rounds.map((_, i) => (
-                      <div key={`header_${i}`} className="flex-1 min-w-[140px] md:min-w-[160px] py-4 text-center border-r border-white/20 last:border-r-0">
+                      <div key={`header_${i}`} className="flex-1 min-w-[140px] md:min-w-[160px] py-3 md:py-4 text-center border-r border-white/20 last:border-r-0">
                         <span className="text-white font-black italic text-lg md:text-xl tracking-wider drop-shadow-sm">ROUND {i + 1}</span>
                       </div>
                     ))}
                   </div>
 
                   {/* Nội dung điểm số các ván */}
-                  <div className="flex-1 flex w-full">
+                  <div className="flex-1 flex w-full min-h-0">
                     {rounds.map((game, gIndex) => {
                       const isPlayed = game && game.times.some(t => t !== '');
                       const calcs = isPlayed ? getGameCalculations(gIndex, game.times) : [];
                       
                       if (!isPlayed) {
                          return (
-                          <div key={`empty_${gIndex}`} className="flex-1 min-w-[140px] md:min-w-[160px] flex flex-col border-r border-[#151f30] bg-[#263655] relative bg-stripes">
+                          <div key={`empty_${gIndex}`} className="flex-1 min-w-[140px] md:min-w-[160px] flex flex-col border-r border-[#151f30] bg-[#263655] relative bg-stripes h-full">
                              <div className="absolute inset-0 flex items-center justify-center opacity-[0.05]">
                                <WheelIcon size={120} />
                              </div>
@@ -393,10 +394,10 @@
                       const mapName = game.mapId ? getMapName(game.mapId, lang) : '';
 
                       return (
-                        <div key={`play_${gIndex}`} className="flex-1 min-w-[140px] md:min-w-[160px] flex flex-col relative border-r border-[#151f30]" style={bgStyle}>
+                        <div key={`play_${gIndex}`} className="flex-1 min-w-[140px] md:min-w-[160px] flex flex-col relative border-r border-[#151f30] h-full" style={bgStyle}>
                           <div className="absolute inset-0 bg-black/50 z-0"></div> 
                           
-                          <div className="relative z-10 flex-1 flex flex-col py-4">
+                          <div className="relative z-10 flex-1 flex flex-col py-1 md:py-2 h-full min-h-0">
                             {game.times.map((time, pIndex) => {
                               const c = calcs[pIndex];
                               const playerName = players[pIndex];
@@ -404,28 +405,28 @@
                               const textColor = isTop ? 'text-[#fce300]' : 'text-slate-300';
                               
                               return (
-                                <div key={`g${gIndex}_p${pIndex}`} className="flex-1 flex flex-col items-center justify-center group hover:bg-white/5 transition-colors mx-1">
-                                   {/* Khung chứa Vương miện cố định chiều cao để không đẩy lệch tên */}
-                                   <div className="h-6 md:h-8 flex items-end justify-center mb-1 w-full">
-                                      {c.isKingMap && isTop && <Crown size={18} className="text-[#fce300] animate-bounce drop-shadow-[0_0_5px_rgba(252,227,0,0.8)]"/>}
-                                   </div>
-                                   <span className={`text-[13px] md:text-[15px] font-bold truncate w-[90%] text-center leading-none ${textColor}`}>{playerName}</span>
+                                <div key={`g${gIndex}_p${pIndex}`} className="flex-1 flex flex-col items-center justify-center relative min-h-0 mx-1 group hover:bg-white/5 transition-colors">
+                                   {/* VƯƠNG MIỆN NẰM TUYỆT ĐỐI KHÔNG CHIẾM DIỆN TÍCH, KHÔNG ĐẨY LỆCH TÊN */}
+                                   {c.isKingMap && isTop && (
+                                     <div className="absolute top-0 md:top-1 left-1/2 -translate-x-1/2 w-full flex justify-center">
+                                       <Crown size={18} className="text-[#fce300] animate-bounce drop-shadow-[0_0_5px_rgba(252,227,0,0.8)]"/>
+                                     </div>
+                                   )}
+                                   <span className={`text-[12px] md:text-[14px] font-bold truncate w-[90%] text-center leading-none mt-5 md:mt-7 ${textColor}`}>{playerName}</span>
                                    {time ? (
-                                      <span className={`text-2xl md:text-4xl font-black mt-1.5 leading-none ${isTop ? 'text-[#fce300] drop-shadow-[0_0_8px_rgba(252,227,0,0.5)]' : 'text-white'}`}>
+                                      <span className={`text-xl md:text-3xl font-black mt-1.5 md:mt-2 leading-none ${isTop ? 'text-[#fce300] drop-shadow-[0_0_8px_rgba(252,227,0,0.5)]' : 'text-white'}`}>
                                         +{c.score}
                                       </span>
                                    ) : (
-                                      <span className="text-2xl md:text-4xl font-black mt-1.5 leading-none text-slate-600">-</span>
+                                      <span className="text-xl md:text-3xl font-black mt-1.5 md:mt-2 leading-none text-slate-600">-</span>
                                    )}
-                                   {/* Đệm dưới */}
-                                   <div className="h-4 md:h-6"></div>
                                 </div>
                               );
                             })}
                           </div>
 
-                          <div className="relative z-10 h-10 md:h-12 bg-gradient-to-t from-black/90 to-transparent flex items-end justify-center pb-2 md:pb-3 px-2">
-                            <span className="text-[10px] md:text-xs font-black text-white uppercase tracking-widest truncate text-center w-full drop-shadow-md">{mapName}</span>
+                          <div className="relative z-10 h-8 md:h-10 shrink-0 bg-gradient-to-t from-black/90 to-transparent flex items-end justify-center pb-2 px-2">
+                            <span className="text-[9px] md:text-[11px] font-black text-white uppercase tracking-widest truncate text-center w-full drop-shadow-md">{mapName}</span>
                           </div>
                         </div>
                       );
@@ -434,7 +435,7 @@
                 </div>
               </div>
 
-              {/* FOOTER TỔNG ĐIỂM - KÉO RA NGOÀI ĐỂ KHÔNG BỊ CUỘN, CỐ ĐỊNH CHIA ĐỀU VIEWPORT */}
+              {/* FOOTER TỔNG ĐIỂM - Kéo ra ngoài vùng cuộn ngang để luôn bám chặt dưới đáy */}
               <div className="flex bg-[#13c0eb] shadow-[0_-5px_15px_rgba(0,0,0,0.2)] h-20 md:h-24 w-full shrink-0 relative z-20">
                 {isTeamMode ? (
                    Array.from({ length: Math.ceil(players.length / 2) }).map((_, i) => {
@@ -822,12 +823,11 @@
           const colorClass = isT1 ? 'text-blue-400' : 'text-red-400';
           return { show: true, text: t.normalPick.replace('{0}', nextIdx + 1).replace('{1}', teamName), isT1, colorClass };
         } else {
-          // SỬA LỖI LOGIC: Dùng exact time (thời gian mili-giây) thay vì điểm số để phân định chính xác ai chậm hơn
           const lastGameTimes = games[actualLastGameIndex].times.map(parseTime);
           const pStats = players.map((_, i) => ({
               index: i,
               total: totals[i],
-              lastTimeMs: lastGameTimes[i] === null ? Infinity : lastGameTimes[i] // Infinity cho ai ko hoàn thành (DNF)
+              lastTimeMs: lastGameTimes[i] === null ? Infinity : lastGameTimes[i]
           }));
 
           pStats.sort((a, b) => b.total - a.total);
@@ -842,7 +842,6 @@
               targetPlayers = pStats.filter(p => p.total === secondScore);
           }
 
-          // Tie breaker: Thời gian map trước CÀNG CAO (chạy chậm hơn) -> Về đích xếp hạng thấp hơn -> Nhận quyền Pick map
           targetPlayers.sort((a, b) => b.lastTimeMs - a.lastTimeMs);
           const pickerIndex = targetPlayers[0].index;
           const pickerName = players[pickerIndex];
@@ -928,7 +927,6 @@
               </div>
               <p className="text-slate-400 text-[10px] md:text-sm tracking-[0.1em] md:tracking-[0.2em] uppercase font-bold">{t.subtitle}</p>
               
-              {/* Ô NHẬP TÊN GIẢI ĐẤU */}
               <div className="mt-3 flex justify-center w-full px-4">
                  <input 
                    type="text" 
@@ -938,7 +936,7 @@
                    placeholder={t.tourNamePh}
                  />
               </div>
-              
+
               <div className="mt-6 flex flex-wrap justify-center gap-2 md:gap-4 relative z-20">
                 <button onClick={() => setShowBroadcast(true)} className="flex items-center justify-center gap-1 md:gap-2 px-4 py-2.5 bg-gradient-to-r from-cyan-600 to-blue-600 text-white hover:from-cyan-500 hover:to-blue-500 hover:-translate-y-1 hover:shadow-[0_5px_15px_rgba(6,182,212,0.6)] active:scale-95 font-black rounded transition-all duration-300 uppercase text-[10px] md:text-sm tracking-wider shadow-lg">
                   <MonitorPlay size={16}/> <span className="hidden sm:inline">{t.broadcastBtn}</span>
