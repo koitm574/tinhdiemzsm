@@ -482,24 +482,25 @@
                               const playerName = players[pIndex];
                               const isTop = c.isBest && c.score > 0;
                               const textColor = isTop ? 'text-[#fce300]' : 'text-slate-300';
+                              const is6P = players.length > 4;
                               
                               return (
                                 <div key={`g${gIndex}_p${pIndex}`} className="flex-1 flex flex-col items-center justify-center relative min-h-0 mx-1 group hover:bg-white/5 transition-colors">
                                    {/* VƯƠNG MIỆN LƠ LỬNG TRÊN ĐẦU */}
                                    {c.isKingMap && isTop && (
-                                     <div className="absolute top-0 md:top-1 left-1/2 -translate-x-1/2 w-full flex justify-center">
-                                       <Crown size={16} className="text-[#fce300] animate-bounce drop-shadow-[0_0_5px_rgba(252,227,0,0.8)]"/>
+                                     <div className={`absolute ${is6P ? '-top-1 md:top-0' : 'top-0 md:top-1'} left-1/2 -translate-x-1/2 w-full flex justify-center`}>
+                                       <Crown size={is6P ? 12 : 16} className="text-[#fce300] animate-bounce drop-shadow-[0_0_5px_rgba(252,227,0,0.8)]"/>
                                      </div>
                                    )}
                                    {/* TÊN TUYỂN THỦ TRONG TỪNG MAP */}
-                                   <span className={`text-[11px] md:text-[13px] font-bold truncate w-[90%] text-center leading-tight mt-5 md:mt-6 ${textColor}`}>{playerName}</span>
+                                   <span className={`${is6P ? 'text-[9px] md:text-[11px] mt-2 md:mt-3' : 'text-[11px] md:text-[13px] mt-5 md:mt-6'} font-bold truncate w-[90%] text-center leading-tight ${textColor}`}>{playerName}</span>
                                    {/* ĐIỂM SỐ */}
                                    {time ? (
-                                      <span className={`text-xl md:text-2xl font-black mt-0.5 leading-tight ${isTop ? 'text-[#fce300] drop-shadow-[0_0_8px_rgba(252,227,0,0.5)]' : 'text-white'}`}>
+                                      <span className={`${is6P ? 'text-[15px] md:text-[18px]' : 'text-xl md:text-2xl'} font-black mt-0.5 leading-tight ${isTop ? 'text-[#fce300] drop-shadow-[0_0_8px_rgba(252,227,0,0.5)]' : 'text-white'}`}>
                                         +{c.score}
                                       </span>
                                    ) : (
-                                      <span className="text-xl md:text-2xl font-black mt-0.5 leading-tight text-slate-600">-</span>
+                                      <span className={`${is6P ? 'text-[15px] md:text-[18px]' : 'text-xl md:text-2xl'} font-black mt-0.5 leading-tight text-slate-600`}>-</span>
                                    )}
                                 </div>
                               );
