@@ -361,7 +361,6 @@
             <div className="w-full bg-[#263655] rounded-xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] flex flex-col h-[75vh]">
               
               {/* VÙNG CUỘN NGANG DÀNH RIÊNG CHO HEADER VÀ NỘI DUNG MAP */}
-              {/* overflow-y-hidden tuyệt đối ngăn chặn việc cột map cuộn lên xuống */}
               <div className="flex-1 overflow-x-auto overflow-y-hidden hide-scrollbar flex flex-col bg-[#1a253a]">
                 <div className="flex flex-col h-full min-w-max">
                   
@@ -412,7 +411,9 @@
                                        <Crown size={18} className="text-[#fce300] animate-bounce drop-shadow-[0_0_5px_rgba(252,227,0,0.8)]"/>
                                      </div>
                                    )}
+                                   {/* TÊN TUYỂN THỦ TRONG TỪNG MAP */}
                                    <span className={`text-[12px] md:text-[14px] font-bold truncate w-[90%] text-center leading-none mt-5 md:mt-7 ${textColor}`}>{playerName}</span>
+                                   {/* ĐIỂM SỐ */}
                                    {time ? (
                                       <span className={`text-xl md:text-3xl font-black mt-1.5 md:mt-2 leading-none ${isTop ? 'text-[#fce300] drop-shadow-[0_0_8px_rgba(252,227,0,0.5)]' : 'text-white'}`}>
                                         +{c.score}
@@ -435,7 +436,7 @@
                 </div>
               </div>
 
-              {/* FOOTER TỔNG ĐIỂM - Kéo ra ngoài vùng cuộn ngang để luôn bám chặt dưới đáy */}
+              {/* FOOTER TỔNG ĐIỂM - Nằm ngoài vùng cuộn để luôn hiển thị */}
               <div className="flex bg-[#13c0eb] shadow-[0_-5px_15px_rgba(0,0,0,0.2)] h-20 md:h-24 w-full shrink-0 relative z-20">
                 {isTeamMode ? (
                    Array.from({ length: Math.ceil(players.length / 2) }).map((_, i) => {
@@ -462,7 +463,7 @@
 
             </div>
 
-            {/* Dòng chữ phụ chú phía dưới (Footer Screen) */}
+            {/* Dòng chữ phụ chú phía dưới */}
             <div className="text-center mt-4 md:mt-6 text-xl md:text-2xl font-black italic tracking-[0.5em] text-[#263655] uppercase opacity-70 truncate px-4">
               {tournamentName}
             </div>
