@@ -339,8 +339,8 @@
           </div>
 
           {/* Header Bảng Livestream */}
-          <div className="relative w-full h-[12vh] min-h-[70px] flex items-center justify-between px-10 bg-white shadow-sm border-b border-gray-200 z-10">
-            <div className="text-xl md:text-2xl font-black italic text-[#13c0eb] tracking-widest uppercase">
+          <div className="relative w-full h-[12vh] min-h-[70px] flex items-center justify-between px-10 bg-white shadow-sm border-b border-gray-200 z-10 shrink-0">
+            <div className="text-xl md:text-2xl font-black italic text-[#13c0eb] tracking-widest uppercase truncate max-w-[30%]">
               {tournamentName}
             </div>
             
@@ -360,7 +360,7 @@
           <div className="flex-1 w-full max-w-[1920px] mx-auto p-4 md:p-8 flex flex-col justify-center min-h-0 z-10">
             <div className="w-full bg-[#263655] rounded-xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] flex flex-col h-[75vh]">
               
-              {/* VÙNG CUỘN NGANG (XỬ LÝ KHI > 9 MAP) */}
+              {/* VÙNG CUỘN NGANG DÀNH RIÊNG CHO HEADER VÀ NỘI DUNG MAP */}
               <div className="flex-1 overflow-x-auto hide-scrollbar flex flex-col bg-[#1a253a]">
                 <div className="flex flex-col h-full min-w-max">
                   
@@ -404,16 +404,21 @@
                               const textColor = isTop ? 'text-[#fce300]' : 'text-slate-300';
                               
                               return (
-                                <div key={`g${gIndex}_p${pIndex}`} className="flex-1 flex flex-col items-center justify-center relative group hover:bg-white/5 transition-colors rounded mx-1">
-                                   {c.isKingMap && isTop && <Crown size={18} className="text-[#fce300] absolute top-1 md:top-2 animate-bounce drop-shadow-[0_0_5px_rgba(252,227,0,0.8)]"/>}
-                                   <span className={`text-[13px] md:text-[15px] font-bold truncate w-[90%] text-center ${isTop ? 'mt-5 md:mt-7' : ''} ${textColor}`}>{playerName}</span>
+                                <div key={`g${gIndex}_p${pIndex}`} className="flex-1 flex flex-col items-center justify-center group hover:bg-white/5 transition-colors mx-1">
+                                   {/* Khung chứa Vương miện cố định chiều cao để không đẩy lệch tên */}
+                                   <div className="h-6 md:h-8 flex items-end justify-center mb-1 w-full">
+                                      {c.isKingMap && isTop && <Crown size={18} className="text-[#fce300] animate-bounce drop-shadow-[0_0_5px_rgba(252,227,0,0.8)]"/>}
+                                   </div>
+                                   <span className={`text-[13px] md:text-[15px] font-bold truncate w-[90%] text-center leading-none ${textColor}`}>{playerName}</span>
                                    {time ? (
-                                      <span className={`text-2xl md:text-4xl font-black mt-1 ${isTop ? 'text-[#fce300] drop-shadow-[0_0_8px_rgba(252,227,0,0.5)]' : 'text-white'}`}>
+                                      <span className={`text-2xl md:text-4xl font-black mt-1.5 leading-none ${isTop ? 'text-[#fce300] drop-shadow-[0_0_8px_rgba(252,227,0,0.5)]' : 'text-white'}`}>
                                         +{c.score}
                                       </span>
                                    ) : (
-                                      <span className="text-2xl md:text-4xl font-black mt-1 text-slate-600">-</span>
+                                      <span className="text-2xl md:text-4xl font-black mt-1.5 leading-none text-slate-600">-</span>
                                    )}
+                                   {/* Đệm dưới */}
+                                   <div className="h-4 md:h-6"></div>
                                 </div>
                               );
                             })}
@@ -426,38 +431,38 @@
                       );
                     })}
                   </div>
-
-                  {/* Footer Tổng Điểm - SỬA LỖI CĂN GIỮA & CỐ ĐỊNH KÍCH THƯỚC */}
-                  <div className="flex bg-[#13c0eb] sticky bottom-0 z-30 shadow-[0_-5px_15px_rgba(0,0,0,0.2)] h-20 md:h-24">
-                    {isTeamMode ? (
-                       Array.from({ length: Math.ceil(players.length / 2) }).map((_, i) => {
-                          const teamScore = (totals[i * 2] || 0) + (totals[i * 2 + 1] || 0);
-                          const isBlue = i % 2 === 0;
-                          return (
-                            <div key={`foot_team_${i}`} className={`flex-1 min-w-[280px] md:min-w-[320px] flex flex-col items-center justify-center border-r border-white/20 last:border-r-0 ${isBlue ? 'bg-blue-600/20' : 'bg-red-600/20'}`}>
-                              <span className="text-white/90 font-bold text-sm md:text-base uppercase truncate max-w-[90%] tracking-widest">
-                                {isBlue ? t.team1 : t.team2}
-                              </span>
-                              <span className="text-white font-black text-3xl md:text-5xl mt-0.5 drop-shadow-md leading-none">{teamScore}</span>
-                            </div>
-                          )
-                       })
-                    ) : (
-                       players.map((p, i) => (
-                        <div key={`foot_p_${i}`} className="flex-1 min-w-[140px] md:min-w-[160px] flex flex-col items-center justify-center border-r border-white/20 last:border-r-0">
-                          <span className="text-white/90 font-bold text-sm md:text-base truncate max-w-[90%] tracking-wide">{p}</span>
-                          <span className="text-white font-black text-3xl md:text-5xl mt-0.5 drop-shadow-md leading-none">{totals[i]}</span>
-                        </div>
-                      ))
-                    )}
-                  </div>
-
                 </div>
               </div>
+
+              {/* FOOTER TỔNG ĐIỂM - KÉO RA NGOÀI ĐỂ KHÔNG BỊ CUỘN, CỐ ĐỊNH CHIA ĐỀU VIEWPORT */}
+              <div className="flex bg-[#13c0eb] shadow-[0_-5px_15px_rgba(0,0,0,0.2)] h-20 md:h-24 w-full shrink-0 relative z-20">
+                {isTeamMode ? (
+                   Array.from({ length: Math.ceil(players.length / 2) }).map((_, i) => {
+                      const teamScore = (totals[i * 2] || 0) + (totals[i * 2 + 1] || 0);
+                      const isBlue = i % 2 === 0;
+                      return (
+                        <div key={`foot_team_${i}`} className={`flex-1 flex flex-col items-center justify-center border-r border-white/20 last:border-r-0 ${isBlue ? 'bg-blue-600/20' : 'bg-red-600/20'}`}>
+                          <span className="text-white/90 font-bold text-sm md:text-base uppercase truncate max-w-[90%] tracking-widest">
+                            {isBlue ? t.team1 : t.team2}
+                          </span>
+                          <span className="text-white font-black text-3xl md:text-5xl mt-0.5 drop-shadow-md leading-none">{teamScore}</span>
+                        </div>
+                      )
+                   })
+                ) : (
+                   players.map((p, i) => (
+                    <div key={`foot_p_${i}`} className="flex-1 flex flex-col items-center justify-center border-r border-white/20 last:border-r-0 overflow-hidden px-2">
+                      <span className="text-white/90 font-bold text-sm md:text-base truncate max-w-full tracking-wide">{p}</span>
+                      <span className="text-white font-black text-3xl md:text-5xl mt-0.5 drop-shadow-md leading-none">{totals[i]}</span>
+                    </div>
+                  ))
+                )}
+              </div>
+
             </div>
 
             {/* Dòng chữ phụ chú phía dưới (Footer Screen) */}
-            <div className="text-center mt-4 md:mt-6 text-xl md:text-2xl font-black italic tracking-[0.5em] text-[#263655] uppercase opacity-70">
+            <div className="text-center mt-4 md:mt-6 text-xl md:text-2xl font-black italic tracking-[0.5em] text-[#263655] uppercase opacity-70 truncate px-4">
               {tournamentName}
             </div>
           </div>
