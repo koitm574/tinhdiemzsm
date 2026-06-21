@@ -168,7 +168,6 @@
       ]}
     ];
 
-    // --- GAME CONSTANTS & LIMITS ---
     const MAX_GAMES = MAP_POOL.reduce((total, group) => total + group.maps.length, 0); 
     const NORMAL_TOP_SCORE = 11;
     const KING_TOP_SCORE = 12;
@@ -183,7 +182,6 @@
       th: { title: "ระบบการนับคะแนนตามวินาที", subtitle: "ออกแบบและพัฒนาโดย koi", addPlayer: "เพิ่มผู้เล่น", addMatch: "เพิ่มแข่ง", reset: "รีเซ็ต", export: "ส่งออก Excel", no: "ลำดับ", match: "การแข่งขัน", kingMap: "แผนที่คิง", total: "คะแนนรวม", leaderboard: "ตารางคะแนน", pts: "แต้ม", errMaxP: "อนุญาตสูงสุด 6 คน!", errMinP: "ต้องมีอย่างน้อย 2 คน!", errMaxG: `อนุญาตสูงสุด ${MAX_GAMES} นัด!`, delP: "ลบ {0} ออกหรือไม่?", errMinG: "ต้องมีอย่างน้อย 1 นัด!", delG: "ลบ เกมที่ {0} หรือไม่?", confirmReset: "🚨 รีเซ็ตกระดานคะแนน?\nข้อมูลทั้งหมดจะถูกลบและกลับสู่ค่าเริ่มต้น", defPlayer: "ผู้เล่น", defGame: "เกม", selectMap: "ค้นหาแผนที่", searchPh: "พิมพ์ชื่อแผนที่...", infoBtn: "คู่มือ", infoTitle: "กฎการให้คะแนนและการใช้งาน", i1: "ป้อนข้อมูลด่วน: พิมพ์ตัวเลข (เช่น 10704 จะกลายเป็น 1:07.04)", i2: "อันดับ 1: 11 แต้ม", i3: "King Map: ผู้เล่นเลือก King Map ของตัวเอง หากได้อันดับ 1 ใน King Map จะได้ +12 แต้ม", i4: "ผู้เล่นคนอื่นจะถูกหักคะแนนตามช่องว่างเวลา:", i5: "ไม่จบการแข่งขัน (พิมพ์ X): 0 แต้ม", modeSolo: "แข่งเดี่ยว", mode2v2: "แข่งทีม 2vs2", mode3v3: "แข่งทีม 3vs3", indivTotal: "คะแนนส่วนตัว", teamTotal: "คะแนนทีมรวม", team1: "ทีมสีน้ำเงิน", team2: "ทีมสีแดง", i6: "การเลือกแผนที่: แมตช์ 2 ถึง N คือ King Maps หลังจากนั้น: เดี่ยว -> ผู้เล่นอันดับ 2 เลือก ทีม -> ทีมที่มีคะแนนรวมต่ำกว่าเลือก (หากเสมอ ให้คนที่คะแนนน้อยกว่าในแมตช์ก่อนหน้าเลือก)", map1Pick: "แมตช์ 1: แผนที่ที่กำหนด", kingMapPick: "แมตช์ {0}: KING MAP ของ {1}", normalPick: "แมตช์ {0}: สิทธิ์การเลือกของ {1}", broadcastBtn: "มุมมองถ่ายทอดสด", tourNamePh: "พิมพ์ชื่อการแข่งขัน...", closeBtn: "ปิด / Exit" }
     };
 
-    // Lấy tên map chuẩn theo từng ngôn ngữ (Thái Lan dùng map tiếng Anh)
     const getMapName = (id, lang) => {
       const mapLang = lang === 'th' ? 'en' : lang;
       for (const group of MAP_POOL) {
@@ -228,7 +226,6 @@
       return `${m}:${s.toString().padStart(2, '0')}.${c.toString().padStart(2, '0')}`;
     };
 
-    /* Tự sinh gradient nền giả lập map cho Broadcast View dựa trên ID map */
     const getMapGradient = (mapId) => {
       if (!mapId) return '';
       let hash = 0;
@@ -238,7 +235,6 @@
       return `linear-gradient(135deg, hsl(${h1}, 40%, 30%), hsl(${h2}, 50%, 20%))`;
     };
 
-    // --- CUSTOM SEARCHABLE DROPDOWN CHUYÊN NGHIỆP ---
     const SearchableMapSelect = ({ gameIndex, currentMapId, selectedMaps, onChange, lang, t }) => {
       const [isOpen, setIsOpen] = useState(false);
       const [searchTerm, setSearchTerm] = useState('');
@@ -326,7 +322,6 @@
       );
     };
 
-    // --- GIAO DIỆN LIVESTREAM TÍCH HỢP ---
     const BroadcastOverlay = ({ players, games, totals, getGameCalculations, lang, t, gameMode, tournamentName, onClose }) => {
       const isTeamMode = gameMode !== 'solo';
       const displayRounds = Math.max(9, games.length);
@@ -406,7 +401,7 @@
                               
                               return (
                                 <div key={`g${gIndex}_p${pIndex}`} className="flex-1 flex flex-col items-center justify-center relative min-h-0 mx-1 group hover:bg-white/5 transition-colors">
-                                   {/* VƯƠNG MIỆN LƠ LỬNG */}
+                                   {/* VƯƠNG MIỆN LƠ LỬNG TRÊN ĐẦU */}
                                    {c.isKingMap && isTop && (
                                      <div className="absolute top-0 md:top-1 left-1/2 -translate-x-1/2 w-full flex justify-center">
                                        <Crown size={16} className="text-[#fce300] animate-bounce drop-shadow-[0_0_5px_rgba(252,227,0,0.8)]"/>
@@ -476,7 +471,6 @@
     };
 
     function App() {
-      // --- STATE ---
       const [lang, setLang] = useState(() => localStorage.getItem('zsm_lang_v11_final') || 'vi');
       const t = TRANSLATIONS[lang];
       const [showInfo, setShowInfo] = useState(false);
@@ -528,7 +522,6 @@
       useEffect(() => { localStorage.setItem('zsm_players_v11_final', JSON.stringify(players)); }, [players]);
       useEffect(() => { localStorage.setItem('zsm_games_v11_final', JSON.stringify(games)); }, [games]);
 
-      // --- EVENTS ---
       const handleTimeChange = (gIndex, pIndex, val) => {
         const newGames = [...games]; newGames[gIndex].times[pIndex] = val; setGames(newGames);
       };
@@ -545,18 +538,18 @@
           setGameMode(nextMode);
 
           // Tự động điều chỉnh số lượng người chơi cho tiện lợi
-          if (nextMode === '2v2') {
+          if (nextMode === 'solo' || nextMode === '2v2') {
              let newP = [...players];
              if (newP.length < 4) {
                  while(newP.length < 4) newP.push(`${t.defPlayer} ${newP.length + 1}`);
              } else if (newP.length > 4) {
-                 newP = newP.slice(0, 4);
+                 newP = newP.slice(0, 4); // Cắt về 4 nếu đang từ 3vs3
              }
              setPlayers(newP);
              setGames(games.map(g => {
                  let nt = [...g.times];
                  while(nt.length < 4) nt.push('');
-                 return {...g, times: nt.slice(0,4)};
+                 return {...g, times: nt.slice(0,4)}; // Cắt điểm dư
              }));
           } else if (nextMode === '3v3') {
              let newP = [...players];
@@ -602,12 +595,10 @@
         }
       };
 
-      // --- Map List to Block Duplicates ---
       const selectedMaps = useMemo(() => {
         return games.map(g => g.mapId).filter(id => id !== "");
       }, [games]);
 
-      // --- EXPORT PROFESSIONAL EXCEL WITH EXCELJS ---
       const exportProfessionalExcel = async () => {
         const workbook = new ExcelJS.Workbook();
         const sheet = workbook.addWorksheet('Leaderboard');
@@ -635,9 +626,8 @@
           const pCell = sheet.getCell(2, timeCol);
           pCell.value = p;
           
-          // Phân màu cột VĐV trong Excel nếu là Team Mode
-          let headerColor = 'FFDDEBF7'; // Mặc định xanh nhạt
-          if (isTeamMode) headerColor = (i % 2 === 0) ? 'FFBFDBFE' : 'FFFECACA'; // Blue-200 hoặc Red-200
+          let headerColor = 'FFDDEBF7'; 
+          if (isTeamMode) headerColor = (i % 2 === 0) ? 'FFBFDBFE' : 'FFFECACA'; 
           
           pCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: headerColor } }; 
           pCell.font = { bold: true };
@@ -702,7 +692,6 @@
 
         let lastRowIndex = totalRow;
 
-        // XỬ LÝ ROW TỔNG ĐIỂM ĐỘI (CHẾ ĐỘ XEN KẼ)
         if (isTeamMode) {
           lastRowIndex = totalRow + 1;
           const team1Score = totals.filter((_, i) => i % 2 === 0).reduce((a, b) => a + b, 0);
@@ -712,28 +701,26 @@
           const teamLabelCell = sheet.getCell(lastRowIndex, 1);
           teamLabelCell.value = t.teamTotal;
           teamLabelCell.font = { bold: true, size: 14, color: { argb: 'FFFFFFFF' } };
-          teamLabelCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF334155' } }; // Slate-700
+          teamLabelCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF334155' } }; 
           teamLabelCell.alignment = { horizontal: 'right', vertical: 'middle' };
 
           const totalCols = players.length * 2;
           const halfCols = Math.floor(totalCols / 2);
           
-          // Team 1 (Blue)
           sheet.mergeCells(lastRowIndex, 3, lastRowIndex, 2 + halfCols);
           const t1Cell = sheet.getCell(lastRowIndex, 3);
           t1Cell.value = `${t.team1}: ${team1Score}`;
           t1Cell.font = { bold: true, size: 16, color: { argb: 'FFFFFFFF' } };
           t1Cell.alignment = { horizontal: 'center', vertical: 'middle' };
-          t1Cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF1D4ED8' } }; // blue-700
+          t1Cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF1D4ED8' } }; 
 
-          // Team 2 (Red)
           if (players.length > 1) {
             sheet.mergeCells(lastRowIndex, 3 + halfCols, lastRowIndex, 2 + totalCols);
             const t2Cell = sheet.getCell(lastRowIndex, 3 + halfCols);
             t2Cell.value = `${t.team2}: ${team2Score}`;
             t2Cell.font = { bold: true, size: 16, color: { argb: 'FFFFFFFF' } };
             t2Cell.alignment = { horizontal: 'center', vertical: 'middle' };
-            t2Cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFB91C1C' } }; // red-700
+            t2Cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFB91C1C' } }; 
           }
           
           sheet.getRow(lastRowIndex).height = 30;
@@ -767,7 +754,6 @@
         window.URL.revokeObjectURL(url);
       };
 
-      // --- LOGIC TÍNH ĐIỂM ---
       const getGameCalculations = (gameIndex, times) => {
         const parsed = times.map(parseTime);
         const valids = parsed.filter(t => t !== null);
@@ -800,7 +786,6 @@
         return sums;
       }, [games, players]);
 
-      // --- LOGIC BẢNG XẾP HẠNG THEO CHẾ ĐỘ XEN KẼ ---
       const activeLeaderboard = useMemo(() => {
         if (isTeamMode) {
           const team1Score = totals.filter((_, i) => i % 2 === 0).reduce((a, b) => a + b, 0);
@@ -811,7 +796,6 @@
             { id: 'team2', name: t.team2, playersStr: players.filter((_, i) => i % 2 === 1).join(' & '), score: team2Score, isT1: false }
           ];
           
-          // Tránh lỗi hiển thị đội 2 nếu chỉ có 1 người test (không thực tế nhưng chống lỗi UI)
           if (players.length < 2) teams.pop();
 
           const sorted = teams.sort((a, b) => b.score - a.score);
@@ -830,7 +814,6 @@
         }
       }, [players, totals, isTeamMode]);
 
-      // --- LOGIC TÌM LƯỢT CHỌN MAP TIẾP THEO ---
       const nextPickerData = useMemo(() => {
         const nextIdx = games.findIndex(g => g.times.every(time => !time || time.trim() === ''));
         if (nextIdx === -1) return { show: false }; 
@@ -863,12 +846,11 @@
           const colorClass = isT1 ? 'text-blue-400' : 'text-red-400';
           return { show: true, text: t.normalPick.replace('{0}', nextIdx + 1).replace('{1}', teamName), isT1, colorClass };
         } else {
-          // SỬA LỖI LOGIC: Dùng exact time (thời gian mili-giây) thay vì điểm số để phân định chính xác ai chậm hơn
           const lastGameTimes = games[actualLastGameIndex].times.map(parseTime);
           const pStats = players.map((_, i) => ({
               index: i,
               total: totals[i],
-              lastTimeMs: lastGameTimes[i] === null ? Infinity : lastGameTimes[i] // Infinity cho ai ko hoàn thành (DNF)
+              lastTimeMs: lastGameTimes[i] === null ? Infinity : lastGameTimes[i] 
           }));
 
           pStats.sort((a, b) => b.total - a.total);
@@ -883,7 +865,6 @@
               targetPlayers = pStats.filter(p => p.total === secondScore);
           }
 
-          // Tie breaker: Thời gian map trước CÀNG CAO (chạy chậm hơn) -> Về đích xếp hạng thấp hơn -> Nhận quyền Pick map
           targetPlayers.sort((a, b) => b.lastTimeMs - a.lastTimeMs);
           const pickerIndex = targetPlayers[0].index;
           const pickerName = players[pickerIndex];
@@ -1015,7 +996,7 @@
             <div className="grid lg:grid-cols-4 gap-4 md:gap-6">
               
               <div className="lg:col-span-3 bg-[#0f172a] border border-slate-700/50 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.8)] overflow-hidden animate-slide-up delay-100 flex flex-col max-h-[75vh]">
-                <div className="overflow-x-auto overflow-y-auto flex-1 bg-[#0f172a]">
+                <div className="overflow-x-auto overflow-y-hidden hide-scrollbar flex-1 bg-[#0f172a]">
                   <table className="w-full text-xs md:text-sm border-collapse">
                     <thead className="sticky top-0 z-40 bg-[#0f172a] shadow-[0_5px_15px_rgba(0,0,0,0.8)] border-b border-slate-700">
                       <tr>
@@ -1082,37 +1063,51 @@
                         );
                       })}
                     </tbody>
-                    <tfoot className="sticky bottom-0 z-30 shadow-[0_-10px_30px_rgba(0,0,0,0.5)] bg-[#0f172a]">
-                      <tr className={`border-t-4 border-red-600 ${isTeamMode ? 'border-b border-slate-700/50' : ''}`}>
-                        <td colSpan={2} className={`px-2 md:px-4 py-2 md:py-3 text-right font-black uppercase tracking-widest ${isTeamMode ? 'text-[10px] md:text-xs text-slate-400' : 'text-xs md:text-sm text-red-500'}`}>
-                          {isTeamMode ? t.indivTotal : t.total}
-                        </td>
-                        {totals.map((total, i) => (
-                          <td key={i} className="px-1 md:px-2 py-2 md:py-3 text-center">
-                            <span className={`${isTeamMode ? 'text-sm md:text-lg font-bold text-slate-400 drop-shadow-none' : 'text-lg md:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400 drop-shadow-[0_0_15px_rgba(255,255,255,0.4)] cursor-default'}`}>
-                              {total}
-                            </span>
-                          </td>
-                        ))}
-                      </tr>
-                      {isTeamMode && (
-                        <tr className="border-t border-amber-500/50 shadow-[0_-5px_20px_rgba(245,158,11,0.2)]">
-                          <td colSpan={2} className="px-2 md:px-4 py-2 md:py-3 text-right font-black text-amber-500 uppercase tracking-widest text-xs md:text-sm">
-                            {t.teamTotal}
-                          </td>
-                          {Array.from({ length: Math.ceil(players.length / 2) }).map((_, i) => {
-                            const teamScore = (totals[i * 2] || 0) + (totals[i * 2 + 1] || 0);
-                            const colSpan = (i * 2 + 1 < players.length) ? 2 : 1;
-                            return (
-                              <td key={`team_tot_${i}`} colSpan={colSpan} className="px-1 md:px-2 py-2 md:py-3 text-center border-l-2 border-amber-500/30">
-                                <span className="text-xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-b from-amber-200 to-amber-500 drop-shadow-[0_0_20px_rgba(245,158,11,0.6)] cursor-default">{teamScore}</span>
-                              </td>
-                            );
-                          })}
-                        </tr>
-                      )}
-                    </tfoot>
                   </table>
+                </div>
+                {/* FOOTER NẰM NGOÀI ĐỂ KHÔNG BỊ TRƯỢT */}
+                <div className="bg-[#0f172a] shadow-[0_-10px_30px_rgba(0,0,0,0.5)] border-t border-slate-700 z-30 shrink-0 overflow-hidden">
+                    <table className="w-full text-xs md:text-sm border-collapse">
+                      <tbody>
+                        <tr className={`border-t-4 border-red-600 ${isTeamMode ? 'border-b border-slate-700/50' : ''}`}>
+                          <td className={`px-2 md:px-4 py-2 md:py-3 text-right font-black uppercase tracking-widest w-[128px] md:w-[240px] ${isTeamMode ? 'text-[10px] md:text-xs text-slate-400' : 'text-xs md:text-sm text-red-500'}`}>
+                            {isTeamMode ? t.indivTotal : t.total}
+                          </td>
+                          <td className="p-0">
+                            <div className="flex w-full">
+                              {totals.map((total, i) => (
+                                <div key={i} className="flex-1 px-1 md:px-2 py-2 md:py-3 text-center border-l border-white/5 first:border-l-0">
+                                  <span className={`${isTeamMode ? 'text-sm md:text-lg font-bold text-slate-400 drop-shadow-none' : 'text-lg md:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400 drop-shadow-[0_0_15px_rgba(255,255,255,0.4)] cursor-default'}`}>
+                                    {total}
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
+                          </td>
+                        </tr>
+                        {isTeamMode && (
+                          <tr className="border-t border-amber-500/50 shadow-[0_-5px_20px_rgba(245,158,11,0.2)]">
+                            <td className="px-2 md:px-4 py-2 md:py-3 text-right font-black text-amber-500 uppercase tracking-widest text-xs md:text-sm w-[128px] md:w-[240px]">
+                              {t.teamTotal}
+                            </td>
+                            <td className="p-0">
+                               <div className="flex w-full">
+                                  <div className="flex-1 px-1 md:px-2 py-2 md:py-3 text-center border-l-2 border-amber-500/30">
+                                     <span className="text-xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-b from-amber-200 to-amber-500 drop-shadow-[0_0_20px_rgba(245,158,11,0.6)] cursor-default">
+                                        {totals.filter((_, i) => i % 2 === 0).reduce((a, b) => a + b, 0)}
+                                     </span>
+                                  </div>
+                                  <div className="flex-1 px-1 md:px-2 py-2 md:py-3 text-center border-l-2 border-amber-500/30">
+                                     <span className="text-xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-b from-amber-200 to-amber-500 drop-shadow-[0_0_20px_rgba(245,158,11,0.6)] cursor-default">
+                                        {totals.filter((_, i) => i % 2 === 1).reduce((a, b) => a + b, 0)}
+                                     </span>
+                                  </div>
+                               </div>
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
                 </div>
               </div>
 
