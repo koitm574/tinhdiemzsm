@@ -154,7 +154,8 @@
         { id: 'm4_12', vi: 'Đua Thuyền Đoan Ngọ', en: 'Dragon Boat Race', cn: '端午龙舟', tw: '端午龍舟', th: 'แข่งเรือยาว' },
         { id: 'm4_13', vi: 'Tiệc Rượu Bên Suối', en: 'Utopia', cn: '沁园春', tw: '沁園春', th: 'งานเลี้ยงริมลำธาร' },
         { id: 'm4_14', vi: 'Đỉnh Titan', en: 'Titan\'s Peak', cn: '泰坦巨峰', tw: '泰坦巨峰', th: 'ยอดเขาไททัน' },
-        { id: 'm4_15', vi: 'Mây Cuộn Cổng Trời', en: 'Clouds Heavenly Gate', cn: '云游天府', tw: '雲遊天府', th: 'เมฆาม้วนประตูสวรรค์' }
+        { id: 'm4_15', vi: 'Mây Cuộn Cổng Trời', en: 'Clouds Heavenly Gate', cn: '云游天府', tw: '雲遊天府', th: 'เมฆาม้วนประตูสวรรค์' },
+        { id: 'm4_16', vi: 'Vực Thẳm Trái Tim', en: 'Heart\'s Abyss', cn: '心渊', tw: '心渊', th: 'ห้วงลึกแห่งหัวใจ' }
       ]},
       { stars: 3, maps: [
         { id: 'm3_1', vi: 'Thành Phố 11', en: 'City 11', cn: '十一城', tw: '十一城', th: 'เมือง 11' },
@@ -170,17 +171,66 @@
         { id: 'm3_11', vi: 'Vành Đai Troy', en: 'The Circular City of Troy', cn: '特洛伊环城', tw: '特洛伊城', th: 'เมืองทรอย' },
         { id: 'm3_12', vi: 'Hồ Long Tinh', en: 'Dragon Crystal Lake', cn: '龙晶湖', tw: '龍晶湖', th: 'ทะเลสาบมังกรคริสตัล' },
         { id: 'm3_13', vi: 'Vụ Sơn Ngũ Hành', en: 'Wushan Five Elements', cn: '雾山五行', tw: '霧山五行', th: 'ภูเขาหมอกห้าธาตุ' },
-        { id: 'm3_14', vi: 'Bờ Biển Lãng Mạn', en: 'Romantic Seaside', cn: '浪漫海岸', tw: '浪漫海岸', th: 'ชายหาดโรแมนติก' }
+        { id: 'm3_14', vi: 'Bờ Biển Lãng Mạn', en: 'Romantic Seaside', cn: '浪漫海岸', tw: '浪漫海岸', th: 'ชายหาดโรแมนติก' },
       ]}
     ];
 
     // --- MAP BACKGROUND LINKS (ĐỂ THAY HÌNH NỀN MAP TRONG LIVESTREAM) ---
     // Hướng dẫn: Tìm id của map trong MAP_POOL phía trên (VD: 'm7_1'), sau đó thêm link ảnh tương ứng vào đây.
     const MAP_BACKGROUNDS = {
-      'm7_1': 'https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?auto=format&fit=crop&q=80&w=500', // Ví dụ: Sân Bay Siêu Tốc (Dùng ảnh trạm vũ trụ)
-      'm7_2': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20250113/17367779105688.png', // Ví dụ: Sơn Hải Họa Cảnh (Dùng ảnh phong cảnh)
-      // Bạn có thể tự thêm các map khác theo mẫu:
-      // 'm6_1': 'https://imgur.com/link_anh_cua_ban.jpg',
+      // --- 7 SAO ---
+      'm7_1': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20190108/1e2681225a98cd914a54fc0765478dd3.jpg', // Sân Bay Siêu Tốc
+      'm7_2': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20250113/17367779105688.png', // Sơn Hải Họa Cảnh
+      
+      // --- 6 SAO ---
+      'm6_1': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/61_9394613.jpg', // Hẻm Núi Lớn
+      'm6_2': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20211115/16369731693212.png', // Scotland
+      
+      // --- 5 SAO ---
+      'm5_1': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20250325/17428875469403.png', // Căn Cứ Sao Hỏa
+      'm5_2': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/51_9300156.jpg', // Mỏ Khoáng Hoang Dã
+      'm5_3': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20180904/e4e67d4825b6cc7ecf1a5a3491488314.jpg', // Mạc Cao Quật
+      'm5_4': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/54_976883.jpg', // Atlantis
+      'm5_5': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/55_9801857.jpg', // Atlantis (Ngược)
+      'm5_6': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/53_9496680.jpg', // Chuyến Đi Huyền Thoại
+      'm5_7': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/52_9429115.jpg', // Núi Mùa Thu
+      'm5_8': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20220324/16481195029550.png', // Công Trường Phố Cổ
+      'm5_9': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20230111/16734277903891.png', // Thành Lá Đỏ
+      'm5_10': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20240326/17114615429011.png', // Vực Sâu Băng Giá
+
+      // --- 4 SAO ---
+      'm4_1': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20180424/4ceb12a7da81fc78485cd451738f1ddf.jpg', // Tây Hồ
+      'm4_2': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20180326/ed0633a8e49bc3058e8eda3219440918.jpg', // Trường Thành
+      'm4_3': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20180119/a4d8882662a3508ced77be491fd925ff.jpg', // Đại Lộ 1
+      'm4_4': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20190717/07b7aec16c1011992fb28c12a399092f.jpg', // TROY-Sân Thử Nghiệm Số 0
+      'm4_5': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20200522/3e351719616aa614a2063233c6976f35.jpg', // Lâu Đài Thiên Nga Mới
+      'm4_6': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20200921/3265566121a19cae1d3546619b686fb0.jpg', // Thiên Hộ Miêu Trại
+      'm4_7': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20210312/16155457318502.jpg', // Sân Bay Cuồng Phong
+      'm4_8': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20210715/16263281507258.jpg', // Quyết Chiến! Đỉnh Núi Tuyết
+      'm4_9': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20210915/16316995903827.jpg', // Mơ Về Cổ Thục
+      'm4_10': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20220516/16526869593306.png', // Z-Space
+      'm4_11': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20221011/16654598587252.png', // Cổ Đô Thiên Chiếu
+      'm4_12': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20240526/17167362763162.png', // Đua Thuyền Đoan Ngọ
+      'm4_13': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20231221/17031734536016.png', // Tiệc Rượu Bên Suối
+      'm4_14': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20241126/17326359998189.png', // Đỉnh Titan
+      'm4_15': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20250919/17582127372131.png', // Mây Cuộn Cổng Trời
+      'm4_16': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20251118/17634577032615.png', //Vực Thẳm Trái Tim
+
+      // --- 3 SAO ---
+      'm3_1': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps///image/20171211/31_8827468.jpg', // Thành Phố 11
+      'm3_2': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20181011/b1b25310d6f371cf1a1d607a585e8d82.jpg', // Ngư Trường
+      'm3_3': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20190717/54ec6a4988a53867f527e2be8cb0f92b.jpg', // TROY-Xưởng Nung Chảy
+      'm3_4': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20200921/25267e48557d7452e401e470886dc721.jpg', // Quý Châu Lộ
+      'm3_5': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps///image/20210108/c4234de94254c7118bcd8c15517b42a6.jpg', // Trụ Sở Chính Alpha
+      'm3_6': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20210823/16296862647665.jpg', // Quyết chiến! Đôi Mắt Miền Biển
+      'm3_7': '', // Thiên Cung Tầm Mộng
+      'm3_8': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20221123/16692118937198.png', // Căn Cứ Siêu Huyền
+      'm3_9': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20231121/17005788209567.png', // Bóng Hình Eden
+      'm3_10': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20230919/16951270513077.png', // Tuyệt Cảnh Giang Sơn
+      'm3_11': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20230724/16901918219353.png', // Vành Đai Troy
+      'm3_12': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20230724/16901915868769.png', // Hồ Long Tinh
+      'm3_13': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20240725/17218374934897.png', // Vụ Sơn Ngũ Hành
+      'm3_14': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20250721/17530812968308.png', // Bờ Biển Lãng Mạn
     };
 
     const MAX_GAMES = MAP_POOL.reduce((total, group) => total + group.maps.length, 0); 
@@ -524,14 +574,14 @@
                                      </div>
                                    )}
                                    {/* TÊN TUYỂN THỦ TRONG TỪNG MAP */}
-                                   <span className={`${is6P ? 'text-[9px] md:text-[11px] mt-2 md:mt-3' : 'text-[11px] md:text-[13px] mt-5 md:mt-6'} font-bold truncate w-[90%] text-center leading-tight ${textColor} drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]`}>{playerName}</span>
+                                   <span className={`${is6P ? 'text-[9px] md:text-[11px] mt-2 md:mt-3' : 'text-[11px] md:text-[13px] mt-5 md:mt-6'} font-bold truncate w-[90%] text-center leading-normal pb-[2px] ${textColor} drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]`}>{playerName}</span>
                                    {/* ĐIỂM SỐ */}
                                    {time ? (
-                                      <span className={`${is6P ? 'text-[15px] md:text-[18px]' : 'text-xl md:text-2xl'} font-black mt-0.5 leading-tight ${isTop ? 'text-[#fce300] drop-shadow-[0_0_8px_rgba(252,227,0,0.8)]' : 'text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]'}`}>
+                                      <span className={`${is6P ? 'text-[15px] md:text-[18px]' : 'text-xl md:text-2xl'} font-black mt-0.5 leading-normal ${isTop ? 'text-[#fce300] drop-shadow-[0_0_8px_rgba(252,227,0,0.8)]' : 'text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]'}`}>
                                         +{c.score}
                                       </span>
                                    ) : (
-                                      <span className={`${is6P ? 'text-[15px] md:text-[18px]' : 'text-xl md:text-2xl'} font-black mt-0.5 leading-tight text-slate-600 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]`}>-</span>
+                                      <span className={`${is6P ? 'text-[15px] md:text-[18px]' : 'text-xl md:text-2xl'} font-black mt-0.5 leading-normal text-slate-600 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]`}>-</span>
                                    )}
                                 </div>
                               );
