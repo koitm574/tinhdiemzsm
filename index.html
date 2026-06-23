@@ -501,6 +501,42 @@
       );
     };
 
+    const AutoFitText = ({ text }) => {
+      const containerRef = useRef(null);
+      const textRef = useRef(null);
+
+      useEffect(() => {
+        const resize = () => {
+          window.requestAnimationFrame(() => {
+            if (containerRef.current && textRef.current) {
+              textRef.current.style.transform = 'none';
+              const containerWidth = containerRef.current.clientWidth;
+              const textWidth = textRef.current.scrollWidth;
+              if (textWidth > containerWidth && containerWidth > 0) {
+                const scale = (containerWidth / textWidth) * 0.95; // Thu nhỏ lại 95% tỷ lệ thật để có khoảng thở hai bên
+                textRef.current.style.transform = `scale(${scale})`;
+              }
+            }
+          });
+        };
+        resize();
+        const observer = new ResizeObserver(resize);
+        if (containerRef.current) observer.observe(containerRef.current);
+        return () => observer.disconnect();
+      }, [text]);
+
+      return (
+        <div ref={containerRef} className="w-full flex justify-center items-end overflow-visible">
+          <span 
+            ref={textRef} 
+            className="text-[9px] md:text-[11px] font-black text-cyan-300 uppercase tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,1)] origin-bottom whitespace-nowrap transition-transform duration-200"
+          >
+            {text}
+          </span>
+        </div>
+      );
+    };
+
     const BroadcastOverlay = ({ players, games, totals, getGameCalculations, lang, t, gameMode, tournamentName, onClose }) => {
       const isTeamMode = gameMode !== 'solo';
       const displayRounds = Math.max(9, games.length);
@@ -588,7 +624,7 @@
                       return (
                         <div key={`play_${gIndex}`} className="flex-1 min-w-[140px] md:min-w-[160px] flex flex-col relative border-r border-white/10 h-full overflow-hidden group" style={style}>
                           {/* Lớp phủ làm tối mờ hình ảnh để nổi bật chữ */}
-                          <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px] transition-all group-hover:bg-black/20 z-0"></div> 
+                          <div className="absolute inset-0 bg-black/50 backdrop-blur-[1px] transition-all group-hover:bg-black/30 z-0"></div> 
                           {/* Viền sáng bao quanh cột đang có điểm */}
                           <div className="absolute inset-0 border border-cyan-500/20 z-0 pointer-events-none"></div>
                           
@@ -626,7 +662,7 @@
                           </div>
 
                           <div className="relative z-10 h-8 md:h-10 shrink-0 bg-gradient-to-t from-[#0f172a] via-[#0f172a]/80 to-transparent flex items-end justify-center pb-2 px-2 border-t border-white/5">
-                            <span className="text-[9px] md:text-[11px] font-black text-cyan-300 uppercase tracking-widest truncate text-center w-full drop-shadow-[0_2px_4px_rgba(0,0,0,1)]">{mapName}</span>
+                            <AutoFitText text={mapName} />
                           </div>
                         </div>
                       );
