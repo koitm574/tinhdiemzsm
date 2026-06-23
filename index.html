@@ -92,6 +92,23 @@
     .clip-slant-reverse {
       clip-path: polygon(0 0, 90% 0, 100% 100%, 10% 100%);
     }
+
+    /* Hiệu ứng động siêu mượt cho nền Livestream */
+    @keyframes slowZoom {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    .animate-slow-zoom {
+      animation: slowZoom 20s ease-in-out infinite;
+    }
+    @keyframes scanline {
+      0% { transform: translateY(-10vh); }
+      100% { transform: translateY(110vh); }
+    }
+    .animate-scanline {
+      animation: scanline 8s linear infinite;
+    }
   </style>
 </head>
 <body class="bg-[#050510] text-slate-200 m-0 p-0 selection:bg-red-500/30 font-sans">
@@ -232,6 +249,10 @@
       'm3_13': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20240725/17218374934897.png', // Vụ Sơn Ngũ Hành
       'm3_14': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20250721/17530812968308.png', // Bờ Biển Lãng Mạn
     };
+
+    // --- HÌNH NỀN LIVESTREAM TỔNG THỂ (BROADCAST BACKGROUND) ---
+    // Gắn link ảnh nền cho màn hình Broadcast vào giữa 2 dấu nháy đơn. Để trống '' nếu không muốn dùng.
+    const BROADCAST_BACKGROUND_IMAGE = 'https://i.ibb.co/TxWgMDKd/Untitled.png'; // Tôi đã để sẵn 1 ảnh minh họa cực xịn
 
     const MAX_GAMES = MAP_POOL.reduce((total, group) => total + group.maps.length, 0); 
     const NORMAL_TOP_SCORE = 11;
@@ -487,10 +508,24 @@
 
       return (
         <div className="fixed inset-0 z-[999] bg-[#f0f4f8] flex flex-col font-sans overflow-hidden animate-slide-up">
-          {/* Nền Livestream Chuyên nghiệp */}
+          {/* Ảnh nền Broadcast (nếu có) với hiệu ứng Zoom mượt mà */}
+          {BROADCAST_BACKGROUND_IMAGE && (
+             <div 
+               className="absolute inset-0 z-0 bg-cover bg-center animate-slow-zoom opacity-30 pointer-events-none" 
+               style={{ backgroundImage: `url(${BROADCAST_BACKGROUND_IMAGE})` }}
+             ></div>
+          )}
+          
+          {/* Nền Livestream Chuyên nghiệp (Lưới ma trận) */}
           <div className="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] [background-size:30px_30px] opacity-60 pointer-events-none z-0"></div>
-          <div className="absolute -left-[10%] -top-[10%] w-[40%] h-[40%] bg-[#13c0eb] blur-[150px] opacity-20 rounded-full pointer-events-none z-0"></div>
-          <div className="absolute -right-[10%] -bottom-[10%] w-[40%] h-[40%] bg-blue-600 blur-[150px] opacity-20 rounded-full pointer-events-none z-0"></div>
+          
+          {/* Tia quét Scanline chuẩn Esports */}
+          <div className="absolute inset-0 w-full h-[8px] bg-gradient-to-b from-transparent via-cyan-400/40 to-transparent blur-[2px] pointer-events-none z-0 animate-scanline"></div>
+
+          {/* Glow 2 góc với hiệu ứng nhịp thở (Pulse) */}
+          <div className="absolute -left-[10%] -top-[10%] w-[40%] h-[40%] bg-[#13c0eb] blur-[150px] opacity-30 rounded-full pointer-events-none z-0 animate-[pulse_4s_ease-in-out_infinite]"></div>
+          <div className="absolute -right-[10%] -bottom-[10%] w-[40%] h-[40%] bg-blue-600 blur-[150px] opacity-30 rounded-full pointer-events-none z-0 animate-[pulse_5s_ease-in-out_infinite]"></div>
+          
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[10vw] font-black italic text-slate-300 opacity-[0.2] whitespace-nowrap pointer-events-none select-none z-0 tracking-tighter">
             {tournamentName}
           </div>
