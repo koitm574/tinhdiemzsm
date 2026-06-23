@@ -10,7 +10,7 @@
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   
-  <!-- Cấu hình Babel để ép sử dụng React Classic Runtime (khắc phục lỗi pragma & import) -->
+  <!-- Cấu hình Babel để ép sử dụng React Classic Runtime -->
   <script>
     Babel.registerPreset('react-classic', {
       presets: [
@@ -85,6 +85,12 @@
         transparent 10px,
         transparent 20px
       );
+    }
+    .clip-slant {
+      clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+    }
+    .clip-slant-reverse {
+      clip-path: polygon(0 0, 90% 0, 100% 100%, 10% 100%);
     }
   </style>
 </head>
@@ -167,6 +173,15 @@
         { id: 'm3_14', vi: 'Bờ Biển Lãng Mạn', en: 'Romantic Seaside', cn: '浪漫海岸', tw: '浪漫海岸', th: 'ชายหาดโรแมนติก' }
       ]}
     ];
+
+    // --- MAP BACKGROUND LINKS (ĐỂ THAY HÌNH NỀN MAP TRONG LIVESTREAM) ---
+    // Hướng dẫn: Tìm id của map trong MAP_POOL phía trên (VD: 'm7_1'), sau đó thêm link ảnh tương ứng vào đây.
+    const MAP_BACKGROUNDS = {
+      'm7_1': 'https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?auto=format&fit=crop&q=80&w=500', // Ví dụ: Sân Bay Siêu Tốc (Dùng ảnh trạm vũ trụ)
+      'm7_2': 'https://images.unsplash.com/photo-1518002171953-a080ee817e1f?auto=format&fit=crop&q=80&w=500', // Ví dụ: Sơn Hải Họa Cảnh (Dùng ảnh phong cảnh)
+      // Bạn có thể tự thêm các map khác theo mẫu:
+      // 'm6_1': 'https://imgur.com/link_anh_cua_ban.jpg',
+    };
 
     const MAX_GAMES = MAP_POOL.reduce((total, group) => total + group.maps.length, 0); 
     const NORMAL_TOP_SCORE = 11;
@@ -316,6 +331,18 @@
       return `linear-gradient(135deg, hsl(${h1}, 40%, 30%), hsl(${h2}, 50%, 20%))`;
     };
 
+    const getMapBackgroundStyle = (mapId) => {
+      if (!mapId) return {};
+      if (MAP_BACKGROUNDS[mapId]) {
+        return {
+          backgroundImage: `url(${MAP_BACKGROUNDS[mapId]})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        };
+      }
+      return { background: getMapGradient(mapId) };
+    };
+
     const SearchableMapSelect = ({ gameIndex, currentMapId, selectedMaps, onChange, lang, t }) => {
       const [isOpen, setIsOpen] = useState(false);
       const [searchTerm, setSearchTerm] = useState('');
@@ -432,23 +459,24 @@
             </div>
 
             <div className="flex items-center gap-4">
-               <button onClick={onClose} className="px-6 py-2.5 bg-red-600 text-white font-bold rounded hover:bg-red-700 shadow-md uppercase tracking-wider text-sm">{t.closeBtn}</button>
+               <button onClick={onClose} className="px-6 py-2.5 bg-red-600 text-white font-bold rounded hover:bg-red-700 shadow-md uppercase tracking-wider text-sm clip-slant">{t.closeBtn}</button>
             </div>
           </div>
 
           {/* Main Grid Livestream */}
           <div className="flex-1 w-full max-w-[1920px] mx-auto p-4 md:p-8 flex flex-col justify-center min-h-0 z-10">
-            <div className="w-full bg-[#263655] rounded-xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] flex flex-col h-[75vh]">
+            <div className="w-full bg-[#1e293b] rounded-xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] flex flex-col h-[75vh] border border-slate-700/50">
               
               {/* VÙNG CUỘN NGANG DÀNH RIÊNG CHO HEADER VÀ NỘI DUNG MAP */}
-              <div className="flex-1 overflow-x-auto overflow-y-hidden hide-scrollbar flex flex-col bg-[#1a253a]">
+              <div className="flex-1 overflow-x-auto overflow-y-hidden hide-scrollbar flex flex-col bg-[#0f172a]">
                 <div className="flex flex-col h-full min-w-max">
                   
                   {/* Vòng Đấu Header */}
-                  <div className="flex bg-[#13c0eb] sticky top-0 z-30 shadow-md shrink-0">
+                  <div className="flex bg-gradient-to-r from-[#0ea5e9] to-[#0284c7] sticky top-0 z-30 shadow-md shrink-0">
                     {rounds.map((_, i) => (
-                      <div key={`header_${i}`} className="flex-1 min-w-[140px] md:min-w-[160px] py-3 md:py-4 text-center border-r border-white/20 last:border-r-0">
-                        <span className="text-white font-black italic text-lg md:text-xl tracking-wider drop-shadow-sm">ROUND {i + 1}</span>
+                      <div key={`header_${i}`} className="flex-1 min-w-[140px] md:min-w-[160px] py-3 md:py-4 text-center border-r border-white/20 last:border-r-0 relative overflow-hidden">
+                        <div className="absolute inset-0 bg-white/10 clip-slant-reverse transform translate-x-4 opacity-50"></div>
+                        <span className="relative z-10 text-white font-black italic text-lg md:text-xl tracking-wider drop-shadow-sm">ROUND {i + 1}</span>
                       </div>
                     ))}
                   </div>
@@ -461,20 +489,23 @@
                       
                       if (!isPlayed) {
                          return (
-                          <div key={`empty_${gIndex}`} className="flex-1 min-w-[140px] md:min-w-[160px] flex flex-col border-r border-[#151f30] bg-[#263655] relative bg-stripes h-full">
-                             <div className="absolute inset-0 flex items-center justify-center opacity-[0.05]">
+                          <div key={`empty_${gIndex}`} className="flex-1 min-w-[140px] md:min-w-[160px] flex flex-col border-r border-[#1e293b] bg-[#1e293b] relative bg-stripes h-full">
+                             <div className="absolute inset-0 flex items-center justify-center opacity-[0.03]">
                                <WheelIcon size={120} />
                              </div>
                           </div>
                          );
                       }
 
-                      const bgStyle = { background: getMapGradient(game.mapId) };
                       const mapName = game.mapId ? getMapName(game.mapId, lang) : '';
+                      const style = getMapBackgroundStyle(game.mapId);
 
                       return (
-                        <div key={`play_${gIndex}`} className="flex-1 min-w-[140px] md:min-w-[160px] flex flex-col relative border-r border-[#151f30] h-full" style={bgStyle}>
-                          <div className="absolute inset-0 bg-black/50 z-0"></div> 
+                        <div key={`play_${gIndex}`} className="flex-1 min-w-[140px] md:min-w-[160px] flex flex-col relative border-r border-[#1e293b] h-full overflow-hidden group" style={style}>
+                          {/* Lớp phủ làm tối mờ hình ảnh để nổi bật chữ */}
+                          <div className="absolute inset-0 bg-slate-900/80 backdrop-blur-[2px] transition-all group-hover:bg-slate-900/70 z-0"></div> 
+                          {/* Viền sáng bao quanh cột đang có điểm */}
+                          <div className="absolute inset-0 border border-cyan-500/20 z-0 pointer-events-none"></div>
                           
                           <div className="relative z-10 flex-1 flex flex-col py-1 md:py-2 h-full min-h-0 justify-center">
                             {game.times.map((time, pIndex) => {
@@ -485,30 +516,30 @@
                               const is6P = players.length > 4;
                               
                               return (
-                                <div key={`g${gIndex}_p${pIndex}`} className="flex-1 flex flex-col items-center justify-center relative min-h-0 mx-1 group hover:bg-white/5 transition-colors">
+                                <div key={`g${gIndex}_p${pIndex}`} className="flex-1 flex flex-col items-center justify-center relative min-h-0 mx-1 group/item hover:bg-white/10 transition-colors rounded">
                                    {/* VƯƠNG MIỆN LƠ LỬNG TRÊN ĐẦU */}
                                    {c.isKingMap && isTop && (
                                      <div className={`absolute ${is6P ? '-top-1 md:top-0' : 'top-0 md:top-1'} left-1/2 -translate-x-1/2 w-full flex justify-center`}>
-                                       <Crown size={is6P ? 12 : 16} className="text-[#fce300] animate-bounce drop-shadow-[0_0_5px_rgba(252,227,0,0.8)]"/>
+                                       <Crown size={is6P ? 12 : 16} className="text-[#fce300] animate-bounce drop-shadow-[0_0_8px_rgba(252,227,0,1)]"/>
                                      </div>
                                    )}
                                    {/* TÊN TUYỂN THỦ TRONG TỪNG MAP */}
-                                   <span className={`${is6P ? 'text-[9px] md:text-[11px] mt-2 md:mt-3' : 'text-[11px] md:text-[13px] mt-5 md:mt-6'} font-bold truncate w-[90%] text-center leading-tight ${textColor}`}>{playerName}</span>
+                                   <span className={`${is6P ? 'text-[9px] md:text-[11px] mt-2 md:mt-3' : 'text-[11px] md:text-[13px] mt-5 md:mt-6'} font-bold truncate w-[90%] text-center leading-tight ${textColor} drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]`}>{playerName}</span>
                                    {/* ĐIỂM SỐ */}
                                    {time ? (
-                                      <span className={`${is6P ? 'text-[15px] md:text-[18px]' : 'text-xl md:text-2xl'} font-black mt-0.5 leading-tight ${isTop ? 'text-[#fce300] drop-shadow-[0_0_8px_rgba(252,227,0,0.5)]' : 'text-white'}`}>
+                                      <span className={`${is6P ? 'text-[15px] md:text-[18px]' : 'text-xl md:text-2xl'} font-black mt-0.5 leading-tight ${isTop ? 'text-[#fce300] drop-shadow-[0_0_8px_rgba(252,227,0,0.8)]' : 'text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]'}`}>
                                         +{c.score}
                                       </span>
                                    ) : (
-                                      <span className={`${is6P ? 'text-[15px] md:text-[18px]' : 'text-xl md:text-2xl'} font-black mt-0.5 leading-tight text-slate-600`}>-</span>
+                                      <span className={`${is6P ? 'text-[15px] md:text-[18px]' : 'text-xl md:text-2xl'} font-black mt-0.5 leading-tight text-slate-600 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]`}>-</span>
                                    )}
                                 </div>
                               );
                             })}
                           </div>
 
-                          <div className="relative z-10 h-8 md:h-10 shrink-0 bg-gradient-to-t from-black/90 to-transparent flex items-end justify-center pb-2 px-2">
-                            <span className="text-[9px] md:text-[11px] font-black text-white/90 uppercase tracking-widest truncate text-center w-full drop-shadow-md">{mapName}</span>
+                          <div className="relative z-10 h-8 md:h-10 shrink-0 bg-gradient-to-t from-[#0f172a] via-[#0f172a]/80 to-transparent flex items-end justify-center pb-2 px-2 border-t border-white/5">
+                            <span className="text-[9px] md:text-[11px] font-black text-cyan-300 uppercase tracking-widest truncate text-center w-full drop-shadow-[0_2px_4px_rgba(0,0,0,1)]">{mapName}</span>
                           </div>
                         </div>
                       );
@@ -517,28 +548,33 @@
                 </div>
               </div>
 
-              {/* FOOTER TỔNG ĐIỂM - Nằm ngoài vùng cuộn để luôn hiển thị */}
-              <div className="flex bg-[#13c0eb] shadow-[0_-5px_15px_rgba(0,0,0,0.2)] h-20 md:h-24 w-full shrink-0 relative z-20">
+              {/* FOOTER TỔNG ĐIỂM - GLASSMORPHISM TẠO SỰ SANG TRỌNG */}
+              <div className="flex bg-[#0f172a] border-t border-slate-700 shadow-[0_-10px_30px_rgba(0,0,0,0.5)] h-20 md:h-24 w-full shrink-0 relative z-20">
                 {isTeamMode ? (
-                   <div className="flex w-full h-full">
-                     <div className="flex-1 flex flex-col items-center justify-center border-r border-white/20 bg-blue-600/20">
-                        <span className="text-white/90 font-bold text-sm md:text-base uppercase tracking-widest">{t.team1}</span>
-                        <span className="text-white font-black text-3xl md:text-5xl mt-0.5 drop-shadow-md leading-none">
+                   <div className="flex w-full h-full relative">
+                     {/* Đội 1 */}
+                     <div className="flex-1 flex flex-col items-center justify-center bg-gradient-to-r from-blue-900/50 to-blue-800/30 backdrop-blur-md relative overflow-hidden">
+                        <div className="absolute right-0 top-0 bottom-0 w-1 bg-blue-500 shadow-[0_0_15px_#3b82f6]"></div>
+                        <span className="text-blue-200 font-black text-sm md:text-base uppercase tracking-widest drop-shadow-md z-10">{t.team1}</span>
+                        <span className="text-white font-black text-3xl md:text-5xl mt-0.5 drop-shadow-[0_0_15px_rgba(59,130,246,0.5)] leading-none z-10">
                            {totals.filter((_, i) => i % 2 === 0).reduce((a, b) => a + b, 0)}
                         </span>
                      </div>
-                     <div className="flex-1 flex flex-col items-center justify-center bg-red-600/20">
-                        <span className="text-white/90 font-bold text-sm md:text-base uppercase tracking-widest">{t.team2}</span>
-                        <span className="text-white font-black text-3xl md:text-5xl mt-0.5 drop-shadow-md leading-none">
+                     {/* Đội 2 */}
+                     <div className="flex-1 flex flex-col items-center justify-center bg-gradient-to-l from-red-900/50 to-red-800/30 backdrop-blur-md relative overflow-hidden">
+                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-red-500 shadow-[0_0_15px_#ef4444]"></div>
+                        <span className="text-red-200 font-black text-sm md:text-base uppercase tracking-widest drop-shadow-md z-10">{t.team2}</span>
+                        <span className="text-white font-black text-3xl md:text-5xl mt-0.5 drop-shadow-[0_0_15px_rgba(239,68,68,0.5)] leading-none z-10">
                            {totals.filter((_, i) => i % 2 === 1).reduce((a, b) => a + b, 0)}
                         </span>
                      </div>
                    </div>
                 ) : (
                    players.map((p, i) => (
-                    <div key={`foot_p_${i}`} className="flex-1 flex flex-col items-center justify-center border-r border-white/20 last:border-r-0 overflow-hidden px-2">
-                      <span className="text-white/90 font-bold text-sm md:text-base truncate max-w-full tracking-wide">{p}</span>
-                      <span className="text-white font-black text-3xl md:text-5xl mt-0.5 drop-shadow-md leading-none">{totals[i]}</span>
+                    <div key={`foot_p_${i}`} className="flex-1 flex flex-col items-center justify-center border-r border-slate-700 bg-slate-900/50 backdrop-blur-md last:border-r-0 overflow-hidden px-2 relative group hover:bg-slate-800/80 transition-colors">
+                      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500 to-blue-500 opacity-50 group-hover:opacity-100 transition-opacity"></div>
+                      <span className="text-cyan-200 font-bold text-sm md:text-base truncate max-w-full tracking-wide drop-shadow-md z-10">{p}</span>
+                      <span className="text-white font-black text-3xl md:text-5xl mt-0.5 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] leading-none z-10">{totals[i]}</span>
                     </div>
                   ))
                 )}
