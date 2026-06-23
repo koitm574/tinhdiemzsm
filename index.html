@@ -574,14 +574,16 @@
                                      </div>
                                    )}
                                    {/* TÊN TUYỂN THỦ TRONG TỪNG MAP */}
-                                   <span className={`${is6P ? 'text-[9px] md:text-[11px] mt-2 md:mt-3' : 'text-[11px] md:text-[13px] mt-5 md:mt-6'} font-bold truncate w-[90%] text-center leading-normal pb-[2px] ${textColor} drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]`}>{playerName}</span>
+                                   <span className={`${is6P ? 'text-[9px] md:text-[11px] mt-2' : 'text-[11px] md:text-[13px] mt-4'} font-bold truncate w-[90%] text-center leading-normal py-0.5 ${textColor} drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]`}>
+                                     {playerName}
+                                   </span>
                                    {/* ĐIỂM SỐ */}
                                    {time ? (
-                                      <span className={`${is6P ? 'text-[15px] md:text-[18px]' : 'text-xl md:text-2xl'} font-black mt-0.5 leading-normal ${isTop ? 'text-[#fce300] drop-shadow-[0_0_8px_rgba(252,227,0,0.8)]' : 'text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]'}`}>
+                                      <span className={`${is6P ? 'text-[15px] md:text-[18px]' : 'text-xl md:text-2xl'} font-black mt-0.5 leading-none ${isTop ? 'text-[#fce300] drop-shadow-[0_0_8px_rgba(252,227,0,0.8)]' : 'text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]'}`}>
                                         +{c.score}
                                       </span>
                                    ) : (
-                                      <span className={`${is6P ? 'text-[15px] md:text-[18px]' : 'text-xl md:text-2xl'} font-black mt-0.5 leading-normal text-slate-600 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]`}>-</span>
+                                      <span className={`${is6P ? 'text-[15px] md:text-[18px]' : 'text-xl md:text-2xl'} font-black mt-0.5 leading-none text-slate-500 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]`}>-</span>
                                    )}
                                 </div>
                               );
