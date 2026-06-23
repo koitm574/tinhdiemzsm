@@ -328,7 +328,7 @@
         soloMode: "單人賽", teamMode: "組隊賽", modeSolo: "模式：單人賽", mode2v2: "模式：2v2", mode3v3: "模式：3v3",
         indivTotal: "個人總分", teamTotal: "隊伍總分", team1: "藍隊", team2: "紅隊", 
         i6: "選圖規則: 第2到N局為王牌賽道。之後：單人賽 -> 總分第二的選手選圖。組隊賽 -> 總分較低的隊伍選圖。(若同分，則上一局得分較低者選圖)。", 
-        map1Pick: "第1局：官方指定赛道", kingMapPick: "第{0}局：{1} 的王牌賽道", normalPick: "第{0}局：由 {1} 選圖", 
+        map1Pick: "第1局：官方指定賽道", kingMapPick: "第{0}局：{1} 的王牌賽道", normalPick: "第{0}局：由 {1} 選圖", 
         broadcastBtn: "直播介面", pick: "選圖", closeBtn: "關閉",
         recordsBtn: "紀錄", recordsTitle: "🏆 賽道紀錄", noRecords: "暫無紀錄數據。"
       },
@@ -516,7 +516,7 @@
               const containerWidth = containerRef.current.clientWidth;
               const textWidth = textRef.current.scrollWidth;
               if (textWidth > containerWidth && containerWidth > 0) {
-                const scale = (containerWidth / textWidth) * 0.95; // Thu nhỏ lại 95% tỷ lệ thật để có khoảng thở hai bên
+                const scale = (containerWidth / textWidth) * 0.95;
                 textRef.current.style.transform = `scale(${scale})`;
               }
             }
@@ -529,10 +529,10 @@
       }, [text]);
 
       return (
-        <div ref={containerRef} className="w-full flex justify-center items-end overflow-visible">
+        <div ref={containerRef} className="w-full flex justify-center items-end overflow-hidden">
           <span 
             ref={textRef} 
-            className="text-[9px] md:text-[11px] font-black text-cyan-300 uppercase tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,1)] origin-bottom whitespace-nowrap transition-transform duration-200"
+            className="text-[9px] md:text-[11px] font-black text-cyan-300 uppercase tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,1)] origin-bottom whitespace-nowrap transition-transform duration-200 inline-block"
           >
             {text}
           </span>
@@ -664,7 +664,7 @@
                             })}
                           </div>
 
-                          <div className="relative z-10 h-8 md:h-10 shrink-0 bg-gradient-to-t from-[#0f172a] via-[#0f172a]/80 to-transparent flex items-end justify-center pb-2 px-2 border-t border-white/5">
+                          <div className="relative z-10 h-8 md:h-10 shrink-0 bg-gradient-to-t from-[#0f172a] via-[#0f172a]/80 to-transparent flex items-end justify-center pb-2 px-2 border-t border-white/5 overflow-hidden">
                             <AutoFitText text={mapName} />
                           </div>
                         </div>
