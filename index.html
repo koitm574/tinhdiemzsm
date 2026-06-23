@@ -511,7 +511,7 @@
           {/* Ảnh nền Broadcast (nếu có) với hiệu ứng Zoom mượt mà */}
           {BROADCAST_BACKGROUND_IMAGE && (
              <div 
-               className="absolute inset-0 z-0 bg-cover bg-center animate-slow-zoom opacity-30 pointer-events-none" 
+               className="absolute inset-0 z-0 bg-cover bg-center animate-slow-zoom opacity-50 pointer-events-none" 
                style={{ backgroundImage: `url(${BROADCAST_BACKGROUND_IMAGE})` }}
              ></div>
           )}
@@ -531,7 +531,7 @@
           </div>
 
           {/* Header Bảng Livestream */}
-          <div className="relative w-full h-[12vh] min-h-[70px] flex items-center justify-between px-10 bg-white shadow-sm border-b border-gray-200 z-10 shrink-0">
+          <div className="relative w-full h-[9vh] min-h-[60px] flex items-center justify-between px-10 bg-white shadow-sm border-b border-gray-200 z-10 shrink-0">
             <div className="text-xl md:text-2xl font-black italic text-[#13c0eb] tracking-widest uppercase truncate max-w-[30%]">
               {tournamentName}
             </div>
@@ -550,10 +550,10 @@
 
           {/* Main Grid Livestream */}
           <div className="flex-1 w-full max-w-[1920px] mx-auto p-4 md:p-8 flex flex-col justify-center min-h-0 z-10">
-            <div className="w-full bg-[#1e293b] rounded-xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.4)] flex flex-col h-[75vh] border border-slate-700/50">
+            <div className="w-full bg-[#1e293b]/60 backdrop-blur-md rounded-xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col h-[82vh] border border-slate-700/50">
               
               {/* VÙNG CUỘN NGANG DÀNH RIÊNG CHO HEADER VÀ NỘI DUNG MAP */}
-              <div className="flex-1 overflow-x-auto overflow-y-hidden hide-scrollbar flex flex-col bg-[#0f172a]">
+              <div className="flex-1 overflow-x-auto overflow-y-hidden hide-scrollbar flex flex-col bg-transparent">
                 <div className="flex flex-col h-full min-w-max">
                   
                   {/* Vòng Đấu Header */}
@@ -574,7 +574,7 @@
                       
                       if (!isPlayed) {
                          return (
-                          <div key={`empty_${gIndex}`} className="flex-1 min-w-[140px] md:min-w-[160px] flex flex-col border-r border-[#1e293b] bg-[#1e293b] relative bg-stripes h-full">
+                          <div key={`empty_${gIndex}`} className="flex-1 min-w-[140px] md:min-w-[160px] flex flex-col border-r border-white/5 bg-black/20 relative bg-stripes h-full">
                              <div className="absolute inset-0 flex items-center justify-center opacity-[0.03]">
                                <WheelIcon size={120} />
                              </div>
@@ -586,9 +586,9 @@
                       const style = getMapBackgroundStyle(game.mapId);
 
                       return (
-                        <div key={`play_${gIndex}`} className="flex-1 min-w-[140px] md:min-w-[160px] flex flex-col relative border-r border-[#1e293b] h-full overflow-hidden group" style={style}>
+                        <div key={`play_${gIndex}`} className="flex-1 min-w-[140px] md:min-w-[160px] flex flex-col relative border-r border-white/10 h-full overflow-hidden group" style={style}>
                           {/* Lớp phủ làm tối mờ hình ảnh để nổi bật chữ */}
-                          <div className="absolute inset-0 bg-slate-900/80 backdrop-blur-[2px] transition-all group-hover:bg-slate-900/70 z-0"></div> 
+                          <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px] transition-all group-hover:bg-black/20 z-0"></div> 
                           {/* Viền sáng bao quanh cột đang có điểm */}
                           <div className="absolute inset-0 border border-cyan-500/20 z-0 pointer-events-none"></div>
                           
@@ -618,7 +618,7 @@
                                         +{c.score}
                                       </span>
                                    ) : (
-                                      <span className={`${is6P ? 'text-[15px] md:text-[18px]' : 'text-xl md:text-2xl'} font-black mt-0.5 leading-none text-slate-500 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]`}>-</span>
+                                      <span className={`${is6P ? 'text-[15px] md:text-[18px]' : 'text-xl md:text-2xl'} font-black mt-0.5 leading-none text-slate-400 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]`}>-</span>
                                    )}
                                 </div>
                               );
@@ -636,7 +636,7 @@
               </div>
 
               {/* FOOTER TỔNG ĐIỂM - GLASSMORPHISM TẠO SỰ SANG TRỌNG */}
-              <div className="flex bg-[#0f172a] border-t border-slate-700 shadow-[0_-10px_30px_rgba(0,0,0,0.5)] h-20 md:h-24 w-full shrink-0 relative z-20">
+              <div className="flex bg-[#0f172a]/80 backdrop-blur-xl border-t border-slate-700/50 shadow-[0_-10px_30px_rgba(0,0,0,0.5)] h-16 md:h-20 w-full shrink-0 relative z-20">
                 {isTeamMode ? (
                    <div className="flex w-full h-full relative">
                      {/* Đội 1 */}
@@ -658,7 +658,7 @@
                    </div>
                 ) : (
                    players.map((p, i) => (
-                    <div key={`foot_p_${i}`} className="flex-1 flex flex-col items-center justify-center border-r border-slate-700 bg-slate-900/50 backdrop-blur-md last:border-r-0 overflow-hidden px-2 relative group hover:bg-slate-800/80 transition-colors">
+                    <div key={`foot_p_${i}`} className="flex-1 flex flex-col items-center justify-center border-r border-slate-700/50 bg-slate-900/40 backdrop-blur-md last:border-r-0 overflow-hidden px-2 relative group hover:bg-slate-800/80 transition-colors">
                       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500 to-blue-500 opacity-50 group-hover:opacity-100 transition-opacity"></div>
                       <span className="text-cyan-200 font-bold text-sm md:text-base truncate max-w-full tracking-wide drop-shadow-md z-10">{p}</span>
                       <span className="text-white font-black text-3xl md:text-5xl mt-0.5 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] leading-none z-10">{totals[i]}</span>
@@ -670,7 +670,7 @@
             </div>
 
             {/* Dòng chữ phụ chú phía dưới */}
-            <div className="text-center mt-4 md:mt-6 text-xl md:text-2xl font-black italic tracking-[0.5em] text-[#263655] uppercase opacity-70 truncate px-4">
+            <div className="text-center mt-2 md:mt-3 text-xl md:text-2xl font-black italic tracking-[0.5em] text-[#263655] uppercase opacity-70 truncate px-4">
               {tournamentName}
             </div>
           </div>
