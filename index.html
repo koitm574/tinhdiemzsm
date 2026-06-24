@@ -193,66 +193,54 @@
     ];
 
     // --- MAP BACKGROUND LINKS (ĐỂ THAY HÌNH NỀN MAP TRONG LIVESTREAM) ---
-    // Hướng dẫn: Tìm id của map trong MAP_POOL phía trên (VD: 'm7_1'), sau đó thêm link ảnh tương ứng vào đây.
     const MAP_BACKGROUNDS = {
-      // --- 7 SAO ---
-      'm7_1': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20190108/1e2681225a98cd914a54fc0765478dd3.jpg', // Sân Bay Siêu Tốc
-      'm7_2': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20250113/17367779105688.png', // Sơn Hải Họa Cảnh
-      
-      // --- 6 SAO ---
-      'm6_1': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/61_9394613.jpg', // Hẻm Núi Lớn
-      'm6_2': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20211115/16369731693212.png', // Scotland
-      
-      // --- 5 SAO ---
-      'm5_1': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20250325/17428875469403.png', // Căn Cứ Sao Hỏa
-      'm5_2': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/51_9300156.jpg', // Mỏ Khoáng Hoang Dã
-      'm5_3': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20180904/e4e67d4825b6cc7ecf1a5a3491488314.jpg', // Mạc Cao Quật
-      'm5_4': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/54_976883.jpg', // Atlantis
-      'm5_5': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/55_9801857.jpg', // Atlantis (Ngược)
-      'm5_6': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/53_9496680.jpg', // Chuyến Đi Huyền Thoại
-      'm5_7': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/52_9429115.jpg', // Núi Mùa Thu
-      'm5_8': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20220324/16481195029550.png', // Công Trường Phố Cổ
-      'm5_9': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20230111/16734277903891.png', // Thành Lá Đỏ
-      'm5_10': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20240326/17114615429011.png', // Vực Sâu Băng Giá
-
-      // --- 4 SAO ---
-      'm4_1': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20180424/4ceb12a7da81fc78485cd451738f1ddf.jpg', // Tây Hồ
-      'm4_2': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20180326/ed0633a8e49bc3058e8eda3219440918.jpg', // Trường Thành
-      'm4_3': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20180119/a4d8882662a3508ced77be491fd925ff.jpg', // Đại Lộ 1
-      'm4_4': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20190717/07b7aec16c1011992fb28c12a399092f.jpg', // TROY-Sân Thử Nghiệm Số 0
-      'm4_5': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20200522/3e351719616aa614a2063233c6976f35.jpg', // Lâu Đài Thiên Nga Mới
-      'm4_6': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20200921/3265566121a19cae1d3546619b686fb0.jpg', // Thiên Hộ Miêu Trại
-      'm4_7': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20210312/16155457318502.jpg', // Sân Bay Cuồng Phong
-      'm4_8': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20210715/16263281507258.jpg', // Quyết Chiến! Đỉnh Núi Tuyết
-      'm4_9': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20210915/16316995903827.jpg', // Mơ Về Cổ Thục
-      'm4_10': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20220516/16526869593306.png', // Z-Space
-      'm4_11': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20221011/16654598587252.png', // Cổ Đô Thiên Chiếu
-      'm4_12': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20240526/17167362763162.png', // Đua Thuyền Đoan Ngọ
-      'm4_13': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20231221/17031734536016.png', // Tiệc Rượu Bên Suối
-      'm4_14': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20241126/17326359998189.png', // Đỉnh Titan
-      'm4_15': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20250919/17582127372131.png', // Mây Cuộn Cổng Trời
-      'm4_16': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20251118/17634577032615.png', //Vực Thẳm Trái Tim
-
-      // --- 3 SAO ---
-      'm3_1': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps///image/20171211/31_8827468.jpg', // Thành Phố 11
-      'm3_2': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20181011/b1b25310d6f371cf1a1d607a585e8d82.jpg', // Ngư Trường
-      'm3_3': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20190717/54ec6a4988a53867f527e2be8cb0f92b.jpg', // TROY-Xưởng Nung Chảy
-      'm3_4': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20200921/25267e48557d7452e401e470886dc721.jpg', // Quý Châu Lộ
-      'm3_5': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps///image/20210108/c4234de94254c7118bcd8c15517b42a6.jpg', // Trụ Sở Chính Alpha
-      'm3_6': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20210823/16296862647665.jpg', // Quyết chiến! Đôi Mắt Miền Biển
-      'm3_7': 'https://i.ibb.co/VYXpsN9b/16526827657994.png', // Thiên Cung Tầm Mộng
-      'm3_8': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20221123/16692118937198.png', // Căn Cứ Siêu Huyền
-      'm3_9': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20231121/17005788209567.png', // Bóng Hình Eden
-      'm3_10': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20230919/16951270513077.png', // Tuyệt Cảnh Giang Sơn
-      'm3_11': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20230724/16901918219353.png', // Vành Đai Troy
-      'm3_12': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20230724/16901915868769.png', // Hồ Long Tinh
-      'm3_13': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20240725/17218374934897.png', // Vụ Sơn Ngũ Hành
-      'm3_14': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20250721/17530812968308.png', // Bờ Biển Lãng Mạn
+      'm7_1': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20190108/1e2681225a98cd914a54fc0765478dd3.jpg',
+      'm7_2': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20250113/17367779105688.png',
+      'm6_1': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/61_9394613.jpg',
+      'm6_2': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20211115/16369731693212.png',
+      'm5_1': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20250325/17428875469403.png',
+      'm5_2': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/51_9300156.jpg',
+      'm5_3': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20180904/e4e67d4825b6cc7ecf1a5a3491488314.jpg',
+      'm5_4': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/54_976883.jpg',
+      'm5_5': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/55_9801857.jpg',
+      'm5_6': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/53_9496680.jpg',
+      'm5_7': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/52_9429115.jpg',
+      'm5_8': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20220324/16481195029550.png',
+      'm5_9': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20230111/16734277903891.png',
+      'm5_10': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20240326/17114615429011.png',
+      'm4_1': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20180424/4ceb12a7da81fc78485cd451738f1ddf.jpg',
+      'm4_2': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20180326/ed0633a8e49bc3058e8eda3219440918.jpg',
+      'm4_3': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20180119/a4d8882662a3508ced77be491fd925ff.jpg',
+      'm4_4': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20190717/07b7aec16c1011992fb28c12a399092f.jpg',
+      'm4_5': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20200522/3e351719616aa614a2063233c6976f35.jpg',
+      'm4_6': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20200921/3265566121a19cae1d3546619b686fb0.jpg',
+      'm4_7': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20210312/16155457318502.jpg',
+      'm4_8': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20210715/16263281507258.jpg',
+      'm4_9': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20210915/16316995903827.jpg',
+      'm4_10': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20220516/16526869593306.png',
+      'm4_11': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20221011/16654598587252.png',
+      'm4_12': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20240526/17167362763162.png',
+      'm4_13': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20231221/17031734536016.png',
+      'm4_14': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20241126/17326359998189.png',
+      'm4_15': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20250919/17582127372131.png',
+      'm4_16': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20251118/17634577032615.png',
+      'm3_1': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps///image/20171211/31_8827468.jpg',
+      'm3_2': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20181011/b1b25310d6f371cf1a1d607a585e8d82.jpg',
+      'm3_3': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20190717/54ec6a4988a53867f527e2be8cb0f92b.jpg',
+      'm3_4': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20200921/25267e48557d7452e401e470886dc721.jpg',
+      'm3_5': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps///image/20210108/c4234de94254c7118bcd8c15517b42a6.jpg',
+      'm3_6': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20210823/16296862647665.jpg',
+      'm3_7': 'https://i.ibb.co/VYXpsN9b/16526827657994.png',
+      'm3_8': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20221123/16692118937198.png',
+      'm3_9': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20231121/17005788209567.png',
+      'm3_10': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20230919/16951270513077.png',
+      'm3_11': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20230724/16901918219353.png',
+      'm3_12': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20230724/16901915868769.png',
+      'm3_13': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20240725/17218374934897.png',
+      'm3_14': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20250721/17530812968308.png',
     };
 
-    // --- HÌNH NỀN LIVESTREAM TỔNG THỂ (BROADCAST BACKGROUND) ---
-    // Gắn link ảnh nền cho màn hình Broadcast vào giữa 2 dấu nháy đơn. Để trống '' nếu không muốn dùng.
-    const BROADCAST_BACKGROUND_IMAGE = 'https://i.ibb.co/TxWgMDKd/Untitled.png'; // Tôi đã để sẵn 1 ảnh minh họa cực xịn
+    const BROADCAST_BACKGROUND_IMAGE = 'https://i.ibb.co/TxWgMDKd/Untitled.png';
 
     const MAX_GAMES = MAP_POOL.reduce((total, group) => total + group.maps.length, 0); 
     const NORMAL_TOP_SCORE = 11;
@@ -270,11 +258,11 @@
         defPlayer: "VDV", defGame: "Game", selectMap: "Tìm & Chọn Map", searchPh: "Nhập tên map...", 
         infoBtn: "Hướng Dẫn", infoTitle: "CƠ CHẾ TÍNH ĐIỂM & SỬ DỤNG", 
         i1: "Nhập nhanh: Gõ thẳng số (VD: nhập 10704 hệ thống sẽ hiểu là 1:07.04).", i2: "Về nhất: 11 điểm.", 
-        i3: "King Map: Mỗi người chơi được chọn King Map cho mình. Về nhất đúng King Map của mình sẽ được +12 điểm.", 
+        i3: "King Map: Mỗi người chơi được chỉ định King Map cho mình. Về nhất đúng King Map của mình sẽ được +12 điểm.", 
         i4: "Người về sau sẽ bị trừ dần điểm theo độ trễ thời gian:", i5: "Không hoàn thành (nhập X): 0 điểm.", 
         soloMode: "Đua Đơn", teamMode: "Đua Đội", modeSolo: "Chế Độ: Đua Đơn", mode2v2: "Chế Độ: 2vs2", mode3v3: "Chế Độ: 3vs3",
         indivTotal: "ĐIỂM CÁ NHÂN", teamTotal: "TỔNG ĐIỂM ĐỘI", team1: "ĐỘI XANH", team2: "ĐỘI ĐỎ", 
-        i6: "Quyền chọn Map: Trận 2 đến N là King Map của từng VĐV/Đội. Các trận sau: Đua đơn -> VĐV hạng 2 chọn. Đua đội -> Đội có tổng điểm thấp hơn chọn. (Hòa điểm -> xét người/đội có điểm thấp hơn ở map liền trước).", 
+        i6: "Quyền chọn Map: Trận 2 đến N là King Map của từng VĐV/Đội (tự luân phiên). Các trận sau: Đua đơn -> VĐV hạng 2 chọn. Đua đội -> Đội có tổng điểm thấp hơn chọn. (Hòa điểm -> xét đội có điểm thấp hơn ở map liền trước).", 
         map1Pick: "TRẬN 1: MAP CHỈ ĐỊNH (KHÔNG CÓ QUYỀN CHỌN)", kingMapPick: "TRẬN {0}: KING MAP CỦA {1}", normalPick: "TRẬN {0}: LƯỢT CHỌN MAP CỦA {1}", 
         broadcastBtn: "Giao Diện Livestream", pick: "LƯỢT CHỌN", closeBtn: "Thoát / Close"
       },
@@ -288,11 +276,11 @@
         defPlayer: "Player", defGame: "Match", selectMap: "Search Map", searchPh: "Type map name...", 
         infoBtn: "Guide", infoTitle: "SCORING RULES & USAGE", 
         i1: "Quick Input: Type numbers directly (e.g., 10704 becomes 1:07.04).", i2: "1st Place: 11 points.", 
-        i3: "King Map: Players choose their own King Map. 1st place on their chosen King Map gets +12 points.", 
+        i3: "King Map: Designated King Maps for each player. 1st place on their King Map gets +12 points.", 
         i4: "Subsequent players lose points based on time gap:", i5: "DNF (type X): 0 points.", 
         soloMode: "Solo Mode", teamMode: "Team Mode", modeSolo: "Mode: Solo", mode2v2: "Mode: 2vs2", mode3v3: "Mode: 3vs3",
         indivTotal: "INDIV. SCORE", teamTotal: "TEAM TOTAL", team1: "BLUE TEAM", team2: "RED TEAM", 
-        i6: "Map Picking: Matches 2 to N are King Maps. After: Solo -> 2nd place player picks. Team -> Team with lower total score picks. (If tied, the one with lower score in the previous map picks).", 
+        i6: "Map Picking: Matches 2 to N are King Maps. After: Solo -> 2nd place player picks. Team -> Team with lower total score picks.", 
         map1Pick: "MATCH 1: DESIGNATED MAP", kingMapPick: "MATCH {0}: {1}'S KING MAP", normalPick: "MATCH {0}: {1}'S PICK", 
         broadcastBtn: "Broadcast View", pick: "PICK", closeBtn: "Close"
       },
@@ -306,10 +294,10 @@
         defPlayer: "选手", defGame: "比赛", selectMap: "搜索赛道", searchPh: "输入赛道名称...", 
         infoBtn: "指南", infoTitle: "计分规则与使用方法", 
         i1: "快速输入: 直接输入数字（例：10704 会自动转为 1:07.04）。", i2: "第一名：11分。", 
-        i3: "王牌赛道：选手可选择自己的王牌赛道。获得第一名可得 12分。", i4: "后续选手根据落后时间扣分：", i5: "未完成（输入 X）：0分。", 
+        i3: "王牌赛道：选手的专属王牌赛道。获得第一名可得 12分。", i4: "后续选手根据落后时间扣分：", i5: "未完成（输入 X）：0分。", 
         soloMode: "单人赛", teamMode: "组队赛", modeSolo: "模式：单人赛", mode2v2: "模式：2v2", mode3v3: "模式：3v3",
         indivTotal: "个人总分", teamTotal: "队伍总分", team1: "蓝队", team2: "红队", 
-        i6: "选图规则: 第2到N局为王牌赛道。之后：单人赛 -> 总分第二的选手选图。组队赛 -> 总分较低的队伍选图。(若同分，则上一局得分较低者选图)。", 
+        i6: "选图规则: 第2到N局为王牌赛道。之后：单人赛 -> 总分第二的选手选图。组队赛 -> 总分较低的队伍选图。", 
         map1Pick: "第1局：官方指定赛道", kingMapPick: "第{0}局：{1} 的王牌赛道", normalPick: "第{0}局：由 {1} 选图", 
         broadcastBtn: "直播界面", pick: "选图", closeBtn: "关闭"
       },
@@ -323,10 +311,10 @@
         defPlayer: "選手", defGame: "比賽", selectMap: "搜尋賽道", searchPh: "輸入賽道名稱...", 
         infoBtn: "指南", infoTitle: "計分規則與使用方法", 
         i1: "快速輸入: 直接輸入數字（例：10704 會自動轉為 1:07.04）。", i2: "第一名：11分。", 
-        i3: "王牌賽道：選手可選擇自己的王牌賽道。獲得第一名可得 12分。", i4: "後續選手根據落後時間扣分：", i5: "未完成（輸入 X）：0分。", 
+        i3: "王牌賽道：選手專屬的王牌賽道。獲得第一名可得 12分。", i4: "後續選手根據落後時間扣分：", i5: "未完成（輸入 X）：0分。", 
         soloMode: "單人賽", teamMode: "組隊賽", modeSolo: "模式：單人賽", mode2v2: "模式：2v2", mode3v3: "模式：3v3",
         indivTotal: "個人總分", teamTotal: "隊伍總分", team1: "藍隊", team2: "紅隊", 
-        i6: "選圖規則: 第2到N局為王牌賽道。之後：單人賽 -> 總分第二的選手選圖。組隊賽 -> 總分較低的隊伍選圖。(若同分，則上一局得分較低者選圖)。", 
+        i6: "選圖規則: 第2到N局為王牌賽道。之後：單人賽 -> 總分第二的選手選圖。組隊賽 -> 總分較低的隊伍選圖。", 
         map1Pick: "第1局：官方指定賽道", kingMapPick: "第{0}局：{1} 的王牌賽道", normalPick: "第{0}局：由 {1} 選圖", 
         broadcastBtn: "直播介面", pick: "選圖", closeBtn: "關閉"
       },
@@ -340,10 +328,10 @@
         defPlayer: "ผู้เล่น", defGame: "เกม", selectMap: "ค้นหาแผนที่", searchPh: "พิมพ์ชื่อแผนที่...", 
         infoBtn: "คู่มือ", infoTitle: "กฎการให้คะแนนและการใช้งาน", 
         i1: "ป้อนข้อมูลด่วน: พิมพ์ตัวเลข (เช่น 10704 จะกลายเป็น 1:07.04)", i2: "อันดับ 1: 11 แต้ม", 
-        i3: "King Map: ผู้เล่นเลือก King Map ของตัวเอง หากได้อันดับ 1 ใน King Map จะได้ +12 แต้ม", i4: "ผู้เล่นคนอื่นจะถูกหักคะแนนตามช่องว่างเวลา:", i5: "ไม่จบการแข่งขัน (พิมพ์ X): 0 แต้ม", 
+        i3: "King Map: แผนที่ King สำหรับผู้เล่นแต่ละคน หากได้อันดับ 1 ใน King Map จะได้ +12 แต้ม", i4: "ผู้เล่นคนอื่นจะถูกหักคะแนนตามช่องว่างเวลา:", i5: "ไม่จบการแข่งขัน (พิมพ์ X): 0 แต้ม", 
         soloMode: "แข่งเดี่ยว", teamMode: "แข่งทีม", modeSolo: "โหมด: เดี่ยว", mode2v2: "โหมด: 2vs2", mode3v3: "โหมด: 3vs3",
         indivTotal: "คะแนนส่วนตัว", teamTotal: "คะแนนทีมรวม", team1: "ทีมสีน้ำเงิน", team2: "ทีมสีแดง", 
-        i6: "การเลือกแผนที่: แมตช์ 2 ถึง N คือ King Maps หลังจากนั้น: เดี่ยว -> ผู้เล่นอันดับ 2 เลือก ทีม -> ทีมที่มีคะแนนรวมต่ำกว่าเลือก (หากเสมอ ให้คนที่คะแนนน้อยกว่าในแมตช์ก่อนหน้าเลือก)", 
+        i6: "การเลือกแผนที่: แมตช์ 2 ถึง N คือ King Maps หลังจากนั้น: เดี่ยว -> ผู้เล่นอันดับ 2 เลือก ทีม -> ทีมที่มีคะแนนรวมต่ำกว่าเลือก", 
         map1Pick: "แมตช์ 1: แผนที่ที่กำหนด", kingMapPick: "แมตช์ {0}: KING MAP ของ {1}", normalPick: "แมตช์ {0}: สิทธิ์การเลือกของ {1}", 
         broadcastBtn: "มุมมองถ่ายทอดสด", pick: "เลือก", closeBtn: "ปิด / Close"
       }
@@ -513,7 +501,7 @@
               const containerWidth = containerRef.current.clientWidth;
               const textWidth = textRef.current.scrollWidth;
               if (textWidth > containerWidth && containerWidth > 0) {
-                const scale = (containerWidth / textWidth) * 0.95; // Thu nhỏ lại 95% tỷ lệ thật để có khoảng thở hai bên
+                const scale = (containerWidth / textWidth) * 0.95; 
                 textRef.current.style.transform = `scale(${scale})`;
               }
             }
@@ -541,10 +529,10 @@
       const isTeamMode = gameMode !== 'solo';
       const displayRounds = Math.max(9, games.length);
       const rounds = Array.from({ length: displayRounds }).map((_, i) => games[i] || null);
+      const halfLen = Math.floor(players.length / 2);
 
       return (
         <div className="fixed inset-0 z-[999] bg-[#f0f4f8] flex flex-col font-sans overflow-hidden animate-slide-up">
-          {/* Ảnh nền Broadcast (nếu có) với hiệu ứng Zoom mượt mà */}
           {BROADCAST_BACKGROUND_IMAGE && (
              <div 
                className="absolute inset-0 z-0 bg-cover bg-center animate-slow-zoom opacity-50 pointer-events-none" 
@@ -552,13 +540,9 @@
              ></div>
           )}
           
-          {/* Nền Livestream Chuyên nghiệp (Lưới ma trận) */}
           <div className="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] [background-size:30px_30px] opacity-60 pointer-events-none z-0"></div>
-          
-          {/* Tia quét Scanline chuẩn Esports */}
           <div className="absolute inset-0 w-full h-[8px] bg-gradient-to-b from-transparent via-cyan-400/40 to-transparent blur-[2px] pointer-events-none z-0 animate-scanline"></div>
 
-          {/* Glow 2 góc với hiệu ứng nhịp thở (Pulse) */}
           <div className="absolute -left-[10%] -top-[10%] w-[40%] h-[40%] bg-[#13c0eb] blur-[150px] opacity-30 rounded-full pointer-events-none z-0 animate-[pulse_4s_ease-in-out_infinite]"></div>
           <div className="absolute -right-[10%] -bottom-[10%] w-[40%] h-[40%] bg-blue-600 blur-[150px] opacity-30 rounded-full pointer-events-none z-0 animate-[pulse_5s_ease-in-out_infinite]"></div>
           
@@ -566,7 +550,6 @@
             {tournamentName}
           </div>
 
-          {/* Header Bảng Livestream */}
           <div className="relative w-full h-[9vh] min-h-[60px] flex items-center justify-between px-10 bg-white shadow-sm border-b border-gray-200 z-10 shrink-0">
             <div className="text-xl md:text-2xl font-black italic text-[#13c0eb] tracking-widest uppercase truncate max-w-[30%]">
               {tournamentName}
@@ -584,15 +567,12 @@
             </div>
           </div>
 
-          {/* Main Grid Livestream */}
           <div className="flex-1 w-full max-w-[1920px] mx-auto p-4 md:p-8 flex flex-col justify-center min-h-0 z-10">
             <div className="w-full bg-[#1e293b]/60 backdrop-blur-md rounded-xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col h-[82vh] border border-slate-700/50">
               
-              {/* VÙNG CUỘN NGANG DÀNH RIÊNG CHO HEADER VÀ NỘI DUNG MAP */}
               <div className="flex-1 overflow-x-auto overflow-y-hidden hide-scrollbar flex flex-col bg-transparent">
                 <div className="flex flex-col h-full min-w-max">
                   
-                  {/* Vòng Đấu Header */}
                   <div className="flex bg-gradient-to-r from-[#0ea5e9] to-[#0284c7] sticky top-0 z-30 shadow-md shrink-0">
                     {rounds.map((_, i) => (
                       <div key={`header_${i}`} className="flex-1 min-w-[140px] md:min-w-[160px] py-3 md:py-4 text-center border-r border-white/20 last:border-r-0 relative overflow-hidden">
@@ -602,7 +582,6 @@
                     ))}
                   </div>
 
-                  {/* Nội dung điểm số các ván */}
                   <div className="flex-1 flex w-full min-h-0">
                     {rounds.map((game, gIndex) => {
                       const isPlayed = game && game.times.some(t => t !== '');
@@ -623,9 +602,7 @@
 
                       return (
                         <div key={`play_${gIndex}`} className="flex-1 min-w-[140px] md:min-w-[160px] flex flex-col relative border-r border-white/10 h-full overflow-hidden group" style={style}>
-                          {/* Lớp phủ làm tối mờ hình ảnh để nổi bật chữ */}
                           <div className="absolute inset-0 bg-black/50 backdrop-blur-[1px] transition-all group-hover:bg-black/30 z-0"></div> 
-                          {/* Viền sáng bao quanh cột đang có điểm */}
                           <div className="absolute inset-0 border border-cyan-500/20 z-0 pointer-events-none"></div>
                           
                           <div className="relative z-10 flex-1 flex flex-col py-1 md:py-2 h-full min-h-0 justify-center">
@@ -637,18 +614,15 @@
                               const is6P = players.length > 4;
                               
                               return (
-                                <div key={`g${gIndex}_p${pIndex}`} className="flex-1 flex flex-col items-center justify-center relative min-h-0 mx-1 group/item hover:bg-white/10 transition-colors rounded">
-                                   {/* VƯƠNG MIỆN LƠ LỬNG TRÊN ĐẦU */}
+                                <div key={`g${gIndex}_p${pIndex}`} className={`flex-1 flex flex-col items-center justify-center relative min-h-0 mx-1 group/item hover:bg-white/10 transition-colors rounded ${isTeamMode && pIndex === halfLen ? 'border-t-2 border-white/20 mt-1 pt-1' : ''}`}>
                                    {c.isKingMap && isTop && (
                                      <div className={`absolute ${is6P ? '-top-1 md:top-0' : 'top-0 md:top-1'} left-1/2 -translate-x-1/2 w-full flex justify-center`}>
                                        <Crown size={is6P ? 12 : 16} className="text-[#fce300] animate-bounce drop-shadow-[0_0_8px_rgba(252,227,0,1)]"/>
                                      </div>
                                    )}
-                                   {/* TÊN TUYỂN THỦ TRONG TỪNG MAP */}
                                    <span className={`${is6P ? 'text-[9px] md:text-[11px] mt-2' : 'text-[11px] md:text-[13px] mt-4'} font-bold truncate w-[90%] text-center leading-normal py-0.5 ${textColor} drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]`}>
                                      {playerName}
                                    </span>
-                                   {/* ĐIỂM SỐ */}
                                    {time ? (
                                       <span className={`${is6P ? 'text-[15px] md:text-[18px]' : 'text-xl md:text-2xl'} font-black mt-0.5 leading-none ${isTop ? 'text-[#fce300] drop-shadow-[0_0_8px_rgba(252,227,0,0.8)]' : 'text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]'}`}>
                                         +{c.score}
@@ -671,24 +645,21 @@
                 </div>
               </div>
 
-              {/* FOOTER TỔNG ĐIỂM - GLASSMORPHISM TẠO SỰ SANG TRỌNG */}
               <div className="flex bg-[#0f172a]/80 backdrop-blur-xl border-t border-slate-700/50 shadow-[0_-10px_30px_rgba(0,0,0,0.5)] h-16 md:h-20 w-full shrink-0 relative z-20">
                 {isTeamMode ? (
                    <div className="flex w-full h-full relative">
-                     {/* Đội 1 */}
                      <div className="flex-1 flex flex-col items-center justify-center bg-gradient-to-r from-blue-900/50 to-blue-800/30 backdrop-blur-md relative overflow-hidden">
                         <div className="absolute right-0 top-0 bottom-0 w-1 bg-blue-500 shadow-[0_0_15px_#3b82f6]"></div>
                         <span className="text-blue-200 font-black text-sm md:text-base uppercase tracking-widest drop-shadow-md z-10">{t.team1}</span>
                         <span className="text-white font-black text-3xl md:text-5xl mt-0.5 drop-shadow-[0_0_15px_rgba(59,130,246,0.5)] leading-none z-10">
-                           {totals.filter((_, i) => i % 2 === 0).reduce((a, b) => a + b, 0)}
+                           {totals.filter((_, i) => i < halfLen).reduce((a, b) => a + b, 0)}
                         </span>
                      </div>
-                     {/* Đội 2 */}
                      <div className="flex-1 flex flex-col items-center justify-center bg-gradient-to-l from-red-900/50 to-red-800/30 backdrop-blur-md relative overflow-hidden">
                         <div className="absolute left-0 top-0 bottom-0 w-1 bg-red-500 shadow-[0_0_15px_#ef4444]"></div>
                         <span className="text-red-200 font-black text-sm md:text-base uppercase tracking-widest drop-shadow-md z-10">{t.team2}</span>
                         <span className="text-white font-black text-3xl md:text-5xl mt-0.5 drop-shadow-[0_0_15px_rgba(239,68,68,0.5)] leading-none z-10">
-                           {totals.filter((_, i) => i % 2 === 1).reduce((a, b) => a + b, 0)}
+                           {totals.filter((_, i) => i >= halfLen).reduce((a, b) => a + b, 0)}
                         </span>
                      </div>
                    </div>
@@ -705,7 +676,6 @@
 
             </div>
 
-            {/* Dòng chữ phụ chú phía dưới */}
             <div className="text-center mt-2 md:mt-3 text-xl md:text-2xl font-black italic tracking-[0.5em] text-[#263655] uppercase opacity-70 truncate px-4">
               {tournamentName}
             </div>
@@ -744,7 +714,6 @@
         }));
       });
 
-      // --- DYNAMIC TRANSLATION HOOK ---
       useEffect(() => {
         const allDefP = Object.values(TRANSLATIONS).map(tr => tr.defPlayer);
         const currentT = TRANSLATIONS[lang];
@@ -759,7 +728,6 @@
         }));
       }, [lang]);
 
-      // --- AUTO SAVE ---
       useEffect(() => { localStorage.setItem('zsm_lang_v11_final', lang); }, [lang]);
       useEffect(() => { localStorage.setItem('zsm_tour_name', tournamentName); }, [tournamentName]);
       useEffect(() => { localStorage.setItem('zsm_game_mode_v11', gameMode); }, [gameMode]);
@@ -781,19 +749,18 @@
 
           setGameMode(nextMode);
 
-          // Tự động điều chỉnh số lượng người chơi cho tiện lợi
           if (nextMode === 'solo' || nextMode === '2v2') {
              let newP = [...players];
              if (newP.length < 4) {
                  while(newP.length < 4) newP.push(`${t.defPlayer} ${newP.length + 1}`);
              } else if (newP.length > 4) {
-                 newP = newP.slice(0, 4); // Cắt về 4 nếu đang từ 3vs3
+                 newP = newP.slice(0, 4); 
              }
              setPlayers(newP);
              setGames(games.map(g => {
                  let nt = [...g.times];
                  while(nt.length < 4) nt.push('');
-                 return {...g, times: nt.slice(0,4)}; // Cắt điểm dư
+                 return {...g, times: nt.slice(0,4)}; 
              }));
           } else if (nextMode === '3v3') {
              let newP = [...players];
@@ -846,6 +813,7 @@
       const exportProfessionalExcel = async () => {
         const workbook = new ExcelJS.Workbook();
         const sheet = workbook.addWorksheet('Leaderboard');
+        const halfLen = Math.floor(players.length / 2);
 
         const modeText = gameMode === 'solo' ? t.modeSolo : gameMode === '2v2' ? t.mode2v2 : t.mode3v3;
         const lastColIndex = 2 + (players.length * 2);
@@ -871,7 +839,7 @@
           pCell.value = p;
           
           let headerColor = 'FFDDEBF7'; 
-          if (isTeamMode) headerColor = (i % 2 === 0) ? 'FFBFDBFE' : 'FFFECACA'; 
+          if (isTeamMode) headerColor = (i < halfLen) ? 'FFBFDBFE' : 'FFFECACA'; 
           
           pCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: headerColor } }; 
           pCell.font = { bold: true };
@@ -938,8 +906,8 @@
 
         if (isTeamMode) {
           lastRowIndex = totalRow + 1;
-          const team1Score = totals.filter((_, i) => i % 2 === 0).reduce((a, b) => a + b, 0);
-          const team2Score = totals.filter((_, i) => i % 2 === 1).reduce((a, b) => a + b, 0);
+          const team1Score = totals.filter((_, i) => i < halfLen).reduce((a, b) => a + b, 0);
+          const team2Score = totals.filter((_, i) => i >= halfLen).reduce((a, b) => a + b, 0);
           
           sheet.mergeCells(lastRowIndex, 1, lastRowIndex, 2);
           const teamLabelCell = sheet.getCell(lastRowIndex, 1);
@@ -1004,7 +972,18 @@
         const bestTime = valids.length > 0 ? Math.min(...valids) : null;
 
         return parsed.map((timeMs, pIndex) => {
-          const isKingMap = (gameIndex === pIndex + 1); 
+          // Xử lý lại logic King Map khi chia nửa team
+          let kingMapGameIndex = pIndex + 1;
+          if (gameMode !== 'solo') {
+             const H = Math.floor(times.length / 2);
+             if (pIndex < H) {
+                kingMapGameIndex = 1 + pIndex * 2; // Team 1: trận 2, 4, 6...
+             } else {
+                kingMapGameIndex = 2 + (pIndex - H) * 2; // Team 2: trận 3, 5, 7...
+             }
+          }
+          const isKingMap = (gameIndex === kingMapGameIndex); 
+
           if (timeMs === null) return { score: 0, isBest: false, isKingMap, colorClass: 'text-slate-600 bg-slate-900/50 border-transparent' };
           
           const isBest = (timeMs === bestTime);
@@ -1031,13 +1010,14 @@
       }, [games, players]);
 
       const activeLeaderboard = useMemo(() => {
+        const halfLen = Math.floor(players.length / 2);
         if (isTeamMode) {
-          const team1Score = totals.filter((_, i) => i % 2 === 0).reduce((a, b) => a + b, 0);
-          const team2Score = totals.filter((_, i) => i % 2 === 1).reduce((a, b) => a + b, 0);
+          const team1Score = totals.filter((_, i) => i < halfLen).reduce((a, b) => a + b, 0);
+          const team2Score = totals.filter((_, i) => i >= halfLen).reduce((a, b) => a + b, 0);
           
           const teams = [
-            { id: 'team1', name: t.team1, playersStr: players.filter((_, i) => i % 2 === 0).join(' & '), score: team1Score, isT1: true },
-            { id: 'team2', name: t.team2, playersStr: players.filter((_, i) => i % 2 === 1).join(' & '), score: team2Score, isT1: false }
+            { id: 'team1', name: t.team1, playersStr: players.filter((_, i) => i < halfLen).join(' & '), score: team1Score, isT1: true },
+            { id: 'team2', name: t.team2, playersStr: players.filter((_, i) => i >= halfLen).join(' & '), score: team2Score, isT1: false }
           ];
           
           if (players.length < 2) teams.pop();
@@ -1064,15 +1044,25 @@
         if (nextIdx === 0) return { show: true, text: t.map1Pick }; 
 
         if (nextIdx >= 1 && nextIdx < players.length + 1) {
-            const pickerName = players[nextIdx - 1];
-            return { show: true, text: t.kingMapPick.replace('{0}', nextIdx + 1).replace('{1}', pickerName), pIndex: nextIdx - 1 };
+            let kingPlayerIndex = nextIdx - 1;
+            if (isTeamMode) {
+                const H = Math.floor(players.length / 2);
+                if (nextIdx % 2 !== 0) { // Lượt lẻ (trận 2,4,6) -> Đội 1
+                    kingPlayerIndex = Math.floor((nextIdx - 1) / 2);
+                } else { // Lượt chẵn (trận 3,5,7) -> Đội 2
+                    kingPlayerIndex = H + Math.floor((nextIdx - 2) / 2);
+                }
+            }
+            const pickerName = players[kingPlayerIndex];
+            return { show: true, text: t.kingMapPick.replace('{0}', nextIdx + 1).replace('{1}', pickerName), pIndex: kingPlayerIndex };
         }
 
         const actualLastGameIndex = nextIdx - 1; 
+        const halfLen = Math.floor(players.length / 2);
         
         if (isTeamMode) {
-          const t1Score = totals.filter((_, i) => i % 2 === 0).reduce((a, b) => a + b, 0);
-          const t2Score = totals.filter((_, i) => i % 2 === 1).reduce((a, b) => a + b, 0);
+          const t1Score = totals.filter((_, i) => i < halfLen).reduce((a, b) => a + b, 0);
+          const t2Score = totals.filter((_, i) => i >= halfLen).reduce((a, b) => a + b, 0);
           let isT1 = true;
 
           if (t1Score < t2Score) {
@@ -1081,8 +1071,8 @@
               isT1 = false;
           } else {
               const lastGameCalcs = getGameCalculations(actualLastGameIndex, games[actualLastGameIndex].times);
-              const lastT1Score = lastGameCalcs.filter((_, i) => i % 2 === 0).reduce((a, b) => a + b.score, 0);
-              const lastT2Score = lastGameCalcs.filter((_, i) => i % 2 === 1).reduce((a, b) => a + b.score, 0);
+              const lastT1Score = lastGameCalcs.filter((_, i) => i < halfLen).reduce((a, b) => a + b.score, 0);
+              const lastT2Score = lastGameCalcs.filter((_, i) => i >= halfLen).reduce((a, b) => a + b.score, 0);
               isT1 = lastT1Score <= lastT2Score;
           }
 
@@ -1244,7 +1234,8 @@
             <div className="grid lg:grid-cols-4 gap-4 md:gap-6">
               
               <div className="lg:col-span-3 bg-[#0f172a] border border-slate-700/50 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.8)] overflow-hidden animate-slide-up delay-100 flex flex-col max-h-[75vh]">
-                {/* Scroll Area */}
+                
+                {}
                 <div className="overflow-x-auto overflow-y-auto flex-1 bg-[#0f172a]">
                   <table className="w-full text-xs md:text-sm border-collapse">
                     <thead className="sticky top-0 z-40 bg-[#0f172a] shadow-[0_5px_15px_rgba(0,0,0,0.8)] border-b border-slate-700">
@@ -1252,9 +1243,11 @@
                         <th className="px-1 md:px-2 py-3 text-center w-8 md:w-12 text-slate-500 font-bold">{t.no}</th>
                         <th className="px-1 md:px-2 py-3 text-left w-24 md:w-48 tracking-widest text-slate-300 font-bold whitespace-nowrap">{t.match}</th>
                         {players.map((p, i) => {
-                          const isPicker = nextPickerData && nextPickerData.show && (nextPickerData.pIndex === i || (nextPickerData.isT1 !== undefined && nextPickerData.isT1 === (i%2===0)));
+                          const halfLen = Math.floor(players.length / 2);
+                          const isT1 = i < halfLen;
+                          const isPicker = nextPickerData && nextPickerData.show && (nextPickerData.pIndex === i || (nextPickerData.isT1 !== undefined && nextPickerData.isT1 === isT1));
                           return (
-                            <th key={i} className={`px-1 md:px-2 py-3 min-w-[80px] md:min-w-[140px] relative group border-b-2 bg-[#0f172a] ${isPicker ? 'bg-purple-900/30 border-purple-500' : isTeamMode ? (i%2===0 ? 'border-blue-500/50 bg-blue-900/10' : 'border-red-500/50 bg-red-900/10') : 'border-slate-800 bg-[#0f172a]'}`}>
+                            <th key={i} className={`px-1 md:px-2 py-3 min-w-[80px] md:min-w-[140px] relative group border-b-2 bg-[#0f172a] ${isPicker ? 'bg-purple-900/30 border-purple-500' : isTeamMode ? (isT1 ? 'border-blue-500/50 bg-blue-900/10' : 'border-red-500/50 bg-red-900/10') : 'border-slate-800 bg-[#0f172a]'}`}>
                               {isPicker && (
                                 <div className="absolute top-1 left-1 md:left-2 text-[8px] md:text-[9px] bg-purple-600 text-white px-1.5 py-0.5 rounded animate-pulse shadow-[0_0_8px_#9333ea] z-10 pointer-events-none font-black tracking-widest flex items-center gap-0.5">
                                   <span>🎯</span> <span className="hidden sm:inline">{t.pick}</span>
@@ -1263,7 +1256,7 @@
                               <input 
                                 type="text" value={p}
                                 onChange={(e) => { const n=[...players]; n[i]=e.target.value; setPlayers(n); }}
-                                className={`w-full bg-transparent border-b-2 outline-none text-center pb-1 text-sm md:text-lg font-bold hover:border-slate-400 ${isPicker ? 'text-purple-300 border-purple-500 focus:border-purple-400' : isTeamMode ? (i%2===0 ? 'text-blue-100 border-slate-700 focus:border-blue-500' : 'text-red-100 border-slate-700 focus:border-red-500') : 'text-white border-slate-700 focus:border-cyan-400'}`}
+                                className={`w-full bg-transparent border-b-2 outline-none text-center pb-1 text-sm md:text-lg font-bold hover:border-slate-400 ${isPicker ? 'text-purple-300 border-purple-500 focus:border-purple-400' : isTeamMode ? (isT1 ? 'text-blue-100 border-slate-700 focus:border-blue-500' : 'text-red-100 border-slate-700 focus:border-red-500') : 'text-white border-slate-700 focus:border-cyan-400'}`}
                               />
                               <button onClick={() => removePlayer(i)} className="absolute top-1 right-1 p-1 text-slate-500 hover:text-white hover:bg-red-500 opacity-100 md:opacity-0 group-hover:opacity-100 transition-all bg-slate-800 rounded-full border border-slate-700 shadow-lg z-10">
                                 <XIcon size={10}/>
@@ -1294,7 +1287,7 @@
                             {game.times.map((time, pIndex) => {
                               const { score, isKingMap, colorClass } = calcs[pIndex];
                               return (
-                                <td key={pIndex} className={`px-1 md:px-2 py-2 relative z-10 ${isTeamMode && pIndex % 2 === 0 ? 'border-l border-white/5' : ''}`}>
+                                <td key={pIndex} className={`px-1 md:px-2 py-2 relative z-10 ${isTeamMode && pIndex === Math.floor(players.length / 2) ? 'border-l-2 border-slate-700/50 bg-black/10' : ''}`}>
                                   <div className={`relative flex flex-col gap-0.5 md:gap-1 p-1 md:p-2 rounded md:rounded-lg border transition-all duration-300 hover:bg-white/[0.05] hover:-translate-y-[1px] ${colorClass}`}>
                                     {isKingMap && (
                                       <div className="absolute -top-2 md:-top-3 left-1/2 -translate-x-1/2 flex items-center gap-0.5 bg-red-600 px-1 md:px-2 rounded text-[7px] md:text-[9px] uppercase font-bold tracking-widest text-white shadow-[0_0_15px_#dc2626] z-10 whitespace-nowrap animate-pulse">
@@ -1313,6 +1306,7 @@
                     </tbody>
                   </table>
                 </div>
+                
                 {/* FOOTER FIXED - NẰM NGOÀI CUỘN */}
                 <div className="bg-[#0f172a] shadow-[0_-10px_30px_rgba(0,0,0,0.5)] border-t border-slate-700 z-30 shrink-0 overflow-hidden">
                     <table className="w-full text-xs md:text-sm border-collapse">
@@ -1324,7 +1318,7 @@
                           <td className="p-0">
                             <div className="flex w-full">
                               {totals.map((total, i) => (
-                                <div key={i} className="flex-1 px-1 md:px-2 py-2 md:py-3 text-center border-l border-white/5 first:border-l-0">
+                                <div key={i} className={`flex-1 px-1 md:px-2 py-2 md:py-3 text-center border-white/5 ${isTeamMode && i === Math.floor(players.length/2) ? 'border-l-2 border-slate-700/50' : 'border-l'}`}>
                                   <span className={`${isTeamMode ? 'text-sm md:text-lg font-bold text-slate-400 drop-shadow-none' : 'text-lg md:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400 drop-shadow-[0_0_15px_rgba(255,255,255,0.4)] cursor-default'}`}>
                                     {total}
                                   </span>
@@ -1341,13 +1335,13 @@
                             <td className="p-0">
                                <div className="flex w-full">
                                   <div className="flex-1 px-1 md:px-2 py-2 md:py-3 text-center border-l-2 border-amber-500/30">
-                                     <span className="text-xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-b from-amber-200 to-amber-500 drop-shadow-[0_0_20px_rgba(245,158,11,0.6)] cursor-default">
-                                        {totals.filter((_, i) => i % 2 === 0).reduce((a, b) => a + b, 0)}
+                                     <span className="text-xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-b from-blue-300 to-blue-500 drop-shadow-[0_0_20px_rgba(59,130,246,0.6)] cursor-default">
+                                        {totals.filter((_, i) => i < Math.floor(players.length/2)).reduce((a, b) => a + b, 0)}
                                      </span>
                                   </div>
                                   <div className="flex-1 px-1 md:px-2 py-2 md:py-3 text-center border-l-2 border-amber-500/30">
-                                     <span className="text-xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-b from-amber-200 to-amber-500 drop-shadow-[0_0_20px_rgba(245,158,11,0.6)] cursor-default">
-                                        {totals.filter((_, i) => i % 2 === 1).reduce((a, b) => a + b, 0)}
+                                     <span className="text-xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-b from-red-300 to-red-500 drop-shadow-[0_0_20px_rgba(239,68,68,0.6)] cursor-default">
+                                        {totals.filter((_, i) => i >= Math.floor(players.length/2)).reduce((a, b) => a + b, 0)}
                                      </span>
                                   </div>
                                </div>
@@ -1359,6 +1353,7 @@
                 </div>
               </div>
 
+              {}
               <div className="lg:col-span-1 animate-slide-up delay-200 order-first lg:order-last flex flex-col gap-4">
                 <div className="bg-slate-900/80 backdrop-blur-xl border border-slate-700/50 rounded-xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.6)]">
                   <div className="bg-slate-950 px-4 md:px-6 py-3 border-b border-slate-800 flex items-center justify-between">
@@ -1394,7 +1389,7 @@
                             <span className="text-[9px] text-slate-500 font-bold hidden sm:inline">{t.pts}</span>
                           </div>
 
-                          {/* THÔNG BÁO QUYỀN CHỌN MAP SIÊU TINH TẾ GẮN NGAY TẠI LEADERBOARD */}
+                          {/* THÔNG BÁO QUYỀN CHỌN MAP */}
                           {isPicker && (
                             <div className="absolute -top-3 -right-2 bg-purple-600 border border-purple-400 px-2 py-0.5 rounded text-[9px] font-black uppercase text-white shadow-[0_0_10px_#9333ea] animate-pulse whitespace-nowrap z-20 flex items-center gap-1">
                               🎯 {t.pick}
