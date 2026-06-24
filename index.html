@@ -133,6 +133,7 @@
     const Users = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>;
     const MonitorPlay = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line><polygon points="10 8 15 10 10 12 10 8"></polygon></svg>;
     const WheelIcon = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle><line x1="12" y1="2" x2="12" y2="8"></line><line x1="12" y1="16" x2="12" y2="22"></line><line x1="2" y1="12" x2="8" y2="12"></line><line x1="16" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"></line><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"></line><line x1="4.93" y1="19.07" x2="9.17" y2="14.83"></line><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"></line></svg>;
+    const Trophy = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg>;
 
     // --- MAP POOL ---
     const MAP_POOL = [
@@ -182,7 +183,7 @@
         { id: 'm3_5', vi: 'Trụ Sở Chính Alpha', en: 'Alpha Headquarters', cn: '阿尔法总部', tw: '阿爾法總部', th: 'ศูนย์บัญชาการอัลฟ่า' },
         { id: 'm3_6', vi: 'Quyết chiến! Đôi Mắt Miền Biển', en: 'Decisive Battle! Eye of the Sea', cn: '决战！海滨之眼', tw: '決戰！海濱之眼', th: 'ศึกตัดสิน! ดวงตาแห่งท้องทะเล' },
         { id: 'm3_7', vi: 'Thiên Cung Tầm Mộng', en: 'Dream of Heavenly Palace', cn: '寻梦天宫', tw: '尋夢天宫', th: 'วังในฝัน' },
-        { id: 'm3_8', vi: 'Căn Cứ Siêu Huyền', en: 'Superstring Base', cn: '超弦基地', tw: '超級基地', th: 'ฐานทัพซุปเปอร์' },
+        { id: 'm3_8', vi: 'Căn Cứ Siêu Huyền', en: '超弦基地', tw: '超級基地', th: 'ฐานทัพซุปเปอร์' },
         { id: 'm3_9', vi: 'Bóng Hình Eden', en: 'Glimpses of Eden', cn: '伊甸幻象', tw: '伊甸幻象', th: 'เงาแห่งอีเดน' },
         { id: 'm3_10', vi: 'Tuyệt Cảnh Giang Sơn', en: 'Stunning Jiangxi', cn: '绝色江西', tw: '絕色江西', th: 'ทิวทัศน์แม่น้ำ' },
         { id: 'm3_11', vi: 'Vành Đai Troy', en: 'The Circular City of Troy', cn: '特洛伊环城', tw: '特洛伊城', th: 'เมืองทรอย' },
@@ -264,7 +265,9 @@
         indivTotal: "ĐIỂM CÁ NHÂN", teamTotal: "TỔNG ĐIỂM ĐỘI", team1: "ĐỘI XANH", team2: "ĐỘI ĐỎ", 
         i6: "Quyền chọn Map: Trận 2 đến N là King Map của từng VĐV/Đội (tự luân phiên). Các trận sau: Đua đơn -> VĐV hạng 2 chọn. Đua đội -> Đội có tổng điểm thấp hơn chọn. (Hòa điểm -> xét đội có điểm thấp hơn ở map liền trước).", 
         map1Pick: "TRẬN 1: MAP CHỈ ĐỊNH (KHÔNG CÓ QUYỀN CHỌN)", kingMapPick: "TRẬN {0}: KING MAP CỦA {1}", normalPick: "TRẬN {0}: LƯỢT CHỌN MAP CỦA {1}", 
-        broadcastBtn: "Giao Diện Livestream", pick: "LƯỢT CHỌN", closeBtn: "Thoát / Close"
+        broadcastBtn: "Giao Diện Livestream", pick: "LƯỢT CHỌN", closeBtn: "Thoát / Close",
+        recordBtn: "Bảng Kỷ Lục", recordTitle: "🏆 BẢNG VÀNG KỶ LỤC MAP", backupBtn: "📥 Tải File Sao Lưu", restoreBtn: "📤 Phục Hồi Dữ Liệu", 
+        recordHolder: "Kỷ lục:", noRecord: "Chưa có kỷ lục", newRecordAlert: "🎉 KỶ LỤC MỚI: {0} đã phá kỷ lục map {1} với thời gian {2}!"
       },
       en: { 
         title: "SECOND-BASED SCORING SYSTEM", subtitle: "Designed and developed by koi", tourNamePh: "Enter tournament name...",
@@ -282,7 +285,9 @@
         indivTotal: "INDIV. SCORE", teamTotal: "TEAM TOTAL", team1: "BLUE TEAM", team2: "RED TEAM", 
         i6: "Map Picking: Matches 2 to N are King Maps. After: Solo -> 2nd place player picks. Team -> Team with lower total score picks.", 
         map1Pick: "MATCH 1: DESIGNATED MAP", kingMapPick: "MATCH {0}: {1}'S KING MAP", normalPick: "MATCH {0}: {1}'S PICK", 
-        broadcastBtn: "Broadcast View", pick: "PICK", closeBtn: "Close"
+        broadcastBtn: "Broadcast View", pick: "PICK", closeBtn: "Close",
+        recordBtn: "Records", recordTitle: "🏆 MAP RECORDS HALL OF FAME", backupBtn: "📥 Backup Data", restoreBtn: "📤 Restore Data", 
+        recordHolder: "Record:", noRecord: "No record yet", newRecordAlert: "🎉 NEW RECORD: {0} broke the {1} record with {2}!"
       },
       cn: { 
         title: "秒数计分系统", subtitle: "由 koi 设计与开发", tourNamePh: "输入锦标赛名称...",
@@ -299,7 +304,9 @@
         indivTotal: "个人总分", teamTotal: "队伍总分", team1: "蓝队", team2: "红队", 
         i6: "选图规则: 第2到N局为王牌赛道。之后：单人赛 -> 总分第二的选手选图。组队赛 -> 总分较低的队伍选图。", 
         map1Pick: "第1局：官方指定赛道", kingMapPick: "第{0}局：{1} 的王牌赛道", normalPick: "第{0}局：由 {1} 选图", 
-        broadcastBtn: "直播界面", pick: "选图", closeBtn: "关闭"
+        broadcastBtn: "直播界面", pick: "选图", closeBtn: "关闭",
+        recordBtn: "纪录", recordTitle: "🏆 赛道最高纪录", backupBtn: "📥 备份数据", restoreBtn: "📤 恢复数据", 
+        recordHolder: "纪录:", noRecord: "暂无纪录", newRecordAlert: "🎉 新纪录：{0} 以 {2} 打破了 {1} 的纪录！"
       },
       tw: { 
         title: "秒數計分系統", subtitle: "由 koi 設計與開發", tourNamePh: "輸入錦標賽名稱...",
@@ -316,7 +323,9 @@
         indivTotal: "個人總分", teamTotal: "隊伍總分", team1: "藍隊", team2: "紅隊", 
         i6: "選圖規則: 第2到N局為王牌賽道。之後：單人賽 -> 總分第二的選手選圖。組隊賽 -> 總分較低的隊伍選圖。", 
         map1Pick: "第1局：官方指定賽道", kingMapPick: "第{0}局：{1} 的王牌賽道", normalPick: "第{0}局：由 {1} 選圖", 
-        broadcastBtn: "直播介面", pick: "選圖", closeBtn: "關閉"
+        broadcastBtn: "直播介面", pick: "選圖", closeBtn: "關閉",
+        recordBtn: "紀錄", recordTitle: "🏆 賽道最高紀錄", backupBtn: "📥 備份數據", restoreBtn: "📤 恢復數據", 
+        recordHolder: "紀錄:", noRecord: "暫無紀錄", newRecordAlert: "🎉 新紀錄：{0} 以 {2} 打破了 {1} 的紀錄！"
       },
       th: { 
         title: "ระบบการนับคะแนนตามวินาที", subtitle: "ออกแบบและพัฒนาโดย koi", tourNamePh: "ป้อนชื่อการแข่งขัน...",
@@ -333,7 +342,9 @@
         indivTotal: "คะแนนส่วนตัว", teamTotal: "คะแนนทีมรวม", team1: "ทีมสีน้ำเงิน", team2: "ทีมสีแดง", 
         i6: "การเลือกแผนที่: แมตช์ 2 ถึง N คือ King Maps หลังจากนั้น: เดี่ยว -> ผู้เล่นอันดับ 2 เลือก ทีม -> ทีมที่มีคะแนนรวมต่ำกว่าเลือก", 
         map1Pick: "แมตช์ 1: แผนที่ที่กำหนด", kingMapPick: "แมตช์ {0}: KING MAP ของ {1}", normalPick: "แมตช์ {0}: สิทธิ์การเลือกของ {1}", 
-        broadcastBtn: "มุมมองถ่ายทอดสด", pick: "เลือก", closeBtn: "ปิด / Close"
+        broadcastBtn: "มุมมองถ่ายทอดสด", pick: "เลือก", closeBtn: "ปิด / Close",
+        recordBtn: "สถิติ", recordTitle: "🏆 หอเกียรติยศสถิติแผนที่", backupBtn: "📥 สำรองข้อมูล", restoreBtn: "📤 คืนค่าข้อมูล", 
+        recordHolder: "สถิติ:", noRecord: "ยังไม่มีสถิติ", newRecordAlert: "🎉 สถิติใหม่: {0} ทำลายสถิติ {1} ด้วยเวลา {2}!"
       }
     };
 
@@ -691,6 +702,7 @@
       const t = TRANSLATIONS[lang];
       const [showInfo, setShowInfo] = useState(false);
       const [showBroadcast, setShowBroadcast] = useState(false);
+      const [showRecordsModal, setShowRecordsModal] = useState(false);
       
       const [tournamentName, setTournamentName] = useState(() => localStorage.getItem('zsm_tour_name') || 'CUSTOM TOURNAMENT');
 
@@ -719,6 +731,13 @@
         }));
       });
 
+      // --- RECORD SYSTEM STATE ---
+      const [mapRecords, setMapRecords] = useState(() => {
+        const saved = localStorage.getItem('zsm_map_records_v11_final');
+        if (saved) { try { return JSON.parse(saved); } catch(e) {} }
+        return {}; // Structure: { [mapId]: { timeMs: number, timeStr: string, player: string, date: string } }
+      });
+
       // --- DYNAMIC TRANSLATION HOOK ---
       useEffect(() => {
         const allDefP = Object.values(TRANSLATIONS).map(tr => tr.defPlayer);
@@ -742,6 +761,7 @@
       useEffect(() => { localStorage.setItem('zsm_game_mode_v11', gameMode); }, [gameMode]);
       useEffect(() => { localStorage.setItem('zsm_players_v11_final', JSON.stringify(players)); }, [players]);
       useEffect(() => { localStorage.setItem('zsm_games_v11_final', JSON.stringify(games)); }, [games]);
+      useEffect(() => { localStorage.setItem('zsm_map_records_v11_final', JSON.stringify(mapRecords)); }, [mapRecords]);
 
       const displayTeam1Name = team1Name.trim() || t.team1;
       const displayTeam2Name = team2Name.trim() || t.team2;
@@ -751,7 +771,42 @@
       };
 
       const handleTimeBlur = (gIndex, pIndex) => {
-        const newGames = [...games]; newGames[gIndex].times[pIndex] = formatTimeDisplay(newGames[gIndex].times[pIndex]); setGames(newGames);
+        const newGames = [...games]; 
+        const rawTime = newGames[gIndex].times[pIndex];
+        const formattedTime = formatTimeDisplay(rawTime);
+        newGames[gIndex].times[pIndex] = formattedTime; 
+        setGames(newGames);
+
+        // --- CHECK AND UPDATE RECORDS ---
+        const mapId = newGames[gIndex].mapId;
+        const timeMs = parseTime(formattedTime);
+        
+        if (mapId && timeMs !== null && rawTime.toUpperCase() !== 'X') {
+           setMapRecords(prev => {
+              const currentRecord = prev[mapId];
+              // Nếu chưa có kỷ lục hoặc thời gian mới nhỏ hơn kỷ lục cũ
+              if (!currentRecord || timeMs < currentRecord.timeMs) {
+                 const playerName = players[pIndex];
+                 const mapName = getMapName(mapId, lang);
+                 
+                 // Tạo alert nhỏ (Dùng setTimeout để không block UI render)
+                 setTimeout(() => {
+                    alert(t.newRecordAlert.replace('{0}', playerName).replace('{1}', mapName).replace('{2}', formattedTime));
+                 }, 100);
+
+                 return {
+                    ...prev,
+                    [mapId]: {
+                       timeMs: timeMs,
+                       timeStr: formattedTime,
+                       player: playerName,
+                       date: new Date().toLocaleDateString()
+                    }
+                 };
+              }
+              return prev;
+           });
+        }
       };
 
       const toggleMode = () => {
@@ -823,6 +878,33 @@
       const selectedMaps = useMemo(() => {
         return games.map(g => g.mapId).filter(id => id !== "");
       }, [games]);
+
+      // --- BACKUP & RESTORE RECORDS ---
+      const backupRecords = () => {
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(mapRecords, null, 2));
+        const anchor = document.createElement('a');
+        anchor.href = dataStr;
+        anchor.download = `MapRecords_Backup_${new Date().toISOString().slice(0,10)}.json`;
+        anchor.click();
+      };
+
+      const restoreRecords = (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          try {
+            const importedData = JSON.parse(e.target.result);
+            if (typeof importedData === 'object' && importedData !== null) {
+              setMapRecords(importedData);
+              alert('Phục hồi dữ liệu Kỷ Lục thành công! / Records restored successfully!');
+            }
+          } catch (error) {
+            alert('File không hợp lệ! / Invalid file format!');
+          }
+        };
+        reader.readAsText(file);
+      };
 
       const exportProfessionalExcel = async () => {
         const workbook = new ExcelJS.Workbook();
@@ -986,14 +1068,13 @@
         const bestTime = valids.length > 0 ? Math.min(...valids) : null;
 
         return parsed.map((timeMs, pIndex) => {
-          // Xử lý lại logic King Map khi chia nửa team
           let kingMapGameIndex = pIndex + 1;
           if (gameMode !== 'solo') {
              const H = Math.floor(times.length / 2);
              if (pIndex < H) {
-                kingMapGameIndex = 1 + pIndex * 2; // Team 1: trận 2, 4, 6...
+                kingMapGameIndex = 1 + pIndex * 2; 
              } else {
-                kingMapGameIndex = 2 + (pIndex - H) * 2; // Team 2: trận 3, 5, 7...
+                kingMapGameIndex = 2 + (pIndex - H) * 2; 
              }
           }
           const isKingMap = (gameIndex === kingMapGameIndex); 
@@ -1061,9 +1142,9 @@
             let kingPlayerIndex = nextIdx - 1;
             if (isTeamMode) {
                 const H = Math.floor(players.length / 2);
-                if (nextIdx % 2 !== 0) { // Lượt lẻ (trận 2,4,6) -> Đội 1
+                if (nextIdx % 2 !== 0) { 
                     kingPlayerIndex = Math.floor((nextIdx - 1) / 2);
-                } else { // Lượt chẵn (trận 3,5,7) -> Đội 2
+                } else { 
                     kingPlayerIndex = H + Math.floor((nextIdx - 2) / 2);
                 }
             }
@@ -1138,6 +1219,62 @@
               team2Name={displayTeam2Name}
               onClose={() => setShowBroadcast(false)} 
             />
+          )}
+
+          {/* RECORDS MODAL */}
+          {showRecordsModal && (
+            <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-slide-up" onClick={() => setShowRecordsModal(false)}>
+              <div className="bg-slate-900 border border-amber-500/50 rounded-xl max-w-2xl w-full shadow-[0_0_50px_rgba(245,158,11,0.2)] overflow-hidden flex flex-col max-h-[85vh]" onClick={e => e.stopPropagation()}>
+                <div className="bg-slate-950 px-4 py-3 md:py-4 border-b border-slate-800 flex justify-between items-center shrink-0 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-amber-500/10 to-transparent"></div>
+                  <h3 className="font-black text-amber-400 italic tracking-widest uppercase text-lg flex items-center gap-2 z-10"><Trophy size={20}/> {t.recordTitle}</h3>
+                  <button onClick={() => setShowRecordsModal(false)} className="text-slate-400 hover:text-red-500 transition-colors z-10"><XIcon size={24}/></button>
+                </div>
+                
+                <div className="p-4 md:p-6 flex-1 overflow-y-auto hide-scrollbar space-y-4">
+                  {Object.keys(mapRecords).length === 0 ? (
+                    <div className="text-center py-10 text-slate-500 font-bold italic">{t.noRecord}</div>
+                  ) : (
+                    <div className="grid sm:grid-cols-2 gap-3">
+                      {MAP_POOL.flatMap(group => group.maps).map(map => {
+                         const record = mapRecords[map.id];
+                         if (!record) return null;
+                         const mapLang = lang === 'th' ? 'en' : lang;
+                         return (
+                            <div key={map.id} className="bg-slate-800/50 border border-slate-700 rounded-lg p-3 flex items-center justify-between hover:bg-slate-800 hover:border-amber-500/30 transition-colors">
+                               <div className="flex flex-col overflow-hidden mr-2">
+                                  <span className="text-cyan-300 font-bold text-sm truncate">{map[mapLang]}</span>
+                                  <div className="flex items-center gap-1.5 mt-1">
+                                     <span className="text-[10px] bg-slate-900 text-slate-400 px-1.5 py-0.5 rounded truncate max-w-[100px]">{record.player}</span>
+                                     <span className="text-[9px] text-slate-500">{record.date}</span>
+                                  </div>
+                               </div>
+                               <div className="flex flex-col items-end justify-center shrink-0 bg-amber-500/10 px-2 py-1 rounded border border-amber-500/20">
+                                  <span className="text-amber-400 font-black text-lg tracking-wider leading-none">{record.timeStr}</span>
+                               </div>
+                            </div>
+                         )
+                      })}
+                    </div>
+                  )}
+                </div>
+
+                <div className="bg-slate-950 p-4 border-t border-slate-800 shrink-0 flex flex-wrap gap-3 justify-between items-center">
+                   <div className="text-[10px] text-slate-500 md:w-1/2">
+                      Dữ liệu được lưu cục bộ trên trình duyệt. Hãy tải file sao lưu để không bị mất kỷ lục khi đổi máy.
+                   </div>
+                   <div className="flex gap-2 w-full md:w-auto">
+                      <button onClick={backupRecords} className="flex-1 md:flex-none flex items-center justify-center gap-1.5 bg-blue-600/20 text-blue-400 hover:bg-blue-600 hover:text-white border border-blue-500/30 px-3 py-2 rounded text-xs font-bold transition-colors">
+                         {t.backupBtn}
+                      </button>
+                      <label className="flex-1 md:flex-none flex items-center justify-center gap-1.5 bg-emerald-600/20 text-emerald-400 hover:bg-emerald-600 hover:text-white border border-emerald-500/30 px-3 py-2 rounded text-xs font-bold transition-colors cursor-pointer">
+                         {t.restoreBtn}
+                         <input type="file" accept=".json" onChange={restoreRecords} className="hidden" />
+                      </label>
+                   </div>
+                </div>
+              </div>
+            </div>
           )}
 
           {/* INFO MODAL */}
@@ -1234,13 +1371,17 @@
 
                 <div className="w-px h-6 bg-slate-700/80 mx-1 hidden md:block"></div>
 
+                <button onClick={() => setShowRecordsModal(true)} className="flex items-center justify-center p-2 md:p-2.5 text-amber-400 hover:text-white hover:bg-amber-600/30 rounded-xl font-bold transition-all group" title={t.recordBtn}>
+                  <Trophy size={18} className="group-hover:scale-110 transition-transform"/>
+                </button>
+
                 <button onClick={exportProfessionalExcel} className="flex items-center justify-center p-2 md:p-2.5 text-emerald-400 hover:text-white hover:bg-emerald-600/30 rounded-xl font-bold transition-all" title={t.export}>
                   <Download size={18}/>
                 </button>
                 <button onClick={clearAll} className="flex items-center justify-center p-2 md:p-2.5 text-rose-400 hover:text-white hover:bg-rose-600/30 rounded-xl font-bold transition-all group" title={t.reset}>
                   <RefreshCcw size={18} className="group-hover:-rotate-180 transition-transform duration-500"/>
                 </button>
-                <button onClick={() => setShowInfo(true)} className="flex items-center justify-center p-2 md:p-2.5 text-amber-400 hover:text-white hover:bg-amber-600/30 rounded-xl font-bold transition-all" title={t.infoBtn}>
+                <button onClick={() => setShowInfo(true)} className="flex items-center justify-center p-2 md:p-2.5 text-slate-400 hover:text-white hover:bg-slate-600/30 rounded-xl font-bold transition-all" title={t.infoBtn}>
                   <InfoIcon size={18}/>
                 </button>
 
@@ -1251,7 +1392,6 @@
               
               <div className="lg:col-span-3 bg-[#0f172a] border border-slate-700/50 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.8)] overflow-hidden animate-slide-up delay-100 flex flex-col max-h-[75vh]">
                 
-                {}
                 <div className="overflow-x-auto overflow-y-auto flex-1 bg-[#0f172a]">
                   <table className="w-full text-xs md:text-sm border-collapse">
                     <thead className="sticky top-0 z-40 bg-[#0f172a] shadow-[0_5px_15px_rgba(0,0,0,0.8)] border-b border-slate-700">
@@ -1297,6 +1437,16 @@
                                   </button>
                                 </div>
                                 <SearchableMapSelect gameIndex={gIndex} currentMapId={game.mapId} selectedMaps={selectedMaps} onChange={(id) => { const n = [...games]; n[gIndex].mapId = id; setGames(n); }} lang={lang} t={t} />
+                                {/* HIỂN THỊ KỶ LỤC TRỰC TIẾP DƯỚI TÊN MAP */}
+                                {game.mapId && mapRecords[game.mapId] && (
+                                   <div className="mt-1 flex items-center justify-between text-[9px] md:text-[10px] px-1">
+                                      <span className="text-amber-500/70 flex items-center gap-0.5"><Trophy size={10}/></span>
+                                      <div className="flex gap-1.5 font-mono text-amber-400/90">
+                                         <span className="truncate max-w-[50px] md:max-w-[80px]">{mapRecords[game.mapId].player}</span>
+                                         <span className="font-black">{mapRecords[game.mapId].timeStr}</span>
+                                      </div>
+                                   </div>
+                                )}
                               </div>
                             </td>
                             
@@ -1383,7 +1533,6 @@
                 </div>
               </div>
 
-              {}
               <div className="lg:col-span-1 animate-slide-up delay-200 order-first lg:order-last flex flex-col gap-4">
                 <div className="bg-slate-900/80 backdrop-blur-xl border border-slate-700/50 rounded-xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.6)]">
                   <div className="bg-slate-950 px-4 md:px-6 py-3 border-b border-slate-800 flex items-center justify-between">
