@@ -525,7 +525,7 @@
       );
     };
 
-    const BroadcastOverlay = ({ players, games, totals, getGameCalculations, lang, t, gameMode, tournamentName, onClose }) => {
+    const BroadcastOverlay = ({ players, games, totals, getGameCalculations, lang, t, gameMode, tournamentName, team1Name, team2Name, onClose }) => {
       const isTeamMode = gameMode !== 'solo';
       const displayRounds = Math.max(9, games.length);
       const rounds = Array.from({ length: displayRounds }).map((_, i) => games[i] || null);
@@ -648,18 +648,20 @@
               <div className="flex bg-[#0f172a]/80 backdrop-blur-xl border-t border-slate-700/50 shadow-[0_-10px_30px_rgba(0,0,0,0.5)] h-16 md:h-20 w-full shrink-0 relative z-20">
                 {isTeamMode ? (
                    <div className="flex w-full h-full relative">
+                     {/* Đội 1 */}
                      <div className="flex-1 flex flex-col items-center justify-center bg-gradient-to-r from-blue-900/50 to-blue-800/30 backdrop-blur-md relative overflow-hidden">
                         <div className="absolute right-0 top-0 bottom-0 w-1 bg-blue-500 shadow-[0_0_15px_#3b82f6]"></div>
-                        <span className="text-blue-200 font-black text-sm md:text-base uppercase tracking-widest drop-shadow-md z-10">{t.team1}</span>
+                        <span className="text-blue-200 font-black text-sm md:text-base uppercase tracking-widest drop-shadow-md z-10">{team1Name}</span>
                         <span className="text-white font-black text-3xl md:text-5xl mt-0.5 drop-shadow-[0_0_15px_rgba(59,130,246,0.5)] leading-none z-10">
-                           {totals.filter((_, i) => i < halfLen).reduce((a, b) => a + b, 0)}
+                           {totals.filter((_, i) => i < Math.floor(players.length / 2)).reduce((a, b) => a + b, 0)}
                         </span>
                      </div>
+                     {/* Đội 2 */}
                      <div className="flex-1 flex flex-col items-center justify-center bg-gradient-to-l from-red-900/50 to-red-800/30 backdrop-blur-md relative overflow-hidden">
                         <div className="absolute left-0 top-0 bottom-0 w-1 bg-red-500 shadow-[0_0_15px_#ef4444]"></div>
-                        <span className="text-red-200 font-black text-sm md:text-base uppercase tracking-widest drop-shadow-md z-10">{t.team2}</span>
+                        <span className="text-red-200 font-black text-sm md:text-base uppercase tracking-widest drop-shadow-md z-10">{team2Name}</span>
                         <span className="text-white font-black text-3xl md:text-5xl mt-0.5 drop-shadow-[0_0_15px_rgba(239,68,68,0.5)] leading-none z-10">
-                           {totals.filter((_, i) => i >= halfLen).reduce((a, b) => a + b, 0)}
+                           {totals.filter((_, i) => i >= Math.floor(players.length / 2)).reduce((a, b) => a + b, 0)}
                         </span>
                      </div>
                    </div>
@@ -692,6 +694,9 @@
       
       const [tournamentName, setTournamentName] = useState(() => localStorage.getItem('zsm_tour_name') || 'CUSTOM TOURNAMENT');
 
+      const [team1Name, setTeam1Name] = useState(() => localStorage.getItem('zsm_team1_name') || '');
+      const [team2Name, setTeam2Name] = useState(() => localStorage.getItem('zsm_team2_name') || '');
+
       // gameMode: 'solo', '2v2', '3v3'
       const [gameMode, setGameMode] = useState(() => {
         return localStorage.getItem('zsm_game_mode_v11') || 'solo';
@@ -714,6 +719,7 @@
         }));
       });
 
+      // --- DYNAMIC TRANSLATION HOOK ---
       useEffect(() => {
         const allDefP = Object.values(TRANSLATIONS).map(tr => tr.defPlayer);
         const currentT = TRANSLATIONS[lang];
@@ -728,11 +734,17 @@
         }));
       }, [lang]);
 
+      // --- AUTO SAVE ---
       useEffect(() => { localStorage.setItem('zsm_lang_v11_final', lang); }, [lang]);
       useEffect(() => { localStorage.setItem('zsm_tour_name', tournamentName); }, [tournamentName]);
+      useEffect(() => { localStorage.setItem('zsm_team1_name', team1Name); }, [team1Name]);
+      useEffect(() => { localStorage.setItem('zsm_team2_name', team2Name); }, [team2Name]);
       useEffect(() => { localStorage.setItem('zsm_game_mode_v11', gameMode); }, [gameMode]);
       useEffect(() => { localStorage.setItem('zsm_players_v11_final', JSON.stringify(players)); }, [players]);
       useEffect(() => { localStorage.setItem('zsm_games_v11_final', JSON.stringify(games)); }, [games]);
+
+      const displayTeam1Name = team1Name.trim() || t.team1;
+      const displayTeam2Name = team2Name.trim() || t.team2;
 
       const handleTimeChange = (gIndex, pIndex, val) => {
         const newGames = [...games]; newGames[gIndex].times[pIndex] = val; setGames(newGames);
@@ -803,6 +815,8 @@
         if (confirm(t.confirmReset)) {
           setPlayers([`${t.defPlayer} 1`, `${t.defPlayer} 2`, `${t.defPlayer} 3`, `${t.defPlayer} 4`]);
           setGames(Array(9).fill(null).map((_, i) => ({ id: Date.now() + i, mapId: "", times: Array(4).fill('') })));
+          setTeam1Name('');
+          setTeam2Name('');
         }
       };
 
@@ -921,7 +935,7 @@
           
           sheet.mergeCells(lastRowIndex, 3, lastRowIndex, 2 + halfCols);
           const t1Cell = sheet.getCell(lastRowIndex, 3);
-          t1Cell.value = `${t.team1}: ${team1Score}`;
+          t1Cell.value = `${displayTeam1Name}: ${team1Score}`;
           t1Cell.font = { bold: true, size: 16, color: { argb: 'FFFFFFFF' } };
           t1Cell.alignment = { horizontal: 'center', vertical: 'middle' };
           t1Cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF1D4ED8' } }; 
@@ -929,7 +943,7 @@
           if (players.length > 1) {
             sheet.mergeCells(lastRowIndex, 3 + halfCols, lastRowIndex, 2 + totalCols);
             const t2Cell = sheet.getCell(lastRowIndex, 3 + halfCols);
-            t2Cell.value = `${t.team2}: ${team2Score}`;
+            t2Cell.value = `${displayTeam2Name}: ${team2Score}`;
             t2Cell.font = { bold: true, size: 16, color: { argb: 'FFFFFFFF' } };
             t2Cell.alignment = { horizontal: 'center', vertical: 'middle' };
             t2Cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFB91C1C' } }; 
@@ -1016,8 +1030,8 @@
           const team2Score = totals.filter((_, i) => i >= halfLen).reduce((a, b) => a + b, 0);
           
           const teams = [
-            { id: 'team1', name: t.team1, playersStr: players.filter((_, i) => i < halfLen).join(' & '), score: team1Score, isT1: true },
-            { id: 'team2', name: t.team2, playersStr: players.filter((_, i) => i >= halfLen).join(' & '), score: team2Score, isT1: false }
+            { id: 'team1', name: displayTeam1Name, playersStr: players.filter((_, i) => i < halfLen).join(' & '), score: team1Score, isT1: true },
+            { id: 'team2', name: displayTeam2Name, playersStr: players.filter((_, i) => i >= halfLen).join(' & '), score: team2Score, isT1: false }
           ];
           
           if (players.length < 2) teams.pop();
@@ -1036,7 +1050,7 @@
             return { ...item, rank: currentRank };
           });
         }
-      }, [players, totals, isTeamMode]);
+      }, [players, totals, isTeamMode, displayTeam1Name, displayTeam2Name]);
 
       const nextPickerData = useMemo(() => {
         const nextIdx = games.findIndex(g => g.times.every(time => !time || time.trim() === ''));
@@ -1076,7 +1090,7 @@
               isT1 = lastT1Score <= lastT2Score;
           }
 
-          const teamName = isT1 ? t.team1 : t.team2;
+          const teamName = isT1 ? displayTeam1Name : displayTeam2Name;
           const colorClass = isT1 ? 'text-blue-400' : 'text-red-400';
           return { show: true, text: t.normalPick.replace('{0}', nextIdx + 1).replace('{1}', teamName), isT1, colorClass };
         } else {
@@ -1105,7 +1119,7 @@
 
           return { show: true, text: t.normalPick.replace('{0}', nextIdx + 1).replace('{1}', pickerName), pIndex: pickerIndex };
         }
-      }, [games, totals, players, isTeamMode, lang, t]);
+      }, [games, totals, players, isTeamMode, lang, t, displayTeam1Name, displayTeam2Name]);
 
       return (
         <div className="min-h-screen relative overflow-x-hidden pb-20">
@@ -1120,6 +1134,8 @@
               t={t} 
               gameMode={gameMode} 
               tournamentName={tournamentName}
+              team1Name={displayTeam1Name}
+              team2Name={displayTeam2Name}
               onClose={() => setShowBroadcast(false)} 
             />
           )}
@@ -1334,13 +1350,27 @@
                             </td>
                             <td className="p-0">
                                <div className="flex w-full">
-                                  <div className="flex-1 px-1 md:px-2 py-2 md:py-3 text-center border-l-2 border-amber-500/30">
-                                     <span className="text-xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-b from-blue-300 to-blue-500 drop-shadow-[0_0_20px_rgba(59,130,246,0.6)] cursor-default">
+                                  <div className="flex-1 px-1 md:px-2 py-1.5 md:py-2 flex flex-col items-center justify-center border-l-2 border-amber-500/30">
+                                     <input
+                                       type="text"
+                                       value={team1Name}
+                                       onChange={(e) => setTeam1Name(e.target.value)}
+                                       placeholder={t.team1}
+                                       className="w-[90%] max-w-[150px] bg-transparent text-center text-[10px] md:text-xs font-bold text-blue-300 uppercase tracking-widest outline-none border-b border-dashed border-blue-900/50 focus:border-blue-400 transition-colors mb-0.5 md:mb-1 placeholder:text-blue-400/50"
+                                     />
+                                     <span className="text-xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-b from-blue-200 to-blue-500 drop-shadow-[0_0_20px_rgba(59,130,246,0.6)] cursor-default leading-none">
                                         {totals.filter((_, i) => i < Math.floor(players.length/2)).reduce((a, b) => a + b, 0)}
                                      </span>
                                   </div>
-                                  <div className="flex-1 px-1 md:px-2 py-2 md:py-3 text-center border-l-2 border-amber-500/30">
-                                     <span className="text-xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-b from-red-300 to-red-500 drop-shadow-[0_0_20px_rgba(239,68,68,0.6)] cursor-default">
+                                  <div className="flex-1 px-1 md:px-2 py-1.5 md:py-2 flex flex-col items-center justify-center border-l-2 border-amber-500/30">
+                                     <input
+                                       type="text"
+                                       value={team2Name}
+                                       onChange={(e) => setTeam2Name(e.target.value)}
+                                       placeholder={t.team2}
+                                       className="w-[90%] max-w-[150px] bg-transparent text-center text-[10px] md:text-xs font-bold text-red-300 uppercase tracking-widest outline-none border-b border-dashed border-red-900/50 focus:border-red-400 transition-colors mb-0.5 md:mb-1 placeholder:text-red-400/50"
+                                     />
+                                     <span className="text-xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-b from-red-200 to-red-500 drop-shadow-[0_0_20px_rgba(239,68,68,0.6)] cursor-default leading-none">
                                         {totals.filter((_, i) => i >= Math.floor(players.length/2)).reduce((a, b) => a + b, 0)}
                                      </span>
                                   </div>
