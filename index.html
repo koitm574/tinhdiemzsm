@@ -703,6 +703,7 @@
       const [showInfo, setShowInfo] = useState(false);
       const [showBroadcast, setShowBroadcast] = useState(false);
       const [showRecordsModal, setShowRecordsModal] = useState(false);
+      const [recordSearch, setRecordSearch] = useState(''); // Thêm state cho thanh tìm kiếm kỷ lục
       const [toastMsg, setToastMsg] = useState(null); // STATE TOAST NOTIFICATION
       
       const [tournamentName, setTournamentName] = useState(() => localStorage.getItem('zsm_tour_name') || 'CUSTOM TOURNAMENT');
@@ -790,8 +791,12 @@
                  const playerName = players[pIndex];
                  const mapName = getMapName(mapId, lang);
                  
-                 // HIỂN THỊ TOAST THAY VÌ ALERT
-                 setToastMsg(t.newRecordAlert.replace('{0}', playerName).replace('{1}', mapName).replace('{2}', formattedTime));
+                 // HIỂN THỊ TOAST THAY VÌ ALERT VÀ THÊM TÊN NGƯỜI BỊ PHÁ KỶ LỤC
+                 let msg = t.newRecordAlert.replace('{0}', playerName).replace('{1}', mapName).replace('{2}', formattedTime);
+                 if (currentRecord) {
+                    msg += lang === 'vi' ? ` (Kỷ lục cũ: ${currentRecord.player} - ${currentRecord.timeStr})` : ` (Old: ${currentRecord.player} - ${currentRecord.timeStr})`;
+                 }
+                 setToastMsg(msg);
                  setTimeout(() => setToastMsg(null), 3500); // Ẩn đi sau 3.5s
 
                  return {
@@ -1241,56 +1246,70 @@
                   <button onClick={() => setShowRecordsModal(false)} className="text-slate-400 hover:text-red-500 transition-colors z-10"><XIcon size={24}/></button>
                 </div>
                 
-                <div className="p-4 md:p-6 flex-1 overflow-y-auto hide-scrollbar">
-                  {Object.keys(mapRecords).length === 0 ? (
-                    <div className="text-center py-10 text-slate-500 font-bold italic">{t.noRecord}</div>
-                  ) : (
-                    <div>
-                      {MAP_POOL.map((group, groupIdx) => {
-                        const hasRecords = group.maps.some(m => mapRecords[m.id]);
-                        if (!hasRecords) return null;
+                <div className="bg-slate-950 p-3 border-b border-slate-800 shrink-0 z-10">
+                   <input 
+                     type="text"
+                     placeholder={t.searchPh}
+                     value={recordSearch}
+                     onChange={(e) => setRecordSearch(e.target.value)}
+                     className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-sm text-white outline-none focus:border-amber-500 transition-colors"
+                   />
+                </div>
 
-                        return (
-                          <div key={`group-${group.stars}`} className="mb-6 last:mb-0">
-                            <h4 className="text-red-500 font-black text-sm mb-3 flex items-center gap-2">
+                <div className="p-4 md:p-6 flex-1 overflow-y-auto hide-scrollbar space-y-6 bg-[#0f172a]">
+                  {MAP_POOL.map((group, groupIdx) => {
+                     const mapLang = lang === 'th' ? 'en' : lang;
+                     const filteredMaps = group.maps.filter(m => m[mapLang].toLowerCase().includes(recordSearch.toLowerCase()));
+                     
+                     if (filteredMaps.length === 0) return null;
+
+                     return (
+                        <div key={`group-${group.stars}`}>
+                           <h4 className="text-red-500 font-black text-sm mb-3 flex items-center gap-2">
                               {`★`.repeat(group.stars)} {group.stars} {lang==='vi'?'Sao':lang==='en'?'Stars':'星'}
                               <div className="flex-1 h-px bg-slate-700/50 ml-2"></div>
-                            </h4>
-                            <div className="grid sm:grid-cols-2 gap-3">
-                              {group.maps.map(map => {
-                                const record = mapRecords[map.id];
-                                if (!record) return null;
-                                const mapLang = lang === 'th' ? 'en' : lang;
-                                return (
-                                  <div key={map.id} className="group/record bg-slate-800/50 border border-slate-700 rounded-lg p-3 flex items-center justify-between hover:bg-slate-800 hover:border-amber-500/30 transition-colors">
-                                    <div className="flex flex-col overflow-hidden mr-2 flex-1">
-                                      <span className="text-cyan-300 font-bold text-sm truncate">{map[mapLang]}</span>
-                                      <div className="flex items-center gap-1.5 mt-1">
-                                        <span className="text-[10px] bg-slate-900 text-slate-400 px-1.5 py-0.5 rounded truncate max-w-[100px]">{record.player}</span>
-                                        <span className="text-[9px] text-slate-500">{record.date}</span>
-                                      </div>
+                           </h4>
+                           <div className="grid sm:grid-cols-2 gap-3">
+                              {filteredMaps.map(map => {
+                                 const record = mapRecords[map.id];
+                                 return (
+                                    <div key={map.id} className={`group/record relative border rounded-lg p-3 flex items-center justify-between transition-colors ${record ? 'bg-slate-800/50 border-slate-700 hover:bg-slate-800 hover:border-amber-500/30' : 'bg-slate-900/30 border-slate-800/50'}`}>
+                                       <div className="flex flex-col overflow-hidden mr-2 flex-1">
+                                          <span className={`font-bold text-sm truncate ${record ? 'text-cyan-300' : 'text-slate-500'}`}>{map[mapLang]}</span>
+                                          {record ? (
+                                             <div className="flex items-center gap-1.5 mt-1">
+                                                <span className="text-[10px] bg-slate-900 text-slate-400 px-1.5 py-0.5 rounded truncate max-w-[100px]">{record.player}</span>
+                                                <span className="text-[9px] text-slate-500">{record.date}</span>
+                                             </div>
+                                          ) : (
+                                             <div className="mt-1 text-[10px] text-slate-600 italic font-mono">-- No Record --</div>
+                                          )}
+                                       </div>
+                                       <div className="flex items-center gap-2 shrink-0">
+                                          {record ? (
+                                             <>
+                                                <div className="flex flex-col items-end justify-center bg-amber-500/10 px-2 py-1 rounded border border-amber-500/20">
+                                                   <span className="text-amber-400 font-black text-lg tracking-wider leading-none">{record.timeStr}</span>
+                                                </div>
+                                                <button 
+                                                   onClick={() => handleDeleteRecord(map.id)} 
+                                                   className="p-1.5 text-slate-500 hover:text-red-500 hover:bg-red-500/10 rounded transition-colors opacity-0 group-hover/record:opacity-100 absolute right-1 top-1" 
+                                                   title="Delete Record"
+                                                >
+                                                   <Trash2 size={14}/>
+                                                </button>
+                                             </>
+                                          ) : (
+                                             <div className="text-slate-700 font-black text-lg tracking-wider leading-none px-2 py-1">--:--.--</div>
+                                          )}
+                                       </div>
                                     </div>
-                                    <div className="flex items-center gap-2 shrink-0">
-                                      <div className="flex flex-col items-end justify-center bg-amber-500/10 px-2 py-1 rounded border border-amber-500/20">
-                                        <span className="text-amber-400 font-black text-lg tracking-wider leading-none">{record.timeStr}</span>
-                                      </div>
-                                      <button 
-                                        onClick={() => handleDeleteRecord(map.id)} 
-                                        className="p-1.5 text-slate-500 hover:text-red-500 hover:bg-red-500/10 rounded transition-colors opacity-0 group-hover/record:opacity-100" 
-                                        title="Delete Record"
-                                      >
-                                        <Trash2 size={16}/>
-                                      </button>
-                                    </div>
-                                  </div>
-                                )
+                                 )
                               })}
-                            </div>
-                          </div>
-                        )
-                      })}
-                    </div>
-                  )}
+                           </div>
+                        </div>
+                     )
+                  })}
                 </div>
 
                 <div className="bg-slate-950 p-4 border-t border-slate-800 shrink-0 flex flex-wrap gap-3 justify-between items-center">
