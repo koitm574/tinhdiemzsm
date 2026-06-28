@@ -206,7 +206,7 @@
 
     const CAR_POOL = [
       { id: 'none', name: '-- Không có --', url: '' },
-      { id: 'c1', name: 'Xe Mẫu 1', url: 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/cars//image/20260625/17823170757711.png' },
+      { id: 'c1', name: 'Xe Mẫu 1', url: 'https://i.ibb.co/3s6Vp6Z/car1.png' },
       // Thêm link ảnh Xe vào đây...
     ];
 
@@ -876,10 +876,12 @@
                        const displayRecord = (recordData && recordData.player === playerName) ? recordData.timeStr : '--:--.--';
 
                        // Lấy Ảnh/Xe/Pet từ state mới
-                       const assetData = playerAssets[pIdx] || {};
-                       const photoUrl = PLAYER_PHOTO_POOL.find(p => p.id === assetData.photo)?.url;
-                       const carUrl = CAR_POOL.find(c => c.id === assetData.car)?.url;
-                       const petUrl = PET_POOL.find(p => p.id === assetData.pet)?.url;
+                       const globalAssetData = playerAssets[pIdx] || {};
+                       const matchAssetData = activeGame.assets?.[pIdx] || { car: 'none', pet: 'none' };
+                       
+                       const photoUrl = PLAYER_PHOTO_POOL.find(p => p.id === globalAssetData.photo)?.url;
+                       const carUrl = CAR_POOL.find(c => c.id === matchAssetData.car)?.url;
+                       const petUrl = PET_POOL.find(p => p.id === matchAssetData.pet)?.url;
 
                        return (
                          <div key={pIdx} className={`relative flex flex-col rounded-2xl overflow-hidden shadow-2xl border backdrop-blur-md bg-gradient-to-br ${cardGradient} transition-transform hover:-translate-y-1 duration-300`}>
@@ -925,14 +927,14 @@
 
     function App() {
       const [lang, setLang] = useState(() => localStorage.getItem('zsm_lang_v11_final') || 'vi');
-      const t = TRANSLATIONS[lang];
-      const [showInfo, setShowInfo] = useState(false);
+      const [showBroadcast, setShowBroadcast] = useState(false);
       const [showRecordsModal, setShowRecordsModal] = useState(false);
       const [recordSearch, setRecordSearch] = useState('');
       const [toastMsg, setToastMsg] = useState(null);
       
       const [broadcastState, setBroadcastState] = useState({ isOpen: false, tab: 'scoreboard', gameIndex: 0 });
-      const [editingAssetIndex, setEditingAssetIndex] = useState(null);
+      const [editingPhotoIndex, setEditingPhotoIndex] = useState(null);
+      const [editingMatchAsset, setEditingMatchAsset] = useState(null);
 
       const [tournamentName, setTournamentName] = useState(() => localStorage.getItem('zsm_tour_name') || 'CUSTOM TOURNAMENT');
       const [team1Name, setTeam1Name] = useState(() => localStorage.getItem('zsm_team1_name') || '');
@@ -955,8 +957,21 @@
 
       const [games, setGames] = useState(() => {
         const saved = localStorage.getItem('zsm_games_v11_final');
-        if (saved) { try { return JSON.parse(saved); } catch(e) {} }
-        return Array(9).fill(null).map((_, i) => ({ id: Date.now() + i, mapId: "", times: Array(4).fill('') }));
+        if (saved) { 
+           try { 
+             const parsed = JSON.parse(saved);
+             return parsed.map(g => ({
+               ...g,
+               assets: g.assets || Array(6).fill(null).map(() => ({ car: 'none', pet: 'none' }))
+             }));
+           } catch(e) {} 
+        }
+        return Array(9).fill(null).map((_, i) => ({ 
+          id: Date.now() + i, 
+          mapId: "", 
+          times: Array(4).fill(''),
+          assets: Array(4).fill(null).map(() => ({ car: 'none', pet: 'none' }))
+        }));
       });
 
       const [mapRecords, setMapRecords] = useState(() => {
@@ -1043,8 +1058,9 @@
              setPlayers(newP);
              setGames(games.map(g => {
                  let nt = [...g.times];
-                 while(nt.length < 4) nt.push('');
-                 return {...g, times: nt.slice(0,4)}; 
+                 let na = [...(g.assets || [])];
+                 while(nt.length < 4) { nt.push(''); na.push({car:'none', pet:'none'}); }
+                 return {...g, times: nt.slice(0,4), assets: na.slice(0,4)}; 
              }));
           } else if (nextMode === '3v3') {
              let newP = [...players];
@@ -1052,8 +1068,9 @@
              setPlayers(newP);
              setGames(games.map(g => {
                  let nt = [...g.times];
-                 while(nt.length < 6) nt.push('');
-                 return {...g, times: nt};
+                 let na = [...(g.assets || [])];
+                 while(nt.length < 6) { nt.push(''); na.push({car:'none', pet:'none'}); }
+                 return {...g, times: nt, assets: na};
              }));
           }
       };
@@ -1061,20 +1078,20 @@
       const addPlayer = () => {
         if (players.length >= MAX_PLAYERS) return alert(t.errMaxP);
         setPlayers([...players, `${t.defPlayer} ${players.length + 1}`]);
-        setGames(games.map(g => ({ ...g, times: [...g.times, ''] })));
+        setGames(games.map(g => ({ ...g, times: [...g.times, ''], assets: [...(g.assets||[]), {car:'none', pet:'none'}] })));
       };
 
       const removePlayer = (pIndex) => {
         if (players.length <= 2) return alert(t.errMinP);
         if (confirm(t.delP.replace('{0}', players[pIndex]))) {
           setPlayers(players.filter((_, i) => i !== pIndex));
-          setGames(games.map(g => ({ ...g, times: g.times.filter((_, i) => i !== pIndex) })));
+          setGames(games.map(g => ({ ...g, times: g.times.filter((_, i) => i !== pIndex), assets: (g.assets||[]).filter((_, i) => i !== pIndex) })));
         }
       };
 
       const addGame = () => {
         if (games.length >= MAX_GAMES) return alert(t.errMaxG);
-        setGames([...games, { id: Date.now(), mapId: "", times: Array(players.length).fill('') }]);
+        setGames([...games, { id: Date.now(), mapId: "", times: Array(players.length).fill(''), assets: Array(players.length).fill(null).map(()=>({car:'none', pet:'none'})) }]);
       };
 
       const removeGame = (gIndex) => {
@@ -1085,15 +1102,13 @@
       const clearAll = () => {
         if (confirm(t.confirmReset)) {
           setPlayers([`${t.defPlayer} 1`, `${t.defPlayer} 2`, `${t.defPlayer} 3`, `${t.defPlayer} 4`]);
-          setGames(Array(9).fill(null).map((_, i) => ({ id: Date.now() + i, mapId: "", times: Array(4).fill('') })));
+          setGames(Array(9).fill(null).map((_, i) => ({ id: Date.now() + i, mapId: "", times: Array(4).fill(''), assets: Array(4).fill(null).map(()=>({car:'none', pet:'none'})) })));
           setTeam1Name('');
           setTeam2Name('');
         }
       };
 
-      const selectedMaps = useMemo(() => games.map(g => g.mapId).filter(id => id !== ""), [games]);
-
-      const backupRecords = () => {
+      const selectedMaps = useMemo(() => {
         const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(mapRecords, null, 2));
         const anchor = document.createElement('a');
         anchor.href = dataStr;
@@ -1405,44 +1420,64 @@
           )}
 
           {/* ASSETS CONFIG MODAL */}
-          {editingAssetIndex !== null && (
-             <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-slide-up" onClick={() => setEditingAssetIndex(null)}>
+          {editingPhotoIndex !== null && (
+             <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-slide-up" onClick={() => setEditingPhotoIndex(null)}>
                <div className="bg-slate-900 border border-slate-700 rounded-xl w-full max-w-sm shadow-2xl overflow-hidden" onClick={e => e.stopPropagation()}>
                   <div className="bg-slate-950 px-4 py-3 border-b border-slate-800 flex justify-between items-center">
-                    <h3 className="font-black text-amber-400 italic tracking-widest uppercase">{t.assetsConfig}: {players[editingAssetIndex]}</h3>
-                    <button onClick={() => setEditingAssetIndex(null)} className="text-slate-400 hover:text-red-500"><XIcon size={20}/></button>
+                    <h3 className="font-black text-amber-400 italic tracking-widest uppercase">{t.assetsConfig}: {players[editingPhotoIndex]}</h3>
+                    <button onClick={() => setEditingPhotoIndex(null)} className="text-slate-400 hover:text-red-500"><XIcon size={20}/></button>
                   </div>
                   <div className="p-5 flex flex-col gap-4">
                      <div className="flex flex-col gap-1">
                         <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">{t.selectPhoto}</label>
                         <SearchableAssetSelect 
-                           currentId={playerAssets[editingAssetIndex]?.photo || 'none'} 
+                           currentId={playerAssets[editingPhotoIndex]?.photo || 'none'} 
                            options={PLAYER_PHOTO_POOL} 
                            placeholder={t.selectPhoto}
                            onChange={(id) => {
-                              const n = [...playerAssets]; n[editingAssetIndex] = {...n[editingAssetIndex], photo: id}; setPlayerAssets(n);
+                              const n = [...playerAssets]; n[editingPhotoIndex] = {...n[editingPhotoIndex], photo: id}; setPlayerAssets(n);
                            }}
                         />
                      </div>
+                  </div>
+               </div>
+             </div>
+          )}
+
+          {/* ASSETS CONFIG MODAL - MATCH SPECIFIC (CAR/PET) */}
+          {editingMatchAsset !== null && (
+             <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-slide-up" onClick={() => setEditingMatchAsset(null)}>
+               <div className="bg-slate-900 border border-slate-700 rounded-xl w-full max-w-sm shadow-2xl overflow-hidden" onClick={e => e.stopPropagation()}>
+                  <div className="bg-slate-950 px-4 py-3 border-b border-slate-800 flex justify-between items-center">
+                    <h3 className="font-black text-cyan-400 italic tracking-widest uppercase text-sm">TRẬN {editingMatchAsset.gIndex + 1} - {players[editingMatchAsset.pIndex]}</h3>
+                    <button onClick={() => setEditingMatchAsset(null)} className="text-slate-400 hover:text-red-500"><XIcon size={20}/></button>
+                  </div>
+                  <div className="p-5 flex flex-col gap-4">
                      <div className="flex flex-col gap-1">
                         <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">{t.selectCar}</label>
                         <SearchableAssetSelect 
-                           currentId={playerAssets[editingAssetIndex]?.car || 'none'} 
+                           currentId={games[editingMatchAsset.gIndex].assets?.[editingMatchAsset.pIndex]?.car || 'none'} 
                            options={CAR_POOL} 
                            placeholder={t.selectCar}
                            onChange={(id) => {
-                              const n = [...playerAssets]; n[editingAssetIndex] = {...n[editingAssetIndex], car: id}; setPlayerAssets(n);
+                              const n = [...games]; 
+                              if(!n[editingMatchAsset.gIndex].assets) n[editingMatchAsset.gIndex].assets = Array(6).fill(null).map(()=>({car:'none', pet:'none'}));
+                              n[editingMatchAsset.gIndex].assets[editingMatchAsset.pIndex] = {...n[editingMatchAsset.gIndex].assets[editingMatchAsset.pIndex], car: id}; 
+                              setGames(n);
                            }}
                         />
                      </div>
                      <div className="flex flex-col gap-1">
                         <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">{t.selectPet}</label>
                         <SearchableAssetSelect 
-                           currentId={playerAssets[editingAssetIndex]?.pet || 'none'} 
+                           currentId={games[editingMatchAsset.gIndex].assets?.[editingMatchAsset.pIndex]?.pet || 'none'} 
                            options={PET_POOL} 
                            placeholder={t.selectPet}
                            onChange={(id) => {
-                              const n = [...playerAssets]; n[editingAssetIndex] = {...n[editingAssetIndex], pet: id}; setPlayerAssets(n);
+                              const n = [...games]; 
+                              if(!n[editingMatchAsset.gIndex].assets) n[editingMatchAsset.gIndex].assets = Array(6).fill(null).map(()=>({car:'none', pet:'none'}));
+                              n[editingMatchAsset.gIndex].assets[editingMatchAsset.pIndex] = {...n[editingMatchAsset.gIndex].assets[editingMatchAsset.pIndex], pet: id}; 
+                              setGames(n);
                            }}
                         />
                      </div>
@@ -1683,8 +1718,8 @@
                                 className={`w-full bg-transparent border-b-2 outline-none text-center pb-1 text-sm md:text-lg font-bold hover:border-slate-400 ${isPicker ? 'text-purple-300 border-purple-500 focus:border-purple-400' : isTeamMode ? (isT1 ? 'text-blue-100 border-slate-700 focus:border-blue-500' : 'text-red-100 border-slate-700 focus:border-red-500') : 'text-white border-slate-700 focus:border-cyan-400'}`}
                               />
                               <div className="w-full flex justify-center mt-1 opacity-20 hover:opacity-100 transition-opacity">
-                                <button onClick={() => setEditingAssetIndex(i)} className="text-[9px] bg-slate-800/80 text-slate-300 px-2 py-0.5 rounded border border-slate-600 shadow-sm font-sans flex items-center gap-1">
-                                   ⚙️ <span className="hidden md:inline">{t.assetsConfig}</span>
+                                <button onClick={() => setEditingPhotoIndex(i)} className="text-[9px] bg-slate-800/80 text-slate-300 px-2 py-0.5 rounded border border-slate-600 shadow-sm font-sans flex items-center gap-1">
+                                   🖼️ <span className="hidden md:inline">ẢNH VĐV</span>
                                 </button>
                               </div>
                               <button onClick={() => removePlayer(i)} className="absolute top-1 right-1 p-1 text-slate-500 hover:text-white hover:bg-red-500 opacity-100 md:opacity-0 group-hover:opacity-100 transition-all bg-slate-800 rounded-full border border-slate-700 shadow-lg z-10">
@@ -1738,7 +1773,10 @@
                                       </div>
                                     )}
                                     <input type="text" value={time} onChange={(e) => handleTimeChange(gIndex, pIndex, e.target.value)} onBlur={() => handleTimeBlur(gIndex, pIndex)} placeholder="X" className={`w-full text-center bg-black/40 border border-slate-700 rounded px-1 py-1 outline-none tracking-widest text-xs md:text-sm transition-all duration-300 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 hover:border-slate-500 hover:bg-black/60 ${time ? 'text-white' : 'text-slate-600'}`} />
-                                    <div className="mt-0.5 text-center py-0.5 rounded text-[10px] md:text-sm tracking-wider font-bold">{time ? `+${score}` : '-'}</div>
+                                    <div className="mt-0.5 relative flex justify-center items-center py-0.5 rounded text-[10px] md:text-sm tracking-wider font-bold">
+                                       <span>{time ? `+${score}` : '-'}</span>
+                                       <button onClick={() => setEditingMatchAsset({gIndex, pIndex})} className="absolute right-1 opacity-30 hover:opacity-100 transition-all text-xs" title="Chọn Xe & Pet cho trận này">🏎️</button>
+                                    </div>
                                   </div>
                                 </td>
                               );
