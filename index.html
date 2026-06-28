@@ -396,6 +396,14 @@
       return '';
     };
 
+    const getMapStars = (id) => {
+      for (const group of MAP_POOL) {
+        const found = group.maps.find(m => m.id === id);
+        if (found) return group.stars;
+      }
+      return 0;
+    };
+
     const parseTime = (val) => {
       if (!val || val.toUpperCase() === 'X') return null;
       if (val.includes(':') || val.includes('.')) {
