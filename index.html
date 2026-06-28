@@ -89,9 +89,6 @@
     .clip-slant {
       clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
     }
-    .clip-slant-reverse {
-      clip-path: polygon(0 0, 90% 0, 100% 100%, 10% 100%);
-    }
 
     /* Hiệu ứng động siêu mượt cho nền Livestream */
     @keyframes slowZoom {
@@ -117,8 +114,7 @@
   <script type="text/babel" data-presets="react-classic,env">
     const { useState, useMemo, useEffect, useRef } = React;
 
-    // --- ICONS ---
-    const Flag = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>;
+    //    const Flag = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>;
     const Crown = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="currentColor" className={className} width={size} height={size}><path d="M5.5 20h13a1.5 1.5 0 0 0 1.5-1.5v-1a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 4 17.5v1A1.5 1.5 0 0 0 5.5 20zm14-5.5L16 4l-4 7-4-7-3.5 10.5h15z"></path></svg>;
     const Flame = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>;
     const RefreshCcw = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path><path d="M16 21v-5h5"></path></svg>;
@@ -134,41 +130,38 @@
     const MonitorPlay = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line><polygon points="10 8 15 10 10 12 10 8"></polygon></svg>;
     const WheelIcon = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle><line x1="12" y1="2" x2="12" y2="8"></line><line x1="12" y1="16" x2="12" y2="22"></line><line x1="2" y1="12" x2="8" y2="12"></line><line x1="16" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"></line><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"></line><line x1="4.93" y1="19.07" x2="9.17" y2="14.83"></line><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"></line></svg>;
     const Trophy = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg>;
-    const PlayIcon = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>;
 
+    //    // ============================================================================
+    // ⚙️ GẮN CỨNG ẢNH VĐV TẠI ĐÂY (Tối đa 6 link, dùng ảnh không viền PNG)
     // ============================================================================
-    // ⚙️ CẤU HÌNH HÌNH ẢNH CỐ ĐỊNH (VĐV, XE, PET) - THAY LINK VÀO BÊN DƯỚI
-    // ============================================================================
-    // Thay link ảnh trong suốt (.png) của tuyển thủ vào đây, theo thứ tự từ 1 đến 6.
     const HARDCODED_PLAYER_PHOTOS = [
-      "https://i.ibb.co/mrGbRQYx/image-removebg-preview.png", // VĐV 1
-      "https://i.ibb.co/8YJ11Zt/player-placeholder.png", // VĐV 2
-      "https://i.ibb.co/8YJ11Zt/player-placeholder.png", // VĐV 3
-      "https://i.ibb.co/8YJ11Zt/player-placeholder.png", // VĐV 4
-      "", // VĐV 5
-      "", // VĐV 6
-    ];
-    
-    // Thay link ảnh của Xe vào đây (để trống "" nếu chưa có)
-    const HARDCODED_CAR_PHOTOS = [
-      "", // VĐV 1
-      "", // VĐV 2
-      "", // VĐV 3
-      "", // VĐV 4
-      "", // VĐV 5
-      "", // VĐV 6
+      "https://i.ibb.co/8YJ11Zt/player-placeholder.png", // Tuyển thủ 1
+      "https://i.ibb.co/8YJ11Zt/player-placeholder.png", // Tuyển thủ 2
+      "https://i.ibb.co/8YJ11Zt/player-placeholder.png", // Tuyển thủ 3
+      "https://i.ibb.co/8YJ11Zt/player-placeholder.png", // Tuyển thủ 4
+      "", // Tuyển thủ 5 (Chỉ dùng cho mode 3v3)
+      "", // Tuyển thủ 6 (Chỉ dùng cho mode 3v3)
     ];
 
-    // Thay link ảnh của Pet vào đây (để trống "" nếu chưa có)
-    const HARDCODED_PET_PHOTOS = [
-      "", // VĐV 1
-      "", // VĐV 2
-      "", // VĐV 3
-      "", // VĐV 4
-      "", // VĐV 5
-      "", // VĐV 6
-    ];
     // ============================================================================
+    // ⚙️ KHO TÀNG XE (CAR DATABASE)
+    // ============================================================================
+    const CAR_DATABASE = [
+      { id: 'c1', name: 'Dark Azure Dragon', img: 'https://i.ibb.co/3s6Vp6Z/car1.png' },
+      { id: 'c2', name: 'Hallet', img: 'https://i.ibb.co/3s6Vp6Z/car1.png' },
+      { id: 'c3', name: 'S-Chrono Envoy', img: 'https://i.ibb.co/3s6Vp6Z/car1.png' },
+      { id: 'c4', name: 'L-Qing', img: 'https://i.ibb.co/3s6Vp6Z/car1.png' },
+      // Dán thêm Xe vào đây thoải mái...
+    ];
+
+    // ============================================================================
+    // ⚙️ KHO TÀNG PET (PET DATABASE)
+    // ============================================================================
+    const PET_DATABASE = [
+      { id: 'p1', name: 'Hellfire Dragon', img: 'https://i.ibb.co/3s6Vp6Z/car1.png' }, // Thay link Pet thật
+      { id: 'p2', name: 'Angel Feather', img: 'https://i.ibb.co/3s6Vp6Z/car1.png' },
+      // Dán thêm Pet vào đây thoải mái...
+    ];
 
     // --- MAP POOL ---
     const MAP_POOL = [
@@ -287,7 +280,7 @@
       vi: { 
         title: "HỆ THỐNG TÍNH ĐIỂM THEO GIÂY", subtitle: "Thiết kế và phát triển bởi koi", tourNamePh: "Nhập tên giải đấu...",
         addPlayer: "Thêm VĐV", addMatch: "Thêm Trận", reset: "Làm mới", export: "Xuất Excel", 
-        no: "STT", match: "TRẬN ĐẤU", kingMap: "King Map", total: "TỔNG ĐIỂM", leaderboard: "BẢNG XẾP HẠNG", pts: "PTS", 
+        match: "TRẬN ĐẤU", kingMap: "King Map", total: "TỔNG ĐIỂM", leaderboard: "BẢNG XẾP HẠNG", pts: "PTS", 
         errMaxP: "Giải đấu giới hạn tối đa 6 VĐV!", errMinP: "Bảng thi đấu cần ít nhất 2 VĐV!", errMaxG: `Giải đấu giới hạn tối đa ${MAX_GAMES} Trận!`, 
         delP: "Bạn muốn xóa {0} khỏi giải đấu?", errMinG: "Phải có ít nhất 1 Trận đấu!", delG: "Bạn có muốn xóa Trận {0}?", 
         confirmReset: "🚨 LÀM MỚI BẢNG ĐIỂM?\nMọi dữ liệu sẽ bị xóa và quay về trạng thái mặc định.", 
@@ -303,13 +296,13 @@
         broadcastBtn: "Giao Diện Livestream", pick: "LƯỢT CHỌN", closeBtn: "Thoát / Close",
         recordBtn: "Bảng Kỷ Lục", recordTitle: "🏆 BẢNG VÀNG KỶ LỤC MAP", backupBtn: "📥 Tải File Sao Lưu", restoreBtn: "📤 Phục Hồi Dữ Liệu", 
         recordHolder: "Kỷ lục:", noRecord: "Chưa có kỷ lục", newRecordAlert: "🎉 KỶ LỤC MỚI: {0} đã phá kỷ lục map {1} với thời gian {2}!",
-        scoreboardTab: "BẢNG ĐIỂM", prematchTab: "TRƯỚC TRẬN",
-        preMatchTitleIndiv: "ĐUA TỐC ĐỘ CÁ NHÂN", preMatchTitleTeam: "ĐUA TỐC ĐỘ ĐỒNG ĐỘI", preMatchMode: "CHẾ ĐỘ", preMatchBestRecord: "KỶ LỤC TỐT NHẤT"
+        preMatchTitleIndiv: "INDIVIDUAL SPRINT CLASSIC", preMatchTitleTeam: "TEAM SPRINT CLASSIC", preMatchMode: "MODE", preMatchBestRecord: "BEST RECORD",
+        scoreboardTab: "BẢNG ĐIỂM", prematchTab: "TRƯỚC TRẬN", matchResult: "KẾT QUẢ TRẬN ĐẤU"
       },
       en: { 
         title: "SECOND-BASED SCORING SYSTEM", subtitle: "Designed and developed by koi", tourNamePh: "Enter tournament name...",
         addPlayer: "Add Player", addMatch: "Add Match", reset: "Reset", export: "Export Excel", 
-        no: "No.", match: "MATCH", kingMap: "King Map", total: "TOTAL SCORE", leaderboard: "LEADERBOARD", pts: "PTS", 
+        match: "MATCH", kingMap: "King Map", total: "TOTAL SCORE", leaderboard: "LEADERBOARD", pts: "PTS", 
         errMaxP: "Maximum 6 players allowed!", errMinP: "Need at least 2 players!", errMaxG: `Maximum ${MAX_GAMES} matches allowed!`, 
         delP: "Remove {0} from the tournament?", errMinG: "Need at least 1 match!", delG: "Delete Game {0}?", 
         confirmReset: "🚨 RESET SCOREBOARD?\nAll data will be wiped and returned to default.", 
@@ -325,13 +318,13 @@
         broadcastBtn: "Broadcast View", pick: "PICK", closeBtn: "Close",
         recordBtn: "Records", recordTitle: "🏆 MAP RECORDS HALL OF FAME", backupBtn: "📥 Backup Data", restoreBtn: "📤 Restore Data", 
         recordHolder: "Record:", noRecord: "No record yet", newRecordAlert: "🎉 NEW RECORD: {0} broke the {1} record with {2}!",
-        scoreboardTab: "SCOREBOARD", prematchTab: "PRE-MATCH",
-        preMatchTitleIndiv: "INDIVIDUAL SPRINT CLASSIC", preMatchTitleTeam: "TEAM SPRINT CLASSIC", preMatchMode: "MODE", preMatchBestRecord: "BEST RECORD"
+        preMatchTitleIndiv: "INDIVIDUAL SPRINT CLASSIC", preMatchTitleTeam: "TEAM SPRINT CLASSIC", preMatchMode: "MODE", preMatchBestRecord: "BEST RECORD",
+        scoreboardTab: "SCOREBOARD", prematchTab: "PRE-MATCH", matchResult: "MATCH RESULT"
       },
       cn: { 
         title: "秒数计分系统", subtitle: "由 koi 设计与开发", tourNamePh: "输入锦标赛名称...",
         addPlayer: "添加选手", addMatch: "添加比赛", reset: "重置", export: "导出表格", 
-        no: "序号", match: "比赛", kingMap: "王牌赛道", total: "总分", leaderboard: "排行榜", pts: "分", 
+        match: "比赛", kingMap: "王牌赛道", total: "总分", leaderboard: "排行榜", pts: "分", 
         errMaxP: "最多允许 6 名选手！", errMinP: "至少需要 2 名选手！", errMaxG: `最多允许 ${MAX_GAMES} 场比赛！`, 
         delP: "是否将 {0} 移出比赛？", errMinG: "至少需要 1 场比赛！", delG: "确定要删除 第{0}场 吗？", 
         confirmReset: "🚨 重置计分板？\n所有数据将被清除并恢复为默认状态。", 
@@ -346,13 +339,13 @@
         broadcastBtn: "直播界面", pick: "选图", closeBtn: "关闭",
         recordBtn: "纪录", recordTitle: "🏆 赛道最高纪录", backupBtn: "📥 备份数据", restoreBtn: "📤 恢复数据", 
         recordHolder: "纪录:", noRecord: "暂无纪录", newRecordAlert: "🎉 新纪录：{0} 以 {2} 打破了 {1} 的纪录！",
-        scoreboardTab: "计分板", prematchTab: "赛前界面",
-        preMatchTitleIndiv: "个人竞速赛", preMatchTitleTeam: "组队竞速赛", preMatchMode: "模式", preMatchBestRecord: "最高纪录"
+        preMatchTitleIndiv: "个人竞速赛", preMatchTitleTeam: "组队竞速赛", preMatchMode: "模式", preMatchBestRecord: "最高纪录",
+        scoreboardTab: "计分板", prematchTab: "赛前界面", matchResult: "比赛结果"
       },
       tw: { 
         title: "秒數計分系統", subtitle: "由 koi 設計與開發", tourNamePh: "輸入錦標賽名稱...",
         addPlayer: "新增選手", addMatch: "新增比賽", reset: "重置", export: "匯出表格", 
-        no: "序號", match: "比賽", kingMap: "王牌賽道", total: "總分", leaderboard: "排行榜", pts: "分", 
+        match: "比賽", kingMap: "王牌賽道", total: "總分", leaderboard: "排行榜", pts: "分", 
         errMaxP: "最多允許 6 名選手！", errMinP: "至少需要 2 名選手！", errMaxG: `最多允許 ${MAX_GAMES} 場比賽！`, 
         delP: "是否將 {0} 移出比賽？", errMinG: "至少需要 1 場比賽！", delG: "確定要刪除 第{0}場 嗎？", 
         confirmReset: "🚨 重置計分板？\n所有數據將被清除並恢復為預設狀態。", 
@@ -367,13 +360,13 @@
         broadcastBtn: "直播介面", pick: "選圖", closeBtn: "關閉",
         recordBtn: "紀錄", recordTitle: "🏆 賽道最高紀錄", backupBtn: "📥 備份數據", restoreBtn: "📤 恢復數據", 
         recordHolder: "紀錄:", noRecord: "暫無紀錄", newRecordAlert: "🎉 新紀錄：{0} 以 {2} 打破了 {1} 的紀錄！",
-        scoreboardTab: "計分板", prematchTab: "賽前介面",
-        preMatchTitleIndiv: "個人競速賽", preMatchTitleTeam: "組隊競速賽", preMatchMode: "模式", preMatchBestRecord: "最高紀錄"
+        preMatchTitleIndiv: "個人競速賽", preMatchTitleTeam: "組隊競速賽", preMatchMode: "模式", preMatchBestRecord: "最高紀錄",
+        scoreboardTab: "計分板", prematchTab: "賽前介面", matchResult: "比賽結果"
       },
       th: { 
         title: "ระบบการนับคะแนนตามวินาที", subtitle: "ออกแบบและพัฒนาโดย koi", tourNamePh: "ป้อนชื่อการแข่งขัน...",
         addPlayer: "เพิ่มผู้เล่น", addMatch: "เพิ่มแข่ง", reset: "รีเซ็ต", export: "ส่งออก Excel", 
-        no: "ลำดับ", match: "การแข่งขัน", kingMap: "แผนที่คิง", total: "คะแนนรวม", leaderboard: "ตารางคะแนน", pts: "แต้ม", 
+        match: "การแข่งขัน", kingMap: "แผนที่คิง", total: "คะแนนรวม", leaderboard: "ตารางคะแนน", pts: "แต้ม", 
         errMaxP: "อนุญาตสูงสุด 6 คน!", errMinP: "ต้องมีอย่างน้อย 2 คน!", errMaxG: `อนุญาตสูงสุด ${MAX_GAMES} นัด!`, 
         delP: "ลบ {0} ออกหรือไม่?", errMinG: "ต้องมีอย่างน้อย 1 นัด!", delG: "ลบ เกมที่ {0} หรือไม่?", 
         confirmReset: "🚨 รีเซ็ตกระดานคะแนน?\nข้อมูลทั้งหมดจะถูกลบและกลับสู่ค่าเริ่มต้น", 
@@ -388,8 +381,8 @@
         broadcastBtn: "มุมมองถ่ายทอดสด", pick: "เลือก", closeBtn: "ปิด / Close",
         recordBtn: "สถิติ", recordTitle: "🏆 หอเกียรติยศสถิติแผนที่", backupBtn: "📥 สำรองข้อมูล", restoreBtn: "📤 คืนค่าข้อมูล", 
         recordHolder: "สถิติ:", noRecord: "ยังไม่มีสถิติ", newRecordAlert: "🎉 สถิติใหม่: {0} ทำลายสถิติ {1} ด้วยเวลา {2}!",
-        scoreboardTab: "กระดานคะแนน", prematchTab: "ก่อนการแข่งขัน",
-        preMatchTitleIndiv: "เดี่ยวสปรินต์คลาสสิก", preMatchTitleTeam: "ทีมสปรินต์คลาสสิก", preMatchMode: "โหมด", preMatchBestRecord: "สถิติที่ดีที่สุด"
+        preMatchTitleIndiv: "เดี่ยวสปรินต์คลาสสิก", preMatchTitleTeam: "ทีมสปรินต์คลาสสิก", preMatchMode: "โหมด", preMatchBestRecord: "สถิติที่ดีที่สุด",
+        scoreboardTab: "กระดานคะแนน", prematchTab: "ก่อนการแข่งขัน", matchResult: "ผลการแข่งขัน"
       }
     };
 
@@ -466,7 +459,7 @@
       return { background: getMapGradient(mapId) };
     };
 
-    const SearchableMapSelect = ({ gameIndex, currentMapId, selectedMaps, onChange, lang, t }) => {
+    //    const SearchableMapSelect = ({ gameIndex, currentMapId, selectedMaps, onChange, lang, t }) => {
       const [isOpen, setIsOpen] = useState(false);
       const [searchTerm, setSearchTerm] = useState('');
       const wrapperRef = useRef(null);
@@ -589,7 +582,27 @@
       );
     };
 
-    const BroadcastOverlay = ({ broadcastState, setBroadcastState, players, games, totals, getGameCalculations, mapRecords, personalRecords, lang, t, gameMode, tournamentName, team1Name, team2Name, onClose }) => {
+    //    const CustomDialog = ({ dialog, setDialog }) => {
+      if (!dialog.isOpen) return null;
+      return (
+        <div className="fixed inset-0 z-[10000] bg-black/80 flex items-center justify-center p-4 animate-slide-up">
+           <div className="bg-slate-900 border border-slate-700 rounded-xl p-6 max-w-sm w-full shadow-2xl flex flex-col items-center text-center">
+              <div className={`w-12 h-12 rounded-full flex items-center justify-center mb-4 ${dialog.type === 'confirm' ? 'bg-amber-500/20 text-amber-500' : 'bg-red-500/20 text-red-500'}`}>
+                 {dialog.type === 'confirm' ? <InfoIcon size={24} /> : <Flame size={24} />}
+              </div>
+              <p className="text-white font-bold mb-6 whitespace-pre-wrap">{dialog.message}</p>
+              <div className="flex gap-3 w-full justify-center">
+                 {dialog.type === 'confirm' && (
+                    <button onClick={() => setDialog({ ...dialog, isOpen: false })} className="flex-1 px-4 py-2 bg-slate-800 text-slate-300 rounded font-bold hover:bg-slate-700 transition-colors">Hủy</button>
+                 )}
+                 <button onClick={() => { if (dialog.onConfirm) dialog.onConfirm(); setDialog({ ...dialog, isOpen: false }); }} className="flex-1 px-4 py-2 bg-red-600 text-white rounded font-bold hover:bg-red-500 transition-colors">OK</button>
+              </div>
+           </div>
+        </div>
+      );
+    };
+
+    //    const BroadcastOverlay = ({ broadcastState, setBroadcastState, players, games, totals, getGameCalculations, mapRecords, personalRecords, lang, t, gameMode, tournamentName, team1Name, team2Name, onClose }) => {
       const isTeamMode = gameMode !== 'solo';
       const displayRounds = Math.max(9, games.length);
       const rounds = Array.from({ length: displayRounds }).map((_, i) => games[i] || null);
@@ -767,7 +780,7 @@
             <div className="flex-1 w-full max-w-[1920px] mx-auto p-4 md:p-8 flex flex-col z-10 relative animate-slide-up">
               
               <div className="w-full flex justify-between items-end mb-4 md:mb-6">
-                <h2 className="text-2xl md:text-4xl font-black italic text-[#13c0eb] tracking-widest drop-shadow-[0_0_10px_rgba(19,192,235,0.5)]">
+                <h2 className="text-2xl md:text-4xl font-black italic text-[#13c0eb] tracking-widest drop-shadow-[0_0_10px_rgba(19,192,235,0.5)] whitespace-normal break-words max-w-[70%] leading-tight">
                   {headerTitle}
                 </h2>
                 
@@ -817,10 +830,8 @@
                        const pbData = personalRecords[pbKey];
                        const displayRecord = pbData ? pbData.timeStr : '--:--.--';
 
-                       // Lấy Ảnh/Xe/Pet tĩnh
+                       // Lấy Ảnh cứng (Hardcode)
                        const photoUrl = HARDCODED_PLAYER_PHOTOS[pIdx] || '';
-                       const carUrl = HARDCODED_CAR_PHOTOS[pIdx] || '';
-                       const petUrl = HARDCODED_PET_PHOTOS[pIdx] || '';
 
                        return (
                          <div key={pIdx} className={`relative flex flex-col rounded-2xl overflow-hidden shadow-2xl border backdrop-blur-md bg-gradient-to-br ${cardGradient} transition-transform hover:-translate-y-1 duration-300`}>
@@ -844,15 +855,8 @@
                                </div>
                             </div>
 
-                            {/* KHU VỰC XE & PET */}
-                            <div className="absolute bottom-5 right-5 z-20 flex gap-2 md:gap-3">
-                               <div className="w-16 h-8 md:w-20 md:h-10 bg-black/60 backdrop-blur-md rounded border border-white/20 flex items-center justify-center overflow-hidden shadow-[inset_0_0_10px_rgba(255,255,255,0.1)] relative">
-                                  {carUrl ? <img src={carUrl} className="w-full h-full object-contain" alt="Car" /> : <span className="text-[8px] text-white/30 font-bold italic">CAR</span>}
-                               </div>
-                               <div className="w-16 h-8 md:w-20 md:h-10 bg-black/60 backdrop-blur-md rounded border border-white/20 flex items-center justify-center overflow-hidden shadow-[inset_0_0_10px_rgba(255,255,255,0.1)] relative">
-                                  {petUrl ? <img src={petUrl} className="w-full h-full object-contain" alt="Pet" /> : <span className="text-[8px] text-white/30 font-bold italic">PET</span>}
-                               </div>
-                            </div>
+                            {/* Khối che mờ phần dưới cho đẹp (Do đã gỡ xe/pet) */}
+                            <div className="absolute bottom-0 w-full h-[25%] bg-gradient-to-t from-black/80 to-transparent z-0"></div>
                          </div>
                        );
                     })}
@@ -873,6 +877,12 @@
       const [toastMsg, setToastMsg] = useState(null);
       
       const [broadcastState, setBroadcastState] = useState({ isOpen: false, tab: 'scoreboard', gameIndex: 0 });
+
+      // Cửa sổ Dialog Custom thay thế window.alert và window.confirm
+      const [dialog, setDialog] = useState({ isOpen: false, type: 'alert', message: '', onConfirm: null });
+
+      const showDialogAlert = (msg) => setDialog({ isOpen: true, type: 'alert', message: msg, onConfirm: null });
+      const showDialogConfirm = (msg, onConfirmCallback) => setDialog({ isOpen: true, type: 'confirm', message: msg, onConfirm: onConfirmCallback });
 
       const [tournamentName, setTournamentName] = useState(() => localStorage.getItem('zsm_tour_name') || 'CUSTOM TOURNAMENT');
 
@@ -1025,36 +1035,38 @@
       };
 
       const addPlayer = () => {
-        if (players.length >= MAX_PLAYERS) return alert(t.errMaxP);
+        if (players.length >= MAX_PLAYERS) return showDialogAlert(t.errMaxP);
         setPlayers([...players, `${t.defPlayer} ${players.length + 1}`]);
         setGames(games.map(g => ({ ...g, times: [...g.times, ''] })));
       };
 
       const removePlayer = (pIndex) => {
-        if (players.length <= 2) return alert(t.errMinP);
-        if (confirm(t.delP.replace('{0}', players[pIndex]))) {
+        if (players.length <= 2) return showDialogAlert(t.errMinP);
+        showDialogConfirm(t.delP.replace('{0}', players[pIndex]), () => {
           setPlayers(players.filter((_, i) => i !== pIndex));
           setGames(games.map(g => ({ ...g, times: g.times.filter((_, i) => i !== pIndex) })));
-        }
+        });
       };
 
       const addGame = () => {
-        if (games.length >= MAX_GAMES) return alert(t.errMaxG);
+        if (games.length >= MAX_GAMES) return showDialogAlert(t.errMaxG);
         setGames([...games, { id: Date.now(), mapId: "", times: Array(players.length).fill('') }]);
       };
 
       const removeGame = (gIndex) => {
-        if (games.length <= 1) return alert(t.errMinG);
-        if (confirm(t.delG.replace('{0}', gIndex + 1))) setGames(games.filter((_, i) => i !== gIndex));
+        if (games.length <= 1) return showDialogAlert(t.errMinG);
+        showDialogConfirm(t.delG.replace('{0}', gIndex + 1), () => {
+           setGames(games.filter((_, i) => i !== gIndex));
+        });
       };
 
       const clearAll = () => {
-        if (confirm(t.confirmReset)) {
+        showDialogConfirm(t.confirmReset, () => {
           setPlayers([`${t.defPlayer} 1`, `${t.defPlayer} 2`, `${t.defPlayer} 3`, `${t.defPlayer} 4`]);
           setGames(Array(9).fill(null).map((_, i) => ({ id: Date.now() + i, mapId: "", times: Array(4).fill('') })));
           setTeam1Name('');
           setTeam2Name('');
-        }
+        });
       };
 
       const selectedMaps = useMemo(() => {
@@ -1078,17 +1090,19 @@
             const importedData = JSON.parse(e.target.result);
             if (typeof importedData === 'object' && importedData !== null) {
               setMapRecords(importedData);
-              alert('Phục hồi dữ liệu Kỷ Lục thành công! / Records restored successfully!');
+              showDialogAlert('Phục hồi dữ liệu Kỷ Lục thành công! / Records restored successfully!');
             }
-          } catch (error) { alert('File không hợp lệ! / Invalid file format!'); }
+          } catch (error) { 
+             showDialogAlert('File không hợp lệ! / Invalid file format!'); 
+          }
         };
         reader.readAsText(file);
       };
 
       const handleDeleteRecord = (mapId) => {
-        if(confirm(lang === 'vi' ? "Bạn có chắc muốn xóa kỷ lục này?" : "Are you sure to delete this record?")) {
+        showDialogConfirm(lang === 'vi' ? "Bạn có chắc muốn xóa kỷ lục này?" : "Are you sure to delete this record?", () => {
             setMapRecords(prev => { const newRecords = {...prev}; delete newRecords[mapId]; return newRecords; });
-        }
+        });
       };
 
       const exportProfessionalExcel = async () => {
@@ -1352,6 +1366,8 @@
       return (
         <div className="min-h-screen relative overflow-x-hidden pb-20">
           
+          <CustomDialog dialog={dialog} setDialog={setDialog} />
+
           {/* TAB Livestream Component gọi từ đây */}
           {broadcastState.isOpen && (
             <BroadcastOverlay 
