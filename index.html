@@ -568,8 +568,12 @@
       const headerTitle = gameMode === 'solo' ? t.preMatchTitleIndiv : t.preMatchTitleTeam;
 
       return (
-        <div className="fixed inset-0 z-[1000] bg-white flex items-center justify-center font-sans">
-          <div className="relative w-full max-w-[1920px] aspect-video bg-[#f9fafd] overflow-hidden flex flex-col shadow-2xl">
+        <div className="fixed inset-0 z-[9999] bg-black/90 flex items-center justify-center p-2 sm:p-4 font-sans" onClick={onClose}>
+          <div 
+            className="relative bg-[#f9fafd] overflow-hidden flex flex-col shadow-2xl rounded-lg md:rounded-xl ring-1 ring-white/20"
+            style={{ width: '100%', maxWidth: '177.78vh', aspectRatio: '16/9' }}
+            onClick={e => e.stopPropagation()}
+          >
             {/* Background Accents (SVG Top Left & Bottom Right) */}
             <div className="absolute top-0 left-0 w-1/3 h-1/3 pointer-events-none z-0">
                <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="w-full h-full opacity-90">
@@ -585,43 +589,42 @@
             </div>
 
             {/* Header */}
-            <div className="relative z-10 w-full pt-4 pb-2 md:pt-8 md:pb-4 flex justify-center items-center shrink-0">
+            <div className="relative z-10 w-full pt-4 pb-2 md:pt-6 md:pb-4 flex justify-center items-center shrink-0">
                <div className="relative inline-block">
-                  <h1 className="text-3xl md:text-5xl lg:text-6xl font-black italic text-[#204ece] tracking-[0.1em] uppercase">
+                  <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black italic text-[#204ece] tracking-[0.1em] uppercase px-10 text-center">
                     {headerTitle}
                   </h1>
-                  <span className="absolute -bottom-2 -right-4 text-4xl md:text-7xl lg:text-8xl font-black italic text-[#f9e829]/30 font-['Chakra_Petch'] pointer-events-none select-none">Speed</span>
                </div>
-               <button onClick={onClose} className="absolute right-8 top-8 w-10 h-10 bg-[#204ece] text-white rounded-full flex items-center justify-center hover:bg-red-500 transition-colors z-50 shadow-lg">
-                  <XIcon size={24} />
+               <button onClick={onClose} className="absolute right-4 top-4 md:right-8 md:top-6 w-8 h-8 md:w-10 md:h-10 bg-[#204ece] text-white rounded-full flex items-center justify-center hover:bg-red-500 transition-colors z-[100] shadow-lg cursor-pointer">
+                  <XIcon size={20} className="sm:w-6 sm:h-6" />
                </button>
             </div>
 
             {/* Main Content Area */}
-            <div className="relative z-10 flex-1 flex flex-col md:flex-row px-6 md:px-12 lg:px-20 gap-6 md:gap-10 pb-16 h-full min-h-0">
+            <div className="relative z-10 flex-1 flex flex-col md:flex-row px-4 md:px-10 lg:px-16 gap-4 md:gap-8 pb-12 md:pb-16 h-full min-h-0">
                
                {/* Left Panel: Map Info */}
-               <div className="w-full md:w-[45%] flex flex-col rounded-xl overflow-hidden shadow-[0_15px_40px_rgba(32,78,206,0.3)] border-4 border-[#204ece] bg-[#204ece]">
+               <div className="w-full md:w-[45%] flex flex-col rounded-lg md:rounded-xl overflow-hidden shadow-[0_15px_40px_rgba(32,78,206,0.3)] border-2 md:border-4 border-[#204ece] bg-[#204ece]">
                   {/* Map Header Bar */}
-                  <div className="h-12 md:h-16 bg-[#204ece] flex items-center justify-between px-4 text-white shrink-0">
+                  <div className="h-10 md:h-16 bg-[#204ece] flex items-center justify-between px-3 md:px-4 text-white shrink-0">
                      <div className="flex flex-col">
-                        <span className="font-black italic text-lg md:text-xl uppercase tracking-wider">{mapName}</span>
-                        <div className="flex text-[#f9e829]">
+                        <span className="font-black italic text-sm md:text-xl uppercase tracking-wider truncate max-w-[120px] md:max-w-[200px]">{mapName}</span>
+                        <div className="flex text-[#f9e829] text-[10px] md:text-base">
                            {Array(mapStars).fill(0).map((_, i) => <span key={i}>★</span>)}
                         </div>
                      </div>
-                     <div className="flex gap-4 md:gap-8 text-right">
+                     <div className="flex gap-2 md:gap-6 text-right">
                         <div className="flex flex-col items-center">
-                           <span className="text-[8px] md:text-[10px] font-bold opacity-80 uppercase tracking-widest">{t.preMatchLaps}</span>
-                           <span className="font-black italic text-sm md:text-base">1</span>
+                           <span className="text-[6px] md:text-[10px] font-bold opacity-80 uppercase tracking-widest">{t.preMatchLaps}</span>
+                           <span className="font-black italic text-xs md:text-base">1</span>
                         </div>
                         <div className="flex flex-col items-center">
-                           <span className="text-[8px] md:text-[10px] font-bold opacity-80 uppercase tracking-widest">{t.preMatchOvertaking}</span>
-                           <span className="font-black italic text-sm md:text-base">8</span>
+                           <span className="text-[6px] md:text-[10px] font-bold opacity-80 uppercase tracking-widest">{t.preMatchOvertaking}</span>
+                           <span className="font-black italic text-xs md:text-base">8</span>
                         </div>
                         <div className="flex flex-col items-center">
-                           <span className="text-[8px] md:text-[10px] font-bold opacity-80 uppercase tracking-widest">{t.preMatchMode}</span>
-                           <span className="font-black italic text-sm md:text-base">{modeText}</span>
+                           <span className="text-[6px] md:text-[10px] font-bold opacity-80 uppercase tracking-widest">{t.preMatchMode}</span>
+                           <span className="font-black italic text-xs md:text-base">{modeText}</span>
                         </div>
                      </div>
                   </div>
@@ -632,64 +635,62 @@
                   </div>
 
                   {/* Car Selection Footer */}
-                  <div className="h-20 md:h-28 bg-[#204ece] flex items-center px-6 shrink-0 relative overflow-hidden">
-                     <div className="text-[#f9e829] font-black italic text-xl md:text-2xl w-1/3 uppercase leading-tight tracking-wider z-10">
+                  <div className="h-12 md:h-24 bg-[#204ece] flex items-center px-4 shrink-0 relative overflow-hidden">
+                     <div className="text-[#f9e829] font-black italic text-sm md:text-2xl w-1/3 uppercase leading-tight tracking-wider z-10">
                         {t.preMatchCarSelection}
                      </div>
-                     <div className="w-2/3 flex flex-wrap gap-2 md:gap-4 justify-end z-10">
+                     <div className="w-2/3 flex flex-wrap gap-1 md:gap-4 justify-end z-10">
                         {players.slice(0,4).map((_, i) => (
-                           <div key={i} className="flex items-center gap-2">
-                              <div className="w-12 h-6 md:w-16 md:h-8 bg-black/40 rounded-full border border-white/20 shadow-inner flex items-center justify-center">
-                                 <span className="text-[8px] text-white/50 italic font-bold">CAR {i+1}</span>
+                           <div key={i} className="flex items-center gap-1 md:gap-2">
+                              <div className="w-8 h-4 md:w-16 md:h-8 bg-black/40 rounded-full border border-white/20 shadow-inner flex items-center justify-center">
+                                 <span className="text-[5px] md:text-[8px] text-white/50 italic font-bold">CAR {i+1}</span>
                               </div>
                            </div>
                         ))}
                      </div>
-                     <div className="absolute right-0 bottom-0 text-[80px] font-black italic text-white/5 uppercase select-none pointer-events-none -mb-4">SPEED</div>
                   </div>
                </div>
 
                {/* Right Panel: Player Cards */}
                <div className="w-full md:w-[55%] h-full flex items-center justify-center">
-                  <div className={`w-full grid gap-4 md:gap-6 ${players.length > 4 ? 'grid-cols-3' : 'grid-cols-2'} h-full max-h-[100%]`}>
+                  <div className={`w-full grid gap-2 md:gap-6 ${players.length > 4 ? 'grid-cols-3' : 'grid-cols-2'} h-full max-h-[100%]`}>
                      {players.map((playerName, pIdx) => {
                         const isTeam2 = isTeamMode && pIdx >= Math.floor(players.length / 2);
                         const cardGradient = isTeam2 ? 'from-[#ef4444] to-[#991b1b]' : 'from-[#3b82f6] to-[#1e3a8a]';
                         const textAccent = isTeam2 ? 'text-red-200' : 'text-blue-200';
                         
                         return (
-                           <div key={pIdx} className={`relative flex flex-col rounded-xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.2)] border-2 ${isTeam2 ? 'border-red-400' : 'border-blue-400'} bg-gradient-to-br ${cardGradient}`}>
+                           <div key={pIdx} className={`relative flex flex-col rounded-lg md:rounded-xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.2)] border md:border-2 ${isTeam2 ? 'border-red-400' : 'border-blue-400'} bg-gradient-to-br ${cardGradient}`}>
                               {/* Player Image Placeholder */}
                               <div className="absolute bottom-0 left-0 w-2/3 h-[90%] bg-white/10 z-0" style={{ clipPath: 'polygon(0 0, 100% 0, 80% 100%, 0% 100%)' }}>
-                                 {/* Place transparent player PNG here in OBS */}
                                  <div className="w-full h-full flex items-center justify-center opacity-30">
-                                    <User size={64} className="text-white" />
+                                    <User size={48} className="text-white md:w-16 md:h-16" />
                                  </div>
                               </div>
 
                               {/* Info Top Right */}
-                              <div className="relative z-10 p-4 md:p-6 flex flex-col items-end text-right flex-1">
-                                 <h3 className="text-xl md:text-2xl font-black text-white italic drop-shadow-md truncate w-full">{playerName}</h3>
-                                 <span className={`text-[10px] md:text-xs font-bold uppercase tracking-widest mt-1 ${textAccent}`}>{t.preMatchBestRecord}</span>
-                                 <div className="text-3xl md:text-4xl lg:text-5xl font-black font-['Chakra_Petch'] text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] mt-1">
+                              <div className="relative z-10 p-2 md:p-6 flex flex-col items-end text-right flex-1">
+                                 <h3 className="text-sm md:text-2xl font-black text-white italic drop-shadow-md truncate w-full">{playerName}</h3>
+                                 <span className={`text-[6px] md:text-xs font-bold uppercase tracking-widest mt-0.5 md:mt-1 ${textAccent}`}>{t.preMatchBestRecord}</span>
+                                 <div className="text-xl md:text-4xl lg:text-5xl font-black font-['Chakra_Petch'] text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] mt-0.5 md:mt-1">
                                     1:00.00
                                  </div>
                               </div>
 
                               {/* Info Bottom Right (Cars/Pets) */}
-                              <div className="relative z-10 p-3 md:p-4 flex flex-col items-end justify-end border-t border-white/10 bg-black/20 mt-auto">
-                                 <div className="flex gap-2 items-center">
+                              <div className="relative z-10 p-1.5 md:p-4 flex flex-col items-end justify-end border-t border-white/10 bg-black/20 mt-auto">
+                                 <div className="flex gap-1.5 md:gap-2 items-center">
                                     <div className="flex flex-col items-end">
-                                       <div className="w-16 h-6 md:w-20 md:h-8 bg-white/10 rounded flex items-center justify-center shadow-inner">
-                                          <span className="text-[8px] md:text-[10px] text-white font-bold italic">CAR</span>
+                                       <div className="w-8 h-3 md:w-20 md:h-8 bg-white/10 rounded flex items-center justify-center shadow-inner">
+                                          <span className="text-[5px] md:text-[10px] text-white font-bold italic">CAR</span>
                                        </div>
-                                       <span className={`text-[6px] md:text-[8px] uppercase mt-1 opacity-70 font-bold ${textAccent}`}>Hellfire Dragon</span>
+                                       <span className={`text-[4px] md:text-[8px] uppercase mt-0.5 md:mt-1 opacity-70 font-bold ${textAccent} max-w-[40px] md:max-w-auto truncate`}>Hellfire</span>
                                     </div>
                                     <div className="flex flex-col items-end">
-                                       <div className="w-16 h-6 md:w-20 md:h-8 bg-white/10 rounded flex items-center justify-center shadow-inner">
-                                          <span className="text-[8px] md:text-[10px] text-white font-bold italic">PET</span>
+                                       <div className="w-8 h-3 md:w-20 md:h-8 bg-white/10 rounded flex items-center justify-center shadow-inner">
+                                          <span className="text-[5px] md:text-[10px] text-white font-bold italic">PET</span>
                                        </div>
-                                       <span className={`text-[6px] md:text-[8px] uppercase mt-1 opacity-70 font-bold text-right max-w-[80px] leading-tight ${textAccent}`}>Chrono Envoy Angel Feather</span>
+                                       <span className={`text-[4px] md:text-[8px] uppercase mt-0.5 md:mt-1 opacity-70 font-bold text-right max-w-[40px] md:max-w-[80px] leading-tight ${textAccent} truncate`}>Chrono Envoy</span>
                                     </div>
                                  </div>
                               </div>
@@ -701,10 +702,9 @@
             </div>
 
             {/* Footer Bar */}
-            <div className="absolute bottom-0 w-full h-10 md:h-12 bg-[#204ece] text-white flex items-center justify-between px-8 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase shrink-0">
+            <div className="absolute bottom-0 w-full h-6 md:h-12 bg-[#204ece] text-white flex items-center justify-between px-4 md:px-8 text-[6px] md:text-xs font-bold tracking-[0.2em] uppercase shrink-0">
                <span>{tournamentName}</span>
-               <div className="flex items-center gap-4">
-                  <span className="italic text-[#f9e829]">QQSPEED</span>
+               <div className="flex items-center gap-2 md:gap-4">
                   <span>&laquo;</span>
                   <span>{tournamentName}</span>
                </div>
