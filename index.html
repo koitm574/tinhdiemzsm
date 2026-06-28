@@ -927,20 +927,24 @@
 
     function App() {
       const [lang, setLang] = useState(() => localStorage.getItem('zsm_lang_v11_final') || 'vi');
-      const [showBroadcast, setShowBroadcast] = useState(false);
+      const t = TRANSLATIONS[lang];
+      const [showInfo, setShowInfo] = useState(false);
       const [showRecordsModal, setShowRecordsModal] = useState(false);
       const [recordSearch, setRecordSearch] = useState('');
       const [toastMsg, setToastMsg] = useState(null);
       
       const [broadcastState, setBroadcastState] = useState({ isOpen: false, tab: 'scoreboard', gameIndex: 0 });
       const [editingPhotoIndex, setEditingPhotoIndex] = useState(null);
-      const [editingMatchAsset, setEditingMatchAsset] = useState(null);
+      const [editingMatchAsset, setEditingMatchAsset] = useState(null); // {gIndex, pIndex}
 
       const [tournamentName, setTournamentName] = useState(() => localStorage.getItem('zsm_tour_name') || 'CUSTOM TOURNAMENT');
+
       const [team1Name, setTeam1Name] = useState(() => localStorage.getItem('zsm_team1_name') || '');
       const [team2Name, setTeam2Name] = useState(() => localStorage.getItem('zsm_team2_name') || '');
 
-      const [gameMode, setGameMode] = useState(() => localStorage.getItem('zsm_game_mode_v11') || 'solo');
+      const [gameMode, setGameMode] = useState(() => {
+        return localStorage.getItem('zsm_game_mode_v11') || 'solo';
+      });
       const isTeamMode = gameMode !== 'solo';
 
       const [players, setPlayers] = useState(() => {
@@ -1053,8 +1057,11 @@
 
           if (nextMode === 'solo' || nextMode === '2v2') {
              let newP = [...players];
-             if (newP.length < 4) while(newP.length < 4) newP.push(`${t.defPlayer} ${newP.length + 1}`);
-             else if (newP.length > 4) newP = newP.slice(0, 4); 
+             if (newP.length < 4) {
+                 while(newP.length < 4) newP.push(`${t.defPlayer} ${newP.length + 1}`);
+             } else if (newP.length > 4) {
+                 newP = newP.slice(0, 4); 
+             }
              setPlayers(newP);
              setGames(games.map(g => {
                  let nt = [...g.times];
@@ -1109,6 +1116,10 @@
       };
 
       const selectedMaps = useMemo(() => {
+        return games.map(g => g.mapId).filter(id => id !== "");
+      }, [games]);
+
+      const backupRecords = () => {
         const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(mapRecords, null, 2));
         const anchor = document.createElement('a');
         anchor.href = dataStr;
@@ -1399,6 +1410,7 @@
       return (
         <div className="min-h-screen relative overflow-x-hidden pb-20">
           
+          {/* TAB Livestream Component gọi từ đây */}
           {broadcastState.isOpen && (
             <BroadcastOverlay 
               broadcastState={broadcastState}
@@ -1419,7 +1431,7 @@
             />
           )}
 
-          {/* ASSETS CONFIG MODAL */}
+          {/* ASSETS CONFIG MODAL (PLAYER PHOTO) */}
           {editingPhotoIndex !== null && (
              <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-slide-up" onClick={() => setEditingPhotoIndex(null)}>
                <div className="bg-slate-900 border border-slate-700 rounded-xl w-full max-w-sm shadow-2xl overflow-hidden" onClick={e => e.stopPropagation()}>
