@@ -116,7 +116,7 @@
 
     // ⚙️ KHO TÀNG XE (Dùng để hiển thị bảng chọn trong Pre-Match)
     const CAR_DATABASE = [
-      { id: 'c1', name: 'S-Ngược Sáng', img: 'https://i.ibb.co/B5tFwPJ8/image-removebg-preview-1.png' },
+      { id: 'c1', name: 'Dark Azure Dragon', img: 'https://i.ibb.co/3s6Vp6Z/car1.png' },
       { id: 'c2', name: 'Hallet', img: 'https://i.ibb.co/3s6Vp6Z/car1.png' },
       { id: 'c3', name: 'S-Chrono Envoy', img: 'https://i.ibb.co/3s6Vp6Z/car1.png' },
       { id: 'c4', name: 'L-Qing', img: 'https://i.ibb.co/3s6Vp6Z/car1.png' },
@@ -840,15 +840,15 @@
                                <div className="flex gap-2 items-center">
                                   {/* Xe */}
                                   <div className="flex flex-col items-end cursor-pointer group" onClick={() => setAssetModal({ type: 'car', pIndex: pIdx })}>
-                                     <div className="w-16 h-8 md:w-20 md:h-10 flex items-center justify-center relative transition-transform group-hover:scale-110">
-                                        {carObj ? <img src={carObj.img} className="max-w-full max-h-full object-contain drop-shadow-[0_5px_10px_rgba(0,0,0,0.8)] scale-125" alt="Car" /> : <div className="px-2 py-1 rounded bg-black/30 text-[8px] md:text-[10px] text-white/50 font-bold italic">{t.selectCar}</div>}
+                                     <div className="w-20 h-10 md:w-28 md:h-14 flex items-center justify-center relative transition-transform group-hover:scale-110">
+                                        {carObj ? <img src={carObj.img} className="max-w-full max-h-full object-contain drop-shadow-[0_5px_10px_rgba(0,0,0,0.8)] scale-150" alt="Car" /> : <div className="px-2 py-1 rounded bg-black/30 text-[8px] md:text-[10px] text-white/50 font-bold italic">{t.selectCar}</div>}
                                      </div>
                                      <span className={`text-[6px] md:text-[8px] uppercase mt-1 opacity-70 font-bold ${textAccent}`}>{carObj ? carObj.name : ''}</span>
                                   </div>
                                   {/* Pet */}
                                   <div className="flex flex-col items-end cursor-pointer group" onClick={() => setAssetModal({ type: 'pet', pIndex: pIdx })}>
-                                     <div className="w-16 h-8 md:w-20 md:h-10 flex items-center justify-center relative transition-transform group-hover:scale-110">
-                                        {petObj ? <img src={petObj.img} className="max-w-full max-h-full object-contain drop-shadow-[0_5px_10px_rgba(0,0,0,0.8)] scale-125" alt="Pet" /> : <div className="px-2 py-1 rounded bg-black/30 text-[8px] md:text-[10px] text-white/50 font-bold italic">{t.selectPet}</div>}
+                                     <div className="w-20 h-10 md:w-28 md:h-14 flex items-center justify-center relative transition-transform group-hover:scale-110">
+                                        {petObj ? <img src={petObj.img} className="max-w-full max-h-full object-contain drop-shadow-[0_5px_10px_rgba(0,0,0,0.8)] scale-150" alt="Pet" /> : <div className="px-2 py-1 rounded bg-black/30 text-[8px] md:text-[10px] text-white/50 font-bold italic">{t.selectPet}</div>}
                                      </div>
                                      <span className={`text-[6px] md:text-[8px] uppercase mt-1 opacity-70 font-bold text-right max-w-[80px] leading-tight truncate ${textAccent}`}>{petObj ? petObj.name : ''}</span>
                                   </div>
