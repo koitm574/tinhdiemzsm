@@ -109,6 +109,14 @@
     .animate-scanline {
       animation: scanline 8s linear infinite;
     }
+    
+    /* Pre-Match Screen Background Slants */
+    .bg-prematch-slant-left {
+      clip-path: polygon(0 0, 100% 0, 80% 100%, 0% 100%);
+    }
+    .bg-prematch-slant-right {
+      clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
+    }
   </style>
 </head>
 <body class="bg-[#050510] text-slate-200 m-0 p-0 selection:bg-red-500/30 font-sans">
@@ -134,6 +142,7 @@
     const MonitorPlay = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line><polygon points="10 8 15 10 10 12 10 8"></polygon></svg>;
     const WheelIcon = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle><line x1="12" y1="2" x2="12" y2="8"></line><line x1="12" y1="16" x2="12" y2="22"></line><line x1="2" y1="12" x2="8" y2="12"></line><line x1="16" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"></line><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"></line><line x1="4.93" y1="19.07" x2="9.17" y2="14.83"></line><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"></line></svg>;
     const Trophy = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg>;
+    const PlayIcon = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>;
 
     // --- MAP POOL ---
     const MAP_POOL = [
@@ -267,7 +276,8 @@
         map1Pick: "TRẬN 1: MAP CHỈ ĐỊNH (KHÔNG CÓ QUYỀN CHỌN)", kingMapPick: "TRẬN {0}: KING MAP CỦA {1}", normalPick: "TRẬN {0}: LƯỢT CHỌN MAP CỦA {1}", 
         broadcastBtn: "Giao Diện Livestream", pick: "LƯỢT CHỌN", closeBtn: "Thoát / Close",
         recordBtn: "Bảng Kỷ Lục", recordTitle: "🏆 BẢNG VÀNG KỶ LỤC MAP", backupBtn: "📥 Tải File Sao Lưu", restoreBtn: "📤 Phục Hồi Dữ Liệu", 
-        recordHolder: "Kỷ lục:", noRecord: "Chưa có kỷ lục", newRecordAlert: "🎉 KỶ LỤC MỚI: {0} đã phá kỷ lục map {1} với thời gian {2}!"
+        recordHolder: "Kỷ lục:", noRecord: "Chưa có kỷ lục", newRecordAlert: "🎉 KỶ LỤC MỚI: {0} đã phá kỷ lục map {1} với thời gian {2}!",
+        preMatchTitleIndiv: "INDIVIDUAL SPRINT CLASSIC", preMatchTitleTeam: "TEAM SPRINT CLASSIC", preMatchLaps: "LAPS", preMatchOvertaking: "OVERTAKING", preMatchMode: "MODE", preMatchCarSelection: "CAR SELECTION", preMatchBestRecord: "BEST RECORD"
       },
       en: { 
         title: "SECOND-BASED SCORING SYSTEM", subtitle: "Designed and developed by koi", tourNamePh: "Enter tournament name...",
@@ -287,7 +297,8 @@
         map1Pick: "MATCH 1: DESIGNATED MAP", kingMapPick: "MATCH {0}: {1}'S KING MAP", normalPick: "MATCH {0}: {1}'S PICK", 
         broadcastBtn: "Broadcast View", pick: "PICK", closeBtn: "Close",
         recordBtn: "Records", recordTitle: "🏆 MAP RECORDS HALL OF FAME", backupBtn: "📥 Backup Data", restoreBtn: "📤 Restore Data", 
-        recordHolder: "Record:", noRecord: "No record yet", newRecordAlert: "🎉 NEW RECORD: {0} broke the {1} record with {2}!"
+        recordHolder: "Record:", noRecord: "No record yet", newRecordAlert: "🎉 NEW RECORD: {0} broke the {1} record with {2}!",
+        preMatchTitleIndiv: "INDIVIDUAL SPRINT CLASSIC", preMatchTitleTeam: "TEAM SPRINT CLASSIC", preMatchLaps: "LAPS", preMatchOvertaking: "OVERTAKING", preMatchMode: "MODE", preMatchCarSelection: "CAR SELECTION", preMatchBestRecord: "BEST RECORD"
       },
       cn: { 
         title: "秒数计分系统", subtitle: "由 koi 设计与开发", tourNamePh: "输入锦标赛名称...",
@@ -306,7 +317,8 @@
         map1Pick: "第1局：官方指定赛道", kingMapPick: "第{0}局：{1} 的王牌赛道", normalPick: "第{0}局：由 {1} 选图", 
         broadcastBtn: "直播界面", pick: "选图", closeBtn: "关闭",
         recordBtn: "纪录", recordTitle: "🏆 赛道最高纪录", backupBtn: "📥 备份数据", restoreBtn: "📤 恢复数据", 
-        recordHolder: "纪录:", noRecord: "暂无纪录", newRecordAlert: "🎉 新纪录：{0} 以 {2} 打破了 {1} 的纪录！"
+        recordHolder: "纪录:", noRecord: "暂无纪录", newRecordAlert: "🎉 新纪录：{0} 以 {2} 打破了 {1} 的纪录！",
+        preMatchTitleIndiv: "INDIVIDUAL SPRINT CLASSIC", preMatchTitleTeam: "TEAM SPRINT CLASSIC", preMatchLaps: "LAPS", preMatchOvertaking: "OVERTAKING", preMatchMode: "MODE", preMatchCarSelection: "CAR SELECTION", preMatchBestRecord: "BEST RECORD"
       },
       tw: { 
         title: "秒數計分系統", subtitle: "由 koi 設計與開發", tourNamePh: "輸入錦標賽名稱...",
@@ -325,7 +337,8 @@
         map1Pick: "第1局：官方指定賽道", kingMapPick: "第{0}局：{1} 的王牌賽道", normalPick: "第{0}局：由 {1} 選圖", 
         broadcastBtn: "直播介面", pick: "選圖", closeBtn: "關閉",
         recordBtn: "紀錄", recordTitle: "🏆 賽道最高紀錄", backupBtn: "📥 備份數據", restoreBtn: "📤 恢復數據", 
-        recordHolder: "紀錄:", noRecord: "暫無紀錄", newRecordAlert: "🎉 新紀錄：{0} 以 {2} 打破了 {1} 的紀錄！"
+        recordHolder: "紀錄:", noRecord: "暫無紀錄", newRecordAlert: "🎉 新紀錄：{0} 以 {2} 打破了 {1} 的紀錄！",
+        preMatchTitleIndiv: "INDIVIDUAL SPRINT CLASSIC", preMatchTitleTeam: "TEAM SPRINT CLASSIC", preMatchLaps: "LAPS", preMatchOvertaking: "OVERTAKING", preMatchMode: "MODE", preMatchCarSelection: "CAR SELECTION", preMatchBestRecord: "BEST RECORD"
       },
       th: { 
         title: "ระบบการนับคะแนนตามวินาที", subtitle: "ออกแบบและพัฒนาโดย koi", tourNamePh: "ป้อนชื่อการแข่งขัน...",
@@ -344,7 +357,8 @@
         map1Pick: "แมตช์ 1: แผนที่ที่กำหนด", kingMapPick: "แมตช์ {0}: KING MAP ของ {1}", normalPick: "แมตช์ {0}: สิทธิ์การเลือกของ {1}", 
         broadcastBtn: "มุมมองถ่ายทอดสด", pick: "เลือก", closeBtn: "ปิด / Close",
         recordBtn: "สถิติ", recordTitle: "🏆 หอเกียรติยศสถิติแผนที่", backupBtn: "📥 สำรองข้อมูล", restoreBtn: "📤 คืนค่าข้อมูล", 
-        recordHolder: "สถิติ:", noRecord: "ยังไม่มีสถิติ", newRecordAlert: "🎉 สถิติใหม่: {0} ทำลายสถิติ {1} ด้วยเวลา {2}!"
+        recordHolder: "สถิติ:", noRecord: "ยังไม่มีสถิติ", newRecordAlert: "🎉 สถิติใหม่: {0} ทำลายสถิติ {1} ด้วยเวลา {2}!",
+        preMatchTitleIndiv: "INDIVIDUAL SPRINT CLASSIC", preMatchTitleTeam: "TEAM SPRINT CLASSIC", preMatchLaps: "LAPS", preMatchOvertaking: "OVERTAKING", preMatchMode: "MODE", preMatchCarSelection: "CAR SELECTION", preMatchBestRecord: "BEST RECORD"
       }
     };
 
@@ -355,6 +369,14 @@
         if (found) return found[mapLang];
       }
       return '';
+    };
+
+    const getMapStars = (id) => {
+      for (const group of MAP_POOL) {
+        const found = group.maps.find(m => m.id === id);
+        if (found) return group.stars;
+      }
+      return 0;
     };
 
     const parseTime = (val) => {
@@ -536,6 +558,162 @@
       );
     };
 
+    const PreMatchOverlay = ({ game, players, mapRecords, lang, t, gameMode, tournamentName, onClose }) => {
+      const mapName = game.mapId ? getMapName(game.mapId, lang) : 'UNKNOWN MAP';
+      const mapStars = game.mapId ? getMapStars(game.mapId) : 0;
+      const bgStyle = getMapBackgroundStyle(game.mapId);
+      
+      const isTeamMode = gameMode !== 'solo';
+      const modeText = gameMode === 'solo' ? 'INDIVIDUAL' : gameMode === '2v2' ? '2 VS 2' : '3 VS 3';
+      const headerTitle = gameMode === 'solo' ? t.preMatchTitleIndiv : t.preMatchTitleTeam;
+
+      return (
+        <div className="fixed inset-0 z-[1000] bg-white flex items-center justify-center font-sans">
+          <div className="relative w-full max-w-[1920px] aspect-video bg-[#f9fafd] overflow-hidden flex flex-col shadow-2xl">
+            {/* Background Accents (SVG Top Left & Bottom Right) */}
+            <div className="absolute top-0 left-0 w-1/3 h-1/3 pointer-events-none z-0">
+               <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="w-full h-full opacity-90">
+                  <polygon points="0,0 100,0 0,60" fill="#204ece" />
+                  <polygon points="0,20 100,0 0,80" fill="#f9e829" opacity="0.8" />
+               </svg>
+            </div>
+            <div className="absolute bottom-0 right-0 w-1/4 h-1/4 pointer-events-none z-0">
+               <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="w-full h-full opacity-90">
+                  <polygon points="100,100 0,100 100,0" fill="#f9e829" />
+                  <polygon points="100,100 20,100 100,20" fill="#204ece" opacity="0.8" />
+               </svg>
+            </div>
+
+            {/* Header */}
+            <div className="relative z-10 w-full pt-4 pb-2 md:pt-8 md:pb-4 flex justify-center items-center shrink-0">
+               <div className="relative inline-block">
+                  <h1 className="text-3xl md:text-5xl lg:text-6xl font-black italic text-[#204ece] tracking-[0.1em] uppercase">
+                    {headerTitle}
+                  </h1>
+                  <span className="absolute -bottom-2 -right-4 text-4xl md:text-7xl lg:text-8xl font-black italic text-[#f9e829]/30 font-['Chakra_Petch'] pointer-events-none select-none">Speed</span>
+               </div>
+               <button onClick={onClose} className="absolute right-8 top-8 w-10 h-10 bg-[#204ece] text-white rounded-full flex items-center justify-center hover:bg-red-500 transition-colors z-50 shadow-lg">
+                  <XIcon size={24} />
+               </button>
+            </div>
+
+            {/* Main Content Area */}
+            <div className="relative z-10 flex-1 flex flex-col md:flex-row px-6 md:px-12 lg:px-20 gap-6 md:gap-10 pb-16 h-full min-h-0">
+               
+               {/* Left Panel: Map Info */}
+               <div className="w-full md:w-[45%] flex flex-col rounded-xl overflow-hidden shadow-[0_15px_40px_rgba(32,78,206,0.3)] border-4 border-[#204ece] bg-[#204ece]">
+                  {/* Map Header Bar */}
+                  <div className="h-12 md:h-16 bg-[#204ece] flex items-center justify-between px-4 text-white shrink-0">
+                     <div className="flex flex-col">
+                        <span className="font-black italic text-lg md:text-xl uppercase tracking-wider">{mapName}</span>
+                        <div className="flex text-[#f9e829]">
+                           {Array(mapStars).fill(0).map((_, i) => <span key={i}>★</span>)}
+                        </div>
+                     </div>
+                     <div className="flex gap-4 md:gap-8 text-right">
+                        <div className="flex flex-col items-center">
+                           <span className="text-[8px] md:text-[10px] font-bold opacity-80 uppercase tracking-widest">{t.preMatchLaps}</span>
+                           <span className="font-black italic text-sm md:text-base">1</span>
+                        </div>
+                        <div className="flex flex-col items-center">
+                           <span className="text-[8px] md:text-[10px] font-bold opacity-80 uppercase tracking-widest">{t.preMatchOvertaking}</span>
+                           <span className="font-black italic text-sm md:text-base">8</span>
+                        </div>
+                        <div className="flex flex-col items-center">
+                           <span className="text-[8px] md:text-[10px] font-bold opacity-80 uppercase tracking-widest">{t.preMatchMode}</span>
+                           <span className="font-black italic text-sm md:text-base">{modeText}</span>
+                        </div>
+                     </div>
+                  </div>
+
+                  {/* Map Image */}
+                  <div className="flex-1 relative bg-slate-800 w-full" style={bgStyle}>
+                     <div className="absolute inset-0 bg-gradient-to-t from-[#204ece] via-transparent to-transparent opacity-80"></div>
+                  </div>
+
+                  {/* Car Selection Footer */}
+                  <div className="h-20 md:h-28 bg-[#204ece] flex items-center px-6 shrink-0 relative overflow-hidden">
+                     <div className="text-[#f9e829] font-black italic text-xl md:text-2xl w-1/3 uppercase leading-tight tracking-wider z-10">
+                        {t.preMatchCarSelection}
+                     </div>
+                     <div className="w-2/3 flex flex-wrap gap-2 md:gap-4 justify-end z-10">
+                        {players.slice(0,4).map((_, i) => (
+                           <div key={i} className="flex items-center gap-2">
+                              <div className="w-12 h-6 md:w-16 md:h-8 bg-black/40 rounded-full border border-white/20 shadow-inner flex items-center justify-center">
+                                 <span className="text-[8px] text-white/50 italic font-bold">CAR {i+1}</span>
+                              </div>
+                           </div>
+                        ))}
+                     </div>
+                     <div className="absolute right-0 bottom-0 text-[80px] font-black italic text-white/5 uppercase select-none pointer-events-none -mb-4">SPEED</div>
+                  </div>
+               </div>
+
+               {/* Right Panel: Player Cards */}
+               <div className="w-full md:w-[55%] h-full flex items-center justify-center">
+                  <div className={`w-full grid gap-4 md:gap-6 ${players.length > 4 ? 'grid-cols-3' : 'grid-cols-2'} h-full max-h-[100%]`}>
+                     {players.map((playerName, pIdx) => {
+                        const isTeam2 = isTeamMode && pIdx >= Math.floor(players.length / 2);
+                        const cardGradient = isTeam2 ? 'from-[#ef4444] to-[#991b1b]' : 'from-[#3b82f6] to-[#1e3a8a]';
+                        const textAccent = isTeam2 ? 'text-red-200' : 'text-blue-200';
+                        
+                        return (
+                           <div key={pIdx} className={`relative flex flex-col rounded-xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.2)] border-2 ${isTeam2 ? 'border-red-400' : 'border-blue-400'} bg-gradient-to-br ${cardGradient}`}>
+                              {/* Player Image Placeholder */}
+                              <div className="absolute bottom-0 left-0 w-2/3 h-[90%] bg-white/10 z-0" style={{ clipPath: 'polygon(0 0, 100% 0, 80% 100%, 0% 100%)' }}>
+                                 {/* Place transparent player PNG here in OBS */}
+                                 <div className="w-full h-full flex items-center justify-center opacity-30">
+                                    <User size={64} className="text-white" />
+                                 </div>
+                              </div>
+
+                              {/* Info Top Right */}
+                              <div className="relative z-10 p-4 md:p-6 flex flex-col items-end text-right flex-1">
+                                 <h3 className="text-xl md:text-2xl font-black text-white italic drop-shadow-md truncate w-full">{playerName}</h3>
+                                 <span className={`text-[10px] md:text-xs font-bold uppercase tracking-widest mt-1 ${textAccent}`}>{t.preMatchBestRecord}</span>
+                                 <div className="text-3xl md:text-4xl lg:text-5xl font-black font-['Chakra_Petch'] text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] mt-1">
+                                    1:00.00
+                                 </div>
+                              </div>
+
+                              {/* Info Bottom Right (Cars/Pets) */}
+                              <div className="relative z-10 p-3 md:p-4 flex flex-col items-end justify-end border-t border-white/10 bg-black/20 mt-auto">
+                                 <div className="flex gap-2 items-center">
+                                    <div className="flex flex-col items-end">
+                                       <div className="w-16 h-6 md:w-20 md:h-8 bg-white/10 rounded flex items-center justify-center shadow-inner">
+                                          <span className="text-[8px] md:text-[10px] text-white font-bold italic">CAR</span>
+                                       </div>
+                                       <span className={`text-[6px] md:text-[8px] uppercase mt-1 opacity-70 font-bold ${textAccent}`}>Hellfire Dragon</span>
+                                    </div>
+                                    <div className="flex flex-col items-end">
+                                       <div className="w-16 h-6 md:w-20 md:h-8 bg-white/10 rounded flex items-center justify-center shadow-inner">
+                                          <span className="text-[8px] md:text-[10px] text-white font-bold italic">PET</span>
+                                       </div>
+                                       <span className={`text-[6px] md:text-[8px] uppercase mt-1 opacity-70 font-bold text-right max-w-[80px] leading-tight ${textAccent}`}>Chrono Envoy Angel Feather</span>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        );
+                     })}
+                  </div>
+               </div>
+            </div>
+
+            {/* Footer Bar */}
+            <div className="absolute bottom-0 w-full h-10 md:h-12 bg-[#204ece] text-white flex items-center justify-between px-8 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase shrink-0">
+               <span>{tournamentName}</span>
+               <div className="flex items-center gap-4">
+                  <span className="italic text-[#f9e829]">QQSPEED</span>
+                  <span>&laquo;</span>
+                  <span>{tournamentName}</span>
+               </div>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
     const BroadcastOverlay = ({ players, games, totals, getGameCalculations, lang, t, gameMode, tournamentName, team1Name, team2Name, onClose }) => {
       const isTeamMode = gameMode !== 'solo';
       const displayRounds = Math.max(9, games.length);
@@ -706,6 +884,8 @@
       const [recordSearch, setRecordSearch] = useState(''); // Thêm state cho thanh tìm kiếm kỷ lục
       const [toastMsg, setToastMsg] = useState(null); // STATE TOAST NOTIFICATION
       
+      const [preMatchGameIndex, setPreMatchGameIndex] = useState(null); // STATE FOR PRE-MATCH SCREEN
+
       const [tournamentName, setTournamentName] = useState(() => localStorage.getItem('zsm_tour_name') || 'CUSTOM TOURNAMENT');
 
       const [team1Name, setTeam1Name] = useState(() => localStorage.getItem('zsm_team1_name') || '');
@@ -1236,6 +1416,20 @@
             />
           )}
 
+          {/* PRE-MATCH OVERLAY */}
+          {preMatchGameIndex !== null && (
+             <PreMatchOverlay
+               game={games[preMatchGameIndex]}
+               players={players}
+               mapRecords={mapRecords}
+               lang={lang}
+               t={t}
+               gameMode={gameMode}
+               tournamentName={tournamentName}
+               onClose={() => setPreMatchGameIndex(null)}
+             />
+          )}
+
           {/* RECORDS MODAL */}
           {showRecordsModal && (
             <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-slide-up" onClick={() => setShowRecordsModal(false)}>
@@ -1246,6 +1440,7 @@
                   <button onClick={() => setShowRecordsModal(false)} className="text-slate-400 hover:text-red-500 transition-colors z-10"><XIcon size={24}/></button>
                 </div>
                 
+                {/* THANH TÌM KIẾM MAP TRONG BẢNG KỶ LỤC */}
                 <div className="bg-slate-950 p-3 border-b border-slate-800 shrink-0 z-10">
                    <input 
                      type="text"
@@ -1485,9 +1680,14 @@
                               <div className="flex flex-col gap-0.5 md:gap-1">
                                 <div className="flex items-center justify-between">
                                   <span className="text-[9px] md:text-[10px] text-slate-500 font-bold uppercase tracking-widest">{t.defGame} {gIndex + 1}</span>
-                                  <button onClick={() => removeGame(gIndex)} className="text-slate-600 hover:text-red-500 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer flex-shrink-0">
-                                    <Trash2 size={12} className="md:w-[14px] md:h-[14px]"/>
-                                  </button>
+                                  <div className="flex items-center gap-1 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button onClick={() => setPreMatchGameIndex(gIndex)} className="text-cyan-600 hover:text-cyan-400 cursor-pointer flex-shrink-0" title="Pre-Match Screen">
+                                      <PlayIcon size={14} className="md:w-[16px] md:h-[16px]"/>
+                                    </button>
+                                    <button onClick={() => removeGame(gIndex)} className="text-slate-600 hover:text-red-500 cursor-pointer flex-shrink-0" title="Xóa trận">
+                                      <Trash2 size={12} className="md:w-[14px] md:h-[14px]"/>
+                                    </button>
+                                  </div>
                                 </div>
                                 <SearchableMapSelect gameIndex={gIndex} currentMapId={game.mapId} selectedMaps={selectedMaps} onChange={(id) => { const n = [...games]; n[gIndex].mapId = id; setGames(n); }} lang={lang} t={t} />
                                 {/* HIỂN THỊ KỶ LỤC TRỰC TIẾP DƯỚI TÊN MAP */}
