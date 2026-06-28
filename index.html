@@ -5,12 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hệ Thống Tính Điểm Theo Giây</title>
   
-  <!-- Import React, ReactDOM, and Babel -->
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   
-  <!-- Cấu hình Babel để ép sử dụng React Classic Runtime -->
   <script>
     Babel.registerPreset('react-classic', {
       presets: [
@@ -19,13 +17,9 @@
     });
   </script>
 
-  <!-- Import Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- Import ExcelJS for Professional Export -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
   
-  <!-- Import Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Sans+SC:wght@400;700;900&family=Noto+Sans+TC:wght@400;700;900&family=Noto+Sans+Thai:wght@400;700;900&display=swap" rel="stylesheet">
@@ -43,27 +37,16 @@
   </script>
 
   <style>
-    /* THU PHÓNG GIAO DIỆN (ZOOM 90%) THEO YÊU CẦU */
-    html {
-      zoom: 0.9;
-    }
-    /* Hỗ trợ cho Firefox */
+    html { zoom: 0.9; }
     @-moz-document url-prefix() {
-      html {
-        transform: scale(0.9);
-        transform-origin: top center;
-        width: 111.11%;
-      }
+      html { transform: scale(0.9); transform-origin: top center; width: 111.11%; }
     }
 
     @keyframes slideUpFade {
       from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    .animate-slide-up {
-      animation: slideUpFade 0.6s ease-out forwards;
-      opacity: 0;
-    }
+    .animate-slide-up { animation: slideUpFade 0.6s ease-out forwards; opacity: 0; }
     .delay-100 { animation-delay: 0.1s; }
     .delay-200 { animation-delay: 0.2s; }
     
@@ -72,40 +55,28 @@
     ::-webkit-scrollbar-thumb { background: rgba(51, 65, 85, 0.8); border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: rgba(71, 85, 105, 1); }
 
-    /* Hide scrollbar for elements but keep functionality */
     .hide-scrollbar::-webkit-scrollbar { display: none; }
     .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-    /* CSS Cho màn hình Broadcast */
     .bg-stripes {
       background-image: repeating-linear-gradient(
-        -45deg,
-        rgba(255, 255, 255, 0.03),
-        rgba(255, 255, 255, 0.03) 10px,
-        transparent 10px,
-        transparent 20px
+        -45deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.03) 10px, transparent 10px, transparent 20px
       );
     }
-    .clip-slant {
-      clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
-    }
+    .clip-slant { clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%); }
+    .clip-slant-reverse { clip-path: polygon(0 0, 90% 0, 100% 100%, 10% 100%); }
 
-    /* Hiệu ứng động siêu mượt cho nền Livestream */
     @keyframes slowZoom {
       0% { transform: scale(1); }
       50% { transform: scale(1.05); }
       100% { transform: scale(1); }
     }
-    .animate-slow-zoom {
-      animation: slowZoom 20s ease-in-out infinite;
-    }
+    .animate-slow-zoom { animation: slowZoom 20s ease-in-out infinite; }
     @keyframes scanline {
       0% { transform: translateY(-10vh); }
       100% { transform: translateY(110vh); }
     }
-    .animate-scanline {
-      animation: scanline 8s linear infinite;
-    }
+    .animate-scanline { animation: scanline 8s linear infinite; }
   </style>
 </head>
 <body class="bg-[#050510] text-slate-200 m-0 p-0 selection:bg-red-500/30 font-sans">
@@ -114,7 +85,7 @@
   <script type="text/babel" data-presets="react-classic,env">
     const { useState, useMemo, useEffect, useRef } = React;
 
-    //    const Flag = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>;
+    const Flag = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>;
     const Crown = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="currentColor" className={className} width={size} height={size}><path d="M5.5 20h13a1.5 1.5 0 0 0 1.5-1.5v-1a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 4 17.5v1A1.5 1.5 0 0 0 5.5 20zm14-5.5L16 4l-4 7-4-7-3.5 10.5h15z"></path></svg>;
     const Flame = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>;
     const RefreshCcw = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path><path d="M16 21v-5h5"></path></svg>;
@@ -130,37 +101,33 @@
     const MonitorPlay = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line><polygon points="10 8 15 10 10 12 10 8"></polygon></svg>;
     const WheelIcon = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle><line x1="12" y1="2" x2="12" y2="8"></line><line x1="12" y1="16" x2="12" y2="22"></line><line x1="2" y1="12" x2="8" y2="12"></line><line x1="16" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"></line><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"></line><line x1="4.93" y1="19.07" x2="9.17" y2="14.83"></line><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"></line></svg>;
     const Trophy = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg>;
+    const PlayIcon = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>;
 
-    //    // ============================================================================
-    // ⚙️ GẮN CỨNG ẢNH VĐV TẠI ĐÂY (Tối đa 6 link, dùng ảnh không viền PNG)
-    // ============================================================================
+    
+    // ⚙️ LINK ẢNH VĐV (Đã được Gắn Cứng theo yêu cầu - Dán link PNG trong suốt vào)
     const HARDCODED_PLAYER_PHOTOS = [
       "https://i.ibb.co/8YJ11Zt/player-placeholder.png", // Tuyển thủ 1
       "https://i.ibb.co/8YJ11Zt/player-placeholder.png", // Tuyển thủ 2
       "https://i.ibb.co/8YJ11Zt/player-placeholder.png", // Tuyển thủ 3
       "https://i.ibb.co/8YJ11Zt/player-placeholder.png", // Tuyển thủ 4
-      "", // Tuyển thủ 5 (Chỉ dùng cho mode 3v3)
-      "", // Tuyển thủ 6 (Chỉ dùng cho mode 3v3)
+      "", // Tuyển thủ 5 (3v3)
+      "", // Tuyển thủ 6 (3v3)
     ];
 
-    // ============================================================================
-    // ⚙️ KHO TÀNG XE (CAR DATABASE)
-    // ============================================================================
+    // ⚙️ KHO TÀNG XE (Dùng để hiển thị bảng chọn trong Pre-Match)
     const CAR_DATABASE = [
       { id: 'c1', name: 'Dark Azure Dragon', img: 'https://i.ibb.co/3s6Vp6Z/car1.png' },
       { id: 'c2', name: 'Hallet', img: 'https://i.ibb.co/3s6Vp6Z/car1.png' },
       { id: 'c3', name: 'S-Chrono Envoy', img: 'https://i.ibb.co/3s6Vp6Z/car1.png' },
       { id: 'c4', name: 'L-Qing', img: 'https://i.ibb.co/3s6Vp6Z/car1.png' },
-      // Dán thêm Xe vào đây thoải mái...
+      // Thêm Xe vào đây
     ];
 
-    // ============================================================================
-    // ⚙️ KHO TÀNG PET (PET DATABASE)
-    // ============================================================================
+    // ⚙️ KHO TÀNG PET (Dùng để hiển thị bảng chọn trong Pre-Match)
     const PET_DATABASE = [
-      { id: 'p1', name: 'Hellfire Dragon', img: 'https://i.ibb.co/3s6Vp6Z/car1.png' }, // Thay link Pet thật
+      { id: 'p1', name: 'Hellfire Dragon', img: 'https://i.ibb.co/3s6Vp6Z/car1.png' }, 
       { id: 'p2', name: 'Angel Feather', img: 'https://i.ibb.co/3s6Vp6Z/car1.png' },
-      // Dán thêm Pet vào đây thoải mái...
+      // Thêm Pet vào đây
     ];
 
     // --- MAP POOL ---
@@ -221,7 +188,6 @@
       ]}
     ];
 
-    // --- MAP BACKGROUND LINKS (ĐỂ THAY HÌNH NỀN MAP TRONG LIVESTREAM) ---
     const MAP_BACKGROUNDS = {
       'm7_1': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20190108/1e2681225a98cd914a54fc0765478dd3.jpg',
       'm7_2': 'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20250113/17367779105688.png',
@@ -280,7 +246,7 @@
       vi: { 
         title: "HỆ THỐNG TÍNH ĐIỂM THEO GIÂY", subtitle: "Thiết kế và phát triển bởi koi", tourNamePh: "Nhập tên giải đấu...",
         addPlayer: "Thêm VĐV", addMatch: "Thêm Trận", reset: "Làm mới", export: "Xuất Excel", 
-        match: "TRẬN ĐẤU", kingMap: "King Map", total: "TỔNG ĐIỂM", leaderboard: "BẢNG XẾP HẠNG", pts: "PTS", 
+        no: "STT", match: "TRẬN ĐẤU", kingMap: "King Map", total: "TỔNG ĐIỂM", leaderboard: "BẢNG XẾP HẠNG", pts: "PTS", 
         errMaxP: "Giải đấu giới hạn tối đa 6 VĐV!", errMinP: "Bảng thi đấu cần ít nhất 2 VĐV!", errMaxG: `Giải đấu giới hạn tối đa ${MAX_GAMES} Trận!`, 
         delP: "Bạn muốn xóa {0} khỏi giải đấu?", errMinG: "Phải có ít nhất 1 Trận đấu!", delG: "Bạn có muốn xóa Trận {0}?", 
         confirmReset: "🚨 LÀM MỚI BẢNG ĐIỂM?\nMọi dữ liệu sẽ bị xóa và quay về trạng thái mặc định.", 
@@ -297,12 +263,12 @@
         recordBtn: "Bảng Kỷ Lục", recordTitle: "🏆 BẢNG VÀNG KỶ LỤC MAP", backupBtn: "📥 Tải File Sao Lưu", restoreBtn: "📤 Phục Hồi Dữ Liệu", 
         recordHolder: "Kỷ lục:", noRecord: "Chưa có kỷ lục", newRecordAlert: "🎉 KỶ LỤC MỚI: {0} đã phá kỷ lục map {1} với thời gian {2}!",
         preMatchTitleIndiv: "INDIVIDUAL SPRINT CLASSIC", preMatchTitleTeam: "TEAM SPRINT CLASSIC", preMatchMode: "MODE", preMatchBestRecord: "BEST RECORD",
-        scoreboardTab: "BẢNG ĐIỂM", prematchTab: "TRƯỚC TRẬN", matchResult: "KẾT QUẢ TRẬN ĐẤU"
+        scoreboardTab: "BẢNG ĐIỂM", prematchTab: "TRƯỚC TRẬN", matchResult: "KẾT QUẢ TRẬN ĐẤU", selectCar: "CHỌN XE", selectPet: "CHỌN PET"
       },
       en: { 
         title: "SECOND-BASED SCORING SYSTEM", subtitle: "Designed and developed by koi", tourNamePh: "Enter tournament name...",
         addPlayer: "Add Player", addMatch: "Add Match", reset: "Reset", export: "Export Excel", 
-        match: "MATCH", kingMap: "King Map", total: "TOTAL SCORE", leaderboard: "LEADERBOARD", pts: "PTS", 
+        no: "No.", match: "MATCH", kingMap: "King Map", total: "TOTAL SCORE", leaderboard: "LEADERBOARD", pts: "PTS", 
         errMaxP: "Maximum 6 players allowed!", errMinP: "Need at least 2 players!", errMaxG: `Maximum ${MAX_GAMES} matches allowed!`, 
         delP: "Remove {0} from the tournament?", errMinG: "Need at least 1 match!", delG: "Delete Game {0}?", 
         confirmReset: "🚨 RESET SCOREBOARD?\nAll data will be wiped and returned to default.", 
@@ -319,12 +285,12 @@
         recordBtn: "Records", recordTitle: "🏆 MAP RECORDS HALL OF FAME", backupBtn: "📥 Backup Data", restoreBtn: "📤 Restore Data", 
         recordHolder: "Record:", noRecord: "No record yet", newRecordAlert: "🎉 NEW RECORD: {0} broke the {1} record with {2}!",
         preMatchTitleIndiv: "INDIVIDUAL SPRINT CLASSIC", preMatchTitleTeam: "TEAM SPRINT CLASSIC", preMatchMode: "MODE", preMatchBestRecord: "BEST RECORD",
-        scoreboardTab: "SCOREBOARD", prematchTab: "PRE-MATCH", matchResult: "MATCH RESULT"
+        scoreboardTab: "SCOREBOARD", prematchTab: "PRE-MATCH", matchResult: "MATCH RESULT", selectCar: "SELECT CAR", selectPet: "SELECT PET"
       },
       cn: { 
         title: "秒数计分系统", subtitle: "由 koi 设计与开发", tourNamePh: "输入锦标赛名称...",
         addPlayer: "添加选手", addMatch: "添加比赛", reset: "重置", export: "导出表格", 
-        match: "比赛", kingMap: "王牌赛道", total: "总分", leaderboard: "排行榜", pts: "分", 
+        no: "序号", match: "比赛", kingMap: "王牌赛道", total: "总分", leaderboard: "排行榜", pts: "分", 
         errMaxP: "最多允许 6 名选手！", errMinP: "至少需要 2 名选手！", errMaxG: `最多允许 ${MAX_GAMES} 场比赛！`, 
         delP: "是否将 {0} 移出比赛？", errMinG: "至少需要 1 场比赛！", delG: "确定要删除 第{0}场 吗？", 
         confirmReset: "🚨 重置计分板？\n所有数据将被清除并恢复为默认状态。", 
@@ -340,12 +306,12 @@
         recordBtn: "纪录", recordTitle: "🏆 赛道最高纪录", backupBtn: "📥 备份数据", restoreBtn: "📤 恢复数据", 
         recordHolder: "纪录:", noRecord: "暂无纪录", newRecordAlert: "🎉 新纪录：{0} 以 {2} 打破了 {1} 的纪录！",
         preMatchTitleIndiv: "个人竞速赛", preMatchTitleTeam: "组队竞速赛", preMatchMode: "模式", preMatchBestRecord: "最高纪录",
-        scoreboardTab: "计分板", prematchTab: "赛前界面", matchResult: "比赛结果"
+        scoreboardTab: "计分板", prematchTab: "赛前界面", matchResult: "比赛结果", selectCar: "选择车辆", selectPet: "选择宠物"
       },
       tw: { 
         title: "秒數計分系統", subtitle: "由 koi 設計與開發", tourNamePh: "輸入錦標賽名稱...",
         addPlayer: "新增選手", addMatch: "新增比賽", reset: "重置", export: "匯出表格", 
-        match: "比賽", kingMap: "王牌賽道", total: "總分", leaderboard: "排行榜", pts: "分", 
+        no: "序號", match: "比賽", kingMap: "王牌賽道", total: "總分", leaderboard: "排行榜", pts: "分", 
         errMaxP: "最多允許 6 名選手！", errMinP: "至少需要 2 名選手！", errMaxG: `最多允許 ${MAX_GAMES} 場比賽！`, 
         delP: "是否將 {0} 移出比賽？", errMinG: "至少需要 1 場比賽！", delG: "確定要刪除 第{0}場 嗎？", 
         confirmReset: "🚨 重置計分板？\n所有數據將被清除並恢復為預設狀態。", 
@@ -361,12 +327,12 @@
         recordBtn: "紀錄", recordTitle: "🏆 賽道最高紀錄", backupBtn: "📥 備份數據", restoreBtn: "📤 恢復數據", 
         recordHolder: "紀錄:", noRecord: "暫無紀錄", newRecordAlert: "🎉 新紀錄：{0} 以 {2} 打破了 {1} 的紀錄！",
         preMatchTitleIndiv: "個人競速賽", preMatchTitleTeam: "組隊競速賽", preMatchMode: "模式", preMatchBestRecord: "最高紀錄",
-        scoreboardTab: "計分板", prematchTab: "賽前介面", matchResult: "比賽結果"
+        scoreboardTab: "計分板", prematchTab: "賽前介面", matchResult: "比賽結果", selectCar: "選擇車輛", selectPet: "選擇寵物"
       },
       th: { 
         title: "ระบบการนับคะแนนตามวินาที", subtitle: "ออกแบบและพัฒนาโดย koi", tourNamePh: "ป้อนชื่อการแข่งขัน...",
         addPlayer: "เพิ่มผู้เล่น", addMatch: "เพิ่มแข่ง", reset: "รีเซ็ต", export: "ส่งออก Excel", 
-        match: "การแข่งขัน", kingMap: "แผนที่คิง", total: "คะแนนรวม", leaderboard: "ตารางคะแนน", pts: "แต้ม", 
+        no: "ลำดับ", match: "การแข่งขัน", kingMap: "แผนที่คิง", total: "คะแนนรวม", leaderboard: "ตารางคะแนน", pts: "แต้ม", 
         errMaxP: "อนุญาตสูงสุด 6 คน!", errMinP: "ต้องมีอย่างน้อย 2 คน!", errMaxG: `อนุญาตสูงสุด ${MAX_GAMES} นัด!`, 
         delP: "ลบ {0} ออกหรือไม่?", errMinG: "ต้องมีอย่างน้อย 1 นัด!", delG: "ลบ เกมที่ {0} หรือไม่?", 
         confirmReset: "🚨 รีเซ็ตกระดานคะแนน?\nข้อมูลทั้งหมดจะถูกลบและกลับสู่ค่าเริ่มต้น", 
@@ -382,7 +348,7 @@
         recordBtn: "สถิติ", recordTitle: "🏆 หอเกียรติยศสถิติแผนที่", backupBtn: "📥 สำรองข้อมูล", restoreBtn: "📤 คืนค่าข้อมูล", 
         recordHolder: "สถิติ:", noRecord: "ยังไม่มีสถิติ", newRecordAlert: "🎉 สถิติใหม่: {0} ทำลายสถิติ {1} ด้วยเวลา {2}!",
         preMatchTitleIndiv: "เดี่ยวสปรินต์คลาสสิก", preMatchTitleTeam: "ทีมสปรินต์คลาสสิก", preMatchMode: "โหมด", preMatchBestRecord: "สถิติที่ดีที่สุด",
-        scoreboardTab: "กระดานคะแนน", prematchTab: "ก่อนการแข่งขัน", matchResult: "ผลการแข่งขัน"
+        scoreboardTab: "กระดานคะแนน", prematchTab: "ก่อนการแข่งขัน", matchResult: "ผลการแข่งขัน", selectCar: "เลือกรถ", selectPet: "เลือกสัตว์เลี้ยง"
       }
     };
 
@@ -459,7 +425,7 @@
       return { background: getMapGradient(mapId) };
     };
 
-    //    const SearchableMapSelect = ({ gameIndex, currentMapId, selectedMaps, onChange, lang, t }) => {
+    const SearchableMapSelect = ({ gameIndex, currentMapId, selectedMaps, onChange, lang, t }) => {
       const [isOpen, setIsOpen] = useState(false);
       const [searchTerm, setSearchTerm] = useState('');
       const wrapperRef = useRef(null);
@@ -582,7 +548,7 @@
       );
     };
 
-    //    const CustomDialog = ({ dialog, setDialog }) => {
+    const CustomDialog = ({ dialog, setDialog }) => {
       if (!dialog.isOpen) return null;
       return (
         <div className="fixed inset-0 z-[10000] bg-black/80 flex items-center justify-center p-4 animate-slide-up">
@@ -602,7 +568,7 @@
       );
     };
 
-    //    const BroadcastOverlay = ({ broadcastState, setBroadcastState, players, games, totals, getGameCalculations, mapRecords, personalRecords, lang, t, gameMode, tournamentName, team1Name, team2Name, onClose }) => {
+    const BroadcastOverlay = ({ broadcastState, setBroadcastState, players, games, totals, getGameCalculations, mapRecords, personalRecords, lang, t, gameMode, tournamentName, team1Name, team2Name, onAssetSelect, onClose }) => {
       const isTeamMode = gameMode !== 'solo';
       const displayRounds = Math.max(9, games.length);
       const rounds = Array.from({ length: displayRounds }).map((_, i) => games[i] || null);
@@ -615,6 +581,9 @@
       const bgStyle = getMapBackgroundStyle(activeGame.mapId);
       const modeText = gameMode === 'solo' ? 'INDIVIDUAL' : gameMode === '2v2' ? '2 VS 2' : '3 VS 3';
       const headerTitle = gameMode === 'solo' ? t.preMatchTitleIndiv : t.preMatchTitleTeam;
+
+      const [assetModal, setAssetModal] = useState(null); // { type: 'car'|'pet', pIndex }
+      const [assetSearch, setAssetSearch] = useState('');
 
       return (
         <div className="fixed inset-0 z-[999] bg-[#f0f4f8] flex flex-col font-sans overflow-hidden animate-slide-up">
@@ -636,7 +605,7 @@
           </div>
 
           <div className="relative w-full h-[9vh] min-h-[60px] flex items-center justify-between px-10 bg-white shadow-sm border-b border-gray-200 z-10 shrink-0">
-            <div className="text-xl md:text-2xl font-black italic text-[#13c0eb] tracking-widest uppercase break-words leading-tight max-w-[40%]">
+            <div className="text-xl md:text-2xl font-black italic text-[#13c0eb] tracking-widest uppercase truncate max-w-[30%]">
               {tournamentName}
             </div>
             
@@ -775,7 +744,7 @@
           )}
 
           {/* ================================================================================================== */}
-          {/* TAB 2: GIAO DIỆN PRE-MATCH */}
+          {/* TAB 2: GIAO DIỆN PRE-MATCH TÍCH HỢP CHỌN XE/PET */}
           {broadcastState.tab === 'prematch' && (
             <div className="flex-1 w-full max-w-[1920px] mx-auto p-4 md:p-8 flex flex-col z-10 relative animate-slide-up">
               
@@ -833,6 +802,12 @@
                        // Lấy Ảnh cứng (Hardcode)
                        const photoUrl = HARDCODED_PLAYER_PHOTOS[pIdx] || '';
 
+                       // Lấy data Xe/Pet hiện tại
+                       const carId = activeGame.cars?.[pIdx] || '';
+                       const petId = activeGame.pets?.[pIdx] || '';
+                       const carObj = CAR_DATABASE.find(c => c.id === carId);
+                       const petObj = PET_DATABASE.find(p => p.id === petId);
+
                        return (
                          <div key={pIdx} className={`relative flex flex-col rounded-2xl overflow-hidden shadow-2xl border backdrop-blur-md bg-gradient-to-br ${cardGradient} transition-transform hover:-translate-y-1 duration-300`}>
                             <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-50"></div>
@@ -855,8 +830,25 @@
                                </div>
                             </div>
 
-                            {/* Khối che mờ phần dưới cho đẹp (Do đã gỡ xe/pet) */}
-                            <div className="absolute bottom-0 w-full h-[25%] bg-gradient-to-t from-black/80 to-transparent z-0"></div>
+                            {/* CHỌN XE / PET TRỰC TIẾP Ở BOTTOM RIGHT */}
+                            <div className="relative z-30 p-3 md:p-4 flex flex-col items-end justify-end mt-auto bg-gradient-to-t from-black/80 to-transparent pt-12">
+                               <div className="flex gap-2 items-center">
+                                  {/* Xe */}
+                                  <div className="flex flex-col items-end cursor-pointer group" onClick={() => setAssetModal({ type: 'car', pIndex: pIdx })}>
+                                     <div className="w-16 h-8 md:w-20 md:h-10 bg-black/40 rounded flex items-center justify-center shadow-inner overflow-hidden relative border border-white/20 group-hover:border-cyan-400 group-hover:bg-black/60 transition-all">
+                                        {carObj ? <img src={carObj.img} className="max-w-full max-h-full object-contain drop-shadow-md scale-110" alt="Car" /> : <span className="text-[8px] md:text-[10px] text-white/50 font-bold italic">{t.selectCar}</span>}
+                                     </div>
+                                     <span className={`text-[6px] md:text-[8px] uppercase mt-1 opacity-70 font-bold ${textAccent}`}>{carObj ? carObj.name : ''}</span>
+                                  </div>
+                                  {/* Pet */}
+                                  <div className="flex flex-col items-end cursor-pointer group" onClick={() => setAssetModal({ type: 'pet', pIndex: pIdx })}>
+                                     <div className="w-16 h-8 md:w-20 md:h-10 bg-black/40 rounded flex items-center justify-center shadow-inner overflow-hidden relative border border-white/20 group-hover:border-cyan-400 group-hover:bg-black/60 transition-all">
+                                        {petObj ? <img src={petObj.img} className="max-w-full max-h-full object-contain drop-shadow-md scale-110" alt="Pet" /> : <span className="text-[8px] md:text-[10px] text-white/50 font-bold italic">{t.selectPet}</span>}
+                                     </div>
+                                     <span className={`text-[6px] md:text-[8px] uppercase mt-1 opacity-70 font-bold text-right max-w-[80px] leading-tight truncate ${textAccent}`}>{petObj ? petObj.name : ''}</span>
+                                  </div>
+                               </div>
+                            </div>
                          </div>
                        );
                     })}
@@ -864,6 +856,59 @@
               </div>
             </div>
           )}
+
+          {/* ASSET SELECTOR MODAL (NỔI LÊN TRONG LIVESTREAM OVERLAY) */}
+          {assetModal && (
+            <div className="absolute inset-0 z-[2000] bg-black/80 flex items-center justify-center p-4 backdrop-blur-sm animate-slide-up">
+                <div className="bg-slate-900 border border-slate-700 rounded-xl max-w-2xl w-full shadow-[0_0_50px_rgba(0,0,0,0.5)] flex flex-col h-[70vh] overflow-hidden">
+                    <div className="flex justify-between items-center p-4 bg-slate-950 border-b border-slate-800">
+                        <h3 className="text-white font-black italic tracking-widest uppercase">{assetModal.type === 'car' ? t.selectCar : t.selectPet} - PLAYER {assetModal.pIndex + 1}</h3>
+                        <button onClick={() => {setAssetModal(null); setAssetSearch('');}} className="text-slate-400 hover:text-red-500"><XIcon size={24}/></button>
+                    </div>
+                    <div className="p-3 bg-slate-950 border-b border-slate-800">
+                        <input 
+                            type="text" 
+                            autoFocus
+                            placeholder="Tìm kiếm / Search..." 
+                            value={assetSearch} 
+                            onChange={e => setAssetSearch(e.target.value)}
+                            className="w-full bg-slate-900 border border-slate-700 rounded px-4 py-2 text-white outline-none focus:border-cyan-500 transition-colors"
+                        />
+                    </div>
+                    <div className="flex-1 overflow-y-auto hide-scrollbar p-4 grid grid-cols-2 sm:grid-cols-3 gap-4 bg-[#0f172a]">
+                        <div 
+                            onClick={() => {
+                                onAssetSelect(broadcastState.gameIndex, assetModal.pIndex, assetModal.type, '');
+                                setAssetModal(null); setAssetSearch('');
+                            }}
+                            className="bg-slate-800/50 border border-slate-700 border-dashed rounded-lg p-2 flex flex-col items-center justify-center cursor-pointer hover:bg-slate-800 hover:border-red-500 transition-colors text-slate-500 hover:text-red-500"
+                        >
+                            <Trash2 size={24} className="mb-2" />
+                            <span className="text-[10px] font-bold">Xóa / Clear</span>
+                        </div>
+                        {(assetModal.type === 'car' ? CAR_DATABASE : PET_DATABASE)
+                            .filter(item => item.name.toLowerCase().includes(assetSearch.toLowerCase()))
+                            .map(item => (
+                                <div 
+                                    key={item.id} 
+                                    onClick={() => {
+                                        onAssetSelect(broadcastState.gameIndex, assetModal.pIndex, assetModal.type, item.id);
+                                        setAssetModal(null); setAssetSearch('');
+                                    }}
+                                    className="bg-slate-800/80 border border-slate-700 rounded-lg p-3 flex flex-col items-center justify-between gap-3 cursor-pointer hover:bg-slate-700 hover:border-cyan-400 transition-all shadow-md group"
+                                >
+                                    <div className="w-full h-16 bg-black/40 rounded flex items-center justify-center p-1 shadow-inner overflow-hidden">
+                                        <img src={item.img} className="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform" />
+                                    </div>
+                                    <span className="text-[10px] text-white font-bold text-center w-full truncate px-1">{item.name}</span>
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div>
+            </div>
+          )}
+
         </div>
       );
     };
@@ -873,8 +918,8 @@
       const t = TRANSLATIONS[lang];
       const [showInfo, setShowInfo] = useState(false);
       const [showRecordsModal, setShowRecordsModal] = useState(false);
-      const [recordSearch, setRecordSearch] = useState('');
-      const [toastMsg, setToastMsg] = useState(null);
+      const [recordSearch, setRecordSearch] = useState(''); 
+      const [toastMsg, setToastMsg] = useState(null); 
       
       const [broadcastState, setBroadcastState] = useState({ isOpen: false, tab: 'scoreboard', gameIndex: 0 });
 
@@ -904,13 +949,21 @@
         const saved = localStorage.getItem('zsm_games_v11_final');
         if (saved) { 
            try { 
-             return JSON.parse(saved);
+             const parsed = JSON.parse(saved);
+             // Tương thích ngược: Đảm bảo array games có trường cars và pets
+             return parsed.map(g => ({
+                 ...g,
+                 cars: g.cars || Array(6).fill(''),
+                 pets: g.pets || Array(6).fill('')
+             }));
            } catch(e) {} 
         }
         return Array(9).fill(null).map((_, i) => ({ 
           id: Date.now() + i, 
           mapId: "", 
-          times: Array(4).fill('')
+          times: Array(6).fill(''),
+          cars: Array(6).fill(''),
+          pets: Array(6).fill('')
         }));
       });
 
@@ -955,6 +1008,16 @@
 
       const handleTimeChange = (gIndex, pIndex, val) => {
         const newGames = [...games]; newGames[gIndex].times[pIndex] = val; setGames(newGames);
+      };
+
+      const handleAssetSelect = (gIndex, pIndex, type, assetId) => {
+        const newGames = [...games];
+        if (!newGames[gIndex].cars) newGames[gIndex].cars = Array(6).fill('');
+        if (!newGames[gIndex].pets) newGames[gIndex].pets = Array(6).fill('');
+        
+        if (type === 'car') newGames[gIndex].cars[pIndex] = assetId;
+        if (type === 'pet') newGames[gIndex].pets[pIndex] = assetId;
+        setGames(newGames);
       };
 
       const handleTimeBlur = (gIndex, pIndex) => {
@@ -1017,40 +1080,34 @@
                  newP = newP.slice(0, 4); 
              }
              setPlayers(newP);
-             setGames(games.map(g => {
-                 let nt = [...g.times];
-                 while(nt.length < 4) { nt.push(''); }
-                 return {...g, times: nt.slice(0,4)}; 
-             }));
           } else if (nextMode === '3v3') {
              let newP = [...players];
              while(newP.length < 6) newP.push(`${t.defPlayer} ${newP.length + 1}`);
              setPlayers(newP);
-             setGames(games.map(g => {
-                 let nt = [...g.times];
-                 while(nt.length < 6) { nt.push(''); }
-                 return {...g, times: nt};
-             }));
           }
       };
 
       const addPlayer = () => {
         if (players.length >= MAX_PLAYERS) return showDialogAlert(t.errMaxP);
         setPlayers([...players, `${t.defPlayer} ${players.length + 1}`]);
-        setGames(games.map(g => ({ ...g, times: [...g.times, ''] })));
       };
 
       const removePlayer = (pIndex) => {
         if (players.length <= 2) return showDialogAlert(t.errMinP);
         showDialogConfirm(t.delP.replace('{0}', players[pIndex]), () => {
           setPlayers(players.filter((_, i) => i !== pIndex));
-          setGames(games.map(g => ({ ...g, times: g.times.filter((_, i) => i !== pIndex) })));
+          setGames(games.map(g => ({ 
+             ...g, 
+             times: g.times.filter((_, i) => i !== pIndex),
+             cars: g.cars ? g.cars.filter((_, i) => i !== pIndex) : Array(6).fill(''),
+             pets: g.pets ? g.pets.filter((_, i) => i !== pIndex) : Array(6).fill('')
+          })));
         });
       };
 
       const addGame = () => {
         if (games.length >= MAX_GAMES) return showDialogAlert(t.errMaxG);
-        setGames([...games, { id: Date.now(), mapId: "", times: Array(players.length).fill('') }]);
+        setGames([...games, { id: Date.now(), mapId: "", times: Array(6).fill(''), cars: Array(6).fill(''), pets: Array(6).fill('') }]);
       };
 
       const removeGame = (gIndex) => {
@@ -1063,7 +1120,7 @@
       const clearAll = () => {
         showDialogConfirm(t.confirmReset, () => {
           setPlayers([`${t.defPlayer} 1`, `${t.defPlayer} 2`, `${t.defPlayer} 3`, `${t.defPlayer} 4`]);
-          setGames(Array(9).fill(null).map((_, i) => ({ id: Date.now() + i, mapId: "", times: Array(4).fill('') })));
+          setGames(Array(9).fill(null).map((_, i) => ({ id: Date.now() + i, mapId: "", times: Array(6).fill(''), cars: Array(6).fill(''), pets: Array(6).fill('') })));
           setTeam1Name('');
           setTeam2Name('');
         });
@@ -1099,9 +1156,28 @@
         reader.readAsText(file);
       };
 
+      // ĐÂY LÀ HÀM XÓA KỶ LỤC HOÀN CHỈNH: Xóa Map Record VÀ Xóa luôn Personal Records
       const handleDeleteRecord = (mapId) => {
-        showDialogConfirm(lang === 'vi' ? "Bạn có chắc muốn xóa kỷ lục này?" : "Are you sure to delete this record?", () => {
-            setMapRecords(prev => { const newRecords = {...prev}; delete newRecords[mapId]; return newRecords; });
+        showDialogConfirm(lang === 'vi' 
+            ? "Bạn có chắc muốn xóa kỷ lục map này?\n(Kỷ lục cá nhân của các VĐV ở map này cũng sẽ bị xóa sạch)" 
+            : "Are you sure to delete this map record?\n(Personal records for this map will also be deleted)", 
+        () => {
+            // Xóa Kỷ lục chung
+            setMapRecords(prev => {
+                const newRecords = {...prev};
+                delete newRecords[mapId];
+                return newRecords;
+            });
+            // Xóa Kỷ lục cá nhân của map này
+            setPersonalRecords(prev => {
+                const newPRs = {...prev};
+                Object.keys(newPRs).forEach(key => {
+                   if (key.endsWith(`_${mapId}`)) {
+                       delete newPRs[key];
+                   }
+                });
+                return newPRs;
+            });
         });
       };
 
@@ -1152,6 +1228,8 @@
           
           const calcs = getGameCalculations(gIndex, game.times);
           game.times.forEach((time, pIdx) => {
+            // Chỉ in data của người chơi hợp lệ trong mảng players
+            if (pIdx >= players.length) return;
             const timeCol = 2 + (pIdx * 2);
             const ptsCol = 3 + (pIdx * 2);
             const score = calcs[pIdx].score;
@@ -1253,7 +1331,7 @@
         return parsed.map((timeMs, pIndex) => {
           let kingMapGameIndex = pIndex + 1;
           if (gameMode !== 'solo') {
-             const H = Math.floor(times.length / 2);
+             const H = Math.floor(players.length / 2);
              if (pIndex < H) kingMapGameIndex = 1 + pIndex * 2; 
              else kingMapGameIndex = 2 + (pIndex - H) * 2; 
           }
@@ -1279,7 +1357,11 @@
 
       const totals = useMemo(() => {
         const sums = Array(players.length).fill(0);
-        games.forEach((g, gIdx) => { getGameCalculations(gIdx, g.times).forEach((c, pIdx) => sums[pIdx] += c.score); });
+        games.forEach((g, gIdx) => { 
+           getGameCalculations(gIdx, g.times).forEach((c, pIdx) => {
+              if (pIdx < players.length) sums[pIdx] += c.score;
+           }); 
+        });
         return sums;
       }, [games, players]);
 
@@ -1310,7 +1392,10 @@
       }, [players, totals, isTeamMode, displayTeam1Name, displayTeam2Name]);
 
       const nextPickerData = useMemo(() => {
-        const nextIdx = games.findIndex(g => g.times.every(time => !time || time.trim() === ''));
+        const nextIdx = games.findIndex(g => {
+            // Xem trận đấu có trắng trơn (chưa ai nhập) không, chỉ xét những VĐV hợp lệ
+            return g.times.slice(0, players.length).every(time => !time || time.trim() === '');
+        });
         if (nextIdx === -1) return { show: false }; 
         if (nextIdx === 0) return { show: true, text: t.map1Pick }; 
 
@@ -1385,6 +1470,7 @@
               tournamentName={tournamentName}
               team1Name={displayTeam1Name}
               team2Name={displayTeam2Name}
+              onAssetSelect={handleAssetSelect}
               onClose={() => setBroadcastState({...broadcastState, isOpen: false})} 
             />
           )}
@@ -1661,6 +1747,9 @@
                             </td>
                             
                             {game.times.map((time, pIndex) => {
+                              // Chặn các cột nhập liệu dư nếu số players hiện tại ít hơn 6
+                              if (pIndex >= players.length) return null;
+                              
                               const { score, isKingMap, colorClass } = calcs[pIndex];
                               return (
                                 <td key={pIndex} className={`px-1 md:px-2 py-2 relative z-10 ${isTeamMode && pIndex === Math.floor(players.length / 2) ? 'border-l-2 border-slate-700/50 bg-black/10' : ''}`}>
@@ -1693,13 +1782,15 @@
                           </td>
                           <td className="p-0">
                             <div className="flex w-full">
-                              {totals.map((total, i) => (
+                              {totals.map((total, i) => {
+                                if (i >= players.length) return null;
+                                return (
                                 <div key={i} className={`flex-1 px-1 md:px-2 py-2 md:py-3 text-center border-white/5 ${isTeamMode && i === Math.floor(players.length/2) ? 'border-l-2 border-slate-700/50' : 'border-l'}`}>
                                   <span className={`${isTeamMode ? 'text-sm md:text-lg font-bold text-slate-400 drop-shadow-none' : 'text-lg md:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400 drop-shadow-[0_0_15px_rgba(255,255,255,0.4)] cursor-default'}`}>
                                     {total}
                                   </span>
                                 </div>
-                              ))}
+                              )})}
                             </div>
                           </td>
                         </tr>
