@@ -117,26 +117,7 @@
   <script type="text/babel" data-presets="react-classic,env">
     const { useState, useMemo, useEffect, useRef } = React;
 
-    // ============================================================================
-    // ⚙️ KHU VỰC DÁN LINK ẢNH TUYỂN THỦ, XE, PET (DÀNH CHO GIAO DIỆN PRE-MATCH)
-    // ============================================================================
-    // Hướng dẫn: Paste link ảnh đã cắt nền (PNG) vào giữa dấu ngoặc kép "".
-    // Lưu ý: Tên VĐV ("VDV 1") phải khớp chính xác với tên bạn nhập trên Web.
-    // Nếu bạn đổi tên trên web thành "SHIYA", hãy sửa "VDV 1" ở đây thành "SHIYA".
-    const PLAYER_ASSETS = {
-      "VDV 1": { 
-        photo: "", // Link ảnh VĐV (Ví dụ: "https://i.ibb.co/abc/player.png")
-        car: "",   // Link ảnh Xe
-        pet: ""    // Link ảnh Pet
-      },
-      "VDV 2": { photo: "", car: "", pet: "" },
-      "VDV 3": { photo: "", car: "", pet: "" },
-      "VDV 4": { photo: "", car: "", pet: "" },
-      "VDV 5": { photo: "", car: "", pet: "" },
-      "VDV 6": { photo: "", car: "", pet: "" }
-    };
-    // ============================================================================
-
+    // --- ICONS ---
     const Flag = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>;
     const Crown = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="currentColor" className={className} width={size} height={size}><path d="M5.5 20h13a1.5 1.5 0 0 0 1.5-1.5v-1a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 4 17.5v1A1.5 1.5 0 0 0 5.5 20zm14-5.5L16 4l-4 7-4-7-3.5 10.5h15z"></path></svg>;
     const Flame = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>;
@@ -162,7 +143,7 @@
         { id: 'm7_2', vi: 'Sơn Hải Họa Cảnh', en: 'Painted Landscape', cn: '山海画境', tw: '山海畫境', th: 'ดินแดนซานไห่' }
       ]},
       { stars: 6, maps: [
-        { id: 'm6_1', vi: 'Hẻm Núi Lớn', en: 'Grand Canyon', cn: '美洲大峡谷', tw: '美洲大峡谷', th: 'แกรนด์แคนยอน' },
+        { id: 'm6_1', vi: 'Hẻm Núi Lớn', en: 'Grand Canyon', cn: '美洲大峡谷', tw: '美洲大峽谷', th: 'แกรนด์แคนยอน' },
         { id: 'm6_2', vi: 'Scotland', en: 'Scotland Yard', cn: '苏格兰微风', tw: '蘇格蘭微風', th: 'สกอตแลนด์' }
       ]},
       { stars: 5, maps: [
@@ -212,6 +193,29 @@
         { id: 'm3_14', vi: 'Bờ Biển Lãng Mạn', en: 'Romantic Seaside', cn: '浪漫海岸', tw: '浪漫海岸', th: 'ชายหาดโรแมนติก' },
       ]}
     ];
+
+    // ============================================================================
+    // ⚙️ KHO DỮ LIỆU HÌNH ẢNH (VĐV, XE, PET)
+    // Bạn chỉ cần dán link ảnh mới vào mảng tương ứng. Không giới hạn số lượng.
+    // ============================================================================
+    const PLAYER_PHOTO_POOL = [
+      { id: 'none', name: '-- Không có --', url: '' },
+      { id: 'p1', name: 'Mẫu VĐV 1', url: 'https://i.ibb.co/8YJ11Zt/player-placeholder.png' },
+      // Thêm link ảnh VĐV vào đây...
+    ];
+
+    const CAR_POOL = [
+      { id: 'none', name: '-- Không có --', url: '' },
+      { id: 'c1', name: 'Xe Mẫu 1', url: 'https://i.ibb.co/3s6Vp6Z/car1.png' },
+      // Thêm link ảnh Xe vào đây...
+    ];
+
+    const PET_POOL = [
+      { id: 'none', name: '-- Không có --', url: '' },
+      { id: 'pt1', name: 'Pet Mẫu 1', url: 'https://i.ibb.co/3s6Vp6Z/car1.png' }, // Tạm dùng hình xe làm mẫu, bạn đổi link sau nhé
+      // Thêm link ảnh Pet vào đây...
+    ];
+    // ============================================================================
 
     // --- MAP BACKGROUND LINKS (ĐỂ THAY HÌNH NỀN MAP TRONG LIVESTREAM) ---
     const MAP_BACKGROUNDS = {
@@ -288,7 +292,9 @@
         broadcastBtn: "Giao Diện Livestream", pick: "LƯỢT CHỌN", closeBtn: "Thoát / Close",
         recordBtn: "Bảng Kỷ Lục", recordTitle: "🏆 BẢNG VÀNG KỶ LỤC MAP", backupBtn: "📥 Tải File Sao Lưu", restoreBtn: "📤 Phục Hồi Dữ Liệu", 
         recordHolder: "Kỷ lục:", noRecord: "Chưa có kỷ lục", newRecordAlert: "🎉 KỶ LỤC MỚI: {0} đã phá kỷ lục map {1} với thời gian {2}!",
-        preMatchTitleIndiv: "INDIVIDUAL SPRINT CLASSIC", preMatchTitleTeam: "TEAM SPRINT CLASSIC", preMatchMode: "MODE", preMatchBestRecord: "BEST RECORD"
+        scoreboardTab: "BẢNG ĐIỂM", prematchTab: "TRƯỚC TRẬN",
+        preMatchTitleIndiv: "ĐUA TỐC ĐỘ CÁ NHÂN", preMatchTitleTeam: "ĐUA TỐC ĐỘ ĐỒNG ĐỘI", preMatchMode: "CHẾ ĐỘ", preMatchBestRecord: "KỶ LỤC",
+        preMatchCar: "XE", preMatchPet: "PET", assetsConfig: "CẤU HÌNH ẢNH", selectPhoto: "Chọn Ảnh VĐV", selectCar: "Chọn Xe", selectPet: "Chọn Pet"
       },
       en: { 
         title: "SECOND-BASED SCORING SYSTEM", subtitle: "Designed and developed by koi", tourNamePh: "Enter tournament name...",
@@ -309,7 +315,9 @@
         broadcastBtn: "Broadcast View", pick: "PICK", closeBtn: "Close",
         recordBtn: "Records", recordTitle: "🏆 MAP RECORDS HALL OF FAME", backupBtn: "📥 Backup Data", restoreBtn: "📤 Restore Data", 
         recordHolder: "Record:", noRecord: "No record yet", newRecordAlert: "🎉 NEW RECORD: {0} broke the {1} record with {2}!",
-        preMatchTitleIndiv: "INDIVIDUAL SPRINT CLASSIC", preMatchTitleTeam: "TEAM SPRINT CLASSIC", preMatchMode: "MODE", preMatchBestRecord: "BEST RECORD"
+        scoreboardTab: "SCOREBOARD", prematchTab: "PRE-MATCH",
+        preMatchTitleIndiv: "INDIVIDUAL SPRINT CLASSIC", preMatchTitleTeam: "TEAM SPRINT CLASSIC", preMatchMode: "MODE", preMatchBestRecord: "BEST RECORD",
+        preMatchCar: "CAR", preMatchPet: "PET", assetsConfig: "ASSETS CONFIG", selectPhoto: "Select Photo", selectCar: "Select Car", selectPet: "Select Pet"
       },
       cn: { 
         title: "秒数计分系统", subtitle: "由 koi 设计与开发", tourNamePh: "输入锦标赛名称...",
@@ -329,7 +337,9 @@
         broadcastBtn: "直播界面", pick: "选图", closeBtn: "关闭",
         recordBtn: "纪录", recordTitle: "🏆 赛道最高纪录", backupBtn: "📥 备份数据", restoreBtn: "📤 恢复数据", 
         recordHolder: "纪录:", noRecord: "暂无纪录", newRecordAlert: "🎉 新纪录：{0} 以 {2} 打破了 {1} 的纪录！",
-        preMatchTitleIndiv: "INDIVIDUAL SPRINT CLASSIC", preMatchTitleTeam: "TEAM SPRINT CLASSIC", preMatchMode: "MODE", preMatchBestRecord: "BEST RECORD"
+        scoreboardTab: "计分板", prematchTab: "赛前界面",
+        preMatchTitleIndiv: "个人竞速赛", preMatchTitleTeam: "组队竞速赛", preMatchMode: "模式", preMatchBestRecord: "最高纪录",
+        preMatchCar: "赛车", preMatchPet: "宠物", assetsConfig: "图片配置", selectPhoto: "选择照片", selectCar: "选择赛车", selectPet: "选择宠物"
       },
       tw: { 
         title: "秒數計分系統", subtitle: "由 koi 設計與開發", tourNamePh: "輸入錦標賽名稱...",
@@ -349,7 +359,9 @@
         broadcastBtn: "直播介面", pick: "選圖", closeBtn: "關閉",
         recordBtn: "紀錄", recordTitle: "🏆 賽道最高紀錄", backupBtn: "📥 備份數據", restoreBtn: "📤 恢復數據", 
         recordHolder: "紀錄:", noRecord: "暫無紀錄", newRecordAlert: "🎉 新紀錄：{0} 以 {2} 打破了 {1} 的紀錄！",
-        preMatchTitleIndiv: "INDIVIDUAL SPRINT CLASSIC", preMatchTitleTeam: "TEAM SPRINT CLASSIC", preMatchMode: "MODE", preMatchBestRecord: "BEST RECORD"
+        scoreboardTab: "計分板", prematchTab: "賽前介面",
+        preMatchTitleIndiv: "個人競速賽", preMatchTitleTeam: "組隊競速賽", preMatchMode: "模式", preMatchBestRecord: "最高紀錄",
+        preMatchCar: "賽車", preMatchPet: "寵物", assetsConfig: "圖片配置", selectPhoto: "選擇照片", selectCar: "選擇賽車", selectPet: "選擇寵物"
       },
       th: { 
         title: "ระบบการนับคะแนนตามวินาที", subtitle: "ออกแบบและพัฒนาโดย koi", tourNamePh: "ป้อนชื่อการแข่งขัน...",
@@ -369,7 +381,9 @@
         broadcastBtn: "มุมมองถ่ายทอดสด", pick: "เลือก", closeBtn: "ปิด / Close",
         recordBtn: "สถิติ", recordTitle: "🏆 หอเกียรติยศสถิติแผนที่", backupBtn: "📥 สำรองข้อมูล", restoreBtn: "📤 คืนค่าข้อมูล", 
         recordHolder: "สถิติ:", noRecord: "ยังไม่มีสถิติ", newRecordAlert: "🎉 สถิติใหม่: {0} ทำลายสถิติ {1} ด้วยเวลา {2}!",
-        preMatchTitleIndiv: "INDIVIDUAL SPRINT CLASSIC", preMatchTitleTeam: "TEAM SPRINT CLASSIC", preMatchMode: "MODE", preMatchBestRecord: "BEST RECORD"
+        scoreboardTab: "กระดานคะแนน", prematchTab: "ก่อนการแข่งขัน",
+        preMatchTitleIndiv: "เดี่ยวสปรินต์คลาสสิก", preMatchTitleTeam: "ทีมสปรินต์คลาสสิก", preMatchMode: "โหมด", preMatchBestRecord: "สถิติที่ดีที่สุด",
+        preMatchCar: "รถ", preMatchPet: "สัตว์เลี้ยง", assetsConfig: "กำหนดค่าภาพ", selectPhoto: "เลือกรูปภาพ", selectCar: "เลือกรถ", selectPet: "เลือกสัตว์เลี้ยง"
       }
     };
 
@@ -380,14 +394,6 @@
         if (found) return found[mapLang];
       }
       return '';
-    };
-
-    const getMapStars = (id) => {
-      for (const group of MAP_POOL) {
-        const found = group.maps.find(m => m.id === id);
-        if (found) return group.stars;
-      }
-      return 0;
     };
 
     const parseTime = (val) => {
@@ -533,6 +539,71 @@
       );
     };
 
+    const SearchableAssetSelect = ({ currentId, options, onChange, placeholder }) => {
+      const [isOpen, setIsOpen] = useState(false);
+      const [searchTerm, setSearchTerm] = useState('');
+      const wrapperRef = useRef(null);
+
+      useEffect(() => {
+        function handleClickOutside(event) {
+          if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+            setIsOpen(false);
+            setSearchTerm('');
+          }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+      }, []);
+
+      const currentItem = options.find(o => o.id === currentId);
+      const currentName = currentItem ? currentItem.name : '';
+
+      return (
+        <div ref={wrapperRef} className={`relative w-full ${isOpen ? 'z-[105]' : 'z-20'}`}>
+          <div 
+            onClick={() => setIsOpen(!isOpen)}
+            className={`w-full flex items-center justify-between bg-slate-950/80 border ${isOpen ? 'border-amber-500 ring-1 ring-amber-500' : 'border-slate-700 hover:border-slate-500'} rounded px-3 py-2 cursor-pointer transition-all`}
+          >
+            <span className={`text-xs font-bold truncate ${currentName ? 'text-amber-300' : 'text-slate-500'}`}>
+              {currentName || placeholder}
+            </span>
+            <ChevronDown size={14} className={`text-slate-400 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+          </div>
+
+          {isOpen && (
+            <div className="absolute top-full left-0 mt-1 w-full bg-slate-900 border border-slate-700 rounded-md shadow-2xl max-h-48 overflow-y-auto z-[105]">
+              <div className="sticky top-0 bg-slate-900 p-2 border-b border-slate-700">
+                <input 
+                  type="text"
+                  autoFocus
+                  placeholder="Tìm kiếm..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full bg-slate-950 border border-slate-700 rounded px-2 py-1 text-xs text-white outline-none focus:border-amber-500"
+                />
+              </div>
+              <div className="p-1">
+                {options.filter(o => o.name.toLowerCase().includes(searchTerm.toLowerCase())).map(opt => (
+                  <div 
+                    key={opt.id}
+                    onClick={() => { onChange(opt.id); setIsOpen(false); setSearchTerm(''); }}
+                    className={`px-2 py-2 text-xs rounded transition-colors flex items-center gap-2 ${
+                      opt.id === currentId ? 'bg-amber-900/40 text-amber-400 font-bold' :
+                      'text-slate-300 hover:bg-slate-800 cursor-pointer'
+                    }`}
+                  >
+                    {opt.url && <img src={opt.url} className="w-6 h-6 object-contain bg-black/50 rounded" alt="" />}
+                    {!opt.url && <div className="w-6 h-6 bg-slate-800 rounded flex items-center justify-center"><XIcon size={12}/></div>}
+                    {opt.name}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    };
+
     const AutoFitText = ({ text }) => {
       const containerRef = useRef(null);
       const textRef = useRef(null);
@@ -569,7 +640,7 @@
       );
     };
 
-    const BroadcastOverlay = ({ broadcastState, setBroadcastState, players, games, totals, getGameCalculations, mapRecords, lang, t, gameMode, tournamentName, team1Name, team2Name, onClose }) => {
+    const BroadcastOverlay = ({ broadcastState, setBroadcastState, players, playerAssets, games, totals, getGameCalculations, mapRecords, lang, t, gameMode, tournamentName, team1Name, team2Name, onClose }) => {
       const isTeamMode = gameMode !== 'solo';
       const displayRounds = Math.max(9, games.length);
       const rounds = Array.from({ length: displayRounds }).map((_, i) => games[i] || null);
@@ -585,7 +656,6 @@
 
       return (
         <div className="fixed inset-0 z-[999] bg-[#f0f4f8] flex flex-col font-sans overflow-hidden animate-slide-up">
-          {/* NỀN ĐỒNG NHẤT CHO CẢ 2 CHẾ ĐỘ */}
           {BROADCAST_BACKGROUND_IMAGE && (
              <div 
                className="absolute inset-0 z-0 bg-cover bg-center animate-slow-zoom opacity-50 pointer-events-none" 
@@ -603,25 +673,23 @@
             {tournamentName}
           </div>
 
-          {/* HEADER CHUYỂN TAB */}
           <div className="relative w-full h-[9vh] min-h-[60px] flex items-center justify-between px-10 bg-white shadow-sm border-b border-gray-200 z-10 shrink-0">
-            <div className="text-xl md:text-2xl font-black italic text-[#13c0eb] tracking-widest uppercase truncate max-w-[20%]">
+            <div className="text-xl md:text-2xl font-black italic text-[#13c0eb] tracking-widest uppercase break-words leading-tight max-w-[40%]">
               {tournamentName}
             </div>
             
-            {/* TABS SELECTOR */}
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-2 md:gap-4">
               <button 
                 onClick={() => setBroadcastState({ ...broadcastState, tab: 'scoreboard' })} 
                 className={`px-4 md:px-8 py-2 md:py-2.5 font-black italic tracking-widest clip-slant transition-colors text-[10px] md:text-sm uppercase ${broadcastState.tab === 'scoreboard' ? 'bg-[#13c0eb] text-[#050510]' : 'bg-[#1e293b] text-slate-400 hover:bg-slate-700 hover:text-white'}`}
               >
-                SCOREBOARD
+                {t.scoreboardTab}
               </button>
               <button 
                 onClick={() => setBroadcastState({ ...broadcastState, tab: 'prematch' })} 
                 className={`px-4 md:px-8 py-2 md:py-2.5 font-black italic tracking-widest clip-slant transition-colors text-[10px] md:text-sm uppercase ${broadcastState.tab === 'prematch' ? 'bg-[#13c0eb] text-[#050510]' : 'bg-[#1e293b] text-slate-400 hover:bg-slate-700 hover:text-white'}`}
               >
-                PRE-MATCH
+                {t.prematchTab}
               </button>
             </div>
 
@@ -631,7 +699,7 @@
           </div>
 
           {/* ================================================================================================== */}
-          {/* TAB 1: SCOREBOARD GIAO DIỆN CŨ */}
+          {/* TAB 1: SCOREBOARD */}
           {broadcastState.tab === 'scoreboard' && (
             <div className="flex-1 w-full max-w-[1920px] mx-auto p-4 md:p-8 flex flex-col justify-center min-h-0 z-10 animate-slide-up">
               <div className="w-full bg-[#1e293b]/60 backdrop-blur-md rounded-xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col h-[82vh] border border-slate-700/50">
@@ -745,7 +813,7 @@
           )}
 
           {/* ================================================================================================== */}
-          {/* TAB 2: GIAO DIỆN PRE-MATCH MỚI CHUẨN ESPORTS */}
+          {/* TAB 2: GIAO DIỆN PRE-MATCH */}
           {broadcastState.tab === 'prematch' && (
             <div className="flex-1 w-full max-w-[1920px] mx-auto p-4 md:p-8 flex flex-col z-10 relative animate-slide-up">
               
@@ -754,7 +822,6 @@
                   {headerTitle}
                 </h2>
                 
-                {/* SELECTOR CHỌN TRẬN ĐẤU */}
                 <select 
                   value={broadcastState.gameIndex} 
                   onChange={e => setBroadcastState({...broadcastState, gameIndex: Number(e.target.value)})} 
@@ -765,11 +832,11 @@
               </div>
 
               <div className="flex-1 flex flex-col md:flex-row gap-6 min-h-0">
-                 {/* CỘT TRÁI: THÔNG TIN MAP KHÔNG CÓ CAR SELECTION */}
-                 <div className="w-full md:w-[35%] flex flex-col rounded-2xl overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.5)] border border-cyan-500/40 bg-[#0f172a]/80 backdrop-blur-xl">
+                 {/* CỘT TRÁI: MAP INFO */}
+                 <div className="w-full md:w-[40%] flex flex-col rounded-2xl overflow-hidden shadow-[0_15px_40px_rgba(0,0,0,0.5)] border border-cyan-500/40 bg-[#0f172a]/80 backdrop-blur-xl">
                     <div className="p-5 md:p-6 border-b border-white/10 flex justify-between items-center bg-gradient-to-r from-[#0ea5e9]/20 to-transparent shrink-0">
                         <div className="flex flex-col max-w-[70%]">
-                            <span className="font-black italic text-2xl md:text-3xl lg:text-4xl text-cyan-300 uppercase tracking-wider drop-shadow-md truncate">{mapName}</span>
+                            <span className="font-black italic text-lg md:text-xl lg:text-2xl xl:text-3xl text-cyan-300 uppercase tracking-wider drop-shadow-md break-words leading-tight">{mapName}</span>
                             <div className="flex text-yellow-400 text-sm md:text-base mt-1 drop-shadow-[0_0_5px_rgba(250,204,21,0.8)]">
                                {Array(mapStars).fill(0).map((_, i) => <span key={i}>★</span>)}
                             </div>
@@ -779,10 +846,9 @@
                             <span className="font-black italic text-lg md:text-xl text-white">{modeText}</span>
                         </div>
                     </div>
-                    {/* HÌNH MAP FULL HEIGHT TRÀN VIỀN */}
+                    {/* Map Image Full */}
                     <div className="flex-1 relative p-4 md:p-5">
                         <div className="w-full h-full rounded-xl overflow-hidden border border-white/10 shadow-inner relative" style={bgStyle}>
-                           {/* Lớp lưới phủ lên tạo cảm giác màn hình hiển thị */}
                            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
                            <div className="absolute inset-0 border-2 border-cyan-500/20 mix-blend-overlay pointer-events-none"></div>
                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-50"></div>
@@ -790,51 +856,52 @@
                     </div>
                  </div>
                  
-                 {/* CỘT PHẢI: PLAYER CARDS VỚI LAYOUT CHUẨN XÁC, SẴN SÀNG NHẬN LINK ẢNH */}
-                 <div className={`w-full md:w-[65%] grid gap-4 lg:gap-6 ${players.length > 4 ? 'grid-cols-3' : 'grid-cols-2'} h-full max-h-full`}>
+                 {/* CỘT PHẢI: PLAYER CARDS */}
+                 <div className={`w-full md:w-[60%] grid gap-4 lg:gap-6 ${players.length > 4 ? 'grid-cols-3' : 'grid-cols-2'} h-full max-h-full`}>
                     {players.map((playerName, pIdx) => {
                        const isTeam2 = isTeamMode && pIdx >= Math.floor(players.length / 2);
                        const cardGradient = isTeam2 ? 'from-red-900/60 to-red-800/40 border-red-500/40' : 'from-blue-900/60 to-blue-800/40 border-blue-500/40';
                        const textAccent = isTeam2 ? 'text-red-300' : 'text-cyan-300';
                        
-                       // XỬ LÝ BEST RECORD (Chỉ lấy nếu Kỷ lục thuộc về VĐV này)
+                       // Lấy kỷ lục nếu có
                        const recordData = mapRecords[activeGame.mapId];
                        const displayRecord = (recordData && recordData.player === playerName) ? recordData.timeStr : '--:--.--';
 
-                       // LẤY ASSETS ĐƯỢC CHUẨN BỊ Ở ĐẦU FILE
-                       const assets = PLAYER_ASSETS[playerName] || {};
+                       // Lấy Ảnh/Xe/Pet từ state mới
+                       const assetData = playerAssets[pIdx] || {};
+                       const photoUrl = PLAYER_PHOTO_POOL.find(p => p.id === assetData.photo)?.url;
+                       const carUrl = CAR_POOL.find(c => c.id === assetData.car)?.url;
+                       const petUrl = PET_POOL.find(p => p.id === assetData.pet)?.url;
 
                        return (
                          <div key={pIdx} className={`relative flex flex-col rounded-2xl overflow-hidden shadow-2xl border backdrop-blur-md bg-gradient-to-br ${cardGradient} transition-transform hover:-translate-y-1 duration-300`}>
-                            {/* Hiệu ứng ánh sáng chéo (Slant Overlay) */}
                             <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-50"></div>
                             
-                            {/* KHU VỰC ẢNH VĐV (TRÁI/DƯỚI) */}
+                            {/* KHU VỰC ẢNH VĐV */}
                             <div className="absolute bottom-0 left-0 w-[60%] h-[95%] flex items-end justify-center pointer-events-none z-10">
-                               {assets.photo ? (
-                                   <img src={assets.photo} className="max-w-full max-h-full object-contain object-bottom drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)]" alt={playerName} />
+                               {photoUrl ? (
+                                   <img src={photoUrl} className="max-w-full max-h-full object-contain object-bottom drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)]" alt={playerName} />
                                ) : (
                                    <div className="flex items-center justify-center opacity-20 mb-8"><User size={100} /></div>
                                )}
                             </div>
 
-                            {/* KHU VỰC TEXT (PHẢI/TRÊN) */}
+                            {/* TEXT KHU VỰC TRÊN */}
                             <div className="absolute top-5 right-5 z-20 flex flex-col items-end text-right max-w-full pl-[40%]">
-                               <span className="text-xl md:text-2xl lg:text-3xl font-black italic text-white drop-shadow-md truncate w-full">{playerName}</span>
-                               <span className={`text-[8px] md:text-[10px] font-bold tracking-widest uppercase mt-1.5 opacity-90 ${textAccent}`}>{t.preMatchBestRecord}</span>
-                               {/* SIZE CHỮ NHỎ LẠI THEO YÊU CẦU ĐỂ KHÔNG CHE ẢNH */}
-                               <div className="text-2xl md:text-3xl lg:text-4xl font-black font-['Chakra_Petch'] text-white drop-shadow-[0_2px_5px_rgba(0,0,0,1)] bg-black/30 px-3 py-1 rounded-md mt-1 backdrop-blur-sm border border-white/5">
+                               <span className="text-lg md:text-xl lg:text-2xl font-black italic text-white drop-shadow-md truncate w-full">{playerName}</span>
+                               <span className={`text-[8px] md:text-[10px] font-bold tracking-widest uppercase mt-1 opacity-90 ${textAccent}`}>{t.preMatchBestRecord}</span>
+                               <div className="text-xl md:text-2xl lg:text-3xl font-black font-['Chakra_Petch'] text-white drop-shadow-[0_2px_5px_rgba(0,0,0,1)] bg-black/30 px-3 py-1 rounded-md mt-1 backdrop-blur-sm border border-white/5">
                                   {displayRecord}
                                </div>
                             </div>
 
-                            {/* KHU VỰC XE & PET (PHẢI/DƯỚI) - CHỈ CHỨA ẢNH/Ô TRỐNG */}
+                            {/* KHU VỰC XE & PET */}
                             <div className="absolute bottom-5 right-5 z-20 flex gap-2 md:gap-3">
-                               <div className="w-16 h-8 md:w-20 md:h-10 bg-black/60 backdrop-blur-md rounded border border-white/20 flex items-center justify-center overflow-hidden shadow-[inset_0_0_10px_rgba(255,255,255,0.1)]">
-                                  {assets.car ? <img src={assets.car} className="w-full h-full object-contain" alt="Car" /> : <span className="text-[8px] text-white/30 font-bold italic">CAR</span>}
+                               <div className="w-16 h-8 md:w-20 md:h-10 bg-black/60 backdrop-blur-md rounded border border-white/20 flex items-center justify-center overflow-hidden shadow-[inset_0_0_10px_rgba(255,255,255,0.1)] relative">
+                                  {carUrl ? <img src={carUrl} className="w-full h-full object-contain" alt="Car" /> : <span className="text-[8px] text-white/30 font-bold italic">{t.preMatchCar}</span>}
                                </div>
-                               <div className="w-16 h-8 md:w-20 md:h-10 bg-black/60 backdrop-blur-md rounded border border-white/20 flex items-center justify-center overflow-hidden shadow-[inset_0_0_10px_rgba(255,255,255,0.1)]">
-                                  {assets.pet ? <img src={assets.pet} className="w-full h-full object-contain" alt="Pet" /> : <span className="text-[8px] text-white/30 font-bold italic">PET</span>}
+                               <div className="w-16 h-8 md:w-20 md:h-10 bg-black/60 backdrop-blur-md rounded border border-white/20 flex items-center justify-center overflow-hidden shadow-[inset_0_0_10px_rgba(255,255,255,0.1)] relative">
+                                  {petUrl ? <img src={petUrl} className="w-full h-full object-contain" alt="Pet" /> : <span className="text-[8px] text-white/30 font-bold italic">{t.preMatchPet}</span>}
                                </div>
                             </div>
                          </div>
@@ -853,19 +920,17 @@
       const t = TRANSLATIONS[lang];
       const [showInfo, setShowInfo] = useState(false);
       const [showRecordsModal, setShowRecordsModal] = useState(false);
-      const [recordSearch, setRecordSearch] = useState(''); 
-      const [toastMsg, setToastMsg] = useState(null); 
+      const [recordSearch, setRecordSearch] = useState('');
+      const [toastMsg, setToastMsg] = useState(null);
       
-      // GỘP STATE CHO MÀN HÌNH LIVESTREAM (Scoreboard + PreMatch)
       const [broadcastState, setBroadcastState] = useState({ isOpen: false, tab: 'scoreboard', gameIndex: 0 });
+      const [editingAssetIndex, setEditingAssetIndex] = useState(null);
 
       const [tournamentName, setTournamentName] = useState(() => localStorage.getItem('zsm_tour_name') || 'CUSTOM TOURNAMENT');
       const [team1Name, setTeam1Name] = useState(() => localStorage.getItem('zsm_team1_name') || '');
       const [team2Name, setTeam2Name] = useState(() => localStorage.getItem('zsm_team2_name') || '');
 
-      const [gameMode, setGameMode] = useState(() => {
-        return localStorage.getItem('zsm_game_mode_v11') || 'solo';
-      });
+      const [gameMode, setGameMode] = useState(() => localStorage.getItem('zsm_game_mode_v11') || 'solo');
       const isTeamMode = gameMode !== 'solo';
 
       const [players, setPlayers] = useState(() => {
@@ -874,20 +939,22 @@
         return [`${t.defPlayer} 1`, `${t.defPlayer} 2`, `${t.defPlayer} 3`, `${t.defPlayer} 4`];
       });
 
+      const [playerAssets, setPlayerAssets] = useState(() => {
+        const saved = localStorage.getItem('zsm_assets_v11_final');
+        if (saved) { try { return JSON.parse(saved); } catch(e){} }
+        return Array(6).fill({ photo: 'none', car: 'none', pet: 'none' });
+      });
+
       const [games, setGames] = useState(() => {
         const saved = localStorage.getItem('zsm_games_v11_final');
         if (saved) { try { return JSON.parse(saved); } catch(e) {} }
-        return Array(9).fill(null).map((_, i) => ({
-          id: Date.now() + i,
-          mapId: "",
-          times: Array(4).fill('')
-        }));
+        return Array(9).fill(null).map((_, i) => ({ id: Date.now() + i, mapId: "", times: Array(4).fill('') }));
       });
 
       const [mapRecords, setMapRecords] = useState(() => {
         const saved = localStorage.getItem('zsm_map_records_v11_final');
         if (saved) { try { return JSON.parse(saved); } catch(e) {} }
-        return {}; 
+        return {};
       });
 
       useEffect(() => {
@@ -912,6 +979,7 @@
       useEffect(() => { localStorage.setItem('zsm_players_v11_final', JSON.stringify(players)); }, [players]);
       useEffect(() => { localStorage.setItem('zsm_games_v11_final', JSON.stringify(games)); }, [games]);
       useEffect(() => { localStorage.setItem('zsm_map_records_v11_final', JSON.stringify(mapRecords)); }, [mapRecords]);
+      useEffect(() => { localStorage.setItem('zsm_assets_v11_final', JSON.stringify(playerAssets)); }, [playerAssets]);
 
       const displayTeam1Name = team1Name.trim() || t.team1;
       const displayTeam2Name = team2Name.trim() || t.team2;
@@ -942,16 +1010,11 @@
                     msg += lang === 'vi' ? ` (Kỷ lục cũ: ${currentRecord.player} - ${currentRecord.timeStr})` : ` (Old: ${currentRecord.player} - ${currentRecord.timeStr})`;
                  }
                  setToastMsg(msg);
-                 setTimeout(() => setToastMsg(null), 3500); 
+                 setTimeout(() => setToastMsg(null), 4000);
 
                  return {
                     ...prev,
-                    [mapId]: {
-                       timeMs: timeMs,
-                       timeStr: formattedTime,
-                       player: playerName,
-                       date: new Date().toLocaleDateString()
-                    }
+                    [mapId]: { timeMs: timeMs, timeStr: formattedTime, player: playerName, date: new Date().toLocaleDateString() }
                  };
               }
               return prev;
@@ -963,16 +1026,12 @@
           let nextMode = 'solo';
           if (gameMode === 'solo') nextMode = '2v2';
           else if (gameMode === '2v2') nextMode = '3v3';
-
           setGameMode(nextMode);
 
           if (nextMode === 'solo' || nextMode === '2v2') {
              let newP = [...players];
-             if (newP.length < 4) {
-                 while(newP.length < 4) newP.push(`${t.defPlayer} ${newP.length + 1}`);
-             } else if (newP.length > 4) {
-                 newP = newP.slice(0, 4); 
-             }
+             if (newP.length < 4) while(newP.length < 4) newP.push(`${t.defPlayer} ${newP.length + 1}`);
+             else if (newP.length > 4) newP = newP.slice(0, 4); 
              setPlayers(newP);
              setGames(games.map(g => {
                  let nt = [...g.times];
@@ -993,9 +1052,8 @@
 
       const addPlayer = () => {
         if (players.length >= MAX_PLAYERS) return alert(t.errMaxP);
-        const newPlayers = [...players, `${t.defPlayer} ${players.length + 1}`];
-        const newGames = games.map(g => ({ ...g, times: [...g.times, ''] }));
-        setPlayers(newPlayers); setGames(newGames);
+        setPlayers([...players, `${t.defPlayer} ${players.length + 1}`]);
+        setGames(games.map(g => ({ ...g, times: [...g.times, ''] })));
       };
 
       const removePlayer = (pIndex) => {
@@ -1025,9 +1083,7 @@
         }
       };
 
-      const selectedMaps = useMemo(() => {
-        return games.map(g => g.mapId).filter(id => id !== "");
-      }, [games]);
+      const selectedMaps = useMemo(() => games.map(g => g.mapId).filter(id => id !== ""), [games]);
 
       const backupRecords = () => {
         const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(mapRecords, null, 2));
@@ -1048,20 +1104,14 @@
               setMapRecords(importedData);
               alert('Phục hồi dữ liệu Kỷ Lục thành công! / Records restored successfully!');
             }
-          } catch (error) {
-            alert('File không hợp lệ! / Invalid file format!');
-          }
+          } catch (error) { alert('File không hợp lệ! / Invalid file format!'); }
         };
         reader.readAsText(file);
       };
 
       const handleDeleteRecord = (mapId) => {
         if(confirm(lang === 'vi' ? "Bạn có chắc muốn xóa kỷ lục này?" : "Are you sure to delete this record?")) {
-            setMapRecords(prev => {
-                const newRecords = {...prev};
-                delete newRecords[mapId];
-                return newRecords;
-            });
+            setMapRecords(prev => { const newRecords = {...prev}; delete newRecords[mapId]; return newRecords; });
         }
       };
 
@@ -1069,9 +1119,9 @@
         const workbook = new ExcelJS.Workbook();
         const sheet = workbook.addWorksheet('Leaderboard');
         const halfLen = Math.floor(players.length / 2);
-
         const modeText = gameMode === 'solo' ? t.modeSolo : gameMode === '2v2' ? t.mode2v2 : t.mode3v3;
         const lastColIndex = 1 + (players.length * 2);
+        
         sheet.mergeCells(1, 1, 1, lastColIndex);
         const titleCell = sheet.getCell(1, 1);
         titleCell.value = t.title + ` - ${modeText}`;
@@ -1086,14 +1136,12 @@
         players.forEach((p, i) => {
           const timeCol = 2 + (i * 2);
           const ptsCol = 3 + (i * 2);
-          
           sheet.mergeCells(2, timeCol, 2, ptsCol);
           const pCell = sheet.getCell(2, timeCol);
           pCell.value = p;
           
           let headerColor = 'FFDDEBF7'; 
           if (isTeamMode) headerColor = (i < halfLen) ? 'FFBFDBFE' : 'FFFECACA'; 
-          
           pCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: headerColor } }; 
           pCell.font = { bold: true };
           pCell.alignment = { horizontal: 'center' };
@@ -1117,17 +1165,14 @@
             const timeCol = 2 + (pIdx * 2);
             const ptsCol = 3 + (pIdx * 2);
             const score = calcs[pIdx].score;
-            
             sheet.getCell(rowNum, timeCol).value = time || "-";
             sheet.getCell(rowNum, ptsCol).value = time ? score : 0;
-
             sheet.getCell(rowNum, timeCol).alignment = { horizontal: 'center' };
             sheet.getCell(rowNum, ptsCol).alignment = { horizontal: 'center' };
 
             if (calcs[pIdx].isBest) {
               const bgColor = calcs[pIdx].isKingMap ? 'FFFF6666' : 'FFFFFF99'; 
               const fontColor = calcs[pIdx].isKingMap ? 'FF9C0006' : 'FF000000'; 
-              
               sheet.getCell(rowNum, timeCol).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: bgColor } };
               sheet.getCell(rowNum, ptsCol).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: bgColor } };
               sheet.getCell(rowNum, ptsCol).font = { bold: true, color: { argb: fontColor } };
@@ -1153,7 +1198,6 @@
         });
 
         let lastRowIndex = totalRow;
-
         if (isTeamMode) {
           lastRowIndex = totalRow + 1;
           const team1Score = totals.filter((_, i) => i < halfLen).reduce((a, b) => a + b, 0);
@@ -1184,7 +1228,6 @@
             t2Cell.alignment = { horizontal: 'center', vertical: 'middle' };
             t2Cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFB91C1C' } }; 
           }
-          
           sheet.getRow(lastRowIndex).height = 30;
         }
 
@@ -1197,10 +1240,7 @@
         sheet.eachRow((row, rowNumber) => {
           if (rowNumber > 1 && rowNumber <= lastRowIndex) {
             row.eachCell((cell) => {
-              cell.border = {
-                top: { style: 'thin' }, left: { style: 'thin' },
-                bottom: { style: 'thin' }, right: { style: 'thin' }
-              };
+              cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
             });
           }
         });
@@ -1224,14 +1264,10 @@
           let kingMapGameIndex = pIndex + 1;
           if (gameMode !== 'solo') {
              const H = Math.floor(times.length / 2);
-             if (pIndex < H) {
-                kingMapGameIndex = 1 + pIndex * 2; 
-             } else {
-                kingMapGameIndex = 2 + (pIndex - H) * 2; 
-             }
+             if (pIndex < H) kingMapGameIndex = 1 + pIndex * 2; 
+             else kingMapGameIndex = 2 + (pIndex - H) * 2; 
           }
           const isKingMap = (gameIndex === kingMapGameIndex); 
-
           if (timeMs === null) return { score: 0, isBest: false, isKingMap, colorClass: 'text-slate-600 bg-slate-900/50 border-transparent' };
           
           const isBest = (timeMs === bestTime);
@@ -1262,14 +1298,11 @@
         if (isTeamMode) {
           const team1Score = totals.filter((_, i) => i < halfLen).reduce((a, b) => a + b, 0);
           const team2Score = totals.filter((_, i) => i >= halfLen).reduce((a, b) => a + b, 0);
-          
           const teams = [
             { id: 'team1', name: displayTeam1Name, playersStr: players.filter((_, i) => i < halfLen).join(' & '), score: team1Score, isT1: true },
             { id: 'team2', name: displayTeam2Name, playersStr: players.filter((_, i) => i >= halfLen).join(' & '), score: team2Score, isT1: false }
           ];
-          
           if (players.length < 2) teams.pop();
-
           const sorted = teams.sort((a, b) => b.score - a.score);
           let currentRank = 1;
           return sorted.map((item, index) => {
@@ -1295,11 +1328,8 @@
             let kingPlayerIndex = nextIdx - 1;
             if (isTeamMode) {
                 const H = Math.floor(players.length / 2);
-                if (nextIdx % 2 !== 0) { 
-                    kingPlayerIndex = Math.floor((nextIdx - 1) / 2);
-                } else { 
-                    kingPlayerIndex = H + Math.floor((nextIdx - 2) / 2);
-                }
+                if (nextIdx % 2 !== 0) kingPlayerIndex = Math.floor((nextIdx - 1) / 2);
+                else kingPlayerIndex = H + Math.floor((nextIdx - 2) / 2);
             }
             const pickerName = players[kingPlayerIndex];
             return { show: true, text: t.kingMapPick.replace('{0}', nextIdx + 1).replace('{1}', pickerName), pIndex: kingPlayerIndex };
@@ -1312,45 +1342,33 @@
           const t1Score = totals.filter((_, i) => i < halfLen).reduce((a, b) => a + b, 0);
           const t2Score = totals.filter((_, i) => i >= halfLen).reduce((a, b) => a + b, 0);
           let isT1 = true;
-
-          if (t1Score < t2Score) {
-              isT1 = true;
-          } else if (t2Score < t1Score) {
-              isT1 = false;
-          } else {
+          if (t1Score < t2Score) isT1 = true;
+          else if (t2Score < t1Score) isT1 = false;
+          else {
               const lastGameCalcs = getGameCalculations(actualLastGameIndex, games[actualLastGameIndex].times);
               const lastT1Score = lastGameCalcs.filter((_, i) => i < halfLen).reduce((a, b) => a + b.score, 0);
               const lastT2Score = lastGameCalcs.filter((_, i) => i >= halfLen).reduce((a, b) => a + b.score, 0);
               isT1 = lastT1Score <= lastT2Score;
           }
-
           const teamName = isT1 ? displayTeam1Name : displayTeam2Name;
           const colorClass = isT1 ? 'text-blue-400' : 'text-red-400';
           return { show: true, text: t.normalPick.replace('{0}', nextIdx + 1).replace('{1}', teamName), isT1, colorClass };
         } else {
           const lastGameTimes = games[actualLastGameIndex].times.map(parseTime);
           const pStats = players.map((_, i) => ({
-              index: i,
-              total: totals[i],
-              lastTimeMs: lastGameTimes[i] === null ? Infinity : lastGameTimes[i] 
+              index: i, total: totals[i], lastTimeMs: lastGameTimes[i] === null ? Infinity : lastGameTimes[i] 
           }));
-
           pStats.sort((a, b) => b.total - a.total);
           if (pStats.length < 2) return { show: false };
-
           let targetPlayers = [];
           if (pStats[0].total === pStats[1].total) {
-              const topScore = pStats[0].total;
-              targetPlayers = pStats.filter(p => p.total === topScore);
+              const topScore = pStats[0].total; targetPlayers = pStats.filter(p => p.total === topScore);
           } else {
-              const secondScore = pStats[1].total;
-              targetPlayers = pStats.filter(p => p.total === secondScore);
+              const secondScore = pStats[1].total; targetPlayers = pStats.filter(p => p.total === secondScore);
           }
-
           targetPlayers.sort((a, b) => b.lastTimeMs - a.lastTimeMs);
           const pickerIndex = targetPlayers[0].index;
           const pickerName = players[pickerIndex];
-
           return { show: true, text: t.normalPick.replace('{0}', nextIdx + 1).replace('{1}', pickerName), pIndex: pickerIndex };
         }
       }, [games, totals, players, isTeamMode, lang, t, displayTeam1Name, displayTeam2Name]);
@@ -1358,12 +1376,12 @@
       return (
         <div className="min-h-screen relative overflow-x-hidden pb-20">
           
-          {}
           {broadcastState.isOpen && (
             <BroadcastOverlay 
               broadcastState={broadcastState}
               setBroadcastState={setBroadcastState}
               players={players} 
+              playerAssets={playerAssets}
               games={games} 
               totals={totals} 
               getGameCalculations={getGameCalculations}
@@ -1376,6 +1394,53 @@
               team2Name={displayTeam2Name}
               onClose={() => setBroadcastState({...broadcastState, isOpen: false})} 
             />
+          )}
+
+          {/* ASSETS CONFIG MODAL */}
+          {editingAssetIndex !== null && (
+             <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-slide-up" onClick={() => setEditingAssetIndex(null)}>
+               <div className="bg-slate-900 border border-slate-700 rounded-xl w-full max-w-sm shadow-2xl overflow-hidden" onClick={e => e.stopPropagation()}>
+                  <div className="bg-slate-950 px-4 py-3 border-b border-slate-800 flex justify-between items-center">
+                    <h3 className="font-black text-amber-400 italic tracking-widest uppercase">{t.assetsConfig}: {players[editingAssetIndex]}</h3>
+                    <button onClick={() => setEditingAssetIndex(null)} className="text-slate-400 hover:text-red-500"><XIcon size={20}/></button>
+                  </div>
+                  <div className="p-5 flex flex-col gap-4">
+                     <div className="flex flex-col gap-1">
+                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">{t.selectPhoto}</label>
+                        <SearchableAssetSelect 
+                           currentId={playerAssets[editingAssetIndex]?.photo || 'none'} 
+                           options={PLAYER_PHOTO_POOL} 
+                           placeholder={t.selectPhoto}
+                           onChange={(id) => {
+                              const n = [...playerAssets]; n[editingAssetIndex] = {...n[editingAssetIndex], photo: id}; setPlayerAssets(n);
+                           }}
+                        />
+                     </div>
+                     <div className="flex flex-col gap-1">
+                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">{t.selectCar}</label>
+                        <SearchableAssetSelect 
+                           currentId={playerAssets[editingAssetIndex]?.car || 'none'} 
+                           options={CAR_POOL} 
+                           placeholder={t.selectCar}
+                           onChange={(id) => {
+                              const n = [...playerAssets]; n[editingAssetIndex] = {...n[editingAssetIndex], car: id}; setPlayerAssets(n);
+                           }}
+                        />
+                     </div>
+                     <div className="flex flex-col gap-1">
+                        <label className="text-xs font-bold text-slate-400 uppercase tracking-wider">{t.selectPet}</label>
+                        <SearchableAssetSelect 
+                           currentId={playerAssets[editingAssetIndex]?.pet || 'none'} 
+                           options={PET_POOL} 
+                           placeholder={t.selectPet}
+                           onChange={(id) => {
+                              const n = [...playerAssets]; n[editingAssetIndex] = {...n[editingAssetIndex], pet: id}; setPlayerAssets(n);
+                           }}
+                        />
+                     </div>
+                  </div>
+               </div>
+             </div>
           )}
 
           {/* RECORDS MODAL */}
@@ -1543,7 +1608,7 @@
                  />
               </div>
 
-              {}
+              {/* THANH ĐIỀU KHIỂN DOCK TỐI GIẢN */}
               <div className="mt-6 inline-flex flex-wrap items-center justify-center gap-1 p-1.5 bg-[#0f172a]/80 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] z-20 relative mx-4">
                 
                 <button onClick={() => setBroadcastState({ isOpen: true, tab: 'scoreboard', gameIndex: 0 })} className="flex items-center gap-2 px-4 py-2 md:py-2.5 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-black rounded-xl hover:scale-105 active:scale-95 transition-all shadow-[0_0_15px_rgba(6,182,212,0.4)] text-[10px] md:text-xs uppercase tracking-wider mx-1">
@@ -1592,7 +1657,6 @@
                   <table className="w-full text-xs md:text-sm border-collapse">
                     <thead className="sticky top-0 z-40 bg-[#0f172a] shadow-[0_5px_15px_rgba(0,0,0,0.8)] border-b border-slate-700">
                       <tr>
-                        {/* CỘT STT ĐÃ BỊ LOẠI BỎ THEO YÊU CẦU */}
                         <th className="px-1 md:px-4 py-3 text-left w-32 md:w-64 tracking-widest text-slate-300 font-bold whitespace-nowrap pl-4">{t.match}</th>
                         {players.map((p, i) => {
                           const halfLen = Math.floor(players.length / 2);
@@ -1610,6 +1674,11 @@
                                 onChange={(e) => { const n=[...players]; n[i]=e.target.value; setPlayers(n); }}
                                 className={`w-full bg-transparent border-b-2 outline-none text-center pb-1 text-sm md:text-lg font-bold hover:border-slate-400 ${isPicker ? 'text-purple-300 border-purple-500 focus:border-purple-400' : isTeamMode ? (isT1 ? 'text-blue-100 border-slate-700 focus:border-blue-500' : 'text-red-100 border-slate-700 focus:border-red-500') : 'text-white border-slate-700 focus:border-cyan-400'}`}
                               />
+                              <div className="w-full flex justify-center mt-1 opacity-20 hover:opacity-100 transition-opacity">
+                                <button onClick={() => setEditingAssetIndex(i)} className="text-[9px] bg-slate-800/80 text-slate-300 px-2 py-0.5 rounded border border-slate-600 shadow-sm font-sans flex items-center gap-1">
+                                   ⚙️ <span className="hidden md:inline">{t.assetsConfig}</span>
+                                </button>
+                              </div>
                               <button onClick={() => removePlayer(i)} className="absolute top-1 right-1 p-1 text-slate-500 hover:text-white hover:bg-red-500 opacity-100 md:opacity-0 group-hover:opacity-100 transition-all bg-slate-800 rounded-full border border-slate-700 shadow-lg z-10">
                                 <XIcon size={10}/>
                               </button>
