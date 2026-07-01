@@ -103,7 +103,6 @@
     const Trophy = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg>;
     const PlayIcon = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>;
 
-    
     // ⚙️ LINK ẢNH VĐV (Đã được Gắn Cứng theo yêu cầu - Dán link PNG trong suốt vào)
     const HARDCODED_PLAYER_PHOTOS = [
       "https://i.ibb.co/8YJ11Zt/player-placeholder.png", // Tuyển thủ 1
@@ -255,7 +254,7 @@
         i1: "Nhập nhanh: Gõ thẳng số (VD: nhập 10704 hệ thống sẽ hiểu là 1:07.04).", i2: "Về nhất: 11 điểm.", 
         i3: "King Map: Mỗi người chơi được chỉ định King Map cho mình. Về nhất đúng King Map của mình sẽ được +12 điểm.", 
         i4: "Người về sau sẽ bị trừ dần điểm theo độ trễ thời gian:", i5: "Không hoàn thành (nhập X): 0 điểm.", 
-        soloMode: "CÁ NHÂN (4P)", mode1v1: "SOLO 1VS1", teamMode: "Đua Đội", modeSolo: "CÁ NHÂN (4P)", mode2v2: "Chế Độ: 2vs2", mode3v3: "Chế Độ: 3vs3",
+        soloMode: "Đua Đơn", teamMode: "Đua Đội", modeSolo: "Chế Độ: Đua Đơn", mode1v1: "SOLO 1VS1", mode2v2: "Chế Độ: 2vs2", mode3v3: "Chế Độ: 3vs3",
         indivTotal: "ĐIỂM CÁ NHÂN", teamTotal: "TỔNG ĐIỂM ĐỘI", team1: "ĐỘI XANH", team2: "ĐỘI ĐỎ", 
         i6: "Quyền chọn Map: Trận 2 đến N là King Map của từng VĐV/Đội (tự luân phiên). Các trận sau: Đua đơn -> VĐV hạng 2 chọn. Đua đội -> Đội có tổng điểm thấp hơn chọn. (Hòa điểm -> xét đội có điểm thấp hơn ở map liền trước).", 
         map1Pick: "TRẬN 1: MAP CHỈ ĐỊNH (KHÔNG CÓ QUYỀN CHỌN)", kingMapPick: "TRẬN {0}: KING MAP CỦA {1}", normalPick: "TRẬN {0}: LƯỢT CHỌN MAP CỦA {1}", 
@@ -279,7 +278,7 @@
         i1: "Quick Input: Type numbers directly (e.g., 10704 becomes 1:07.04).", i2: "1st Place: 11 points.", 
         i3: "King Map: Designated King Maps for each player. 1st place on their King Map gets +12 points.", 
         i4: "Subsequent players lose points based on time gap:", i5: "DNF (type X): 0 points.", 
-        soloMode: "Solo Mode", mode1v1: "SOLO 1VS1", teamMode: "Team Mode", modeSolo: "Mode: Solo", mode2v2: "Mode: 2vs2", mode3v3: "Mode: 3vs3",
+        soloMode: "Solo Mode", teamMode: "Team Mode", modeSolo: "Mode: Solo", mode1v1: "SOLO 1VS1", mode2v2: "Mode: 2vs2", mode3v3: "Mode: 3vs3",
         indivTotal: "INDIV. SCORE", teamTotal: "TEAM TOTAL", team1: "BLUE TEAM", team2: "RED TEAM", 
         i6: "Map Picking: Matches 2 to N are King Maps. After: Solo -> 2nd place player picks. Team -> Team with lower total score picks.", 
         map1Pick: "MATCH 1: DESIGNATED MAP", kingMapPick: "MATCH {0}: {1}'S KING MAP", normalPick: "MATCH {0}: {1}'S PICK", 
@@ -302,7 +301,7 @@
         infoBtn: "指南", infoTitle: "计分规则与使用方法", 
         i1: "快速输入: 直接输入数字（例：10704 会自动转为 1:07.04）。", i2: "第一名：11分。", 
         i3: "王牌赛道：选手的专属王牌赛道。获得第一名可得 12分。", i4: "后续选手根据落后时间扣分：", i5: "未完成（输入 X）：0分。", 
-        soloMode: "单人赛", mode1v1: "SOLO 1VS1", teamMode: "组队赛", modeSolo: "模式：单人赛", mode2v2: "模式：2v2", mode3v3: "模式：3v3",
+        soloMode: "单人赛", teamMode: "组队赛", modeSolo: "模式：单人赛", mode1v1: "SOLO 1VS1", mode2v2: "模式：2v2", mode3v3: "模式：3v3",
         indivTotal: "个人总分", teamTotal: "队伍总分", team1: "蓝队", team2: "红队", 
         i6: "选图规则: 第2到N局为王牌赛道。之后：单人赛 -> 总分第二的选手选图。组队赛 -> 总分较低的队伍选图。", 
         map1Pick: "第1局：官方指定赛道", kingMapPick: "第{0}局：{1} 的王牌赛道", normalPick: "第{0}局：由 {1} 选图", 
@@ -325,7 +324,7 @@
         infoBtn: "指南", infoTitle: "計分規則與使用方法", 
         i1: "快速輸入: 直接輸入數字（例：10704 會自動轉為 1:07.04）。", i2: "第一名：11分。", 
         i3: "王牌賽道：選手專屬的王牌賽道。獲得第一名可得 12分。", i4: "後續選手根據落後時間扣分：", i5: "未完成（輸入 X）：0分。", 
-        soloMode: "單人賽", mode1v1: "SOLO 1VS1", teamMode: "組隊賽", modeSolo: "模式：單人賽", mode2v2: "模式：2v2", mode3v3: "模式：3v3",
+        soloMode: "單人賽", teamMode: "組隊賽", modeSolo: "模式：單人賽", mode1v1: "SOLO 1VS1", mode2v2: "模式：2v2", mode3v3: "模式：3v3",
         indivTotal: "個人總分", teamTotal: "隊伍總分", team1: "藍隊", team2: "紅隊", 
         i6: "選圖規則: 第2到N局為王牌賽道。之後：單人賽 -> 總分第二的選手選圖。組隊賽 -> 總分較低的隊伍選圖。", 
         map1Pick: "第1局：官方指定賽道", kingMapPick: "第{0}局：{1} 的王牌賽道", normalPick: "第{0}局：由 {1} 選圖", 
@@ -348,7 +347,7 @@
         infoBtn: "คู่มือ", infoTitle: "กฎการให้คะแนนและการใช้งาน", 
         i1: "ป้อนข้อมูลด่วน: พิมพ์ตัวเลข (เช่น 10704 จะกลายเป็น 1:07.04)", i2: "อันดับ 1: 11 แต้ม", 
         i3: "King Map: แผนที่ King สำหรับผู้เล่นแต่ละคน หากได้อันดับ 1 ใน King Map จะได้ +12 แต้ม", i4: "ผู้เล่นคนอื่นจะถูกหักคะแนนตามช่องว่างเวลา:", i5: "ไม่จบการแข่งขัน (พิมพ์ X): 0 แต้ม", 
-        soloMode: "แข่งเดี่ยว", mode1v1: "SOLO 1VS1", teamMode: "แข่งทีม", modeSolo: "โหมด: เดี่ยว", mode2v2: "โหมด: 2vs2", mode3v3: "โหมด: 3vs3",
+        soloMode: "แข่งเดี่ยว", teamMode: "แข่งทีม", modeSolo: "โหมด: เดี่ยว", mode1v1: "SOLO 1VS1", mode2v2: "โหมด: 2vs2", mode3v3: "โหมด: 3vs3",
         indivTotal: "คะแนนส่วนตัว", teamTotal: "คะแนนทีมรวม", team1: "ทีมสีน้ำเงิน", team2: "ทีมสีแดง", 
         i6: "การเลือกแผนที่: แมตช์ 2 ถึง N คือ King Maps หลังจากนั้น: เดี่ยว -> ผู้เล่นอันดับ 2 เลือก ทีม -> ทีมที่มีคะแนนรวมต่ำกว่าเลือก", 
         map1Pick: "แมตช์ 1: แผนที่ที่กำหนด", kingMapPick: "แมตช์ {0}: KING MAP ของ {1}", normalPick: "แมตช์ {0}: สิทธิ์การเลือกของ {1}", 
@@ -578,15 +577,14 @@
       );
     };
 
-    const BroadcastOverlay = ({ broadcastState, setBroadcastState, players, games, totals, getGameCalculations, matchStatus1v1, mapRecords, personalRecords, lang, t, gameMode, soloMatchBO, tournamentName, team1Name, team2Name, onAssetSelect, onClose }) => {
+    const BroadcastOverlay = ({ broadcastState, setBroadcastState, players, games, totals, getGameCalculations, matchStatus1v1, mapRecords, personalRecords, lang, t, gameMode, tournamentName, team1Name, team2Name, onAssetSelect, onClose }) => {
       const isTeamMode = gameMode === '2v2' || gameMode === '3v3';
-      
       const [viewSet, setViewSet] = useState(1);
 
       useEffect(() => {
           if (gameMode === '1v1' && matchStatus1v1) {
-              const s = matchStatus1v1.gameAssignments[broadcastState.gameIndex]?.set;
-              if (s) setViewSet(s);
+              const activeSet = matchStatus1v1.gameAssignments[broadcastState.gameIndex]?.set || matchStatus1v1.currentSet;
+              if (activeSet) setViewSet(activeSet);
           }
       }, [broadcastState.gameIndex, matchStatus1v1, gameMode]);
 
@@ -652,7 +650,7 @@
               {tournamentName}
             </div>
             
-            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center mt-2">
               <div className="flex items-center gap-2 md:gap-4">
                 <button 
                   onClick={() => setBroadcastState({ ...broadcastState, tab: 'scoreboard' })} 
@@ -669,9 +667,9 @@
               </div>
               {gameMode === '1v1' && matchStatus1v1 && (
                   <div className="flex items-center gap-3 mt-1.5 bg-slate-900 border border-slate-700 rounded-full px-3 py-0.5 shadow-inner">
-                      <button onClick={() => setViewSet(v => Math.max(1, v - 1))} className="text-slate-400 hover:text-cyan-400 px-2 font-bold">&lt;</button>
-                      <span className="text-cyan-400 font-black text-xs uppercase tracking-widest">SET {viewSet}</span>
-                      <button onClick={() => setViewSet(v => Math.min(soloMatchBO, v + 1))} className="text-slate-400 hover:text-cyan-400 px-2 font-bold">&gt;</button>
+                      <button onClick={() => setViewSet(v => Math.max(1, v - 1))} className="text-slate-400 hover:text-cyan-400 px-2 font-bold text-lg">&lt;</button>
+                      <span className="text-cyan-400 font-black text-xs uppercase tracking-widest min-w-[50px] text-center">SET {viewSet}</span>
+                      <button onClick={() => setViewSet(v => Math.min(matchStatus1v1.currentSet, v + 1))} className="text-slate-400 hover:text-cyan-400 px-2 font-bold text-lg">&gt;</button>
                   </div>
               )}
             </div>
@@ -742,9 +740,12 @@
                                        {playerName}
                                      </span>
                                      {time ? (
-                                        <span className={`${is6P ? 'text-[15px] md:text-[18px]' : 'text-xl md:text-2xl'} font-black mt-0.5 leading-none ${isTop ? 'text-[#fce300] drop-shadow-[0_0_8px_rgba(252,227,0,0.8)]' : 'text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]'}`}>
-                                          +{c.score}
-                                        </span>
+                                        <div className="flex flex-col items-center">
+                                           <span className={`${is6P ? 'text-[15px] md:text-[18px]' : 'text-xl md:text-2xl'} font-black mt-0.5 leading-none ${isTop ? 'text-[#fce300] drop-shadow-[0_0_8px_rgba(252,227,0,0.8)]' : 'text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]'}`}>
+                                             +{c.score}
+                                           </span>
+                                           <span className="text-[10px] md:text-xs font-mono font-bold text-slate-300 mt-1 opacity-90 drop-shadow-md">{time}</span>
+                                        </div>
                                      ) : (
                                         <span className={`${is6P ? 'text-[15px] md:text-[18px]' : 'text-xl md:text-2xl'} font-black mt-0.5 leading-none text-slate-400 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]`}>-</span>
                                      )}
@@ -773,23 +774,23 @@
                   {gameMode === '1v1' && matchStatus1v1 ? (
                     <div className="flex w-full h-full bg-[#0ea5e9] items-center justify-between px-2 md:px-8 text-white font-black shadow-[inset_0_5px_20px_rgba(2,132,199,0.8)]">
                         {/* CỘT TRÁI - PLAYER 1 */}
-                        <div className="flex items-center justify-end gap-3 flex-1 h-full">
+                        <div className="flex items-center justify-start gap-4 flex-1 h-full pl-4 md:pl-8">
                             <span className="text-3xl md:text-4xl text-[#fce300] font-black drop-shadow-[0_0_10px_rgba(252,227,0,0.6)]">{matchStatus1v1.p1Sets}</span>
                             <div className="w-px h-8 bg-white/40 shadow-[1px_0_0_rgba(0,0,0,0.2)]"></div>
-                            <span className="text-lg md:text-2xl tracking-wider truncate font-black drop-shadow-md max-w-[150px] md:max-w-[300px] text-right">{players[0]}</span>
+                            <span className="text-lg md:text-2xl tracking-wider truncate font-black drop-shadow-md text-center flex-1">{players[0]}</span>
                             <div className="w-px h-8 bg-white/40 shadow-[1px_0_0_rgba(0,0,0,0.2)]"></div>
                             <span className="text-2xl md:text-4xl text-white font-black drop-shadow-md min-w-[30px] text-center">{matchStatus1v1.p1Rounds}</span>
                         </div>
                         
-                        <div className="flex-shrink-0 px-6 md:px-12 h-full bg-gradient-to-b from-white/90 to-white/70 skew-x-[-15deg] mx-4 md:mx-8 flex items-center justify-center border-x border-white/50 shadow-2xl">
-                            <span className="block skew-x-[15deg] text-xl md:text-3xl text-[#0ea5e9] font-black italic drop-shadow-sm">VS</span>
+                        <div className="flex-shrink-0 px-8 md:px-16 h-full bg-gradient-to-b from-white/90 to-white/70 skew-x-[-15deg] mx-4 flex items-center justify-center border-x border-white/50 shadow-2xl z-10">
+                            <span className="block skew-x-[15deg] text-2xl md:text-3xl text-[#0ea5e9] font-black italic drop-shadow-sm">VS</span>
                         </div>
 
                         {/* CỘT PHẢI - PLAYER 2 */}
-                        <div className="flex items-center justify-start gap-3 flex-1 h-full">
+                        <div className="flex items-center justify-end gap-4 flex-1 h-full pr-4 md:pr-8">
                             <span className="text-2xl md:text-4xl text-white font-black drop-shadow-md min-w-[30px] text-center">{matchStatus1v1.p2Rounds}</span>
                             <div className="w-px h-8 bg-white/40 shadow-[1px_0_0_rgba(0,0,0,0.2)]"></div>
-                            <span className="text-lg md:text-2xl tracking-wider truncate font-black drop-shadow-md max-w-[150px] md:max-w-[300px] text-left">{players[1]}</span>
+                            <span className="text-lg md:text-2xl tracking-wider truncate font-black drop-shadow-md text-center flex-1">{players[1]}</span>
                             <div className="w-px h-8 bg-white/40 shadow-[1px_0_0_rgba(0,0,0,0.2)]"></div>
                             <span className="text-3xl md:text-4xl text-[#fce300] font-black drop-shadow-[0_0_10px_rgba(252,227,0,0.6)]">{matchStatus1v1.p2Sets}</span>
                         </div>
@@ -1011,12 +1012,15 @@
       const [toastMsg, setToastMsg] = useState(null); 
       
       const [broadcastState, setBroadcastState] = useState({ isOpen: false, tab: 'scoreboard', gameIndex: 0 });
+
+      // Cửa sổ Dialog Custom thay thế window.alert và window.confirm
       const [dialog, setDialog] = useState({ isOpen: false, type: 'alert', message: '', onConfirm: null });
 
       const showDialogAlert = (msg) => setDialog({ isOpen: true, type: 'alert', message: msg, onConfirm: null });
       const showDialogConfirm = (msg, onConfirmCallback) => setDialog({ isOpen: true, type: 'confirm', message: msg, onConfirm: onConfirmCallback });
 
       const [tournamentName, setTournamentName] = useState(() => localStorage.getItem('zsm_tour_name') || 'CUSTOM TOURNAMENT');
+
       const [team1Name, setTeam1Name] = useState(() => localStorage.getItem('zsm_team1_name') || '');
       const [team2Name, setTeam2Name] = useState(() => localStorage.getItem('zsm_team2_name') || '');
 
@@ -1123,6 +1127,7 @@
         const newGames = [...games];
         if (!newGames[gIndex].cars) newGames[gIndex].cars = Array(6).fill('');
         if (!newGames[gIndex].pets) newGames[gIndex].pets = Array(6).fill('');
+        
         if (type === 'car') newGames[gIndex].cars[pIndex] = assetId;
         if (type === 'pet') newGames[gIndex].pets[pIndex] = assetId;
         setGames(newGames);
@@ -1142,6 +1147,7 @@
            const playerName = players[pIndex];
            const pbKey = `${playerName}_${mapId}`;
 
+           // 1. LƯU KỶ LỤC CÁ NHÂN (Cho màn hình Pre-Match)
            setPersonalRecords(prev => {
               const currentPB = prev[pbKey];
               if (!currentPB || timeMs < currentPB.timeMs) {
@@ -1150,10 +1156,12 @@
               return prev;
            });
 
+           // 2. LƯU KỶ LỤC CHUNG (Hall of Fame)
            setMapRecords(prev => {
               const currentRecord = prev[mapId];
               if (!currentRecord || timeMs < currentRecord.timeMs) {
                  const mapName = getMapName(mapId, lang);
+                 
                  let msg = t.newRecordAlert.replace('{0}', playerName).replace('{1}', mapName).replace('{2}', formattedTime);
                  if (currentRecord) {
                     msg += lang === 'vi' ? ` (Kỷ lục cũ: ${currentRecord.player} - ${currentRecord.timeStr})` : ` (Old: ${currentRecord.player} - ${currentRecord.timeStr})`;
@@ -1219,13 +1227,13 @@
       };
 
       const addGame = () => {
-        if (gameMode === '1v1') return showDialogAlert(lang === 'vi' ? "Mode SOLO 1VS1 không được phép tự thêm trận." : "Cannot manually add games in 1VS1 Mode.");
+        if (gameMode === '1v1') return showDialogAlert(lang === 'vi' ? "Mode SOLO 1VS1 tự động sinh ván đấu theo thiết lập (BO)." : "1VS1 Mode auto-generates matches based on BO format.");
         if (games.length >= MAX_GAMES) return showDialogAlert(t.errMaxG);
         setGames([...games, { id: Date.now(), mapId: "", times: Array(6).fill(''), cars: Array(6).fill(''), pets: Array(6).fill('') }]);
       };
 
       const removeGame = (gIndex) => {
-        if (gameMode === '1v1') return showDialogAlert(lang === 'vi' ? "Mode SOLO 1VS1 không được phép tự xóa trận." : "Cannot manually delete games in 1VS1 Mode.");
+        if (gameMode === '1v1') return showDialogAlert(lang === 'vi' ? "Mode SOLO 1VS1 không được tự xóa trận." : "Cannot delete games in 1VS1 Mode.");
         if (games.length <= 1) return showDialogAlert(t.errMinG);
         showDialogConfirm(t.delG.replace('{0}', gIndex + 1), () => {
            setGames(games.filter((_, i) => i !== gIndex));
@@ -1248,21 +1256,12 @@
         let p1Sets = 0; let p2Sets = 0;
         let p1Rounds = 0; let p2Rounds = 0;
         let currentSet = 1;
-        let currentRoundInSet = 1;
         let gameAssignments = [];
         let mapsUsedSet12 = [];
         let mapsUsedSet3 = [];
         const winCond = Math.ceil(soloSetBO / 2);
         
         games.forEach((g, idx) => {
-            // NẾU VƯỢT QUÁ SỐ VÁN MAX CỦA 1 SET -> Ép sang Set mới
-            if (currentRoundInSet > soloSetBO) {
-                currentSet++;
-                currentRoundInSet = 1;
-                p1Rounds = 0; 
-                p2Rounds = 0;
-            }
-
             if (g.mapId) {
                 if (currentSet < 3) mapsUsedSet12.push(g.mapId);
                 else mapsUsedSet3.push(g.mapId);
@@ -1270,17 +1269,19 @@
 
             gameAssignments.push({
                 set: currentSet,
-                round: currentRoundInSet,
+                round: p1Rounds + p2Rounds + 1,
             });
 
-            const parsed = g.times.map(parseTime);
-            const v1 = parsed[0]; const v2 = parsed[1];
+            // Parse an toàn để lấy điểm
+            const t1 = g.times[0];
+            const t2 = g.times[1];
+            const v1 = parseTime(t1); 
+            const v2 = parseTime(t2);
+            
             let winner = -1;
 
-            const p1Str = g.times[0] || '';
-            const p2Str = g.times[1] || '';
-            const p1DNF = p1Str.toUpperCase() === 'X';
-            const p2DNF = p2Str.toUpperCase() === 'X';
+            const p1DNF = t1 && t1.toUpperCase() === 'X';
+            const p2DNF = t2 && t2.toUpperCase() === 'X';
 
             if (v1 !== null && v2 !== null) {
                 if (v1 < v2) winner = 0;
@@ -1294,13 +1295,10 @@
             if (winner === 0) p1Rounds++;
             if (winner === 1) p2Rounds++;
 
-            currentRoundInSet++; // Tịnh tiến lên Ván tiếp theo để giao diện hiển thị đúng số G
-
             if (p1Rounds >= winCond || p2Rounds >= winCond) {
                 if (p1Rounds > p2Rounds) p1Sets++; else p2Sets++;
                 currentSet++;
                 p1Rounds = 0; p2Rounds = 0;
-                currentRoundInSet = 1; // Reset số đếm ván cho hiệp mới
             }
         });
 
@@ -1340,16 +1338,19 @@
         reader.readAsText(file);
       };
 
+      // ĐÂY LÀ HÀM XÓA KỶ LỤC HOÀN CHỈNH: Xóa Map Record VÀ Xóa luôn Personal Records
       const handleDeleteRecord = (mapId) => {
         showDialogConfirm(lang === 'vi' 
             ? "Bạn có chắc muốn xóa kỷ lục map này?\n(Kỷ lục cá nhân của các VĐV ở map này cũng sẽ bị xóa sạch)" 
             : "Are you sure to delete this map record?\n(Personal records for this map will also be deleted)", 
         () => {
+            // Xóa Kỷ lục chung
             setMapRecords(prev => {
                 const newRecords = {...prev};
                 delete newRecords[mapId];
                 return newRecords;
             });
+            // Xóa Kỷ lục cá nhân của map này
             setPersonalRecords(prev => {
                 const newPRs = {...prev};
                 Object.keys(newPRs).forEach(key => {
@@ -1414,6 +1415,7 @@
           
           const calcs = getGameCalculations(gIndex, game.times);
           game.times.forEach((time, pIdx) => {
+            // Chỉ in data của người chơi hợp lệ trong mảng players
             if (pIdx >= players.length) return;
             const timeCol = 2 + (pIdx * 2);
             const ptsCol = 3 + (pIdx * 2);
@@ -1591,26 +1593,11 @@
 
       const nextPickerData = useMemo(() => {
         const nextIdx = games.findIndex(g => {
+            // Xem trận đấu có trắng trơn (chưa ai nhập) không, chỉ xét những VĐV hợp lệ
             return g.times.slice(0, players.length).every(time => !time || time.trim() === '');
         });
         if (nextIdx === -1) return { show: false }; 
         if (nextIdx === 0) return { show: true, text: t.map1Pick }; 
-
-        const actualLastGameIndex = nextIdx - 1; 
-
-        if (gameMode === '1v1') {
-            const lastGameTimes = games[actualLastGameIndex].times.map(parseTime);
-            const p1Time = lastGameTimes[0];
-            const p2Time = lastGameTimes[1];
-            let pickerIndex = 0;
-            if (p1Time !== null && p2Time !== null) {
-                pickerIndex = p1Time > p2Time ? 0 : 1; 
-            } else if (p1Time === null) pickerIndex = 0; 
-            else pickerIndex = 1;
-            
-            const pickerName = players[pickerIndex];
-            return { show: true, text: t.normalPick.replace('{0}', nextIdx + 1).replace('{1}', pickerName), pIndex: pickerIndex };
-        }
 
         if (nextIdx >= 1 && nextIdx < players.length + 1) {
             let kingPlayerIndex = nextIdx - 1;
@@ -1623,6 +1610,7 @@
             return { show: true, text: t.kingMapPick.replace('{0}', nextIdx + 1).replace('{1}', pickerName), pIndex: kingPlayerIndex };
         }
 
+        const actualLastGameIndex = nextIdx - 1; 
         const halfLen = Math.floor(players.length / 2);
         
         if (isTeamMode) {
@@ -1658,7 +1646,7 @@
           const pickerName = players[pickerIndex];
           return { show: true, text: t.normalPick.replace('{0}', nextIdx + 1).replace('{1}', pickerName), pIndex: pickerIndex };
         }
-      }, [games, totals, players, isTeamMode, gameMode, lang, t, displayTeam1Name, displayTeam2Name]);
+      }, [games, totals, players, isTeamMode, lang, t, displayTeam1Name, displayTeam2Name]);
 
       return (
         <div className="min-h-screen relative overflow-x-hidden pb-20">
@@ -1680,7 +1668,6 @@
               lang={lang} 
               t={t} 
               gameMode={gameMode} 
-              soloMatchBO={soloMatchBO}
               tournamentName={tournamentName}
               team1Name={displayTeam1Name}
               team2Name={displayTeam2Name}
@@ -1884,17 +1871,13 @@
                     </div>
                 )}
 
-                {gameMode !== '1v1' && (
-                  <>
-                    <button onClick={addPlayer} className="flex items-center gap-1.5 px-3 py-2 md:py-2.5 text-slate-300 hover:text-white hover:bg-slate-800 rounded-xl font-bold transition-all text-[10px] md:text-xs uppercase" title={t.addPlayer}>
-                      <Plus size={14}/> <User size={14} className="hidden lg:block"/> <span className="hidden md:inline">{t.addPlayer}</span>
-                    </button>
+                <button onClick={addPlayer} className={`flex items-center gap-1.5 px-3 py-2 md:py-2.5 text-slate-300 hover:text-white hover:bg-slate-800 rounded-xl font-bold transition-all text-[10px] md:text-xs uppercase ${gameMode === '1v1' ? 'opacity-50 cursor-not-allowed' : ''}`} title={t.addPlayer}>
+                  <Plus size={14}/> <User size={14} className="hidden lg:block"/> <span className="hidden md:inline">{t.addPlayer}</span>
+                </button>
 
-                    <button onClick={addGame} className="flex items-center gap-1.5 px-3 py-2 md:py-2.5 text-slate-300 hover:text-white hover:bg-slate-800 rounded-xl font-bold transition-all text-[10px] md:text-xs uppercase" title={t.addMatch}>
-                      <Plus size={14}/> <Flag size={14} className="hidden lg:block"/> <span className="hidden md:inline">{t.addMatch}</span>
-                    </button>
-                  </>
-                )}
+                <button onClick={addGame} className={`flex items-center gap-1.5 px-3 py-2 md:py-2.5 text-slate-300 hover:text-white hover:bg-slate-800 rounded-xl font-bold transition-all text-[10px] md:text-xs uppercase ${gameMode === '1v1' ? 'opacity-50 cursor-not-allowed' : ''}`} title={t.addMatch}>
+                  <Plus size={14}/> <Flag size={14} className="hidden lg:block"/> <span className="hidden md:inline">{t.addMatch}</span>
+                </button>
 
                 <div className="w-px h-6 bg-slate-700/80 mx-1 hidden md:block"></div>
 
@@ -2024,26 +2007,26 @@
                 <div className="bg-[#0f172a] shadow-[0_-10px_30px_rgba(0,0,0,0.5)] border-t border-slate-700 z-30 shrink-0 overflow-hidden">
                   {gameMode === '1v1' && matchStatus1v1 ? (
                     <div className="flex w-full h-16 bg-[#0ea5e9] items-center justify-between px-4 md:px-8 text-white font-black shadow-[inset_0_5px_20px_rgba(2,132,199,0.8)]">
-                        {/* CỘT TRÁI - PLAYER 2 */}
-                        <div className="flex items-center justify-start gap-4 flex-1 h-full">
-                            <span className="text-3xl md:text-4xl text-[#fce300] font-black drop-shadow-[0_0_10px_rgba(252,227,0,0.6)]">{matchStatus1v1.p2Sets}</span>
+                        {/* CỘT TRÁI - PLAYER 1 */}
+                        <div className="flex items-center justify-start gap-4 flex-1 h-full pl-4 md:pl-8">
+                            <span className="text-3xl md:text-4xl text-[#fce300] font-black drop-shadow-[0_0_10px_rgba(252,227,0,0.6)]">{matchStatus1v1.p1Sets}</span>
                             <div className="w-px h-8 bg-white/40 shadow-[1px_0_0_rgba(0,0,0,0.2)]"></div>
-                            <span className="text-lg md:text-2xl tracking-wider truncate font-black drop-shadow-md max-w-[150px] md:max-w-[300px] text-left">{players[1]}</span>
+                            <span className="text-lg md:text-2xl tracking-wider truncate font-black drop-shadow-md text-center flex-1">{players[0]}</span>
                             <div className="w-px h-8 bg-white/40 shadow-[1px_0_0_rgba(0,0,0,0.2)]"></div>
-                            <span className="text-2xl md:text-4xl text-white font-black drop-shadow-md min-w-[30px] text-center">{matchStatus1v1.p2Rounds}</span>
+                            <span className="text-2xl md:text-4xl text-white font-black drop-shadow-md min-w-[30px] text-center">{matchStatus1v1.p1Rounds}</span>
                         </div>
                         
-                        <div className="flex-shrink-0 px-8 md:px-16 h-full bg-gradient-to-b from-white/90 to-white/70 skew-x-[-15deg] mx-4 flex items-center justify-center border-x border-white/50 shadow-2xl">
+                        <div className="flex-shrink-0 px-8 md:px-16 h-full bg-gradient-to-b from-white/90 to-white/70 skew-x-[-15deg] mx-4 flex items-center justify-center border-x border-white/50 shadow-2xl z-10">
                             <span className="block skew-x-[15deg] text-2xl md:text-3xl text-[#0ea5e9] font-black italic drop-shadow-sm">VS</span>
                         </div>
 
-                        {/* CỘT PHẢI - PLAYER 1 */}
-                        <div className="flex items-center justify-end gap-4 flex-1 h-full">
-                            <span className="text-2xl md:text-4xl text-white font-black drop-shadow-md min-w-[30px] text-center">{matchStatus1v1.p1Rounds}</span>
+                        {/* CỘT PHẢI - PLAYER 2 */}
+                        <div className="flex items-center justify-end gap-4 flex-1 h-full pr-4 md:pr-8">
+                            <span className="text-2xl md:text-4xl text-white font-black drop-shadow-md min-w-[30px] text-center">{matchStatus1v1.p2Rounds}</span>
                             <div className="w-px h-8 bg-white/40 shadow-[1px_0_0_rgba(0,0,0,0.2)]"></div>
-                            <span className="text-lg md:text-2xl tracking-wider truncate font-black drop-shadow-md max-w-[150px] md:max-w-[300px] text-right">{players[0]}</span>
+                            <span className="text-lg md:text-2xl tracking-wider truncate font-black drop-shadow-md text-center flex-1">{players[1]}</span>
                             <div className="w-px h-8 bg-white/40 shadow-[1px_0_0_rgba(0,0,0,0.2)]"></div>
-                            <span className="text-3xl md:text-4xl text-[#fce300] font-black drop-shadow-[0_0_10px_rgba(252,227,0,0.6)]">{matchStatus1v1.p1Sets}</span>
+                            <span className="text-3xl md:text-4xl text-[#fce300] font-black drop-shadow-[0_0_10px_rgba(252,227,0,0.6)]">{matchStatus1v1.p2Sets}</span>
                         </div>
                     </div>
                   ) : (
