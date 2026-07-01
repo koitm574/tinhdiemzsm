@@ -747,9 +747,32 @@
                 </div>
 
                 <div className="flex bg-[#0f172a]/80 backdrop-blur-xl border-t border-slate-700/50 shadow-[0_-10px_30px_rgba(0,0,0,0.5)] h-16 md:h-20 w-full shrink-0 relative z-20">
-                  {isTeamMode ? (
-                     <div className="flex w-full h-full relative">
-                       <div className="flex-1 flex flex-col items-center justify-center bg-gradient-to-r from-blue-900/50 to-blue-800/30 backdrop-blur-md relative overflow-hidden">
+                {gameMode === '1v1' && matchStatus1v1 ? (
+                  <div className="flex w-full h-full bg-[#0ea5e9] items-center justify-between px-2 md:px-4 text-white font-black">
+                      <div className="flex items-center gap-2 md:gap-4 flex-1 justify-start h-full">
+                          <span className="text-3xl md:text-5xl text-[#fce300] w-12 md:w-16 text-center drop-shadow-md">{matchStatus1v1.p1Sets}</span>
+                          <div className="w-[2px] h-[60%] bg-white/40"></div>
+                          <span className="text-xl md:text-3xl tracking-wider truncate max-w-[200px] md:max-w-[400px] pl-2">{players[0]}</span>
+                          <div className="w-[2px] h-[60%] bg-white/40 ml-auto"></div>
+                          <span className="text-2xl md:text-4xl w-12 md:w-16 text-center drop-shadow-md">{matchStatus1v1.p1Rounds}</span>
+                      </div>
+                      
+                      <div className="flex-shrink-0 px-6 md:px-12 h-full bg-gradient-to-b from-white/90 to-white/70 skew-x-[-15deg] mx-4 flex items-center justify-center border-x border-white/50 shadow-lg">
+                          <span className="block skew-x-[15deg] text-2xl md:text-4xl text-[#0ea5e9] font-black italic">VS</span>
+                      </div>
+
+                      <div className="flex items-center gap-2 md:gap-4 flex-1 justify-end h-full">
+                          <span className="text-2xl md:text-4xl w-12 md:w-16 text-center drop-shadow-md">{matchStatus1v1.p2Rounds}</span>
+                          <div className="w-[2px] h-[60%] bg-white/40 mr-auto"></div>
+                          <span className="text-xl md:text-3xl tracking-wider truncate max-w-[200px] md:max-w-[400px] text-right pr-2">{players[1]}</span>
+                          <div className="w-[2px] h-[60%] bg-white/40"></div>
+                          <span className="text-3xl md:text-5xl text-[#fce300] w-12 md:w-16 text-center drop-shadow-md">{matchStatus1v1.p2Sets}</span>
+                      </div>
+                  </div>
+                ) : isTeamMode ? (
+                   <div className="flex w-full h-full relative">
+                     {/* Đội 1 */}
+                     <div className="flex-1 flex flex-col items-center justify-center bg-gradient-to-r from-blue-900/50 to-blue-800/30 backdrop-blur-md relative overflow-hidden">
                           <div className="absolute right-0 top-0 bottom-0 w-1 bg-blue-500 shadow-[0_0_15px_#3b82f6]"></div>
                           <span className="text-blue-200 font-black text-sm md:text-base uppercase tracking-widest drop-shadow-md z-10">{team1Name}</span>
                           <span className="text-white font-black text-3xl md:text-5xl mt-0.5 drop-shadow-[0_0_15px_rgba(59,130,246,0.5)] leading-none z-10">
@@ -1965,33 +1988,13 @@
                           <td className={`px-2 md:px-4 py-2 md:py-3 text-right font-black uppercase tracking-widest w-[128px] md:w-[240px] ${isTeamMode ? 'text-[10px] md:text-xs text-slate-400' : 'text-xs md:text-sm text-red-500'}`}>
                             {isTeamMode ? t.indivTotal : t.total}
                           </td>
-                            <td className="p-0">
-                               <div className="flex w-full">
-                                  <div className="flex-1 px-1 md:px-2 py-1.5 md:py-2 text-center border-l-2 border-purple-500/30">
-                                     <span className="text-xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-b from-purple-200 to-purple-500 drop-shadow-[0_0_20px_rgba(168,85,247,0.6)] cursor-default leading-none">
-                                        {matchStatus1v1.p1Sets}
-                                     </span>
-                                  </div>
-                                  <div className="flex-1 px-1 md:px-2 py-1.5 md:py-2 text-center border-l-2 border-purple-500/30">
-                                     <span className="text-xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-b from-purple-200 to-purple-500 drop-shadow-[0_0_20px_rgba(168,85,247,0.6)] cursor-default leading-none">
-                                        {matchStatus1v1.p2Sets}
-                                     </span>
-                                  </div>
-                               </div>
-                            </td>
-                          </tr>
-                        )}
-                        <tr className={`border-t-4 border-red-600 ${isTeamMode || gameMode === '1v1' ? 'border-b border-slate-700/50' : ''}`}>
-                          <td className={`px-2 md:px-4 py-2 md:py-3 text-right font-black uppercase tracking-widest w-[128px] md:w-[240px] ${isTeamMode || gameMode === '1v1' ? 'text-[10px] md:text-xs text-slate-400' : 'text-xs md:text-sm text-red-500'}`}>
-                            {isTeamMode ? t.indivTotal : (gameMode === '1v1' ? t.roundScore : t.total)}
-                          </td>
                           <td className="p-0">
                             <div className="flex w-full">
                               {totals.map((total, i) => {
                                 if (i >= players.length) return null;
                                 return (
-                                <div key={i} className={`flex-1 px-1 md:px-2 py-2 md:py-3 text-center border-white/5 ${(isTeamMode || gameMode==='1v1') && i === Math.floor(players.length/2) ? 'border-l-2 border-slate-700/50' : 'border-l'}`}>
-                                  <span className={`${isTeamMode || gameMode==='1v1' ? 'text-sm md:text-lg font-bold text-slate-400 drop-shadow-none' : 'text-lg md:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400 drop-shadow-[0_0_15px_rgba(255,255,255,0.4)] cursor-default'}`}>
+                                <div key={i} className={`flex-1 px-1 md:px-2 py-2 md:py-3 text-center border-white/5 ${isTeamMode && i === Math.floor(players.length/2) ? 'border-l-2 border-slate-700/50' : 'border-l'}`}>
+                                  <span className={`${isTeamMode ? 'text-sm md:text-lg font-bold text-slate-400 drop-shadow-none' : 'text-lg md:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400 drop-shadow-[0_0_15px_rgba(255,255,255,0.4)] cursor-default'}`}>
                                     {total}
                                   </span>
                                 </div>
@@ -2041,15 +2044,17 @@
               </div>
 
               {gameMode !== '1v1' && (
-                <div className="lg:col-span-1 animate-slide-up delay-200 order-first lg:order-last flex flex-col gap-4">
-                  <div className="bg-slate-900/80 backdrop-blur-xl border border-slate-700/50 rounded-xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.6)]">
-                    <div className="bg-slate-950 px-4 md:px-6 py-3 border-b border-slate-800 flex items-center justify-between">
-                      <h2 className="font-black text-white tracking-[0.1em] uppercase italic transform skew-x-[-10deg] text-sm md:text-base cursor-default">{t.leaderboard}</h2>
-                      <Flame className="text-red-500 animate-pulse w-4 h-4" />
-                    </div>
-                    
-                    <div className="p-2 md:p-3 space-y-2 flex flex-row lg:flex-col overflow-x-auto lg:overflow-x-visible hide-scrollbar">
-                      {activeLeaderboard.map((item) => {
+              <div className="lg:col-span-1 animate-slide-up delay-200 order-first lg:order-last flex flex-col gap-4">
+                <div className="bg-slate-900/80 backdrop-blur-xl border border-slate-700/50 rounded-xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.6)]">
+                  <div className="bg-slate-950 px-4 md:px-6 py-3 border-b border-slate-800 flex items-center justify-between">
+                    <h2 className="font-black text-white tracking-[0.1em] uppercase italic transform skew-x-[-10deg] text-sm md:text-base cursor-default">{t.leaderboard}</h2>
+                    <Flame className="text-red-500 animate-pulse w-4 h-4" />
+                  </div>
+                  
+                  <div className="p-2 md:p-3 space-y-2 flex flex-row lg:flex-col overflow-x-auto lg:overflow-x-visible hide-scrollbar">
+                    {activeLeaderboard.map((item) => {
+                      const isTop1 = item.rank === 1 && item.score > 0;
+                      const isTop2 = item.rank === 2 && item.score > 0;
                       const isTop3 = item.rank === 3 && item.score > 0;
                       const isPicker = nextPickerData && nextPickerData.show && ((isTeamMode && nextPickerData.isT1 === item.isT1) || (!isTeamMode && nextPickerData.pIndex === item.oIndex));
 
@@ -2078,13 +2083,14 @@
                           {isPicker && (
                             <div className="absolute -top-3 -right-2 bg-purple-600 border border-purple-400 px-2 py-0.5 rounded text-[9px] font-black uppercase text-white shadow-[0_0_10px_#9333ea] animate-pulse whitespace-nowrap z-20 flex items-center gap-1">
                               🎯 {t.pick}
-                            )}
-                          </div>
-                        );
-                      })}
-                    </div>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
+              </div>
               )}
 
             </div>
