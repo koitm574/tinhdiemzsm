@@ -739,7 +739,7 @@
                                         crownSize = 12;
                                     } else {
                                         // Mode Đội: Phóng to chữ do đã bỏ ẩn thời gian
-                                        nameSize = "text-[11px] md:text-[13px]";
+                                        nameSize = "text-[12px] md:text-[14px]";
                                         scoreSize = "text-[20px] md:text-[24px]";
                                         crownSize = 14;
                                     }
@@ -779,14 +779,14 @@
                                                 : `+${c.score}`}
                                            </span>
                                            {(gameMode === 'solo' || gameMode === '1v1') && (
-                                               <span className={`${is6P ? 'text-[8px] md:text-[9px]' : 'text-[10px] md:text-[12px]'} font-mono font-bold ${isTop ? 'text-cyan-200' : 'text-slate-400'} mt-1 opacity-90 drop-shadow-md leading-none`}>{time}</span>
+                                               <span className={`${is6P ? 'text-[8px] md:text-[9px]' : 'text-[9px] md:text-[11px]'} font-mono font-bold ${isTop ? 'text-cyan-200' : 'text-slate-400'} mt-1 opacity-90 drop-shadow-md leading-none`}>{time}</span>
                                            )}
                                         </div>
                                      ) : (
                                         <div className="flex flex-col items-center justify-center mt-0.5 z-10">
                                            <span className={`${scoreSize} font-black leading-none text-slate-400 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]`}>-</span>
                                            {(gameMode === 'solo' || gameMode === '1v1') && (
-                                               <span className={`${is6P ? 'text-[8px] md:text-[9px]' : 'text-[10px] md:text-[12px]'} font-mono font-bold text-transparent mt-1 leading-none`}>-</span>
+                                               <span className={`${is6P ? 'text-[8px] md:text-[9px]' : 'text-[9px] md:text-[11px]'} font-mono font-bold text-transparent mt-1 leading-none`}>-</span>
                                            )}
                                         </div>
                                      )}
@@ -1633,24 +1633,126 @@
         const nextIdx = games.findIndex(g => {
             return g.times.slice(0, players.length).every(time => !time || time.trim() === '');
         });
+
+        // ==========================================
+        // THUẬT TOÁN PICK MAP DÀNH RIÊNG CHO SOLO 1v1 
+        // ==========================================
+        if (gameMode === '1v1') {
+            // Bước 1: Tìm game cuối cùng đã được nhập thời gian
+            let lastPlayedIdx = -1;
+            for (let i = games.length - 1; i >= 0; i--) {
+                const t1 = games[i].times[0]; const t2 = games[i].times[1];
+                if ((t1 && t1.trim() !== '') || (t2 && t2.trim() !== '')) {
+                    lastPlayedIdx = i;
+                    break;
+                }
+            }
+
+            if (lastPlayedIdx === -1) {
+                return { show: true, text: t.map1Pick }; // Trận đầu tiên luôn là chỉ định
+            }
+
+            // Bước 2: Tính toán chính xác tỉ số Set và Game lên tới đúng trận vừa chơi
+            const winCond = Math.ceil(soloSetBO / 2);
+            let s_p1Rounds = 0, s_p2Rounds = 0;
+            let lastGameWinner = -1; // 0 là P1 thắng, 1 là P2 thắng
+
+            for (let s = 1; s <= soloMatchBO; s++) {
+                s_p1Rounds = 0;
+                s_p2Rounds = 0;
+
+                for (let r = 1; r <= soloSetBO; r++) {
+                    const gIdx = (s - 1) * soloSetBO + (r - 1);
+                    if (gIdx > lastPlayedIdx) break; // Chỉ tính đến ván mới nhất
+
+                    const g = games[gIdx];
+                    const t1 = g.times[0]; const t2 = g.times[1];
+                    const isT1Final = t1 && (t1.includes(':') || t1.toUpperCase() === 'X');
+                    const isT2Final = t2 && (t2.includes(':') || t2.toUpperCase() === 'X');
+
+                    let winner = -1;
+                    if (isT1Final && isT2Final) {
+                        const v1 = parseTime(t1); const v2 = parseTime(t2);
+                        const p1DNF = t1.toUpperCase() === 'X';
+                        const p2DNF = t2.toUpperCase() === 'X';
+
+                        if (v1 !== null && v2 !== null) winner = v1 < v2 ? 0 : (v2 < v1 ? 1 : -1);
+                        else if (v1 !== null || p2DNF) winner = 0;
+                        else if (v2 !== null || p1DNF) winner = 1;
+                    }
+                    
+                    if (winner === 0) s_p1Rounds++;
+                    if (winner === 1) s_p2Rounds++;
+                    
+                    if (gIdx === lastPlayedIdx) {
+                        lastGameWinner = winner; // Lưu lại người thắng ván chót
+                    }
+
+                    if (s_p1Rounds >= winCond || s_p2Rounds >= winCond) {
+                        break; // Đã xong 1 set
+                    }
+                }
+                
+                // Nếu trận cuối cùng thuộc Set này thì dừng chạy Set tiếp theo
+                if (lastPlayedIdx < s * soloSetBO) {
+                    break;
+                }
+            }
+
+            let pickerIndex = 0;
+            let isNewSet = (s_p1Rounds >= winCond || s_p2Rounds >= winCond);
+
+            if (isNewSet) {
+                // ĐẦU SET MỚI: Ai thua Set trước thì được pick
+                pickerIndex = s_p1Rounds >= winCond ? 1 : 0;
+            } else {
+                // TRONG CÙNG 1 SET
+                if (s_p1Rounds < s_p2Rounds) {
+                    pickerIndex = 0; // P1 điểm nhỏ hơn -> P1 pick
+                } else if (s_p2Rounds < s_p1Rounds) {
+                    pickerIndex = 1; // P2 điểm nhỏ hơn -> P2 pick
+                } else {
+                    // HÒA ĐIỂM (BỊ CÂN BẰNG): Người THUA ở ván trước đó sẽ pick
+                    if (lastGameWinner === 0) pickerIndex = 1; // P1 mới thắng để gỡ hòa -> P2 bị cân bằng -> P2 pick
+                    else if (lastGameWinner === 1) pickerIndex = 0; // P2 mới thắng để gỡ hòa -> P1 bị cân bằng -> P1 pick
+                    else {
+                        // Dữ phòng nếu trận trước cả 2 DNF thì so sánh time thô
+                        const lastG = games[lastPlayedIdx];
+                        const v1 = parseTime(lastG.times[0]); const v2 = parseTime(lastG.times[1]);
+                        if (v1 !== null && v2 !== null) pickerIndex = v1 > v2 ? 0 : 1;
+                        else pickerIndex = 0;
+                    }
+                }
+            }
+
+            const pickerName = players[pickerIndex];
+            
+            // Format giao diện hiển thị cho chuyên nghiệp
+            let nextAssign = matchStatus1v1?.gameAssignments[lastPlayedIdx + 1];
+            if (isNewSet) {
+                const currentSet = Math.floor(lastPlayedIdx / soloSetBO) + 1;
+                nextAssign = { set: currentSet + 1, round: 1 };
+            }
+            
+            let displayText = "";
+            if (nextAssign) {
+                displayText = lang === 'vi' 
+                    ? `SET ${nextAssign.set} - GAME ${nextAssign.round}: LƯỢT CHỌN MAP CỦA ${pickerName}`
+                    : `SET ${nextAssign.set} - GAME ${nextAssign.round}: ${pickerName}'S PICK`;
+            } else {
+                displayText = t.normalPick.replace('{0}', lastPlayedIdx + 2).replace('{1}', pickerName);
+            }
+
+            return { show: true, text: displayText, pIndex: pickerIndex };
+        }
+
+        // ==========================================
+        // THUẬT TOÁN PICK MAP DÀNH CHO TEAM & SOLO 4P
+        // ==========================================
         if (nextIdx === -1) return { show: false }; 
         if (nextIdx === 0) return { show: true, text: t.map1Pick }; 
 
         const actualLastGameIndex = nextIdx - 1; 
-
-        if (gameMode === '1v1') {
-            const lastGameTimes = games[actualLastGameIndex].times.map(parseTime);
-            const p1Time = lastGameTimes[0];
-            const p2Time = lastGameTimes[1];
-            let pickerIndex = 0;
-            if (p1Time !== null && p2Time !== null) {
-                pickerIndex = p1Time > p2Time ? 0 : 1; 
-            } else if (p1Time === null) pickerIndex = 0; 
-            else pickerIndex = 1;
-            
-            const pickerName = players[pickerIndex];
-            return { show: true, text: t.normalPick.replace('{0}', nextIdx + 1).replace('{1}', pickerName), pIndex: pickerIndex };
-        }
 
         if (nextIdx >= 1 && nextIdx < players.length + 1) {
             let kingPlayerIndex = nextIdx - 1;
@@ -1698,7 +1800,7 @@
           const pickerName = players[pickerIndex];
           return { show: true, text: t.normalPick.replace('{0}', nextIdx + 1).replace('{1}', pickerName), pIndex: pickerIndex };
         }
-      }, [games, totals, players, isTeamMode, gameMode, lang, t, displayTeam1Name, displayTeam2Name]);
+      }, [games, totals, players, isTeamMode, gameMode, lang, t, displayTeam1Name, displayTeam2Name, soloMatchBO, soloSetBO, matchStatus1v1]);
 
       return (
         <div className="min-h-screen relative overflow-x-hidden pb-20">
