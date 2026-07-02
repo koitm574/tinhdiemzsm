@@ -103,7 +103,6 @@
     const Trophy = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg>;
     const PlayIcon = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>;
 
-    
     // ⚙️ LINK ẢNH VĐV (Đã được Gắn Cứng theo yêu cầu - Dán link PNG trong suốt vào)
     const HARDCODED_PLAYER_PHOTOS = [
       "https://i.ibb.co/8YJ11Zt/player-placeholder.png", // Tuyển thủ 1
@@ -774,18 +773,20 @@
 
                                      {time ? (
                                         <div className="flex flex-col items-center justify-center mt-0.5 z-10">
-                                           <span className={`${scoreSize} font-black leading-none ${isTop ? 'text-[#fce300] drop-shadow-[0_0_8px_rgba(252,227,0,0.8)]' : 'text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]'}`}>
-                                             +{c.score}
+                                           <span className={`${scoreSize} font-black leading-none ${isTop ? 'text-[#fce300] drop-shadow-[0_0_8px_rgba(252,227,0,0.8)]' : (gameMode === '1v1' ? 'text-slate-400 drop-shadow-md' : 'text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]')}`}>
+                                             {gameMode === '1v1' 
+                                                ? (isTop ? (lang === 'vi' ? 'THẮNG' : 'WIN') : (lang === 'vi' ? 'THUA' : 'LOSE')) 
+                                                : `+${c.score}`}
                                            </span>
-                                           {gameMode === 'solo' && (
-                                               <span className={`${is6P ? 'text-[8px] md:text-[9px]' : 'text-[9px] md:text-[11px]'} font-mono font-bold text-slate-300 mt-0.5 opacity-90 drop-shadow-md leading-none`}>{time}</span>
+                                           {(gameMode === 'solo' || gameMode === '1v1') && (
+                                               <span className={`${is6P ? 'text-[8px] md:text-[9px]' : 'text-[10px] md:text-[12px]'} font-mono font-bold ${isTop ? 'text-cyan-200' : 'text-slate-400'} mt-1 opacity-90 drop-shadow-md leading-none`}>{time}</span>
                                            )}
                                         </div>
                                      ) : (
                                         <div className="flex flex-col items-center justify-center mt-0.5 z-10">
                                            <span className={`${scoreSize} font-black leading-none text-slate-400 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]`}>-</span>
-                                           {gameMode === 'solo' && (
-                                               <span className={`${is6P ? 'text-[8px] md:text-[9px]' : 'text-[9px] md:text-[11px]'} font-mono font-bold text-transparent mt-0.5 leading-none`}>-</span>
+                                           {(gameMode === 'solo' || gameMode === '1v1') && (
+                                               <span className={`${is6P ? 'text-[8px] md:text-[9px]' : 'text-[10px] md:text-[12px]'} font-mono font-bold text-transparent mt-1 leading-none`}>-</span>
                                            )}
                                         </div>
                                      )}
@@ -1268,7 +1269,6 @@
         });
       };
 
-      // FIX 2: LOGIC MATCHSTATUS ĐƯỢC CHỈNH SỬA, KHÔNG AUTO JUMP KHI ĐANG NHẬP SỐ
       const matchStatus1v1 = useMemo(() => {
         if (gameMode !== '1v1') return null;
         let p1Sets = 0; let p2Sets = 0;
