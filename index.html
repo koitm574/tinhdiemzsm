@@ -8,7 +8,6 @@
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   
   <script>
     Babel.registerPreset('react-classic', {
@@ -104,7 +103,6 @@
     const Trophy = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg>;
     const PlayIcon = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>;
     const DatabaseIcon = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>;
-    const CameraIcon = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>;
 
     // --- MAP POOL ---
     const MAP_POOL = [
@@ -421,8 +419,8 @@
       return { background: getMapGradient(mapId) };
     };
 
-    // Component Bảng chọn Map có hỗ trợ logic Banned Map (Cấm map)
-    const SearchableMapSelect = ({ gameIndex, currentMapId, selectedMaps = [], bannedMaps = [], onChange, lang, t, isBan = false }) => {
+    // UPDATE: Thêm logic Ban Map vào SearchableMapSelect
+    const SearchableMapSelect = ({ currentMapId, selectedMaps = [], bannedMaps = [], onChange, lang, t, isBan = false }) => {
       const [isOpen, setIsOpen] = useState(false);
       const [searchTerm, setSearchTerm] = useState('');
       const wrapperRef = useRef(null);
@@ -483,21 +481,24 @@
                       </div>
                       {filteredMaps.map(m => {
                         const isSelectedByOther = selectedMaps.includes(m.id) && m.id !== currentMapId;
-                        const isBanned = bannedMaps.includes(m.id) && m.id !== currentMapId;
-                        const isDisabled = isSelectedByOther || isBanned;
+                        const isBannedByOther = bannedMaps.includes(m.id) && m.id !== currentMapId;
+                        const notAllowed = isSelectedByOther || isBannedByOther;
+                        
                         return (
                           <div 
                             key={m.id}
                             onClick={() => {
-                              if (!isDisabled) { onChange(m.id); setIsOpen(false); setSearchTerm(''); }
+                              if (!notAllowed) { onChange(m.id); setIsOpen(false); setSearchTerm(''); }
                             }}
-                            className={`px-2 py-1.5 text-xs rounded transition-colors ${
-                              isDisabled ? 'text-slate-600 cursor-not-allowed line-through' :
-                              m.id === currentMapId ? 'bg-red-900/40 text-red-400 font-bold' :
+                            className={`px-2 py-1.5 text-xs rounded transition-colors flex items-center justify-between ${
+                              isBannedByOther ? 'text-red-500/50 cursor-not-allowed line-through' :
+                              isSelectedByOther ? 'text-slate-600 cursor-not-allowed line-through' :
+                              m.id === currentMapId ? (isBan ? 'bg-red-900/40 text-red-400 font-bold' : 'bg-cyan-900/40 text-cyan-400 font-bold') :
                               'text-slate-300 hover:bg-slate-800 cursor-pointer'
                             }`}
                           >
-                            {m[mapLang]} {isBanned ? `(${t.banned})` : ''}
+                            <span className="truncate">{m[mapLang]}</span>
+                            {isBannedByOther && <span className="text-[9px] text-red-500 ml-1 border border-red-500/50 rounded px-1 flex-shrink-0">{t.banned}</span>}
                           </div>
                         );
                       })}
@@ -567,7 +568,7 @@
       );
     };
 
-    const BroadcastOverlay = ({ broadcastState, setBroadcastState, viewSet, setViewSet, soloSetBO, soloMatchBO, players, games, totals, getGameCalculations, matchStatus1v1, mapRecords, personalRecords, lang, t, gameMode, tournamentName, team1Name, team2Name, onAssetSelect, onClose, carDatabase, petDatabase, playerPhotos, handleTakeScreenshot }) => {
+    const BroadcastOverlay = ({ broadcastState, setBroadcastState, viewSet, setViewSet, soloSetBO, soloMatchBO, players, games, totals, getGameCalculations, matchStatus1v1, mapRecords, personalRecords, lang, t, gameMode, tournamentName, team1Name, team2Name, onAssetSelect, onClose, carDatabase, petDatabase, playerPhotos }) => {
       const isTeamMode = gameMode === '2v2' || gameMode === '3v3';
       
       let broadcastRounds = [];
@@ -614,7 +615,7 @@
       const [assetSearch, setAssetSearch] = useState('');
 
       return (
-        <div id="capture-full-livestream" className="fixed inset-0 z-[999] bg-[#f0f4f8] flex flex-col font-sans overflow-hidden animate-slide-up">
+        <div className="fixed inset-0 z-[999] bg-[#f0f4f8] flex flex-col font-sans overflow-hidden animate-slide-up">
           {BROADCAST_BACKGROUND_IMAGE && (
              <div 
                className="absolute inset-0 z-0 bg-cover bg-center animate-slow-zoom opacity-50 pointer-events-none" 
@@ -632,7 +633,7 @@
             {tournamentName}
           </div>
 
-          <div id="livestream-controls-header" className="relative w-full h-[9vh] min-h-[60px] flex items-center justify-between px-10 bg-white shadow-sm border-b border-gray-200 z-10 shrink-0 transition-opacity duration-300">
+          <div className="relative w-full h-[9vh] min-h-[60px] flex items-center justify-between px-10 bg-white shadow-sm border-b border-gray-200 z-10 shrink-0">
             <div className="text-xl md:text-2xl font-black italic text-[#13c0eb] tracking-widest uppercase truncate max-w-[30%]">
               {tournamentName}
             </div>
@@ -663,9 +664,6 @@
             </div>
 
             <div className="flex items-center gap-4">
-               <button onClick={() => handleTakeScreenshot('capture-full-livestream', 'Livestream', 'livestream-controls-header')} className="px-4 py-2.5 bg-emerald-600 text-white font-bold rounded hover:bg-emerald-500 shadow-md uppercase tracking-wider text-sm clip-slant flex items-center gap-2 transition-all">
-                  <CameraIcon size={16}/> <span className="hidden sm:inline">Chụp Ảnh</span>
-               </button>
                <button onClick={onClose} className="px-6 py-2.5 bg-red-600 text-white font-bold rounded hover:bg-red-700 shadow-md uppercase tracking-wider text-sm clip-slant">{t.closeBtn}</button>
             </div>
           </div>
@@ -719,7 +717,6 @@
                                 const textColor = isTop ? 'text-[#fce300]' : 'text-slate-300';
                                 const is6P = players.length > 4;
                                 
-                                // Tối ưu kích thước Text tự động
                                 let nameSize = "text-[11px] md:text-[13px]";
                                 let scoreSize = "text-xl md:text-2xl";
                                 let crownSize = 16;
@@ -749,7 +746,6 @@
                                 return (
                                   <div key={`g${gIndex}_p${pIndex}`} className={`w-full flex flex-col items-center justify-center relative flex-1 min-h-0 mx-1 group/item hover:bg-white/10 transition-colors rounded ${isTeamMode && pIndex === halfLen ? 'border-t-[2px] border-white/20 mt-1.5 pt-1 md:mt-2 md:pt-1.5' : ''}`}>
                                      
-                                     {/* KHÔNG GIAN BẢO VỆ VƯƠNG MIỆN: pt-3 / pt-4 */}
                                      <div className="relative flex flex-col items-center w-full pt-3 md:pt-4">
                                        {c.isKingMap && isTop && (
                                          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full flex justify-center z-20">
@@ -763,13 +759,11 @@
 
                                      {time ? (
                                         <div className="flex flex-col items-center justify-center mt-0.5 z-10">
-                                           {/* HIỆU ỨNG THẮNG / THUA CHO 1v1 */}
                                            <span className={`${scoreSize} font-black leading-none ${isTop ? 'text-[#fce300] drop-shadow-[0_0_8px_rgba(252,227,0,0.8)]' : (gameMode === '1v1' ? 'text-slate-400 drop-shadow-md' : 'text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]')}`}>
                                              {gameMode === '1v1' 
                                                 ? (isTop ? (lang === 'vi' ? 'THẮNG' : 'WIN') : (lang === 'vi' ? 'THUA' : 'LOSE')) 
                                                 : `+${c.score}`}
                                            </span>
-                                           {/* THỜI GIAN HIỂN THỊ LẠI CHO 1V1 và SOLO */}
                                            {(gameMode === 'solo' || gameMode === '1v1') && (
                                                <span className={`${is6P ? 'text-[8px] md:text-[9px]' : 'text-[9px] md:text-[11px]'} font-mono font-bold ${isTop ? 'text-cyan-200' : 'text-slate-400'} mt-1 opacity-90 drop-shadow-md leading-none`}>{time}</span>
                                            )}
@@ -1029,73 +1023,7 @@
       const showDialogAlert = (msg) => setDialog({ isOpen: true, type: 'alert', message: msg, onConfirm: null });
       const showDialogConfirm = (msg, onConfirmCallback) => setDialog({ isOpen: true, type: 'confirm', message: msg, onConfirm: onConfirmCallback });
 
-      const handleTakeScreenshot = async (elementId, prefix, hideElementId = null) => {
-          const target = document.getElementById(elementId);
-          if (!target) return;
-
-          let hideEl = null;
-          let originalHideOpacity = '';
-          if (hideElementId) {
-              hideEl = document.getElementById(hideElementId);
-              if (hideEl) {
-                  originalHideOpacity = hideEl.style.opacity;
-                  hideEl.style.opacity = '0'; // Ẩn mượt mà không làm vỡ layout
-              }
-          }
-
-          setToastMsg(lang === 'vi' ? 'Đang kết xuất ảnh HD. Vui lòng đợi...' : 'Rendering HD image. Please wait...');
-
-          // Ép bung toàn bộ giới hạn scroll
-          const originalStyle = target.style.cssText;
-          target.style.setProperty('max-height', 'none', 'important');
-          target.style.setProperty('height', 'auto', 'important');
-          target.style.setProperty('overflow', 'visible', 'important');
-
-          const scrollChildren = target.querySelectorAll('.overflow-y-auto, .overflow-x-auto, .overflow-hidden, .hide-scrollbar');
-          const childStyles = [];
-          scrollChildren.forEach(child => {
-              childStyles.push({ el: child, cssText: child.style.cssText });
-              child.style.setProperty('max-height', 'none', 'important');
-              child.style.setProperty('height', 'auto', 'important');
-              child.style.setProperty('overflow', 'visible', 'important');
-          });
-
-          try {
-              await new Promise(r => setTimeout(r, 200)); // Đợi DOM mở rộng hoàn toàn
-
-              const canvas = await html2canvas(target, {
-                  scale: 2, // Xuất ảnh độ phân giải gấp đôi
-                  useCORS: true,
-                  backgroundColor: '#0f172a',
-                  logging: false,
-                  width: target.scrollWidth,
-                  height: target.scrollHeight,
-                  windowWidth: target.scrollWidth,
-                  windowHeight: target.scrollHeight,
-              });
-
-              // Phục hồi lại trạng thái cũ
-              target.style.cssText = originalStyle;
-              childStyles.forEach(item => { item.el.style.cssText = item.cssText; });
-              if (hideEl) hideEl.style.opacity = originalHideOpacity;
-
-              const link = document.createElement('a');
-              link.download = `${prefix}_${Date.now()}.jpg`;
-              link.href = canvas.toDataURL('image/jpeg', 0.9);
-              link.click();
-              
-              setToastMsg(lang === 'vi' ? 'Đã lưu ảnh thành công!' : 'Image saved successfully!');
-              setTimeout(() => setToastMsg(null), 3000);
-          } catch (err) {
-              console.error("Screenshot error:", err);
-              target.style.cssText = originalStyle;
-              childStyles.forEach(item => { item.el.style.cssText = item.cssText; });
-              if (hideEl) hideEl.style.opacity = originalHideOpacity;
-              setToastMsg(lang === 'vi' ? 'Có lỗi khi chụp ảnh!' : 'Screenshot error!');
-              setTimeout(() => setToastMsg(null), 3000);
-          }
-      };
-
+      /* DYNAMIC ASSETS STATES */
       const [carDatabase, setCarDatabase] = useState(() => {
           const saved = localStorage.getItem('zsm_cars_db_v1');
           if (saved) { try { return JSON.parse(saved); } catch(e) {} }
@@ -1122,6 +1050,7 @@
           return Array(6).fill(""); 
       });
 
+      // BANNED MAPS STATE (Mới thêm)
       const [bannedMaps, setBannedMaps] = useState(() => {
           const saved = localStorage.getItem('zsm_banned_maps_1v1_v11');
           if (saved) { try { return JSON.parse(saved); } catch(e) {} }
@@ -1245,6 +1174,7 @@
         setGames(newGames);
       };
 
+      // HÀM XỬ LÝ CẤM MAP (Mới thêm)
       const handleBanChange = (setNum, pIndex, banSlot, mapId) => {
         setBannedMaps(prev => {
             const newState = { ...prev };
@@ -1374,7 +1304,7 @@
           setGames(Array(numGames).fill(null).map((_, i) => ({ id: Date.now() + i, mapId: "", times: Array(6).fill(''), cars: Array(6).fill(''), pets: Array(6).fill('') })));
           setTeam1Name('');
           setTeam2Name('');
-          setBannedMaps({});
+          setBannedMaps({}); // Xoá luôn lịch sử ban map
         });
       };
 
@@ -1414,6 +1344,7 @@
                 const g = games[gIdx];
                 
                 const t1 = g.times[0]; const t2 = g.times[1];
+                
                 const isT1Final = t1 && (t1.includes(':') || t1.toUpperCase() === 'X');
                 const isT2Final = t2 && (t2.includes(':') || t2.toUpperCase() === 'X');
 
@@ -2032,7 +1963,6 @@
               playerPhotos={playerPhotos}
               onAssetSelect={handleAssetSelect}
               onClose={() => setBroadcastState({...broadcastState, isOpen: false})} 
-              handleTakeScreenshot={handleTakeScreenshot}
             />
           )}
 
@@ -2246,10 +2176,6 @@
                   <DatabaseIcon size={18} className="group-hover:scale-110 transition-transform"/>
                 </button>
 
-                <button onClick={() => handleTakeScreenshot('capture-main-scoreboard', 'BangDiem')} className="flex items-center justify-center p-2 md:p-2.5 text-indigo-400 hover:text-white hover:bg-indigo-600/30 rounded-xl font-bold transition-all group" title="Chụp Ảnh Bảng Điểm">
-                  <CameraIcon size={18} className="group-hover:scale-110 transition-transform"/>
-                </button>
-
                 <button onClick={() => setShowRecordsModal(true)} className="flex items-center justify-center p-2 md:p-2.5 text-amber-400 hover:text-white hover:bg-amber-600/30 rounded-xl font-bold transition-all group" title={t.recordBtn}>
                   <Trophy size={18} className="group-hover:scale-110 transition-transform"/>
                 </button>
@@ -2269,7 +2195,7 @@
 
             <div className="grid lg:grid-cols-4 gap-4 md:gap-6">
               
-              <div id="capture-main-scoreboard" className={`${gameMode === '1v1' ? 'lg:col-span-4' : 'lg:col-span-3'} bg-[#0f172a] border border-slate-700/50 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.8)] overflow-hidden animate-slide-up delay-100 flex flex-col max-h-[75vh]`}>
+              <div className={`${gameMode === '1v1' ? 'lg:col-span-4' : 'lg:col-span-3'} bg-[#0f172a] border border-slate-700/50 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.8)] overflow-hidden animate-slide-up delay-100 flex flex-col max-h-[75vh]`}>
                 
                 <div className="overflow-x-auto overflow-y-auto flex-1 bg-[#0f172a]">
                   <table className="w-full text-xs md:text-sm border-collapse">
@@ -2282,7 +2208,8 @@
                                    <span className="text-cyan-400 font-black text-base uppercase tracking-[0.2em] min-w-[80px] text-center drop-shadow-md">SET {viewSet}</span>
                                    <button onClick={() => setViewSet(v => Math.min(soloMatchBO, v + 1))} className="text-slate-400 hover:text-cyan-400 px-3 font-black text-xl hover:bg-slate-800 rounded transition-colors">&gt;</button>
                                </div>
-
+                               
+                               {/* KHU VỰC CẤM MAP DÀNH CHO 1V1 (Mới thêm) */}
                                <div className="mt-2 flex flex-col xl:flex-row justify-center items-center gap-2 xl:gap-8 px-4 border-t border-slate-800/50 pt-2 pb-1">
                                    <div className="flex flex-wrap items-center gap-2 justify-center">
                                        <span className="text-[10px] text-red-500/80 font-black uppercase tracking-widest flex items-center gap-1 drop-shadow-md">
@@ -2377,9 +2304,11 @@
                         let rowBannedMaps = [];
                         if (gameMode === '1v1' && matchStatus1v1) {
                             const assign = matchStatus1v1.gameAssignments[gIndex];
-                            if (assign && assign.set >= 3) rowSelectedMaps = matchStatus1v1.mapsUsedSet3;
-                            else rowSelectedMaps = matchStatus1v1.mapsUsedSet12;
-                            if (assign) rowBannedMaps = getBannedMapsForSet(assign.set);
+                            if (assign) {
+                                if (assign.set >= 3) rowSelectedMaps = matchStatus1v1.mapsUsedSet3;
+                                else rowSelectedMaps = matchStatus1v1.mapsUsedSet12;
+                                rowBannedMaps = getBannedMapsForSet(assign.set);
+                            }
                         }
 
                         return (
