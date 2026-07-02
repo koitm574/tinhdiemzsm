@@ -728,30 +728,62 @@
                                 const textColor = isTop ? 'text-[#fce300]' : 'text-slate-300';
                                 const is6P = players.length > 4;
                                 
+                                // Tối ưu kích thước Text tự động theo Chế độ và Số lượng VĐV
+                                let nameSize = "text-[11px] md:text-[13px]";
+                                let scoreSize = "text-xl md:text-2xl";
+                                let crownSize = 16;
+
+                                if (is6P) { // Mode 6 Người (3v3 hoặc Cá nhân 6P)
+                                    if (gameMode === 'solo') {
+                                        nameSize = "text-[9px] md:text-[10px]";
+                                        scoreSize = "text-[15px] md:text-[18px]";
+                                        crownSize = 12;
+                                    } else {
+                                        // Mode Đội: Phóng to chữ do đã bỏ ẩn thời gian
+                                        nameSize = "text-[11px] md:text-[13px]";
+                                        scoreSize = "text-[20px] md:text-[24px]";
+                                        crownSize = 14;
+                                    }
+                                } else { // Mode 4 Người (2v2 hoặc Cá nhân 4P)
+                                    if (gameMode === 'solo' || gameMode === '1v1') {
+                                        nameSize = "text-[11px] md:text-[13px]";
+                                        scoreSize = "text-xl md:text-2xl";
+                                        crownSize = 16;
+                                    } else {
+                                        // Mode Đội: Phóng to tối đa
+                                        nameSize = "text-[13px] md:text-[15px]";
+                                        scoreSize = "text-3xl md:text-4xl";
+                                        crownSize = 18;
+                                    }
+                                }
+
                                 return (
-                                  <div key={`g${gIndex}_p${pIndex}`} className={`w-full flex flex-col items-center justify-center relative py-1 mx-1 group/item hover:bg-white/10 transition-colors rounded ${isTeamMode && pIndex === halfLen ? 'border-t-2 border-white/20 mt-1' : ''}`}>
-                                     {c.isKingMap && isTop && (
-                                       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full flex justify-center -translate-y-1/2 z-20">
-                                         <Crown size={is6P ? 12 : 16} className="text-[#fce300] animate-bounce drop-shadow-[0_0_8px_rgba(252,227,0,1)]"/>
-                                       </div>
-                                     )}
-                                     <span className={`${is6P ? 'text-[9px] md:text-[10px]' : 'text-[11px] md:text-[13px]'} font-bold truncate w-[90%] text-center leading-tight ${textColor} drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] mt-1 z-10`}>
-                                       {playerName}
-                                     </span>
+                                  <div key={`g${gIndex}_p${pIndex}`} className={`w-full flex flex-col items-center justify-center relative flex-1 min-h-0 mx-1 group/item hover:bg-white/10 transition-colors rounded ${isTeamMode && pIndex === halfLen ? 'border-t-[2px] border-white/20 mt-1.5 pt-1 md:mt-2 md:pt-1.5' : ''}`}>
+                                     
+                                     {/* Wrapper chứa Vương Miện và Tên: Dùng pt-3/pt-4 để MỞ RỘNG VÙNG AN TOÀN cho vương miện */}
+                                     <div className="relative flex flex-col items-center w-full pt-3 md:pt-4">
+                                       {c.isKingMap && isTop && (
+                                         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full flex justify-center z-20">
+                                           <Crown size={crownSize} className="text-[#fce300] animate-bounce drop-shadow-[0_0_8px_rgba(252,227,0,1)]"/>
+                                         </div>
+                                       )}
+                                       <span className={`${nameSize} font-bold truncate w-[90%] text-center leading-tight ${textColor} drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] z-10`}>
+                                         {playerName}
+                                       </span>
+                                     </div>
+
                                      {time ? (
-                                        <div className="flex flex-col items-center justify-center mt-1 z-10">
-                                           <span className={`${is6P ? 'text-[15px] md:text-[18px]' : 'text-xl md:text-2xl'} font-black leading-none ${isTop ? 'text-[#fce300] drop-shadow-[0_0_8px_rgba(252,227,0,0.8)]' : 'text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]'}`}>
+                                        <div className="flex flex-col items-center justify-center mt-0.5 z-10">
+                                           <span className={`${scoreSize} font-black leading-none ${isTop ? 'text-[#fce300] drop-shadow-[0_0_8px_rgba(252,227,0,0.8)]' : 'text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]'}`}>
                                              +{c.score}
                                            </span>
-                                           {/* FIX 1: CHỈ HIỂN THỊ THỜI GIAN KỶ LỤC TRONG SCOREBOARD Ở MODE SOLO */}
                                            {gameMode === 'solo' && (
                                                <span className={`${is6P ? 'text-[8px] md:text-[9px]' : 'text-[9px] md:text-[11px]'} font-mono font-bold text-slate-300 mt-0.5 opacity-90 drop-shadow-md leading-none`}>{time}</span>
                                            )}
                                         </div>
                                      ) : (
-                                        <div className="flex flex-col items-center justify-center mt-1 z-10">
-                                           <span className={`${is6P ? 'text-[15px] md:text-[18px]' : 'text-xl md:text-2xl'} font-black leading-none text-slate-400 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]`}>-</span>
-                                           {/* FIX 1: CHỈ HIỂN THỊ TRONG MODE SOLO ĐỂ CÂN ĐỐI GIAO DIỆN */}
+                                        <div className="flex flex-col items-center justify-center mt-0.5 z-10">
+                                           <span className={`${scoreSize} font-black leading-none text-slate-400 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]`}>-</span>
                                            {gameMode === 'solo' && (
                                                <span className={`${is6P ? 'text-[8px] md:text-[9px]' : 'text-[9px] md:text-[11px]'} font-mono font-bold text-transparent mt-0.5 leading-none`}>-</span>
                                            )}
