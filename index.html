@@ -102,7 +102,32 @@
     const WheelIcon = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle><line x1="12" y1="2" x2="12" y2="8"></line><line x1="12" y1="16" x2="12" y2="22"></line><line x1="2" y1="12" x2="8" y2="12"></line><line x1="16" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"></line><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"></line><line x1="4.93" y1="19.07" x2="9.17" y2="14.83"></line><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"></line></svg>;
     const Trophy = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg>;
     const PlayIcon = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>;
-    const DatabaseIcon = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>;
+
+    // ⚙️ LINK ẢNH VĐV (Đã được Gắn Cứng theo yêu cầu - Dán link PNG trong suốt vào)
+    const HARDCODED_PLAYER_PHOTOS = [
+      "https://i.ibb.co/8YJ11Zt/player-placeholder.png", // Tuyển thủ 1
+      "https://i.ibb.co/8YJ11Zt/player-placeholder.png", // Tuyển thủ 2
+      "https://i.ibb.co/8YJ11Zt/player-placeholder.png", // Tuyển thủ 3
+      "https://i.ibb.co/8YJ11Zt/player-placeholder.png", // Tuyển thủ 4
+      "", // Tuyển thủ 5 (3v3)
+      "", // Tuyển thủ 6 (3v3)
+    ];
+
+    // ⚙️ KHO TÀNG XE (Dùng để hiển thị bảng chọn trong Pre-Match)
+    const CAR_DATABASE = [
+      { id: 'c1', name: 'Dark Azure Dragon', img: 'https://i.ibb.co/3s6Vp6Z/car1.png' },
+      { id: 'c2', name: 'Hallet', img: 'https://i.ibb.co/3s6Vp6Z/car1.png' },
+      { id: 'c3', name: 'S-Chrono Envoy', img: 'https://i.ibb.co/3s6Vp6Z/car1.png' },
+      { id: 'c4', name: 'L-Qing', img: 'https://i.ibb.co/3s6Vp6Z/car1.png' },
+      // Thêm Xe vào đây
+    ];
+
+    // ⚙️ KHO TÀNG PET (Dùng để hiển thị bảng chọn trong Pre-Match)
+    const PET_DATABASE = [
+      { id: 'p1', name: 'Hellfire Dragon', img: 'https://i.ibb.co/3s6Vp6Z/car1.png' }, 
+      { id: 'p2', name: 'Angel Feather', img: 'https://i.ibb.co/3s6Vp6Z/car1.png' },
+      // Thêm Pet vào đây
+    ];
 
     // --- MAP POOL ---
     const MAP_POOL = [
@@ -239,8 +264,7 @@
         preMatchTitleIndiv: "INDIVIDUAL SPRINT CLASSIC", preMatchTitleTeam: "TEAM SPRINT CLASSIC", preMatchTitle1v1: "CÁ NHÂN 1VS1", preMatchMode: "MODE", preMatchBestRecord: "BEST RECORD",
         scoreboardTab: "BẢNG ĐIỂM", prematchTab: "TRƯỚC TRẬN", matchResult: "KẾT QUẢ TRẬN ĐẤU", selectCar: "CHỌN XE", selectPet: "CHỌN PET",
         preMatchModeSolo: "CÁ NHÂN", preMatchMode2v2: "ĐỒNG ĐỘI 2VS2", preMatchMode3v3: "ĐỒNG ĐỘI 3VS3",
-        setScore: "TỈ SỐ HIỆP (SET)", roundScore: "TỈ SỐ VÁN (ROUND)",
-        dbBtn: "Dữ Liệu", dbTitle: "QUẢN LÝ TÀI NGUYÊN (XE, PET, ẢNH)", tabPlayers: "ẢNH VĐV", tabCars: "KHO XE", tabPets: "KHO PET", carName: "Tên Xe", petName: "Tên Pet", imgUrl: "Link Ảnh (URL)", addBtn: "Thêm Mới", emptyDb: "Chưa có dữ liệu"
+        setScore: "TỈ SỐ HIỆP (SET)", roundScore: "TỈ SỐ VÁN (ROUND)"
       },
       en: { 
         title: "SECOND-BASED SCORING SYSTEM", subtitle: "Designed and developed by koi", tourNamePh: "Enter tournament name...",
@@ -264,8 +288,7 @@
         preMatchTitleIndiv: "INDIVIDUAL SPRINT CLASSIC", preMatchTitleTeam: "TEAM SPRINT CLASSIC", preMatchTitle1v1: "1 VS 1 SPRINT CLASSIC", preMatchMode: "MODE", preMatchBestRecord: "BEST RECORD",
         scoreboardTab: "SCOREBOARD", prematchTab: "PRE-MATCH", matchResult: "MATCH RESULT", selectCar: "SELECT CAR", selectPet: "SELECT PET",
         preMatchModeSolo: "INDIVIDUAL", preMatchMode2v2: "2 VS 2 TEAM", preMatchMode3v3: "3 VS 3 TEAM",
-        setScore: "SET SCORE", roundScore: "ROUND SCORE",
-        dbBtn: "Database", dbTitle: "ASSET MANAGER (CARS, PETS, PHOTOS)", tabPlayers: "PLAYER PHOTOS", tabCars: "CAR DB", tabPets: "PET DB", carName: "Car Name", petName: "Pet Name", imgUrl: "Image Link (URL)", addBtn: "Add New", emptyDb: "No data available"
+        setScore: "SET SCORE", roundScore: "ROUND SCORE"
       },
       cn: { 
         title: "秒数计分系统", subtitle: "由 koi 设计与开发", tourNamePh: "输入锦标赛名称...",
@@ -288,8 +311,7 @@
         preMatchTitleIndiv: "个人竞速赛", preMatchTitleTeam: "组队竞速赛", preMatchTitle1v1: "1 VS 1 个人赛", preMatchMode: "模式", preMatchBestRecord: "最高纪录",
         scoreboardTab: "计分板", prematchTab: "赛前界面", matchResult: "比赛结果", selectCar: "选择车辆", selectPet: "选择宠物",
         preMatchModeSolo: "单人赛", preMatchMode2v2: "2 VS 2 组队", preMatchMode3v3: "3 VS 3 组队",
-        setScore: "大局比分 (SET)", roundScore: "小局比分 (ROUND)",
-        dbBtn: "数据库", dbTitle: "资源管理 (车辆，宠物，照片)", tabPlayers: "选手照片", tabCars: "车辆库", tabPets: "宠物库", carName: "车名", petName: "宠物名", imgUrl: "图片链接 (URL)", addBtn: "添加新", emptyDb: "暂无数据"
+        setScore: "大局比分 (SET)", roundScore: "小局比分 (ROUND)"
       },
       tw: { 
         title: "秒數計分系統", subtitle: "由 koi 設計與開發", tourNamePh: "輸入錦標賽名稱...",
@@ -312,8 +334,7 @@
         preMatchTitleIndiv: "個人競速赛", preMatchTitleTeam: "組隊競速赛", preMatchTitle1v1: "1 VS 1 個人赛", preMatchMode: "模式", preMatchBestRecord: "最高紀錄",
         scoreboardTab: "計分板", prematchTab: "賽前介面", matchResult: "比賽結果", selectCar: "選擇車輛", selectPet: "選擇寵物",
         preMatchModeSolo: "單人賽", preMatchMode2v2: "2 VS 2 組隊", preMatchMode3v3: "3 VS 3 組隊",
-        setScore: "大局比分 (SET)", roundScore: "小局比分 (ROUND)",
-        dbBtn: "資料庫", dbTitle: "資源管理 (車輛，寵物，照片)", tabPlayers: "選手照片", tabCars: "車輛庫", tabPets: "寵物庫", carName: "車名", petName: "寵物名", imgUrl: "圖片連結 (URL)", addBtn: "新增", emptyDb: "暫無資料"
+        setScore: "大局比分 (SET)", roundScore: "小局比分 (ROUND)"
       },
       th: { 
         title: "ระบบการนับคะแนนตามวินาที", subtitle: "ออกแบบและพัฒนาโดย koi", tourNamePh: "ป้อนชื่อการแข่งขัน...",
@@ -336,8 +357,7 @@
         preMatchTitleIndiv: "เดี่ยวสปรินต์คลาสสิก", preMatchTitleTeam: "ทีมสปรินต์คลาสสิก", preMatchTitle1v1: "1 VS 1 สปรินต์คลาสสิก", preMatchMode: "โหมด", preMatchBestRecord: "สถิติที่ดีที่สุด",
         scoreboardTab: "กระดานคะแนน", prematchTab: "ก่อนการแข่งขัน", matchResult: "ผลการแข่งขัน", selectCar: "เลือกรถ", selectPet: "เลือกสัตว์เลี้ยง",
         preMatchModeSolo: "เดี่ยว", preMatchMode2v2: "ทีม 2VS2", preMatchMode3v3: "ทีม 3VS3",
-        setScore: "คะแนนเซ็ต", roundScore: "คะแนนรอบ",
-        dbBtn: "ฐานข้อมูล", dbTitle: "การจัดการสินทรัพย์", tabPlayers: "รูปผู้เล่น", tabCars: "คลังรถ", tabPets: "คลังสัตว์เลี้ยง", carName: "ชื่อรถ", petName: "ชื่อสัตว์เลี้ยง", imgUrl: "ลิงก์รูปภาพ (URL)", addBtn: "เพิ่มใหม่", emptyDb: "ไม่มีข้อมูล"
+        setScore: "คะแนนเซ็ต", roundScore: "คะแนนรอบ"
       }
     };
 
@@ -557,7 +577,7 @@
       );
     };
 
-    const BroadcastOverlay = ({ broadcastState, setBroadcastState, viewSet, setViewSet, soloSetBO, soloMatchBO, players, games, totals, getGameCalculations, matchStatus1v1, mapRecords, personalRecords, lang, t, gameMode, tournamentName, team1Name, team2Name, onAssetSelect, onClose, carDatabase, petDatabase, playerPhotos }) => {
+    const BroadcastOverlay = ({ broadcastState, setBroadcastState, viewSet, setViewSet, soloSetBO, soloMatchBO, players, games, totals, getGameCalculations, matchStatus1v1, mapRecords, personalRecords, lang, t, gameMode, tournamentName, team1Name, team2Name, onAssetSelect, onClose }) => {
       const isTeamMode = gameMode === '2v2' || gameMode === '3v3';
       
       let broadcastRounds = [];
@@ -657,6 +677,7 @@
             </div>
           </div>
 
+          {/* ================================================================================================== */}
           {/* TAB 1: SCOREBOARD */}
           {broadcastState.tab === 'scoreboard' && (
             <div className="flex-1 w-full max-w-[1920px] mx-auto p-4 md:p-8 flex flex-col justify-center min-h-0 z-10 animate-slide-up">
@@ -717,7 +738,8 @@
                                         scoreSize = "text-[15px] md:text-[18px]";
                                         crownSize = 12;
                                     } else {
-                                        nameSize = "text-[11px] md:text-[13px]";
+                                        // Mode Đội: Phóng to chữ do đã bỏ ẩn thời gian
+                                        nameSize = "text-[12px] md:text-[14px]";
                                         scoreSize = "text-[20px] md:text-[24px]";
                                         crownSize = 14;
                                     }
@@ -727,6 +749,7 @@
                                         scoreSize = "text-xl md:text-2xl";
                                         crownSize = 16;
                                     } else {
+                                        // Mode Đội: Phóng to tối đa
                                         nameSize = "text-[13px] md:text-[15px]";
                                         scoreSize = "text-3xl md:text-4xl";
                                         crownSize = 18;
@@ -900,11 +923,11 @@
                        const pbData = personalRecords[pbKey];
                        const displayRecord = pbData ? pbData.timeStr : '--:--.--';
 
-                       const photoUrl = playerPhotos[pIdx] || '';
+                       const photoUrl = HARDCODED_PLAYER_PHOTOS[pIdx] || '';
                        const carId = activeGame.cars?.[pIdx] || '';
                        const petId = activeGame.pets?.[pIdx] || '';
-                       const carObj = carDatabase.find(c => c.id === carId);
-                       const petObj = petDatabase.find(p => p.id === petId);
+                       const carObj = CAR_DATABASE.find(c => c.id === carId);
+                       const petObj = PET_DATABASE.find(p => p.id === petId);
 
                        return (
                          <div key={pIdx} className={`relative flex flex-col rounded-2xl overflow-hidden shadow-2xl border backdrop-blur-md bg-gradient-to-br ${cardGradient} transition-transform hover:-translate-y-1 duration-300`}>
@@ -912,7 +935,7 @@
                             
                             <div className="absolute bottom-0 left-0 w-[60%] h-[95%] flex items-end justify-center pointer-events-none z-10">
                                {photoUrl ? (
-                                   <img src={photoUrl} className="max-w-full max-h-full object-contain object-bottom drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)]" alt={playerName} onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/200x300/transparent/white?text=?'; }} />
+                                   <img src={photoUrl} className="max-w-full max-h-full object-contain object-bottom drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)]" alt={playerName} />
                                ) : (
                                    <div className="flex items-center justify-center opacity-20 mb-8"><User size={100} /></div>
                                )}
@@ -930,13 +953,13 @@
                                <div className="flex gap-2 items-center">
                                   <div className="flex flex-col items-end cursor-pointer group" onClick={() => setAssetModal({ type: 'car', pIndex: pIdx })}>
                                      <div className="w-20 h-10 md:w-28 md:h-14 flex items-center justify-center relative transition-transform group-hover:scale-110">
-                                        {carObj ? <img src={carObj.img} className="max-w-full max-h-full object-contain drop-shadow-[0_5px_10px_rgba(0,0,0,0.8)] scale-150" alt="Car" onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/100x50/333/white?text=CAR'; }} /> : <div className="px-2 py-1 rounded bg-black/30 text-[8px] md:text-[10px] text-white/50 font-bold italic">{t.selectCar}</div>}
+                                        {carObj ? <img src={carObj.img} className="max-w-full max-h-full object-contain drop-shadow-[0_5px_10px_rgba(0,0,0,0.8)] scale-150" alt="Car" /> : <div className="px-2 py-1 rounded bg-black/30 text-[8px] md:text-[10px] text-white/50 font-bold italic">{t.selectCar}</div>}
                                      </div>
                                      <span className={`text-[6px] md:text-[8px] uppercase mt-1 opacity-70 font-bold ${textAccent}`}>{carObj ? carObj.name : ''}</span>
                                   </div>
                                   <div className="flex flex-col items-end cursor-pointer group" onClick={() => setAssetModal({ type: 'pet', pIndex: pIdx })}>
                                      <div className="w-20 h-10 md:w-28 md:h-14 flex items-center justify-center relative transition-transform group-hover:scale-110">
-                                        {petObj ? <img src={petObj.img} className="max-w-full max-h-full object-contain drop-shadow-[0_5px_10px_rgba(0,0,0,0.8)] scale-150" alt="Pet" onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/100x50/333/white?text=PET'; }} /> : <div className="px-2 py-1 rounded bg-black/30 text-[8px] md:text-[10px] text-white/50 font-bold italic">{t.selectPet}</div>}
+                                        {petObj ? <img src={petObj.img} className="max-w-full max-h-full object-contain drop-shadow-[0_5px_10px_rgba(0,0,0,0.8)] scale-150" alt="Pet" /> : <div className="px-2 py-1 rounded bg-black/30 text-[8px] md:text-[10px] text-white/50 font-bold italic">{t.selectPet}</div>}
                                      </div>
                                      <span className={`text-[6px] md:text-[8px] uppercase mt-1 opacity-70 font-bold text-right max-w-[80px] leading-tight truncate ${textAccent}`}>{petObj ? petObj.name : ''}</span>
                                   </div>
@@ -979,7 +1002,7 @@
                             <Trash2 size={24} className="mb-2" />
                             <span className="text-[10px] font-bold">Xóa / Clear</span>
                         </div>
-                        {(assetModal.type === 'car' ? carDatabase : petDatabase)
+                        {(assetModal.type === 'car' ? CAR_DATABASE : PET_DATABASE)
                             .filter(item => item.name.toLowerCase().includes(assetSearch.toLowerCase()))
                             .map(item => (
                                 <div 
@@ -991,7 +1014,7 @@
                                     className="bg-slate-800/80 border border-slate-700 rounded-lg p-3 flex flex-col items-center justify-between gap-3 cursor-pointer hover:bg-slate-700 hover:border-cyan-400 transition-all shadow-md group"
                                 >
                                     <div className="w-full h-16 bg-black/40 rounded flex items-center justify-center p-1 shadow-inner overflow-hidden">
-                                        <img src={item.img} className="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform" onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/100x50/333/white?text=?'; }} />
+                                        <img src={item.img} className="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform" />
                                     </div>
                                     <span className="text-[10px] text-white font-bold text-center w-full truncate px-1">{item.name}</span>
                                 </div>
@@ -1010,7 +1033,6 @@
       const t = TRANSLATIONS[lang];
       const [showInfo, setShowInfo] = useState(false);
       const [showRecordsModal, setShowRecordsModal] = useState(false);
-      const [showDbModal, setShowDbModal] = useState(false);
       const [recordSearch, setRecordSearch] = useState(''); 
       const [toastMsg, setToastMsg] = useState(null); 
       
@@ -1019,33 +1041,6 @@
 
       const showDialogAlert = (msg) => setDialog({ isOpen: true, type: 'alert', message: msg, onConfirm: null });
       const showDialogConfirm = (msg, onConfirmCallback) => setDialog({ isOpen: true, type: 'confirm', message: msg, onConfirm: onConfirmCallback });
-
-      /* DYNAMIC ASSETS STATES */
-      const [carDatabase, setCarDatabase] = useState(() => {
-          const saved = localStorage.getItem('zsm_cars_db_v1');
-          if (saved) { try { return JSON.parse(saved); } catch(e) {} }
-          return [
-              { id: 'c1', name: 'Dark Azure Dragon', img: 'https://i.ibb.co/3s6Vp6Z/car1.png' },
-              { id: 'c2', name: 'Hallet', img: 'https://i.ibb.co/3s6Vp6Z/car1.png' },
-              { id: 'c3', name: 'S-Chrono Envoy', img: 'https://i.ibb.co/3s6Vp6Z/car1.png' },
-              { id: 'c4', name: 'L-Qing', img: 'https://i.ibb.co/3s6Vp6Z/car1.png' }
-          ];
-      });
-
-      const [petDatabase, setPetDatabase] = useState(() => {
-          const saved = localStorage.getItem('zsm_pets_db_v1');
-          if (saved) { try { return JSON.parse(saved); } catch(e) {} }
-          return [
-              { id: 'p1', name: 'Hellfire Dragon', img: 'https://i.ibb.co/3s6Vp6Z/car1.png' }, 
-              { id: 'p2', name: 'Angel Feather', img: 'https://i.ibb.co/3s6Vp6Z/car1.png' }
-          ];
-      });
-
-      const [playerPhotos, setPlayerPhotos] = useState(() => {
-          const saved = localStorage.getItem('zsm_player_photos_v1');
-          if (saved) { try { return JSON.parse(saved); } catch(e) {} }
-          return Array(6).fill(""); // Tối đa 6 VĐV
-      });
 
       const [tournamentName, setTournamentName] = useState(() => localStorage.getItem('zsm_tour_name') || 'CUSTOM TOURNAMENT');
       const [team1Name, setTeam1Name] = useState(() => localStorage.getItem('zsm_team1_name') || '');
@@ -1125,9 +1120,6 @@
       useEffect(() => { localStorage.setItem('zsm_games_v11_final', JSON.stringify(games)); }, [games]);
       useEffect(() => { localStorage.setItem('zsm_map_records_v11_final', JSON.stringify(mapRecords)); }, [mapRecords]);
       useEffect(() => { localStorage.setItem('zsm_personal_records_v11_final', JSON.stringify(personalRecords)); }, [personalRecords]);
-      useEffect(() => { localStorage.setItem('zsm_cars_db_v1', JSON.stringify(carDatabase)); }, [carDatabase]);
-      useEffect(() => { localStorage.setItem('zsm_pets_db_v1', JSON.stringify(petDatabase)); }, [petDatabase]);
-      useEffect(() => { localStorage.setItem('zsm_player_photos_v1', JSON.stringify(playerPhotos)); }, [playerPhotos]);
 
       useEffect(() => {
           if (gameMode === '1v1') {
@@ -1314,11 +1306,13 @@
                 
                 const t1 = g.times[0]; const t2 = g.times[1];
                 
+                // KIỂM TRA XEM NGƯỜI DÙNG ĐÃ NHẬP XONG CHƯA (phải có : hoặc là X thì mới tính là nhập xong)
                 const isT1Final = t1 && (t1.includes(':') || t1.toUpperCase() === 'X');
                 const isT2Final = t2 && (t2.includes(':') || t2.toUpperCase() === 'X');
 
                 let winner = -1;
                 
+                // Nếu cả 2 đều đã nhập xong định dạng thì mới phân thắng bại
                 if (isT1Final && isT2Final) {
                     const v1 = parseTime(t1); const v2 = parseTime(t2);
                     const p1DNF = t1.toUpperCase() === 'X';
@@ -1640,8 +1634,11 @@
             return g.times.slice(0, players.length).every(time => !time || time.trim() === '');
         });
 
-        // THUẬT TOÁN PICK MAP CHO 1V1 (Cân bằng & Trận trước)
+        // ==========================================
+        // THUẬT TOÁN PICK MAP DÀNH RIÊNG CHO SOLO 1v1 
+        // ==========================================
         if (gameMode === '1v1') {
+            // Bước 1: Tìm game cuối cùng đã được nhập thời gian
             let lastPlayedIdx = -1;
             for (let i = games.length - 1; i >= 0; i--) {
                 const t1 = games[i].times[0]; const t2 = games[i].times[1];
@@ -1652,12 +1649,13 @@
             }
 
             if (lastPlayedIdx === -1) {
-                return { show: true, text: t.map1Pick };
+                return { show: true, text: t.map1Pick }; // Trận đầu tiên luôn là chỉ định
             }
 
+            // Bước 2: Tính toán chính xác tỉ số Set và Game lên tới đúng trận vừa chơi
             const winCond = Math.ceil(soloSetBO / 2);
             let s_p1Rounds = 0, s_p2Rounds = 0;
-            let lastGameWinner = -1; 
+            let lastGameWinner = -1; // 0 là P1 thắng, 1 là P2 thắng
 
             for (let s = 1; s <= soloMatchBO; s++) {
                 s_p1Rounds = 0;
@@ -1665,7 +1663,7 @@
 
                 for (let r = 1; r <= soloSetBO; r++) {
                     const gIdx = (s - 1) * soloSetBO + (r - 1);
-                    if (gIdx > lastPlayedIdx) break; 
+                    if (gIdx > lastPlayedIdx) break; // Chỉ tính đến ván mới nhất
 
                     const g = games[gIdx];
                     const t1 = g.times[0]; const t2 = g.times[1];
@@ -1687,14 +1685,15 @@
                     if (winner === 1) s_p2Rounds++;
                     
                     if (gIdx === lastPlayedIdx) {
-                        lastGameWinner = winner; 
+                        lastGameWinner = winner; // Lưu lại người thắng ván chót
                     }
 
                     if (s_p1Rounds >= winCond || s_p2Rounds >= winCond) {
-                        break; 
+                        break; // Đã xong 1 set
                     }
                 }
                 
+                // Nếu trận cuối cùng thuộc Set này thì dừng chạy Set tiếp theo
                 if (lastPlayedIdx < s * soloSetBO) {
                     break;
                 }
@@ -1704,16 +1703,20 @@
             let isNewSet = (s_p1Rounds >= winCond || s_p2Rounds >= winCond);
 
             if (isNewSet) {
+                // ĐẦU SET MỚI: Ai thua Set trước thì được pick
                 pickerIndex = s_p1Rounds >= winCond ? 1 : 0;
             } else {
+                // TRONG CÙNG 1 SET
                 if (s_p1Rounds < s_p2Rounds) {
-                    pickerIndex = 0; 
+                    pickerIndex = 0; // P1 điểm nhỏ hơn -> P1 pick
                 } else if (s_p2Rounds < s_p1Rounds) {
-                    pickerIndex = 1; 
+                    pickerIndex = 1; // P2 điểm nhỏ hơn -> P2 pick
                 } else {
-                    if (lastGameWinner === 0) pickerIndex = 1; 
-                    else if (lastGameWinner === 1) pickerIndex = 0; 
+                    // HÒA ĐIỂM (BỊ CÂN BẰNG): Người THUA ở ván trước đó sẽ pick
+                    if (lastGameWinner === 0) pickerIndex = 1; // P1 mới thắng để gỡ hòa -> P2 bị cân bằng -> P2 pick
+                    else if (lastGameWinner === 1) pickerIndex = 0; // P2 mới thắng để gỡ hòa -> P1 bị cân bằng -> P1 pick
                     else {
+                        // Dữ phòng nếu trận trước cả 2 DNF thì so sánh time thô
                         const lastG = games[lastPlayedIdx];
                         const v1 = parseTime(lastG.times[0]); const v2 = parseTime(lastG.times[1]);
                         if (v1 !== null && v2 !== null) pickerIndex = v1 > v2 ? 0 : 1;
@@ -1724,6 +1727,7 @@
 
             const pickerName = players[pickerIndex];
             
+            // Format giao diện hiển thị cho chuyên nghiệp
             let nextAssign = matchStatus1v1?.gameAssignments[lastPlayedIdx + 1];
             if (isNewSet) {
                 const currentSet = Math.floor(lastPlayedIdx / soloSetBO) + 1;
@@ -1742,7 +1746,9 @@
             return { show: true, text: displayText, pIndex: pickerIndex };
         }
 
-        // THUẬT TOÁN PICK MAP CHO TEAM & SOLO 4P
+        // ==========================================
+        // THUẬT TOÁN PICK MAP DÀNH CHO TEAM & SOLO 4P
+        // ==========================================
         if (nextIdx === -1) return { show: false }; 
         if (nextIdx === 0) return { show: true, text: t.map1Pick }; 
 
@@ -1796,119 +1802,12 @@
         }
       }, [games, totals, players, isTeamMode, gameMode, lang, t, displayTeam1Name, displayTeam2Name, soloMatchBO, soloSetBO, matchStatus1v1]);
 
-
-      const DatabaseManagerModal = () => {
-         const [activeTab, setActiveTab] = useState('players');
-         const [newItemName, setNewItemName] = useState('');
-         const [newItemUrl, setNewItemUrl] = useState('');
-
-         const handleAddAsset = () => {
-            if (!newItemName.trim() || !newItemUrl.trim()) return;
-            const newAsset = { id: `${activeTab}_${Date.now()}`, name: newItemName, img: newItemUrl };
-            if (activeTab === 'cars') setCarDatabase([...carDatabase, newAsset]);
-            else if (activeTab === 'pets') setPetDatabase([...petDatabase, newAsset]);
-            setNewItemName('');
-            setNewItemUrl('');
-         };
-
-         const handleDeleteAsset = (id, type) => {
-            showDialogConfirm(lang === 'vi' ? 'Bạn có chắc chắn muốn xóa dữ liệu này?' : 'Are you sure to delete this item?', () => {
-               if (type === 'cars') setCarDatabase(carDatabase.filter(c => c.id !== id));
-               else if (type === 'pets') setPetDatabase(petDatabase.filter(p => p.id !== id));
-            });
-         };
-
-         return (
-            <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-slide-up" onClick={() => setShowDbModal(false)}>
-               <div className="bg-slate-900 border border-cyan-500/50 rounded-xl max-w-4xl w-full shadow-[0_0_50px_rgba(6,182,212,0.2)] overflow-hidden flex flex-col max-h-[85vh]" onClick={e => e.stopPropagation()}>
-                  <div className="bg-slate-950 px-4 py-3 md:py-4 border-b border-slate-800 flex justify-between items-center shrink-0">
-                     <h3 className="font-black text-cyan-400 italic tracking-widest uppercase text-lg flex items-center gap-2"><DatabaseIcon size={20}/> {t.dbTitle}</h3>
-                     <button onClick={() => setShowDbModal(false)} className="text-slate-400 hover:text-red-500 transition-colors"><XIcon size={24}/></button>
-                  </div>
-                  
-                  {/* Tabs */}
-                  <div className="flex bg-slate-950 border-b border-slate-800 shrink-0">
-                     <button onClick={()=>setActiveTab('players')} className={`flex-1 py-3 font-bold text-sm uppercase tracking-wider transition-colors ${activeTab === 'players' ? 'text-cyan-400 border-b-2 border-cyan-400 bg-cyan-900/10' : 'text-slate-400 hover:bg-slate-900'}`}>{t.tabPlayers}</button>
-                     <button onClick={()=>setActiveTab('cars')} className={`flex-1 py-3 font-bold text-sm uppercase tracking-wider transition-colors ${activeTab === 'cars' ? 'text-cyan-400 border-b-2 border-cyan-400 bg-cyan-900/10' : 'text-slate-400 hover:bg-slate-900'}`}>{t.tabCars}</button>
-                     <button onClick={()=>setActiveTab('pets')} className={`flex-1 py-3 font-bold text-sm uppercase tracking-wider transition-colors ${activeTab === 'pets' ? 'text-cyan-400 border-b-2 border-cyan-400 bg-cyan-900/10' : 'text-slate-400 hover:bg-slate-900'}`}>{t.tabPets}</button>
-                  </div>
-
-                  <div className="p-4 md:p-6 flex-1 overflow-y-auto hide-scrollbar bg-[#0f172a]">
-                     
-                     {/* TAB: PLAYERS */}
-                     {activeTab === 'players' && (
-                        <div className="space-y-4">
-                           {players.map((pName, idx) => (
-                              <div key={`pimg_${idx}`} className="flex flex-col md:flex-row gap-4 items-center bg-slate-800/50 p-4 rounded-xl border border-slate-700">
-                                 <div className="w-16 h-16 md:w-20 md:h-20 shrink-0 rounded-full border-2 border-slate-600 bg-slate-900 flex items-center justify-center overflow-hidden">
-                                    {playerPhotos[idx] ? <img src={playerPhotos[idx]} className="w-full h-full object-cover" onError={(e)=>{e.target.onerror=null; e.target.src='https://placehold.co/100/transparent/white?text=?';}}/> : <User size={30} className="text-slate-500" />}
-                                 </div>
-                                 <div className="flex-1 w-full space-y-2">
-                                    <label className="text-xs font-bold text-slate-400 uppercase tracking-widest">{pName}</label>
-                                    <input 
-                                       type="text" 
-                                       value={playerPhotos[idx] || ''} 
-                                       onChange={(e) => {
-                                          const newArr = [...playerPhotos];
-                                          newArr[idx] = e.target.value;
-                                          setPlayerPhotos(newArr);
-                                       }}
-                                       placeholder="https://..."
-                                       className="w-full bg-slate-900 border border-slate-600 rounded px-3 py-2 text-sm text-cyan-300 outline-none focus:border-cyan-400"
-                                    />
-                                 </div>
-                              </div>
-                           ))}
-                        </div>
-                     )}
-
-                     {/* TAB: CARS & PETS */}
-                     {(activeTab === 'cars' || activeTab === 'pets') && (
-                        <div className="flex flex-col h-full">
-                           <div className="bg-slate-800/80 p-4 rounded-xl border border-slate-700 mb-6 shrink-0 flex flex-col md:flex-row gap-3 items-end">
-                              <div className="flex-1 w-full space-y-1">
-                                 <label className="text-xs font-bold text-slate-400 uppercase tracking-widest">{activeTab === 'cars' ? t.carName : t.petName}</label>
-                                 <input type="text" value={newItemName} onChange={e=>setNewItemName(e.target.value)} placeholder="Tên..." className="w-full bg-slate-900 border border-slate-600 rounded px-3 py-2 text-sm text-white outline-none focus:border-cyan-400" />
-                              </div>
-                              <div className="flex-1 w-full space-y-1">
-                                 <label className="text-xs font-bold text-slate-400 uppercase tracking-widest">{t.imgUrl}</label>
-                                 <input type="text" value={newItemUrl} onChange={e=>setNewItemUrl(e.target.value)} placeholder="https://..." className="w-full bg-slate-900 border border-slate-600 rounded px-3 py-2 text-sm text-cyan-300 outline-none focus:border-cyan-400" />
-                              </div>
-                              <button onClick={handleAddAsset} className="w-full md:w-auto px-6 py-2 h-[38px] bg-cyan-600 hover:bg-cyan-500 text-white font-bold rounded shadow-md transition-colors uppercase text-sm">
-                                 {t.addBtn}
-                              </button>
-                           </div>
-
-                           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                              {(activeTab === 'cars' ? carDatabase : petDatabase).map(item => (
-                                 <div key={item.id} className="bg-slate-800/50 border border-slate-700 rounded-xl p-3 flex flex-col items-center gap-3 relative group">
-                                    <button onClick={()=>handleDeleteAsset(item.id, activeTab)} className="absolute top-2 right-2 p-1.5 bg-red-600/80 text-white rounded opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-500 shadow-md">
-                                       <Trash2 size={14}/>
-                                    </button>
-                                    <div className="w-full h-20 bg-black/30 rounded flex items-center justify-center p-2">
-                                       <img src={item.img} className="max-w-full max-h-full object-contain" onError={(e)=>{e.target.onerror=null; e.target.src='https://placehold.co/100x50/333/white?text=?';}}/>
-                                    </div>
-                                    <span className="text-xs font-bold text-center w-full truncate px-1 text-slate-300">{item.name}</span>
-                                 </div>
-                              ))}
-                              {(activeTab === 'cars' ? carDatabase : petDatabase).length === 0 && (
-                                 <div className="col-span-full py-10 text-center text-slate-500 italic">{t.emptyDb}</div>
-                              )}
-                           </div>
-                        </div>
-                     )}
-                  </div>
-               </div>
-            </div>
-         );
-      };
-
       return (
         <div className="min-h-screen relative overflow-x-hidden pb-20">
           
           <CustomDialog dialog={dialog} setDialog={setDialog} />
 
-          {/* TAB Livestream Component */}
+          {/* TAB Livestream Component gọi từ đây */}
           {broadcastState.isOpen && (
             <BroadcastOverlay 
               broadcastState={broadcastState}
@@ -1930,9 +1829,6 @@
               tournamentName={tournamentName}
               team1Name={displayTeam1Name}
               team2Name={displayTeam2Name}
-              carDatabase={carDatabase}
-              petDatabase={petDatabase}
-              playerPhotos={playerPhotos}
               onAssetSelect={handleAssetSelect}
               onClose={() => setBroadcastState({...broadcastState, isOpen: false})} 
             />
@@ -2031,9 +1927,6 @@
               </div>
             </div>
           )}
-
-          {/* DYNAMIC DATABASE MODAL */}
-          {showDbModal && <DatabaseManagerModal />}
 
           {/* INFO MODAL */}
           {showInfo && (
@@ -2143,11 +2036,6 @@
                 </button>
 
                 <div className="w-px h-6 bg-slate-700/80 mx-1 hidden md:block"></div>
-
-                {/* NÚT QUẢN LÝ DATABASE */}
-                <button onClick={() => setShowDbModal(true)} className="flex items-center justify-center p-2 md:p-2.5 text-cyan-400 hover:text-white hover:bg-cyan-600/30 rounded-xl font-bold transition-all group" title={t.dbBtn}>
-                  <DatabaseIcon size={18} className="group-hover:scale-110 transition-transform"/>
-                </button>
 
                 <button onClick={() => setShowRecordsModal(true)} className="flex items-center justify-center p-2 md:p-2.5 text-amber-400 hover:text-white hover:bg-amber-600/30 rounded-xl font-bold transition-all group" title={t.recordBtn}>
                   <Trophy size={18} className="group-hover:scale-110 transition-transform"/>
