@@ -421,8 +421,8 @@
       return { background: getMapGradient(mapId) };
     };
 
-    // UPDATE: Thêm logic Ban Map vào SearchableMapSelect
-    const SearchableMapSelect = ({ currentMapId, selectedMaps = [], bannedMaps = [], onChange, lang, t, isBan = false }) => {
+    // Component Bảng chọn Map có hỗ trợ logic Banned Map (Cấm map)
+    const SearchableMapSelect = ({ gameIndex, currentMapId, selectedMaps = [], bannedMaps = [], onChange, lang, t, isBan = false }) => {
       const [isOpen, setIsOpen] = useState(false);
       const [searchTerm, setSearchTerm] = useState('');
       const wrapperRef = useRef(null);
@@ -451,13 +451,126 @@
             </span>
             <ChevronDown size={14} className={`${isBan ? 'text-red-900' : 'text-slate-400'} transition-transform ${isOpen ? 'rotate-180' : ''}`} />
           </div>
-    );
-  };
 
-  const BroadcastOverlay = ({ broadcastState, setBroadcastState, viewSet, setViewSet, soloSetBO, soloMatchBO, players, games, totals, getGameCalculations, matchStatus1v1, mapRecords, personalRecords, lang, t, gameMode, tournamentName, team1Name, team2Name, onAssetSelect, onClose, carDatabase, petDatabase, playerPhotos, handleTakeScreenshot }) => {
-    const isTeamMode = gameMode === '2v2' || gameMode === '3v3';
-    
-    let broadcastRounds = [];
+          {isOpen && (
+            <div className="absolute top-full left-0 mt-1 w-[200px] md:w-full min-w-[160px] bg-slate-900 border border-slate-700 rounded-md shadow-2xl max-h-60 overflow-y-auto z-[100]">
+              <div className="sticky top-0 bg-slate-900 p-2 border-b border-slate-700">
+                <input 
+                  type="text"
+                  autoFocus
+                  placeholder={t.searchPh}
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full bg-slate-950 border border-slate-700 rounded px-2 py-1 text-xs text-white outline-none focus:border-red-500"
+                />
+              </div>
+              <div className="p-1">
+                <div 
+                  className="px-2 py-1.5 text-xs text-slate-400 hover:bg-slate-800 rounded cursor-pointer mb-1"
+                  onClick={() => { onChange(''); setIsOpen(false); setSearchTerm(''); }}
+                >
+                  -- {isBan ? t.banMap : t.selectMap} --
+                </div>
+                {MAP_POOL.map(group => {
+                  const mapLang = lang === 'th' ? 'en' : lang;
+                  const filteredMaps = group.maps.filter(m => m[mapLang].toLowerCase().includes(searchTerm.toLowerCase()));
+                  if (filteredMaps.length === 0) return null;
+                  
+                  return (
+                    <div key={group.stars} className="mb-2">
+                      <div className="px-2 py-1 text-[10px] font-black text-red-500 uppercase bg-slate-950/50">
+                        {`★`.repeat(group.stars)} {group.stars} {lang==='vi'?'Sao':lang==='en'?'Stars':'星'}
+                      </div>
+                      {filteredMaps.map(m => {
+                        const isSelectedByOther = selectedMaps.includes(m.id) && m.id !== currentMapId;
+                        const isBanned = bannedMaps.includes(m.id) && m.id !== currentMapId;
+                        const isDisabled = isSelectedByOther || isBanned;
+                        return (
+                          <div 
+                            key={m.id}
+                            onClick={() => {
+                              if (!isDisabled) { onChange(m.id); setIsOpen(false); setSearchTerm(''); }
+                            }}
+                            className={`px-2 py-1.5 text-xs rounded transition-colors ${
+                              isDisabled ? 'text-slate-600 cursor-not-allowed line-through' :
+                              m.id === currentMapId ? 'bg-red-900/40 text-red-400 font-bold' :
+                              'text-slate-300 hover:bg-slate-800 cursor-pointer'
+                            }`}
+                          >
+                            {m[mapLang]} {isBanned ? `(${t.banned})` : ''}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    };
+
+    const AutoFitText = ({ text }) => {
+      const containerRef = useRef(null);
+      const textRef = useRef(null);
+
+      useEffect(() => {
+        const resize = () => {
+          window.requestAnimationFrame(() => {
+            if (containerRef.current && textRef.current) {
+              textRef.current.style.transform = 'none';
+              const containerWidth = containerRef.current.clientWidth;
+              const textWidth = textRef.current.scrollWidth;
+              if (textWidth > containerWidth && containerWidth > 0) {
+                const scale = (containerWidth / textWidth) * 0.95; 
+                textRef.current.style.transform = `scale(${scale})`;
+              }
+            }
+          });
+        };
+        resize();
+        const observer = new ResizeObserver(resize);
+        if (containerRef.current) observer.observe(containerRef.current);
+        return () => observer.disconnect();
+      }, [text]);
+
+      return (
+        <div ref={containerRef} className="w-full flex justify-center items-end overflow-visible">
+          <span 
+            ref={textRef} 
+            className="text-[9px] md:text-[11px] font-black text-cyan-300 uppercase tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,1)] origin-bottom whitespace-nowrap transition-transform duration-200"
+          >
+            {text}
+          </span>
+        </div>
+      );
+    };
+
+    const CustomDialog = ({ dialog, setDialog }) => {
+      if (!dialog.isOpen) return null;
+      return (
+        <div className="fixed inset-0 z-[10000] bg-black/80 flex items-center justify-center p-4 animate-slide-up">
+           <div className="bg-slate-900 border border-slate-700 rounded-xl p-6 max-w-sm w-full shadow-2xl flex flex-col items-center text-center">
+              <div className={`w-12 h-12 rounded-full flex items-center justify-center mb-4 ${dialog.type === 'confirm' ? 'bg-amber-500/20 text-amber-500' : 'bg-red-500/20 text-red-500'}`}>
+                 {dialog.type === 'confirm' ? <InfoIcon size={24} /> : <Flame size={24} />}
+              </div>
+              <p className="text-white font-bold mb-6 whitespace-pre-wrap">{dialog.message}</p>
+              <div className="flex gap-3 w-full justify-center">
+                 {dialog.type === 'confirm' && (
+                    <button onClick={() => setDialog({ ...dialog, isOpen: false })} className="flex-1 px-4 py-2 bg-slate-800 text-slate-300 rounded font-bold hover:bg-slate-700 transition-colors">Hủy</button>
+                 )}
+                 <button onClick={() => { if (dialog.onConfirm) dialog.onConfirm(); setDialog({ ...dialog, isOpen: false }); }} className="flex-1 px-4 py-2 bg-red-600 text-white rounded font-bold hover:bg-red-500 transition-colors">OK</button>
+              </div>
+           </div>
+        </div>
+      );
+    };
+
+    const BroadcastOverlay = ({ broadcastState, setBroadcastState, viewSet, setViewSet, soloSetBO, soloMatchBO, players, games, totals, getGameCalculations, matchStatus1v1, mapRecords, personalRecords, lang, t, gameMode, tournamentName, team1Name, team2Name, onAssetSelect, onClose, carDatabase, petDatabase, playerPhotos, handleTakeScreenshot }) => {
+      const isTeamMode = gameMode === '2v2' || gameMode === '3v3';
+      
+      let broadcastRounds = [];
       let broadcastIndices = [];
       
       if (gameMode === '1v1' && matchStatus1v1) {
@@ -500,11 +613,11 @@
       const [assetModal, setAssetModal] = useState(null); 
       const [assetSearch, setAssetSearch] = useState('');
 
-    return (
-      <div id="capture-full-livestream" className="fixed inset-0 z-[999] bg-[#f0f4f8] flex flex-col font-sans overflow-hidden animate-slide-up">
-        {BROADCAST_BACKGROUND_IMAGE && (
-           <div 
-             className="absolute inset-0 z-0 bg-cover bg-center animate-slow-zoom opacity-50 pointer-events-none" 
+      return (
+        <div id="capture-full-livestream" className="fixed inset-0 z-[999] bg-[#f0f4f8] flex flex-col font-sans overflow-hidden animate-slide-up">
+          {BROADCAST_BACKGROUND_IMAGE && (
+             <div 
+               className="absolute inset-0 z-0 bg-cover bg-center animate-slow-zoom opacity-50 pointer-events-none" 
                style={{ backgroundImage: `url(${BROADCAST_BACKGROUND_IMAGE})` }}
              ></div>
           )}
@@ -516,15 +629,10 @@
           <div className="absolute -right-[10%] -bottom-[10%] w-[40%] h-[40%] bg-blue-600 blur-[150px] opacity-30 rounded-full pointer-events-none z-0 animate-[pulse_5s_ease-in-out_infinite]"></div>
           
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[10vw] font-black italic text-slate-300 opacity-[0.2] whitespace-nowrap pointer-events-none select-none z-0 tracking-tighter">
-          {tournamentName}
-        </div>
-
-        <div id="livestream-controls-header" className="relative w-full h-[9vh] min-h-[60px] flex items-center justify-between px-10 bg-white shadow-sm border-b border-gray-200 z-10 shrink-0 transition-opacity duration-300">
-          <div className="text-xl md:text-2xl font-black italic text-[#13c0eb] tracking-widest uppercase truncate max-w-[30%]">
             {tournamentName}
           </div>
 
-          <div className="relative w-full h-[9vh] min-h-[60px] flex items-center justify-between px-10 bg-white shadow-sm border-b border-gray-200 z-10 shrink-0">
+          <div id="livestream-controls-header" className="relative w-full h-[9vh] min-h-[60px] flex items-center justify-between px-10 bg-white shadow-sm border-b border-gray-200 z-10 shrink-0 transition-opacity duration-300">
             <div className="text-xl md:text-2xl font-black italic text-[#13c0eb] tracking-widest uppercase truncate max-w-[30%]">
               {tournamentName}
             </div>
@@ -552,17 +660,12 @@
                       <button onClick={() => setViewSet(v => Math.min(soloMatchBO, v + 1))} className="text-slate-400 hover:text-cyan-400 px-2 font-bold text-lg">&gt;</button>
                   </div>
               )}
-          </div>
-
-          <div className="flex items-center gap-4">
-             <button onClick={() => handleTakeScreenshot('capture-full-livestream', 'Livestream', 'livestream-controls-header')} className="px-4 py-2.5 bg-emerald-600 text-white font-bold rounded hover:bg-emerald-500 shadow-md uppercase tracking-wider text-sm clip-slant flex items-center gap-2 transition-all">
-                <CameraIcon size={16}/> <span className="hidden sm:inline">Chụp Ảnh</span>
-             </button>
-             <button onClick={onClose} className="px-6 py-2.5 bg-red-600 text-white font-bold rounded hover:bg-red-700 shadow-md uppercase tracking-wider text-sm clip-slant">{t.closeBtn}</button>
-          </div>
-        </div>
+            </div>
 
             <div className="flex items-center gap-4">
+               <button onClick={() => handleTakeScreenshot('capture-full-livestream', 'Livestream', 'livestream-controls-header')} className="px-4 py-2.5 bg-emerald-600 text-white font-bold rounded hover:bg-emerald-500 shadow-md uppercase tracking-wider text-sm clip-slant flex items-center gap-2 transition-all">
+                  <CameraIcon size={16}/> <span className="hidden sm:inline">Chụp Ảnh</span>
+               </button>
                <button onClick={onClose} className="px-6 py-2.5 bg-red-600 text-white font-bold rounded hover:bg-red-700 shadow-md uppercase tracking-wider text-sm clip-slant">{t.closeBtn}</button>
             </div>
           </div>
@@ -616,6 +719,7 @@
                                 const textColor = isTop ? 'text-[#fce300]' : 'text-slate-300';
                                 const is6P = players.length > 4;
                                 
+                                // Tối ưu kích thước Text tự động
                                 let nameSize = "text-[11px] md:text-[13px]";
                                 let scoreSize = "text-xl md:text-2xl";
                                 let crownSize = 16;
@@ -645,6 +749,7 @@
                                 return (
                                   <div key={`g${gIndex}_p${pIndex}`} className={`w-full flex flex-col items-center justify-center relative flex-1 min-h-0 mx-1 group/item hover:bg-white/10 transition-colors rounded ${isTeamMode && pIndex === halfLen ? 'border-t-[2px] border-white/20 mt-1.5 pt-1 md:mt-2 md:pt-1.5' : ''}`}>
                                      
+                                     {/* KHÔNG GIAN BẢO VỆ VƯƠNG MIỆN: pt-3 / pt-4 */}
                                      <div className="relative flex flex-col items-center w-full pt-3 md:pt-4">
                                        {c.isKingMap && isTop && (
                                          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full flex justify-center z-20">
@@ -658,11 +763,13 @@
 
                                      {time ? (
                                         <div className="flex flex-col items-center justify-center mt-0.5 z-10">
+                                           {/* HIỆU ỨNG THẮNG / THUA CHO 1v1 */}
                                            <span className={`${scoreSize} font-black leading-none ${isTop ? 'text-[#fce300] drop-shadow-[0_0_8px_rgba(252,227,0,0.8)]' : (gameMode === '1v1' ? 'text-slate-400 drop-shadow-md' : 'text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]')}`}>
                                              {gameMode === '1v1' 
                                                 ? (isTop ? (lang === 'vi' ? 'THẮNG' : 'WIN') : (lang === 'vi' ? 'THUA' : 'LOSE')) 
                                                 : `+${c.score}`}
                                            </span>
+                                           {/* THỜI GIAN HIỂN THỊ LẠI CHO 1V1 và SOLO */}
                                            {(gameMode === 'solo' || gameMode === '1v1') && (
                                                <span className={`${is6P ? 'text-[8px] md:text-[9px]' : 'text-[9px] md:text-[11px]'} font-mono font-bold ${isTop ? 'text-cyan-200' : 'text-slate-400'} mt-1 opacity-90 drop-shadow-md leading-none`}>{time}</span>
                                            )}
@@ -922,75 +1029,74 @@
       const showDialogAlert = (msg) => setDialog({ isOpen: true, type: 'alert', message: msg, onConfirm: null });
       const showDialogConfirm = (msg, onConfirmCallback) => setDialog({ isOpen: true, type: 'confirm', message: msg, onConfirm: onConfirmCallback });
 
-    const handleTakeScreenshot = async (elementId, prefix, hideElementId = null) => {
-        const target = document.getElementById(elementId);
-        if (!target) return;
+      const handleTakeScreenshot = async (elementId, prefix, hideElementId = null) => {
+          const target = document.getElementById(elementId);
+          if (!target) return;
 
-        let hideEl = null;
-        let originalHideOpacity = '';
-        if (hideElementId) {
-            hideEl = document.getElementById(hideElementId);
-            if (hideEl) {
-                originalHideOpacity = hideEl.style.opacity;
-                hideEl.style.opacity = '0'; // Ẩn mượt mà không làm vỡ layout
-            }
-        }
+          let hideEl = null;
+          let originalHideOpacity = '';
+          if (hideElementId) {
+              hideEl = document.getElementById(hideElementId);
+              if (hideEl) {
+                  originalHideOpacity = hideEl.style.opacity;
+                  hideEl.style.opacity = '0'; // Ẩn mượt mà không làm vỡ layout
+              }
+          }
 
-        setToastMsg(lang === 'vi' ? 'Đang kết xuất ảnh HD. Vui lòng đợi...' : 'Rendering HD image. Please wait...');
+          setToastMsg(lang === 'vi' ? 'Đang kết xuất ảnh HD. Vui lòng đợi...' : 'Rendering HD image. Please wait...');
 
-        // Ép bung toàn bộ giới hạn scroll
-        const originalStyle = target.style.cssText;
-        target.style.setProperty('max-height', 'none', 'important');
-        target.style.setProperty('height', 'auto', 'important');
-        target.style.setProperty('overflow', 'visible', 'important');
+          // Ép bung toàn bộ giới hạn scroll
+          const originalStyle = target.style.cssText;
+          target.style.setProperty('max-height', 'none', 'important');
+          target.style.setProperty('height', 'auto', 'important');
+          target.style.setProperty('overflow', 'visible', 'important');
 
-        const scrollChildren = target.querySelectorAll('.overflow-y-auto, .overflow-x-auto, .overflow-hidden, .hide-scrollbar');
-        const childStyles = [];
-        scrollChildren.forEach(child => {
-            childStyles.push({ el: child, cssText: child.style.cssText });
-            child.style.setProperty('max-height', 'none', 'important');
-            child.style.setProperty('height', 'auto', 'important');
-            child.style.setProperty('overflow', 'visible', 'important');
-        });
+          const scrollChildren = target.querySelectorAll('.overflow-y-auto, .overflow-x-auto, .overflow-hidden, .hide-scrollbar');
+          const childStyles = [];
+          scrollChildren.forEach(child => {
+              childStyles.push({ el: child, cssText: child.style.cssText });
+              child.style.setProperty('max-height', 'none', 'important');
+              child.style.setProperty('height', 'auto', 'important');
+              child.style.setProperty('overflow', 'visible', 'important');
+          });
 
-        try {
-            await new Promise(r => setTimeout(r, 200)); // Đợi DOM mở rộng hoàn toàn
+          try {
+              await new Promise(r => setTimeout(r, 200)); // Đợi DOM mở rộng hoàn toàn
 
-            const canvas = await html2canvas(target, {
-                scale: 2, // Xuất ảnh độ phân giải gấp đôi
-                useCORS: true,
-                backgroundColor: '#0f172a',
-                logging: false,
-                width: target.scrollWidth,
-                height: target.scrollHeight,
-                windowWidth: target.scrollWidth,
-                windowHeight: target.scrollHeight,
-            });
+              const canvas = await html2canvas(target, {
+                  scale: 2, // Xuất ảnh độ phân giải gấp đôi
+                  useCORS: true,
+                  backgroundColor: '#0f172a',
+                  logging: false,
+                  width: target.scrollWidth,
+                  height: target.scrollHeight,
+                  windowWidth: target.scrollWidth,
+                  windowHeight: target.scrollHeight,
+              });
 
-            // Phục hồi lại trạng thái cũ
-            target.style.cssText = originalStyle;
-            childStyles.forEach(item => { item.el.style.cssText = item.cssText; });
-            if (hideEl) hideEl.style.opacity = originalHideOpacity;
+              // Phục hồi lại trạng thái cũ
+              target.style.cssText = originalStyle;
+              childStyles.forEach(item => { item.el.style.cssText = item.cssText; });
+              if (hideEl) hideEl.style.opacity = originalHideOpacity;
 
-            const link = document.createElement('a');
-            link.download = `${prefix}_${Date.now()}.jpg`;
-            link.href = canvas.toDataURL('image/jpeg', 0.9);
-            link.click();
-            
-            setToastMsg(lang === 'vi' ? 'Đã lưu ảnh thành công!' : 'Image saved successfully!');
-            setTimeout(() => setToastMsg(null), 3000);
-        } catch (err) {
-            console.error("Screenshot error:", err);
-            target.style.cssText = originalStyle;
-            childStyles.forEach(item => { item.el.style.cssText = item.cssText; });
-            if (hideEl) hideEl.style.opacity = originalHideOpacity;
-            setToastMsg(lang === 'vi' ? 'Có lỗi khi chụp ảnh!' : 'Screenshot error!');
-            setTimeout(() => setToastMsg(null), 3000);
-        }
-    };
+              const link = document.createElement('a');
+              link.download = `${prefix}_${Date.now()}.jpg`;
+              link.href = canvas.toDataURL('image/jpeg', 0.9);
+              link.click();
+              
+              setToastMsg(lang === 'vi' ? 'Đã lưu ảnh thành công!' : 'Image saved successfully!');
+              setTimeout(() => setToastMsg(null), 3000);
+          } catch (err) {
+              console.error("Screenshot error:", err);
+              target.style.cssText = originalStyle;
+              childStyles.forEach(item => { item.el.style.cssText = item.cssText; });
+              if (hideEl) hideEl.style.opacity = originalHideOpacity;
+              setToastMsg(lang === 'vi' ? 'Có lỗi khi chụp ảnh!' : 'Screenshot error!');
+              setTimeout(() => setToastMsg(null), 3000);
+          }
+      };
 
-    /* DYNAMIC ASSETS STATES */
-    const [carDatabase, setCarDatabase] = useState(() => {
+      const [carDatabase, setCarDatabase] = useState(() => {
           const saved = localStorage.getItem('zsm_cars_db_v1');
           if (saved) { try { return JSON.parse(saved); } catch(e) {} }
           return [
@@ -1016,7 +1122,6 @@
           return Array(6).fill(""); 
       });
 
-      // BANNED MAPS STATE (Mới thêm)
       const [bannedMaps, setBannedMaps] = useState(() => {
           const saved = localStorage.getItem('zsm_banned_maps_1v1_v11');
           if (saved) { try { return JSON.parse(saved); } catch(e) {} }
@@ -1140,7 +1245,6 @@
         setGames(newGames);
       };
 
-      // HÀM XỬ LÝ CẤM MAP (Mới thêm)
       const handleBanChange = (setNum, pIndex, banSlot, mapId) => {
         setBannedMaps(prev => {
             const newState = { ...prev };
@@ -1270,7 +1374,7 @@
           setGames(Array(numGames).fill(null).map((_, i) => ({ id: Date.now() + i, mapId: "", times: Array(6).fill(''), cars: Array(6).fill(''), pets: Array(6).fill('') })));
           setTeam1Name('');
           setTeam2Name('');
-          setBannedMaps({}); // Xoá luôn lịch sử ban map
+          setBannedMaps({});
         });
       };
 
@@ -1310,7 +1414,6 @@
                 const g = games[gIdx];
                 
                 const t1 = g.times[0]; const t2 = g.times[1];
-                
                 const isT1Final = t1 && (t1.includes(':') || t1.toUpperCase() === 'X');
                 const isT2Final = t2 && (t2.includes(':') || t2.toUpperCase() === 'X');
 
@@ -1927,13 +2030,13 @@
               carDatabase={carDatabase}
               petDatabase={petDatabase}
               playerPhotos={playerPhotos}
-            onAssetSelect={handleAssetSelect}
-            onClose={() => setBroadcastState({...broadcastState, isOpen: false})} 
-            handleTakeScreenshot={handleTakeScreenshot}
-          />
-        )}
+              onAssetSelect={handleAssetSelect}
+              onClose={() => setBroadcastState({...broadcastState, isOpen: false})} 
+              handleTakeScreenshot={handleTakeScreenshot}
+            />
+          )}
 
-        {/* RECORDS MODAL */}
+          {/* RECORDS MODAL */}
           {showRecordsModal && (
             <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-slide-up" onClick={() => setShowRecordsModal(false)}>
               <div className="bg-slate-900 border border-amber-500/50 rounded-xl max-w-3xl w-full shadow-[0_0_50px_rgba(245,158,11,0.2)] overflow-hidden flex flex-col max-h-[85vh]" onClick={e => e.stopPropagation()}>
@@ -2140,14 +2243,14 @@
                 <div className="w-px h-6 bg-slate-700/80 mx-1 hidden md:block"></div>
 
                 <button onClick={() => setShowDbModal(true)} className="flex items-center justify-center p-2 md:p-2.5 text-cyan-400 hover:text-white hover:bg-cyan-600/30 rounded-xl font-bold transition-all group" title={t.dbBtn}>
-                <DatabaseIcon size={18} className="group-hover:scale-110 transition-transform"/>
-              </button>
+                  <DatabaseIcon size={18} className="group-hover:scale-110 transition-transform"/>
+                </button>
 
-              <button onClick={() => handleTakeScreenshot('capture-main-scoreboard', 'BangDiem')} className="flex items-center justify-center p-2 md:p-2.5 text-indigo-400 hover:text-white hover:bg-indigo-600/30 rounded-xl font-bold transition-all group" title="Chụp Ảnh (Screenshot)">
-                <CameraIcon size={18} className="group-hover:scale-110 transition-transform"/>
-              </button>
+                <button onClick={() => handleTakeScreenshot('capture-main-scoreboard', 'BangDiem')} className="flex items-center justify-center p-2 md:p-2.5 text-indigo-400 hover:text-white hover:bg-indigo-600/30 rounded-xl font-bold transition-all group" title="Chụp Ảnh Bảng Điểm">
+                  <CameraIcon size={18} className="group-hover:scale-110 transition-transform"/>
+                </button>
 
-              <button onClick={() => setShowRecordsModal(true)} className="flex items-center justify-center p-2 md:p-2.5 text-amber-400 hover:text-white hover:bg-amber-600/30 rounded-xl font-bold transition-all group" title={t.recordBtn}>
+                <button onClick={() => setShowRecordsModal(true)} className="flex items-center justify-center p-2 md:p-2.5 text-amber-400 hover:text-white hover:bg-amber-600/30 rounded-xl font-bold transition-all group" title={t.recordBtn}>
                   <Trophy size={18} className="group-hover:scale-110 transition-transform"/>
                 </button>
 
@@ -2164,12 +2267,12 @@
               </div>
             </header>
 
-          <div className="grid lg:grid-cols-4 gap-4 md:gap-6">
-            
-            <div id="capture-main-scoreboard" className={`${gameMode === '1v1' ? 'lg:col-span-4' : 'lg:col-span-3'} bg-[#0f172a] border border-slate-700/50 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.8)] overflow-hidden animate-slide-up delay-100 flex flex-col max-h-[75vh] transition-all`}>
+            <div className="grid lg:grid-cols-4 gap-4 md:gap-6">
               
-              <div className="overflow-x-auto overflow-y-auto flex-1 bg-[#0f172a]">
-                <table className="w-full text-xs md:text-sm border-collapse">
+              <div id="capture-main-scoreboard" className={`${gameMode === '1v1' ? 'lg:col-span-4' : 'lg:col-span-3'} bg-[#0f172a] border border-slate-700/50 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.8)] overflow-hidden animate-slide-up delay-100 flex flex-col max-h-[75vh]`}>
+                
+                <div className="overflow-x-auto overflow-y-auto flex-1 bg-[#0f172a]">
+                  <table className="w-full text-xs md:text-sm border-collapse">
                     <thead className="sticky top-0 z-40 bg-[#0f172a] shadow-[0_5px_15px_rgba(0,0,0,0.8)] border-b border-slate-700">
                       {gameMode === '1v1' && matchStatus1v1 && (
                          <tr>
@@ -2179,8 +2282,7 @@
                                    <span className="text-cyan-400 font-black text-base uppercase tracking-[0.2em] min-w-[80px] text-center drop-shadow-md">SET {viewSet}</span>
                                    <button onClick={() => setViewSet(v => Math.min(soloMatchBO, v + 1))} className="text-slate-400 hover:text-cyan-400 px-3 font-black text-xl hover:bg-slate-800 rounded transition-colors">&gt;</button>
                                </div>
-                               
-                               {/* KHU VỰC CẤM MAP DÀNH CHO 1V1 (Mới thêm) */}
+
                                <div className="mt-2 flex flex-col xl:flex-row justify-center items-center gap-2 xl:gap-8 px-4 border-t border-slate-800/50 pt-2 pb-1">
                                    <div className="flex flex-wrap items-center gap-2 justify-center">
                                        <span className="text-[10px] text-red-500/80 font-black uppercase tracking-widest flex items-center gap-1 drop-shadow-md">
@@ -2275,11 +2377,9 @@
                         let rowBannedMaps = [];
                         if (gameMode === '1v1' && matchStatus1v1) {
                             const assign = matchStatus1v1.gameAssignments[gIndex];
-                            if (assign) {
-                                if (assign.set >= 3) rowSelectedMaps = matchStatus1v1.mapsUsedSet3;
-                                else rowSelectedMaps = matchStatus1v1.mapsUsedSet12;
-                                rowBannedMaps = getBannedMapsForSet(assign.set);
-                            }
+                            if (assign && assign.set >= 3) rowSelectedMaps = matchStatus1v1.mapsUsedSet3;
+                            else rowSelectedMaps = matchStatus1v1.mapsUsedSet12;
+                            if (assign) rowBannedMaps = getBannedMapsForSet(assign.set);
                         }
 
                         return (
