@@ -328,7 +328,7 @@
         soloMode: "單人賽", mode1v1: "SOLO 1VS1", teamMode: "組隊賽", modeSolo: "模式：單人賽", mode2v2: "模式：2v2", mode3v3: "模式：3v3",
         indivTotal: "個人總分", teamTotal: "隊伍總分", team1: "藍隊", team2: "紅隊", 
         i6: "選圖規則: 第2到N局為王牌賽道。之後：單人賽 -> 總分第二的選手選圖。組隊賽 -> 總分較低的隊伍選圖。", 
-        map1Pick: "第1局：官方指定赛道", kingMapPick: "第{0}局：{1} 的王牌賽道", normalPick: "第{0}局：由 {1} 選圖", 
+        map1Pick: "第1局：官方指定賽道", kingMapPick: "第{0}局：{1} 的王牌賽道", normalPick: "第{0}局：由 {1} 選圖", 
         broadcastBtn: "直播介面", pick: "選圖", closeBtn: "關閉",
         recordBtn: "紀錄", recordTitle: "🏆 賽道最高紀錄", backupBtn: "📥 備份數據", restoreBtn: "📤 恢復數據", 
         recordHolder: "紀錄:", noRecord: "暫無紀錄", newRecordAlert: "🎉 新紀錄：{0} 以 {2} 打破了 {1} 的紀錄！",
@@ -739,21 +739,23 @@
                                        {playerName}
                                      </span>
                                      {time ? (
-                                        <>
-                                           <span className={`${is6P ? 'text-[15px] md:text-[18px]' : 'text-xl md:text-2xl'} font-black mt-0.5 leading-none ${isTop ? 'text-[#fce300] drop-shadow-[0_0_8px_rgba(252,227,0,0.8)]' : 'text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]'}`}>
+                                        <div className="flex flex-col items-center justify-center mt-1 z-10">
+                                           <span className={`${is6P ? 'text-[15px] md:text-[18px]' : 'text-xl md:text-2xl'} font-black leading-none ${isTop ? 'text-[#fce300] drop-shadow-[0_0_8px_rgba(252,227,0,0.8)]' : 'text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]'}`}>
                                              +{c.score}
                                            </span>
-                                           {gameMode === '1v1' && (
-                                              <span className={`${is6P ? 'text-[8px] md:text-[9px]' : 'text-[9px] md:text-[11px]'} font-mono font-bold text-slate-300 mt-0.5 opacity-90 drop-shadow-md leading-none`}>{time}</span>
+                                           {/* FIX 1: CHỈ HIỂN THỊ THỜI GIAN KỶ LỤC TRONG SCOREBOARD Ở MODE SOLO */}
+                                           {gameMode === 'solo' && (
+                                               <span className={`${is6P ? 'text-[8px] md:text-[9px]' : 'text-[9px] md:text-[11px]'} font-mono font-bold text-slate-300 mt-0.5 opacity-90 drop-shadow-md leading-none`}>{time}</span>
                                            )}
-                                        </>
+                                        </div>
                                      ) : (
-                                        <>
-                                           <span className={`${is6P ? 'text-[15px] md:text-[18px]' : 'text-xl md:text-2xl'} font-black mt-0.5 leading-none text-slate-400 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]`}>-</span>
-                                           {gameMode === '1v1' && (
-                                              <span className={`${is6P ? 'text-[8px] md:text-[9px]' : 'text-[9px] md:text-[11px]'} font-mono font-bold text-transparent mt-0.5 leading-none`}>-</span>
+                                        <div className="flex flex-col items-center justify-center mt-1 z-10">
+                                           <span className={`${is6P ? 'text-[15px] md:text-[18px]' : 'text-xl md:text-2xl'} font-black leading-none text-slate-400 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]`}>-</span>
+                                           {/* FIX 1: CHỈ HIỂN THỊ TRONG MODE SOLO ĐỂ CÂN ĐỐI GIAO DIỆN */}
+                                           {gameMode === 'solo' && (
+                                               <span className={`${is6P ? 'text-[8px] md:text-[9px]' : 'text-[9px] md:text-[11px]'} font-mono font-bold text-transparent mt-0.5 leading-none`}>-</span>
                                            )}
-                                        </>
+                                        </div>
                                      )}
                                   </div>
                                 );
@@ -773,6 +775,7 @@
                 <div className="flex bg-[#0f172a]/80 backdrop-blur-xl border-t border-slate-700/50 shadow-[0_-10px_30px_rgba(0,0,0,0.5)] h-16 md:h-20 w-full shrink-0 relative z-20">
                   {gameMode === '1v1' && matchStatus1v1 ? (
                     <div className="flex w-full h-full bg-[#0ea5e9] items-center justify-between px-2 md:px-8 text-white font-black shadow-[inset_0_5px_20px_rgba(2,132,199,0.8)]">
+                        {/* CỘT TRÁI - PLAYER 1 */}
                         <div className="flex items-center justify-start gap-4 flex-1 h-full pl-4 md:pl-8">
                             <span className="text-3xl md:text-4xl text-[#fce300] font-black drop-shadow-[0_0_10px_rgba(252,227,0,0.6)]">{matchStatus1v1.p1Sets}</span>
                             <div className="w-px h-8 bg-white/40 shadow-[1px_0_0_rgba(0,0,0,0.2)]"></div>
@@ -785,6 +788,7 @@
                             <span className="block skew-x-[15deg] text-2xl md:text-3xl text-[#0ea5e9] font-black italic drop-shadow-sm">VS</span>
                         </div>
 
+                        {/* CỘT PHẢI - PLAYER 2 */}
                         <div className="flex items-center justify-end gap-4 flex-1 h-full pr-4 md:pr-8">
                             <span className="text-2xl md:text-4xl text-white font-black drop-shadow-md min-w-[30px] text-center">{matchStatus1v1.p2Rounds}</span>
                             <div className="w-px h-8 bg-white/40 shadow-[1px_0_0_rgba(0,0,0,0.2)]"></div>
@@ -824,7 +828,6 @@
             </div>
           )}
 
-          {/* ================================================================================================== */}
           {/* TAB 2: GIAO DIỆN PRE-MATCH TÍCH HỢP CHỌN XE/PET */}
           {broadcastState.tab === 'prematch' && (
             <div className="flex-1 w-full max-w-[1920px] mx-auto p-4 md:p-8 flex flex-col z-10 relative animate-slide-up">
@@ -883,15 +886,11 @@
                        const cardGradient = isTeam2 ? 'from-red-900/60 to-red-800/40 border-red-500/40' : 'from-blue-900/60 to-blue-800/40 border-blue-500/40';
                        const textAccent = isTeam2 ? 'text-red-300' : 'text-cyan-300';
                        
-                       // Lấy kỷ lục cá nhân
                        const pbKey = `${playerName}_${activeGame.mapId}`;
                        const pbData = personalRecords[pbKey];
                        const displayRecord = pbData ? pbData.timeStr : '--:--.--';
 
-                       // Lấy Ảnh cứng (Hardcode)
                        const photoUrl = HARDCODED_PLAYER_PHOTOS[pIdx] || '';
-
-                       // Lấy data Xe/Pet hiện tại
                        const carId = activeGame.cars?.[pIdx] || '';
                        const petId = activeGame.pets?.[pIdx] || '';
                        const carObj = CAR_DATABASE.find(c => c.id === carId);
@@ -901,7 +900,6 @@
                          <div key={pIdx} className={`relative flex flex-col rounded-2xl overflow-hidden shadow-2xl border backdrop-blur-md bg-gradient-to-br ${cardGradient} transition-transform hover:-translate-y-1 duration-300`}>
                             <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-50"></div>
                             
-                            {/* KHU VỰC ẢNH VĐV */}
                             <div className="absolute bottom-0 left-0 w-[60%] h-[95%] flex items-end justify-center pointer-events-none z-10">
                                {photoUrl ? (
                                    <img src={photoUrl} className="max-w-full max-h-full object-contain object-bottom drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)]" alt={playerName} />
@@ -910,7 +908,6 @@
                                )}
                             </div>
 
-                            {/* TEXT KHU VỰC TRÊN */}
                             <div className="absolute top-5 right-5 z-20 flex flex-col items-end text-right max-w-full pl-[40%]">
                                <span className="text-lg md:text-xl lg:text-2xl font-black italic text-white drop-shadow-md truncate w-full">{playerName}</span>
                                <span className={`text-[8px] md:text-[10px] font-bold tracking-widest uppercase mt-1 opacity-90 ${textAccent}`}>{t.preMatchBestRecord}</span>
@@ -919,17 +916,14 @@
                                </div>
                             </div>
 
-                            {/* CHỌN XE / PET TRỰC TIẾP Ở BOTTOM RIGHT */}
                             <div className="relative z-30 p-3 md:p-4 flex flex-col items-end justify-end mt-auto bg-gradient-to-t from-black/80 to-transparent pt-12">
                                <div className="flex gap-2 items-center">
-                                  {/* Xe */}
                                   <div className="flex flex-col items-end cursor-pointer group" onClick={() => setAssetModal({ type: 'car', pIndex: pIdx })}>
                                      <div className="w-20 h-10 md:w-28 md:h-14 flex items-center justify-center relative transition-transform group-hover:scale-110">
                                         {carObj ? <img src={carObj.img} className="max-w-full max-h-full object-contain drop-shadow-[0_5px_10px_rgba(0,0,0,0.8)] scale-150" alt="Car" /> : <div className="px-2 py-1 rounded bg-black/30 text-[8px] md:text-[10px] text-white/50 font-bold italic">{t.selectCar}</div>}
                                      </div>
                                      <span className={`text-[6px] md:text-[8px] uppercase mt-1 opacity-70 font-bold ${textAccent}`}>{carObj ? carObj.name : ''}</span>
                                   </div>
-                                  {/* Pet */}
                                   <div className="flex flex-col items-end cursor-pointer group" onClick={() => setAssetModal({ type: 'pet', pIndex: pIdx })}>
                                      <div className="w-20 h-10 md:w-28 md:h-14 flex items-center justify-center relative transition-transform group-hover:scale-110">
                                         {petObj ? <img src={petObj.img} className="max-w-full max-h-full object-contain drop-shadow-[0_5px_10px_rgba(0,0,0,0.8)] scale-150" alt="Pet" /> : <div className="px-2 py-1 rounded bg-black/30 text-[8px] md:text-[10px] text-white/50 font-bold italic">{t.selectPet}</div>}
@@ -1242,6 +1236,7 @@
         });
       };
 
+      // FIX 2: LOGIC MATCHSTATUS ĐƯỢC CHỈNH SỬA, KHÔNG AUTO JUMP KHI ĐANG NHẬP SỐ
       const matchStatus1v1 = useMemo(() => {
         if (gameMode !== '1v1') return null;
         let p1Sets = 0; let p2Sets = 0;
@@ -1278,23 +1273,22 @@
                 const g = games[gIdx];
                 
                 const t1 = g.times[0]; const t2 = g.times[1];
-                const v1 = parseTime(t1); const v2 = parseTime(t2);
-                const p1DNF = t1 && t1.toUpperCase() === 'X';
-                const p2DNF = t2 && t2.toUpperCase() === 'X';
                 
-                const p1HasInput = v1 !== null || p1DNF;
-                const p2HasInput = v2 !== null || p2DNF;
+                // KIỂM TRA XEM NGƯỜI DÙNG ĐÃ NHẬP XONG CHƯA (phải có : hoặc là X thì mới tính là nhập xong)
+                const isT1Final = t1 && (t1.includes(':') || t1.toUpperCase() === 'X');
+                const isT2Final = t2 && (t2.includes(':') || t2.toUpperCase() === 'X');
 
                 let winner = -1;
-                if (p1HasInput && p2HasInput) {
-                    if (v1 !== null && v2 !== null) {
-                        if (v1 < v2) winner = 0;
-                        else if (v2 < v1) winner = 1;
-                    } else if (v1 !== null || p2DNF) {
-                        winner = 0;
-                    } else if (v2 !== null || p1DNF) {
-                        winner = 1;
-                    }
+                
+                // Nếu cả 2 đều đã nhập xong định dạng thì mới phân thắng bại
+                if (isT1Final && isT2Final) {
+                    const v1 = parseTime(t1); const v2 = parseTime(t2);
+                    const p1DNF = t1.toUpperCase() === 'X';
+                    const p2DNF = t2.toUpperCase() === 'X';
+
+                    if (v1 !== null && v2 !== null) winner = v1 < v2 ? 0 : (v2 < v1 ? 1 : -1);
+                    else if (v1 !== null && p2DNF) winner = 0;
+                    else if (v2 !== null && p1DNF) winner = 1;
                 }
                 
                 if (winner === 0) s_p1Rounds++;
@@ -1716,7 +1710,6 @@
                   <button onClick={() => setShowRecordsModal(false)} className="text-slate-400 hover:text-red-500 transition-colors z-10"><XIcon size={24}/></button>
                 </div>
                 
-                {/* THANH TÌM KIẾM MAP TRONG BẢNG KỶ LỤC */}
                 <div className="bg-slate-950 p-3 border-b border-slate-800 shrink-0 z-10">
                    <input 
                      type="text"
@@ -1871,7 +1864,6 @@
                  />
               </div>
 
-              {/* THANH ĐIỀU KHIỂN DOCK TỐI GIẢN */}
               <div className="mt-6 inline-flex flex-wrap items-center justify-center gap-1 p-1.5 bg-[#0f172a]/80 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] z-20 relative mx-4">
                 
                 <button onClick={() => setBroadcastState({ isOpen: true, tab: 'scoreboard', gameIndex: 0 })} className="flex items-center gap-2 px-4 py-2 md:py-2.5 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-black rounded-xl hover:scale-105 active:scale-95 transition-all shadow-[0_0_15px_rgba(6,182,212,0.4)] text-[10px] md:text-xs uppercase tracking-wider mx-1">
@@ -2009,7 +2001,6 @@
                                   </div>
                                 </div>
                                 <SearchableMapSelect gameIndex={gIndex} currentMapId={game.mapId} selectedMaps={rowSelectedMaps} onChange={(id) => { const n = [...games]; n[gIndex].mapId = id; setGames(n); }} lang={lang} t={t} />
-                                {/* HIỂN THỊ KỶ LỤC TRỰC TIẾP DƯỚI TÊN MAP */}
                                 {gameMode !== '1v1' && game.mapId && mapRecords[game.mapId] && (
                                    <div className="mt-1 flex items-center justify-between text-[9px] md:text-[10px] px-1">
                                       <span className="text-amber-500/70 flex items-center gap-0.5"><Trophy size={10}/></span>
@@ -2023,7 +2014,6 @@
                             </td>
                             
                             {game.times.map((time, pIndex) => {
-                              // Chặn các cột nhập liệu dư nếu số players hiện tại ít hơn 6
                               if (pIndex >= players.length) return null;
                               
                               const { score, isKingMap, colorClass } = calcs[pIndex];
@@ -2050,40 +2040,42 @@
                 
                 {/* FOOTER FIXED - NẰM NGOÀI CUỘN */}
                 <div className="bg-[#0f172a] shadow-[0_-10px_30px_rgba(0,0,0,0.5)] border-t border-slate-700 z-30 shrink-0 overflow-hidden">
+                  {gameMode === '1v1' && matchStatus1v1 ? (
+                    <div className="flex w-full h-16 bg-[#0ea5e9] items-center justify-between px-2 md:px-8 text-white font-black shadow-[inset_0_5px_20px_rgba(2,132,199,0.8)]">
+                        <div className="flex items-center justify-start gap-4 flex-1 h-full pl-4 md:pl-8">
+                            <span className="text-3xl md:text-4xl text-[#fce300] font-black drop-shadow-[0_0_10px_rgba(252,227,0,0.6)]">{matchStatus1v1.p1Sets}</span>
+                            <div className="w-px h-8 bg-white/40 shadow-[1px_0_0_rgba(0,0,0,0.2)]"></div>
+                            <span className="text-lg md:text-2xl tracking-wider truncate font-black drop-shadow-md text-center flex-1">{players[0]}</span>
+                            <div className="w-px h-8 bg-white/40 shadow-[1px_0_0_rgba(0,0,0,0.2)]"></div>
+                            <span className="text-2xl md:text-4xl text-white font-black drop-shadow-md min-w-[30px] text-center">{matchStatus1v1.p1Rounds}</span>
+                        </div>
+                        
+                        <div className="flex-shrink-0 px-8 md:px-16 h-full bg-gradient-to-b from-white/90 to-white/70 skew-x-[-15deg] mx-4 flex items-center justify-center border-x border-white/50 shadow-2xl z-10">
+                            <span className="block skew-x-[15deg] text-2xl md:text-3xl text-[#0ea5e9] font-black italic drop-shadow-sm">VS</span>
+                        </div>
+
+                        <div className="flex items-center justify-end gap-4 flex-1 h-full pr-4 md:pr-8">
+                            <span className="text-2xl md:text-4xl text-white font-black drop-shadow-md min-w-[30px] text-center">{matchStatus1v1.p2Rounds}</span>
+                            <div className="w-px h-8 bg-white/40 shadow-[1px_0_0_rgba(0,0,0,0.2)]"></div>
+                            <span className="text-lg md:text-2xl tracking-wider truncate font-black drop-shadow-md text-center flex-1">{players[1]}</span>
+                            <div className="w-px h-8 bg-white/40 shadow-[1px_0_0_rgba(0,0,0,0.2)]"></div>
+                            <span className="text-3xl md:text-4xl text-[#fce300] font-black drop-shadow-[0_0_10px_rgba(252,227,0,0.6)]">{matchStatus1v1.p2Sets}</span>
+                        </div>
+                    </div>
+                  ) : (
                     <table className="w-full text-xs md:text-sm border-collapse">
                       <tbody>
-                        {gameMode === '1v1' && matchStatus1v1 && (
-                          <tr className="border-t border-purple-500/50 shadow-[0_-5px_20px_rgba(168,85,247,0.2)]">
-                            <td className="px-2 md:px-4 py-2 md:py-3 text-right font-black text-purple-400 uppercase tracking-widest text-xs md:text-sm w-[128px] md:w-[240px]">
-                              {t.setScore || "TỈ SỐ HIỆP (SET)"}
-                            </td>
-                            <td className="p-0">
-                               <div className="flex w-full">
-                                  <div className="flex-1 px-1 md:px-2 py-1.5 md:py-2 text-center border-l-2 border-purple-500/30">
-                                     <span className="text-xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-b from-purple-200 to-purple-500 drop-shadow-[0_0_20px_rgba(168,85,247,0.6)] cursor-default leading-none">
-                                        {matchStatus1v1.p1Sets}
-                                     </span>
-                                  </div>
-                                  <div className="flex-1 px-1 md:px-2 py-1.5 md:py-2 text-center border-l-2 border-purple-500/30">
-                                     <span className="text-xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-b from-purple-200 to-purple-500 drop-shadow-[0_0_20px_rgba(168,85,247,0.6)] cursor-default leading-none">
-                                        {matchStatus1v1.p2Sets}
-                                     </span>
-                                  </div>
-                               </div>
-                            </td>
-                          </tr>
-                        )}
-                        <tr className={`border-t-4 border-red-600 ${isTeamMode || gameMode === '1v1' ? 'border-b border-slate-700/50' : ''}`}>
-                          <td className={`px-2 md:px-4 py-2 md:py-3 text-right font-black uppercase tracking-widest w-[128px] md:w-[240px] ${isTeamMode || gameMode === '1v1' ? 'text-[10px] md:text-xs text-slate-400' : 'text-xs md:text-sm text-red-500'}`}>
-                            {isTeamMode ? t.indivTotal : (gameMode === '1v1' ? t.roundScore : t.total)}
+                        <tr className={`border-t-4 border-red-600 ${isTeamMode ? 'border-b border-slate-700/50' : ''}`}>
+                          <td className={`px-2 md:px-4 py-2 md:py-3 text-right font-black uppercase tracking-widest w-[128px] md:w-[240px] ${isTeamMode ? 'text-[10px] md:text-xs text-slate-400' : 'text-xs md:text-sm text-red-500'}`}>
+                            {isTeamMode ? t.indivTotal : t.total}
                           </td>
                           <td className="p-0">
                             <div className="flex w-full">
                               {totals.map((total, i) => {
                                 if (i >= players.length) return null;
                                 return (
-                                <div key={i} className={`flex-1 px-1 md:px-2 py-2 md:py-3 text-center border-white/5 ${(isTeamMode || gameMode==='1v1') && i === Math.floor(players.length/2) ? 'border-l-2 border-slate-700/50' : 'border-l'}`}>
-                                  <span className={`${isTeamMode || gameMode==='1v1' ? 'text-sm md:text-lg font-bold text-slate-400 drop-shadow-none' : 'text-lg md:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400 drop-shadow-[0_0_15px_rgba(255,255,255,0.4)] cursor-default'}`}>
+                                <div key={i} className={`flex-1 px-1 md:px-2 py-2 md:py-3 text-center border-white/5 ${isTeamMode && i === Math.floor(players.length/2) ? 'border-l-2 border-slate-700/50' : 'border-l'}`}>
+                                  <span className={`${isTeamMode ? 'text-sm md:text-lg font-bold text-slate-400 drop-shadow-none' : 'text-lg md:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400 drop-shadow-[0_0_15px_rgba(255,255,255,0.4)] cursor-default'}`}>
                                     {total}
                                   </span>
                                 </div>
@@ -2128,6 +2120,7 @@
                         )}
                       </tbody>
                     </table>
+                  )}
                 </div>
               </div>
 
