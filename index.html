@@ -103,6 +103,7 @@
     const Trophy = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg>;
     const PlayIcon = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>;
 
+    
     // ⚙️ LINK ẢNH VĐV (Đã được Gắn Cứng theo yêu cầu - Dán link PNG trong suốt vào)
     const HARDCODED_PLAYER_PHOTOS = [
       "https://i.ibb.co/8YJ11Zt/player-placeholder.png", // Tuyển thủ 1
@@ -154,7 +155,7 @@
       { stars: 4, maps: [
         { id: 'm4_1', vi: 'Tây Hồ', en: 'West Lake', cn: '西湖', tw: '西湖', th: 'ทะเลสาบซีหู' },
         { id: 'm4_2', vi: 'Trường Thành', en: 'Great Wall', cn: '长城', tw: '長城', th: 'กำแพงเมืองจีน' },
-        { id: 'm4_3', vi: 'Đại Lộ 1', en: 'Highway 1', cn: '1号公路', tw: '1號公路', th: 'ทางหลวงหมายเลข 1' },
+        { id: 'm4_3', vi: 'Đại Lộ 1', en: 'Highway 1', cn: '1号公路', tw: '1号公路', th: 'ทางหลวงหมายเลข 1' },
         { id: 'm4_4', vi: 'TROY-Sân Thử Nghiệm Số 0', en: 'TROY - Experiment Field O', cn: '特洛伊-零号试验场', tw: '特洛伊-零號試驗場', th: 'TROY-สนามทดสอบหมายเลข 0' },
         { id: 'm4_5', vi: 'Lâu Đài Thiên Nga Mới', en: 'Neuschwanstein', cn: '新天鹅堡', tw: '新天鵝堡', th: 'ปราสาทสวอนใหม่' },
         { id: 'm4_6', vi: 'Thiên Hộ Miêu Trại', en: 'Thousand-House Miaozhai', cn: '千户苗寨', tw: '千戶苗寨', th: 'หมู่บ้านแม้ว' },
@@ -254,7 +255,7 @@
         i1: "Nhập nhanh: Gõ thẳng số (VD: nhập 10704 hệ thống sẽ hiểu là 1:07.04).", i2: "Về nhất: 11 điểm.", 
         i3: "King Map: Mỗi người chơi được chỉ định King Map cho mình. Về nhất đúng King Map của mình sẽ được +12 điểm.", 
         i4: "Người về sau sẽ bị trừ dần điểm theo độ trễ thời gian:", i5: "Không hoàn thành (nhập X): 0 điểm.", 
-        soloMode: "Đua Đơn", teamMode: "Đua Đội", modeSolo: "Chế Độ: Đua Đơn", mode1v1: "SOLO 1VS1", mode2v2: "Chế Độ: 2vs2", mode3v3: "Chế Độ: 3vs3",
+        soloMode: "CÁ NHÂN (4P)", mode1v1: "SOLO 1VS1", teamMode: "Đua Đội", modeSolo: "CÁ NHÂN (4P)", mode2v2: "Chế Độ: 2vs2", mode3v3: "Chế Độ: 3vs3",
         indivTotal: "ĐIỂM CÁ NHÂN", teamTotal: "TỔNG ĐIỂM ĐỘI", team1: "ĐỘI XANH", team2: "ĐỘI ĐỎ", 
         i6: "Quyền chọn Map: Trận 2 đến N là King Map của từng VĐV/Đội (tự luân phiên). Các trận sau: Đua đơn -> VĐV hạng 2 chọn. Đua đội -> Đội có tổng điểm thấp hơn chọn. (Hòa điểm -> xét đội có điểm thấp hơn ở map liền trước).", 
         map1Pick: "TRẬN 1: MAP CHỈ ĐỊNH (KHÔNG CÓ QUYỀN CHỌN)", kingMapPick: "TRẬN {0}: KING MAP CỦA {1}", normalPick: "TRẬN {0}: LƯỢT CHỌN MAP CỦA {1}", 
@@ -278,7 +279,7 @@
         i1: "Quick Input: Type numbers directly (e.g., 10704 becomes 1:07.04).", i2: "1st Place: 11 points.", 
         i3: "King Map: Designated King Maps for each player. 1st place on their King Map gets +12 points.", 
         i4: "Subsequent players lose points based on time gap:", i5: "DNF (type X): 0 points.", 
-        soloMode: "Solo Mode", teamMode: "Team Mode", modeSolo: "Mode: Solo", mode1v1: "SOLO 1VS1", mode2v2: "Mode: 2vs2", mode3v3: "Mode: 3vs3",
+        soloMode: "Solo Mode", mode1v1: "SOLO 1VS1", teamMode: "Team Mode", modeSolo: "Mode: Solo", mode2v2: "Mode: 2vs2", mode3v3: "Mode: 3vs3",
         indivTotal: "INDIV. SCORE", teamTotal: "TEAM TOTAL", team1: "BLUE TEAM", team2: "RED TEAM", 
         i6: "Map Picking: Matches 2 to N are King Maps. After: Solo -> 2nd place player picks. Team -> Team with lower total score picks.", 
         map1Pick: "MATCH 1: DESIGNATED MAP", kingMapPick: "MATCH {0}: {1}'S KING MAP", normalPick: "MATCH {0}: {1}'S PICK", 
@@ -301,7 +302,7 @@
         infoBtn: "指南", infoTitle: "计分规则与使用方法", 
         i1: "快速输入: 直接输入数字（例：10704 会自动转为 1:07.04）。", i2: "第一名：11分。", 
         i3: "王牌赛道：选手的专属王牌赛道。获得第一名可得 12分。", i4: "后续选手根据落后时间扣分：", i5: "未完成（输入 X）：0分。", 
-        soloMode: "单人赛", teamMode: "组队赛", modeSolo: "模式：单人赛", mode1v1: "SOLO 1VS1", mode2v2: "模式：2v2", mode3v3: "模式：3v3",
+        soloMode: "单人赛", mode1v1: "SOLO 1VS1", teamMode: "组队赛", modeSolo: "模式：单人赛", mode2v2: "模式：2v2", mode3v3: "模式：3v3",
         indivTotal: "个人总分", teamTotal: "队伍总分", team1: "蓝队", team2: "红队", 
         i6: "选图规则: 第2到N局为王牌赛道。之后：单人赛 -> 总分第二的选手选图。组队赛 -> 总分较低的队伍选图。", 
         map1Pick: "第1局：官方指定赛道", kingMapPick: "第{0}局：{1} 的王牌赛道", normalPick: "第{0}局：由 {1} 选图", 
@@ -324,7 +325,7 @@
         infoBtn: "指南", infoTitle: "計分規則與使用方法", 
         i1: "快速輸入: 直接輸入數字（例：10704 會自動轉為 1:07.04）。", i2: "第一名：11分。", 
         i3: "王牌賽道：選手專屬的王牌賽道。獲得第一名可得 12分。", i4: "後續選手根據落後時間扣分：", i5: "未完成（輸入 X）：0分。", 
-        soloMode: "單人賽", teamMode: "組隊賽", modeSolo: "模式：單人賽", mode1v1: "SOLO 1VS1", mode2v2: "模式：2v2", mode3v3: "模式：3v3",
+        soloMode: "單人賽", mode1v1: "SOLO 1VS1", teamMode: "組隊賽", modeSolo: "模式：單人賽", mode2v2: "模式：2v2", mode3v3: "模式：3v3",
         indivTotal: "個人總分", teamTotal: "隊伍總分", team1: "藍隊", team2: "紅隊", 
         i6: "選圖規則: 第2到N局為王牌賽道。之後：單人賽 -> 總分第二的選手選圖。組隊賽 -> 總分較低的隊伍選圖。", 
         map1Pick: "第1局：官方指定賽道", kingMapPick: "第{0}局：{1} 的王牌賽道", normalPick: "第{0}局：由 {1} 選圖", 
@@ -347,7 +348,7 @@
         infoBtn: "คู่มือ", infoTitle: "กฎการให้คะแนนและการใช้งาน", 
         i1: "ป้อนข้อมูลด่วน: พิมพ์ตัวเลข (เช่น 10704 จะกลายเป็น 1:07.04)", i2: "อันดับ 1: 11 แต้ม", 
         i3: "King Map: แผนที่ King สำหรับผู้เล่นแต่ละคน หากได้อันดับ 1 ใน King Map จะได้ +12 แต้ม", i4: "ผู้เล่นคนอื่นจะถูกหักคะแนนตามช่องว่างเวลา:", i5: "ไม่จบการแข่งขัน (พิมพ์ X): 0 แต้ม", 
-        soloMode: "แข่งเดี่ยว", teamMode: "แข่งทีม", modeSolo: "โหมด: เดี่ยว", mode1v1: "SOLO 1VS1", mode2v2: "โหมด: 2vs2", mode3v3: "โหมด: 3vs3",
+        soloMode: "แข่งเดี่ยว", mode1v1: "SOLO 1VS1", teamMode: "แข่งทีม", modeSolo: "โหมด: เดี่ยว", mode2v2: "โหมด: 2vs2", mode3v3: "โหมด: 3vs3",
         indivTotal: "คะแนนส่วนตัว", teamTotal: "คะแนนทีมรวม", team1: "ทีมสีน้ำเงิน", team2: "ทีมสีแดง", 
         i6: "การเลือกแผนที่: แมตช์ 2 ถึง N คือ King Maps หลังจากนั้น: เดี่ยว -> ผู้เล่นอันดับ 2 เลือก ทีม -> ทีมที่มีคะแนนรวมต่ำกว่าเลือก", 
         map1Pick: "แมตช์ 1: แผนที่ที่กำหนด", kingMapPick: "แมตช์ {0}: KING MAP ของ {1}", normalPick: "แมตช์ {0}: สิทธิ์การเลือกของ {1}", 
@@ -582,6 +583,7 @@
       
       let broadcastRounds = [];
       let broadcastIndices = [];
+      
       if (gameMode === '1v1' && matchStatus1v1) {
           games.forEach((g, i) => {
               if (matchStatus1v1.gameAssignments[i]?.set === viewSet) {
@@ -589,8 +591,7 @@
                   broadcastIndices.push(i);
               }
           });
-          // Fix 1: Hiển thị đúng số lượng cột theo cấu hình (BO7 -> 7 cột)
-          const displayLen = soloSetBO;
+          const displayLen = soloSetBO; 
           while (broadcastRounds.length < displayLen) {
               broadcastRounds.push(null);
               broadcastIndices.push(-1);
@@ -607,7 +608,6 @@
 
       const halfLen = Math.floor(players.length / 2);
 
-      // PRE-MATCH DATA
       const activeGame = games[broadcastState.gameIndex] || games[0];
       const mapName = activeGame.mapId ? getMapName(activeGame.mapId, lang) : 'UNKNOWN MAP';
       const mapStars = activeGame.mapId ? getMapStars(activeGame.mapId) : 0;
@@ -663,7 +663,7 @@
                   {t.prematchTab}
                 </button>
               </div>
-              {/* Fix 2: Nút chuyển SET trên Livestream */}
+              
               {gameMode === '1v1' && matchStatus1v1 && (
                   <div className="flex items-center gap-3 mt-1.5 bg-slate-900 border border-slate-700 rounded-full px-3 py-0.5 shadow-inner">
                       <button onClick={() => setViewSet(v => Math.max(1, v - 1))} className="text-slate-400 hover:text-cyan-400 px-2 font-bold text-lg">&lt;</button>
@@ -728,7 +728,6 @@
                                 const textColor = isTop ? 'text-[#fce300]' : 'text-slate-300';
                                 const is6P = players.length > 4;
                                 
-                                // Fix 3: Căn chỉnh lại khoảng cách để hiện đủ tên, điểm và thời gian
                                 return (
                                   <div key={`g${gIndex}_p${pIndex}`} className={`w-full flex flex-col items-center justify-center relative py-1 mx-1 group/item hover:bg-white/10 transition-colors rounded ${isTeamMode && pIndex === halfLen ? 'border-t-2 border-white/20 mt-1' : ''}`}>
                                      {c.isKingMap && isTop && (
@@ -757,7 +756,6 @@
                               })}
                             </div>
 
-                            {/* Fix 4: Xóa dòng kỉ lục dưới cột map để tiết kiệm diện tích */}
                             <div className="relative z-10 h-8 md:h-10 shrink-0 bg-gradient-to-t from-[#0f172a] via-[#0f172a]/80 to-transparent flex items-end justify-center pb-2 px-2 border-t border-white/5">
                               <AutoFitText text={mapName} />
                             </div>
@@ -824,7 +822,6 @@
             </div>
           )}
 
-          {/* ================================================================================================== */}
           {/* TAB 2: GIAO DIỆN PRE-MATCH TÍCH HỢP CHỌN XE/PET */}
           {broadcastState.tab === 'prematch' && (
             <div className="flex-1 w-full max-w-[1920px] mx-auto p-4 md:p-8 flex flex-col z-10 relative animate-slide-up">
@@ -883,15 +880,11 @@
                        const cardGradient = isTeam2 ? 'from-red-900/60 to-red-800/40 border-red-500/40' : 'from-blue-900/60 to-blue-800/40 border-blue-500/40';
                        const textAccent = isTeam2 ? 'text-red-300' : 'text-cyan-300';
                        
-                       // Lấy kỷ lục cá nhân
                        const pbKey = `${playerName}_${activeGame.mapId}`;
                        const pbData = personalRecords[pbKey];
                        const displayRecord = pbData ? pbData.timeStr : '--:--.--';
 
-                       // Lấy Ảnh cứng (Hardcode)
                        const photoUrl = HARDCODED_PLAYER_PHOTOS[pIdx] || '';
-
-                       // Lấy data Xe/Pet hiện tại
                        const carId = activeGame.cars?.[pIdx] || '';
                        const petId = activeGame.pets?.[pIdx] || '';
                        const carObj = CAR_DATABASE.find(c => c.id === carId);
@@ -901,7 +894,6 @@
                          <div key={pIdx} className={`relative flex flex-col rounded-2xl overflow-hidden shadow-2xl border backdrop-blur-md bg-gradient-to-br ${cardGradient} transition-transform hover:-translate-y-1 duration-300`}>
                             <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-50"></div>
                             
-                            {/* KHU VỰC ẢNH VĐV */}
                             <div className="absolute bottom-0 left-0 w-[60%] h-[95%] flex items-end justify-center pointer-events-none z-10">
                                {photoUrl ? (
                                    <img src={photoUrl} className="max-w-full max-h-full object-contain object-bottom drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)]" alt={playerName} />
@@ -910,7 +902,6 @@
                                )}
                             </div>
 
-                            {/* TEXT KHU VỰC TRÊN */}
                             <div className="absolute top-5 right-5 z-20 flex flex-col items-end text-right max-w-full pl-[40%]">
                                <span className="text-lg md:text-xl lg:text-2xl font-black italic text-white drop-shadow-md truncate w-full">{playerName}</span>
                                <span className={`text-[8px] md:text-[10px] font-bold tracking-widest uppercase mt-1 opacity-90 ${textAccent}`}>{t.preMatchBestRecord}</span>
@@ -919,17 +910,14 @@
                                </div>
                             </div>
 
-                            {/* CHỌN XE / PET TRỰC TIẾP Ở BOTTOM RIGHT */}
                             <div className="relative z-30 p-3 md:p-4 flex flex-col items-end justify-end mt-auto bg-gradient-to-t from-black/80 to-transparent pt-12">
                                <div className="flex gap-2 items-center">
-                                  {/* Xe */}
                                   <div className="flex flex-col items-end cursor-pointer group" onClick={() => setAssetModal({ type: 'car', pIndex: pIdx })}>
                                      <div className="w-20 h-10 md:w-28 md:h-14 flex items-center justify-center relative transition-transform group-hover:scale-110">
                                         {carObj ? <img src={carObj.img} className="max-w-full max-h-full object-contain drop-shadow-[0_5px_10px_rgba(0,0,0,0.8)] scale-150" alt="Car" /> : <div className="px-2 py-1 rounded bg-black/30 text-[8px] md:text-[10px] text-white/50 font-bold italic">{t.selectCar}</div>}
                                      </div>
                                      <span className={`text-[6px] md:text-[8px] uppercase mt-1 opacity-70 font-bold ${textAccent}`}>{carObj ? carObj.name : ''}</span>
                                   </div>
-                                  {/* Pet */}
                                   <div className="flex flex-col items-end cursor-pointer group" onClick={() => setAssetModal({ type: 'pet', pIndex: pIdx })}>
                                      <div className="w-20 h-10 md:w-28 md:h-14 flex items-center justify-center relative transition-transform group-hover:scale-110">
                                         {petObj ? <img src={petObj.img} className="max-w-full max-h-full object-contain drop-shadow-[0_5px_10px_rgba(0,0,0,0.8)] scale-150" alt="Pet" /> : <div className="px-2 py-1 rounded bg-black/30 text-[8px] md:text-[10px] text-white/50 font-bold italic">{t.selectPet}</div>}
@@ -1011,15 +999,11 @@
       
       const [broadcastState, setBroadcastState] = useState({ isOpen: false, tab: 'scoreboard', gameIndex: 0 });
       const [dialog, setDialog] = useState({ isOpen: false, type: 'alert', message: '', onConfirm: null });
-      
-      // Fix 5: State chuyển đổi Hiệp đấu (Set)
-      const [viewSet, setViewSet] = useState(1);
 
       const showDialogAlert = (msg) => setDialog({ isOpen: true, type: 'alert', message: msg, onConfirm: null });
       const showDialogConfirm = (msg, onConfirmCallback) => setDialog({ isOpen: true, type: 'confirm', message: msg, onConfirm: onConfirmCallback });
 
       const [tournamentName, setTournamentName] = useState(() => localStorage.getItem('zsm_tour_name') || 'CUSTOM TOURNAMENT');
-
       const [team1Name, setTeam1Name] = useState(() => localStorage.getItem('zsm_team1_name') || '');
       const [team2Name, setTeam2Name] = useState(() => localStorage.getItem('zsm_team2_name') || '');
 
@@ -1029,7 +1013,7 @@
       const isTeamMode = gameMode === '2v2' || gameMode === '3v3';
 
       const [soloMatchBO, setSoloMatchBO] = useState(() => Number(localStorage.getItem('zsm_solo_match_bo')) || 3);
-      const [soloSetBO, setSoloSetBO] = useState(() => Number(localStorage.getItem('zsm_solo_set_bo')) || 9);
+      const [soloSetBO, setSoloSetBO] = useState(() => Number(localStorage.getItem('zsm_solo_set_bo')) || 7);
 
       const [players, setPlayers] = useState(() => {
         const saved = localStorage.getItem('zsm_players_v11_final');
@@ -1058,25 +1042,6 @@
         }));
       });
 
-      // --- AUTO RESIZE GAMES FOR 1v1 ---
-      useEffect(() => {
-          if (gameMode === '1v1') {
-              const targetLen = soloMatchBO * soloSetBO;
-              setGames(prev => {
-                  if (prev.length === targetLen) return prev;
-                  let newGames = [...prev];
-                  if (newGames.length < targetLen) {
-                      while(newGames.length < targetLen) {
-                          newGames.push({ id: Date.now() + Math.random(), mapId: "", times: Array(6).fill(''), cars: Array(6).fill(''), pets: Array(6).fill('') });
-                      }
-                  } else {
-                      newGames = newGames.slice(0, targetLen);
-                  }
-                  return newGames;
-              });
-          }
-      }, [gameMode, soloMatchBO, soloSetBO]);
-
       const [mapRecords, setMapRecords] = useState(() => {
         const saved = localStorage.getItem('zsm_map_records_v11_final');
         if (saved) { try { return JSON.parse(saved); } catch(e) {} }
@@ -1088,6 +1053,8 @@
         if (saved) { try { return JSON.parse(saved); } catch(e) {} }
         return {}; 
       });
+
+      const [viewSet, setViewSet] = useState(1);
 
       useEffect(() => {
         const allDefP = Object.values(TRANSLATIONS).map(tr => tr.defPlayer);
@@ -1115,6 +1082,24 @@
       useEffect(() => { localStorage.setItem('zsm_map_records_v11_final', JSON.stringify(mapRecords)); }, [mapRecords]);
       useEffect(() => { localStorage.setItem('zsm_personal_records_v11_final', JSON.stringify(personalRecords)); }, [personalRecords]);
 
+      useEffect(() => {
+          if (gameMode === '1v1') {
+              const targetLen = soloMatchBO * soloSetBO;
+              setGames(prev => {
+                  if (prev.length === targetLen) return prev;
+                  let newGames = [...prev];
+                  if (newGames.length < targetLen) {
+                      while(newGames.length < targetLen) {
+                          newGames.push({ id: Date.now() + Math.random(), mapId: "", times: Array(6).fill(''), cars: Array(6).fill(''), pets: Array(6).fill('') });
+                      }
+                  } else {
+                      newGames = newGames.slice(0, targetLen);
+                  }
+                  return newGames;
+              });
+          }
+      }, [gameMode, soloMatchBO, soloSetBO]);
+
       const displayTeam1Name = team1Name.trim() || t.team1;
       const displayTeam2Name = team2Name.trim() || t.team2;
 
@@ -1126,7 +1111,6 @@
         const newGames = [...games];
         if (!newGames[gIndex].cars) newGames[gIndex].cars = Array(6).fill('');
         if (!newGames[gIndex].pets) newGames[gIndex].pets = Array(6).fill('');
-        
         if (type === 'car') newGames[gIndex].cars[pIndex] = assetId;
         if (type === 'pet') newGames[gIndex].pets[pIndex] = assetId;
         setGames(newGames);
@@ -1146,7 +1130,6 @@
            const playerName = players[pIndex];
            const pbKey = `${playerName}_${mapId}`;
 
-           // 1. LƯU KỶ LỤC CÁ NHÂN (Cho màn hình Pre-Match)
            setPersonalRecords(prev => {
               const currentPB = prev[pbKey];
               if (!currentPB || timeMs < currentPB.timeMs) {
@@ -1155,12 +1138,10 @@
               return prev;
            });
 
-           // 2. LƯU KỶ LỤC CHUNG (Hall of Fame)
            setMapRecords(prev => {
               const currentRecord = prev[mapId];
               if (!currentRecord || timeMs < currentRecord.timeMs) {
                  const mapName = getMapName(mapId, lang);
-                 
                  let msg = t.newRecordAlert.replace('{0}', playerName).replace('{1}', mapName).replace('{2}', formattedTime);
                  if (currentRecord) {
                     msg += lang === 'vi' ? ` (Kỷ lục cũ: ${currentRecord.player} - ${currentRecord.timeStr})` : ` (Old: ${currentRecord.player} - ${currentRecord.timeStr})`;
@@ -1249,7 +1230,6 @@
         });
       };
 
-      // TÍNH TOÁN TRẠNG THÁI HIỆP LỚN / VÁN DÀNH CHO 1VS1
       const matchStatus1v1 = useMemo(() => {
         if (gameMode !== '1v1') return null;
         let p1Sets = 0; let p2Sets = 0;
@@ -1304,24 +1284,24 @@
 
             if (!setFinished) {
                 currentSet = s;
-            currentSet++;
-            p1Rounds = 0; p2Rounds = 0;
+                p1Rounds = s_p1Rounds;
+                p2Rounds = s_p2Rounds;
+                break; 
+            }
         }
-    });
+        
+        return { p1Sets, p2Sets, p1Rounds, p2Rounds, currentSet, gameAssignments, mapsUsedSet12, mapsUsedSet3 };
+      }, [games, gameMode, soloMatchBO, soloSetBO]);
 
-    return { p1Sets, p2Sets, p1Rounds, p2Rounds, currentSet, gameAssignments, mapsUsedSet12, mapsUsedSet3 };
-  }, [games, gameMode, soloMatchBO, soloSetBO]);
+      useEffect(() => {
+          if (gameMode === '1v1' && matchStatus1v1?.currentSet) {
+              setViewSet(matchStatus1v1.currentSet);
+          }
+      }, [matchStatus1v1?.currentSet, gameMode]);
 
-  // Fix 6: Tự động chuyển màn hình SET khi có VĐV thắng hiệp
-  useEffect(() => {
-    if (gameMode === '1v1' && matchStatus1v1?.currentSet) {
-        setViewSet(matchStatus1v1.currentSet);
-    }
-  }, [matchStatus1v1?.currentSet, gameMode]);
-
-  const selectedMaps = useMemo(() => {
+      const selectedMaps = useMemo(() => {
         if (gameMode === '1v1' && matchStatus1v1) {
-            return []; // Map selection validation is handled row by row for 1v1
+            return []; 
         }
         return games.map(g => g.mapId).filter(id => id !== "");
       }, [games, gameMode, matchStatus1v1]);
@@ -1352,19 +1332,16 @@
         reader.readAsText(file);
       };
 
-      // ĐÂY LÀ HÀM XÓA KỶ LỤC HOÀN CHỈNH: Xóa Map Record VÀ Xóa luôn Personal Records
       const handleDeleteRecord = (mapId) => {
         showDialogConfirm(lang === 'vi' 
             ? "Bạn có chắc muốn xóa kỷ lục map này?\n(Kỷ lục cá nhân của các VĐV ở map này cũng sẽ bị xóa sạch)" 
             : "Are you sure to delete this map record?\n(Personal records for this map will also be deleted)", 
         () => {
-            // Xóa Kỷ lục chung
             setMapRecords(prev => {
                 const newRecords = {...prev};
                 delete newRecords[mapId];
                 return newRecords;
             });
-            // Xóa Kỷ lục cá nhân của map này
             setPersonalRecords(prev => {
                 const newPRs = {...prev};
                 Object.keys(newPRs).forEach(key => {
@@ -1429,7 +1406,6 @@
           
           const calcs = getGameCalculations(gIndex, game.times);
           game.times.forEach((time, pIdx) => {
-            // Chỉ in data của người chơi hợp lệ trong mảng players
             if (pIdx >= players.length) return;
             const timeCol = 2 + (pIdx * 2);
             const ptsCol = 3 + (pIdx * 2);
@@ -1607,11 +1583,26 @@
 
       const nextPickerData = useMemo(() => {
         const nextIdx = games.findIndex(g => {
-            // Xem trận đấu có trắng trơn (chưa ai nhập) không, chỉ xét những VĐV hợp lệ
             return g.times.slice(0, players.length).every(time => !time || time.trim() === '');
         });
         if (nextIdx === -1) return { show: false }; 
         if (nextIdx === 0) return { show: true, text: t.map1Pick }; 
+
+        const actualLastGameIndex = nextIdx - 1; 
+
+        if (gameMode === '1v1') {
+            const lastGameTimes = games[actualLastGameIndex].times.map(parseTime);
+            const p1Time = lastGameTimes[0];
+            const p2Time = lastGameTimes[1];
+            let pickerIndex = 0;
+            if (p1Time !== null && p2Time !== null) {
+                pickerIndex = p1Time > p2Time ? 0 : 1; 
+            } else if (p1Time === null) pickerIndex = 0; 
+            else pickerIndex = 1;
+            
+            const pickerName = players[pickerIndex];
+            return { show: true, text: t.normalPick.replace('{0}', nextIdx + 1).replace('{1}', pickerName), pIndex: pickerIndex };
+        }
 
         if (nextIdx >= 1 && nextIdx < players.length + 1) {
             let kingPlayerIndex = nextIdx - 1;
@@ -1624,7 +1615,6 @@
             return { show: true, text: t.kingMapPick.replace('{0}', nextIdx + 1).replace('{1}', pickerName), pIndex: kingPlayerIndex };
         }
 
-        const actualLastGameIndex = nextIdx - 1; 
         const halfLen = Math.floor(players.length / 2);
         
         if (isTeamMode) {
@@ -1660,7 +1650,7 @@
           const pickerName = players[pickerIndex];
           return { show: true, text: t.normalPick.replace('{0}', nextIdx + 1).replace('{1}', pickerName), pIndex: pickerIndex };
         }
-      }, [games, totals, players, isTeamMode, lang, t, displayTeam1Name, displayTeam2Name]);
+      }, [games, totals, players, isTeamMode, gameMode, lang, t, displayTeam1Name, displayTeam2Name]);
 
       return (
         <div className="min-h-screen relative overflow-x-hidden pb-20">
@@ -1704,7 +1694,6 @@
                   <button onClick={() => setShowRecordsModal(false)} className="text-slate-400 hover:text-red-500 transition-colors z-10"><XIcon size={24}/></button>
                 </div>
                 
-                {/* THANH TÌM KIẾM MAP TRONG BẢNG KỶ LỤC */}
                 <div className="bg-slate-950 p-3 border-b border-slate-800 shrink-0 z-10">
                    <input 
                      type="text"
@@ -1859,7 +1848,6 @@
                  />
               </div>
 
-              {/* THANH ĐIỀU KHIỂN DOCK TỐI GIẢN */}
               <div className="mt-6 inline-flex flex-wrap items-center justify-center gap-1 p-1.5 bg-[#0f172a]/80 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] z-20 relative mx-4">
                 
                 <button onClick={() => setBroadcastState({ isOpen: true, tab: 'scoreboard', gameIndex: 0 })} className="flex items-center gap-2 px-4 py-2 md:py-2.5 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-black rounded-xl hover:scale-105 active:scale-95 transition-all shadow-[0_0_15px_rgba(6,182,212,0.4)] text-[10px] md:text-xs uppercase tracking-wider mx-1">
@@ -1904,15 +1892,26 @@
                 </button>
 
                 <button onClick={exportProfessionalExcel} className="flex items-center justify-center p-2 md:p-2.5 text-emerald-400 hover:text-white hover:bg-emerald-600/30 rounded-xl font-bold transition-all" title={t.export}>
+                  <Download size={18}/>
+                </button>
+                <button onClick={clearAll} className="flex items-center justify-center p-2 md:p-2.5 text-rose-400 hover:text-white hover:bg-rose-600/30 rounded-xl font-bold transition-all group" title={t.reset}>
+                  <RefreshCcw size={18} className="group-hover:-rotate-180 transition-transform duration-500"/>
+                </button>
+                <button onClick={() => setShowInfo(true)} className="flex items-center justify-center p-2 md:p-2.5 text-slate-400 hover:text-white hover:bg-slate-600/30 rounded-xl font-bold transition-all" title={t.infoBtn}>
+                  <InfoIcon size={18}/>
+                </button>
+
+              </div>
+            </header>
+
             <div className="grid lg:grid-cols-4 gap-4 md:gap-6">
               
-              <div className={`${gameMode === '1v1' ? '' : 'lg:col-span-3'} bg-[#0f172a] border border-slate-700/50 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.8)] overflow-hidden animate-slide-up delay-100 flex flex-col max-h-[75vh]`}>
+              <div className={`${gameMode === '1v1' ? 'lg:col-span-4' : 'lg:col-span-3'} bg-[#0f172a] border border-slate-700/50 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.8)] overflow-hidden animate-slide-up delay-100 flex flex-col max-h-[75vh]`}>
                 
                 <div className="overflow-x-auto overflow-y-auto flex-1 bg-[#0f172a]">
                   <table className="w-full text-xs md:text-sm border-collapse">
                     <thead className="sticky top-0 z-40 bg-[#0f172a] shadow-[0_5px_15px_rgba(0,0,0,0.8)] border-b border-slate-700">
-                      {/* Fix 7: Thanh điều hướng SET ở giao diện chính Mode Solo */}
-                      {gameMode === '1v1' && (
+                      {gameMode === '1v1' && matchStatus1v1 && (
                          <tr>
                             <th colSpan={players.length + 1} className="py-2 bg-slate-900 border-b border-slate-700 shadow-inner">
                                <div className="flex justify-center items-center gap-6">
@@ -1953,7 +1952,6 @@
                     </thead>
                     <tbody className="divide-y divide-slate-800/50 bg-slate-900/50">
                       {games.map((game, gIndex) => {
-                        // Fix 8: Lọc hiển thị Ván đấu theo Set đã chọn trong UI
                         if (gameMode === '1v1' && matchStatus1v1) {
                             if (matchStatus1v1.gameAssignments[gIndex]?.set !== viewSet) return null;
                         }
@@ -1987,8 +1985,7 @@
                                   </div>
                                 </div>
                                 <SearchableMapSelect gameIndex={gIndex} currentMapId={game.mapId} selectedMaps={rowSelectedMaps} onChange={(id) => { const n = [...games]; n[gIndex].mapId = id; setGames(n); }} lang={lang} t={t} />
-                                {/* HIỂN THỊ KỶ LỤC TRỰC TIẾP DƯỚI TÊN MAP */}
-                                {game.mapId && mapRecords[game.mapId] && (
+                                {gameMode !== '1v1' && game.mapId && mapRecords[game.mapId] && (
                                    <div className="mt-1 flex items-center justify-between text-[9px] md:text-[10px] px-1">
                                       <span className="text-amber-500/70 flex items-center gap-0.5"><Trophy size={10}/></span>
                                       <div className="flex gap-1.5 font-mono text-amber-400/90">
@@ -2001,12 +1998,11 @@
                             </td>
                             
                             {game.times.map((time, pIndex) => {
-                              // Chặn các cột nhập liệu dư nếu số players hiện tại ít hơn 6
                               if (pIndex >= players.length) return null;
                               
                               const { score, isKingMap, colorClass } = calcs[pIndex];
                               return (
-                                <td key={pIndex} className={`px-1 md:px-2 py-2 relative z-10 ${isTeamMode && pIndex === Math.floor(players.length / 2) ? 'border-l-2 border-slate-700/50 bg-black/10' : ''}`}>
+                                <td key={pIndex} className={`px-1 md:px-2 py-2 relative z-10 ${(isTeamMode || gameMode === '1v1') && pIndex === Math.floor(players.length / 2) ? 'border-l-2 border-slate-700/50 bg-black/10' : ''}`}>
                                   <div className={`relative flex flex-col gap-0.5 md:gap-1 p-1 md:p-2 rounded md:rounded-lg border transition-all duration-300 hover:bg-white/[0.05] hover:-translate-y-[1px] ${colorClass}`}>
                                     {isKingMap && (
                                       <div className="absolute -top-2 md:-top-3 left-1/2 -translate-x-1/2 flex items-center gap-0.5 bg-red-600 px-1 md:px-2 rounded text-[7px] md:text-[9px] uppercase font-bold tracking-widest text-white shadow-[0_0_15px_#dc2626] z-10 whitespace-nowrap animate-pulse">
@@ -2029,8 +2025,7 @@
                 {/* FOOTER FIXED - NẰM NGOÀI CUỘN */}
                 <div className="bg-[#0f172a] shadow-[0_-10px_30px_rgba(0,0,0,0.5)] border-t border-slate-700 z-30 shrink-0 overflow-hidden">
                   {gameMode === '1v1' && matchStatus1v1 ? (
-                    <div className="flex w-full h-16 bg-[#0ea5e9] items-center justify-between px-4 md:px-8 text-white font-black shadow-[inset_0_5px_20px_rgba(2,132,199,0.8)]">
-                        {/* CỘT TRÁI - PLAYER 1 */}
+                    <div className="flex w-full h-16 bg-[#0ea5e9] items-center justify-between px-2 md:px-8 text-white font-black shadow-[inset_0_5px_20px_rgba(2,132,199,0.8)]">
                         <div className="flex items-center justify-start gap-4 flex-1 h-full pl-4 md:pl-8">
                             <span className="text-3xl md:text-4xl text-[#fce300] font-black drop-shadow-[0_0_10px_rgba(252,227,0,0.6)]">{matchStatus1v1.p1Sets}</span>
                             <div className="w-px h-8 bg-white/40 shadow-[1px_0_0_rgba(0,0,0,0.2)]"></div>
@@ -2043,7 +2038,6 @@
                             <span className="block skew-x-[15deg] text-2xl md:text-3xl text-[#0ea5e9] font-black italic drop-shadow-sm">VS</span>
                         </div>
 
-                        {/* CỘT PHẢI - PLAYER 2 */}
                         <div className="flex items-center justify-end gap-4 flex-1 h-full pr-4 md:pr-8">
                             <span className="text-2xl md:text-4xl text-white font-black drop-shadow-md min-w-[30px] text-center">{matchStatus1v1.p2Rounds}</span>
                             <div className="w-px h-8 bg-white/40 shadow-[1px_0_0_rgba(0,0,0,0.2)]"></div>
