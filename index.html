@@ -577,17 +577,9 @@
       );
     };
 
-    const BroadcastOverlay = ({ broadcastState, setBroadcastState, players, games, totals, getGameCalculations, matchStatus1v1, mapRecords, personalRecords, lang, t, gameMode, tournamentName, team1Name, team2Name, onAssetSelect, onClose }) => {
+    const BroadcastOverlay = ({ broadcastState, setBroadcastState, viewSet, setViewSet, soloSetBO, soloMatchBO, players, games, totals, getGameCalculations, matchStatus1v1, mapRecords, personalRecords, lang, t, gameMode, tournamentName, team1Name, team2Name, onAssetSelect, onClose }) => {
       const isTeamMode = gameMode === '2v2' || gameMode === '3v3';
-      const [viewSet, setViewSet] = useState(1);
-
-      useEffect(() => {
-          if (gameMode === '1v1' && matchStatus1v1) {
-              const activeSet = matchStatus1v1.gameAssignments[broadcastState.gameIndex]?.set || matchStatus1v1.currentSet;
-              if (activeSet) setViewSet(activeSet);
-          }
-      }, [broadcastState.gameIndex, matchStatus1v1, gameMode]);
-
+      
       let broadcastRounds = [];
       let broadcastIndices = [];
       if (gameMode === '1v1' && matchStatus1v1) {
@@ -597,14 +589,20 @@
                   broadcastIndices.push(i);
               }
           });
+          // Fix 1: Hiển thị đúng số lượng cột theo cấu hình (BO7 -> 7 cột)
+          const displayLen = soloSetBO;
+          while (broadcastRounds.length < displayLen) {
+              broadcastRounds.push(null);
+              broadcastIndices.push(-1);
+          }
       } else {
           broadcastRounds = [...games];
           broadcastIndices = games.map((_, i) => i);
-      }
-      const displayLen = Math.max(9, broadcastRounds.length);
-      while (broadcastRounds.length < displayLen) {
-          broadcastRounds.push(null);
-          broadcastIndices.push(-1);
+          const displayLen = Math.max(9, broadcastRounds.length);
+          while (broadcastRounds.length < displayLen) {
+              broadcastRounds.push(null);
+              broadcastIndices.push(-1);
+          }
       }
 
       const halfLen = Math.floor(players.length / 2);
@@ -665,11 +663,12 @@
                   {t.prematchTab}
                 </button>
               </div>
+              {/* Fix 2: Nút chuyển SET trên Livestream */}
               {gameMode === '1v1' && matchStatus1v1 && (
                   <div className="flex items-center gap-3 mt-1.5 bg-slate-900 border border-slate-700 rounded-full px-3 py-0.5 shadow-inner">
                       <button onClick={() => setViewSet(v => Math.max(1, v - 1))} className="text-slate-400 hover:text-cyan-400 px-2 font-bold text-lg">&lt;</button>
                       <span className="text-cyan-400 font-black text-xs uppercase tracking-widest min-w-[50px] text-center">SET {viewSet}</span>
-                      <button onClick={() => setViewSet(v => Math.min(matchStatus1v1.currentSet, v + 1))} className="text-slate-400 hover:text-cyan-400 px-2 font-bold text-lg">&gt;</button>
+                      <button onClick={() => setViewSet(v => Math.min(soloMatchBO, v + 1))} className="text-slate-400 hover:text-cyan-400 px-2 font-bold text-lg">&gt;</button>
                   </div>
               )}
             </div>
@@ -729,39 +728,38 @@
                                 const textColor = isTop ? 'text-[#fce300]' : 'text-slate-300';
                                 const is6P = players.length > 4;
                                 
+                                // Fix 3: Căn chỉnh lại khoảng cách để hiện đủ tên, điểm và thời gian
                                 return (
-                                  <div key={`g${gIndex}_p${pIndex}`} className={`flex-1 flex flex-col items-center justify-center relative min-h-0 mx-1 group/item hover:bg-white/10 transition-colors rounded ${isTeamMode && pIndex === halfLen ? 'border-t-2 border-white/20 mt-1 pt-1' : ''}`}>
+                                  <div key={`g${gIndex}_p${pIndex}`} className={`w-full flex flex-col items-center justify-center relative py-1 mx-1 group/item hover:bg-white/10 transition-colors rounded ${isTeamMode && pIndex === halfLen ? 'border-t-2 border-white/20 mt-1' : ''}`}>
                                      {c.isKingMap && isTop && (
-                                       <div className={`absolute ${is6P ? '-top-1 md:top-0' : 'top-0 md:top-1'} left-1/2 -translate-x-1/2 w-full flex justify-center`}>
+                                       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full flex justify-center -translate-y-1/2 z-20">
                                          <Crown size={is6P ? 12 : 16} className="text-[#fce300] animate-bounce drop-shadow-[0_0_8px_rgba(252,227,0,1)]"/>
                                        </div>
                                      )}
-                                     <span className={`${is6P ? 'text-[9px] md:text-[11px] mt-2' : 'text-[11px] md:text-[13px] mt-4'} font-bold truncate w-[90%] text-center leading-normal py-0.5 ${textColor} drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]`}>
+                                     <span className={`${is6P ? 'text-[9px] md:text-[10px]' : 'text-[11px] md:text-[13px]'} font-bold truncate w-[90%] text-center leading-tight ${textColor} drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] mt-1 z-10`}>
                                        {playerName}
                                      </span>
                                      {time ? (
-                                        <div className="flex flex-col items-center">
-                                           <span className={`${is6P ? 'text-[15px] md:text-[18px]' : 'text-xl md:text-2xl'} font-black mt-0.5 leading-none ${isTop ? 'text-[#fce300] drop-shadow-[0_0_8px_rgba(252,227,0,0.8)]' : 'text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]'}`}>
+                                        <div className="flex flex-col items-center justify-center mt-1 z-10">
+                                           <span className={`${is6P ? 'text-[15px] md:text-[18px]' : 'text-xl md:text-2xl'} font-black leading-none ${isTop ? 'text-[#fce300] drop-shadow-[0_0_8px_rgba(252,227,0,0.8)]' : 'text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]'}`}>
                                              +{c.score}
                                            </span>
-                                           <span className="text-[10px] md:text-xs font-mono font-bold text-slate-300 mt-1 opacity-90 drop-shadow-md">{time}</span>
+                                           <span className={`${is6P ? 'text-[8px] md:text-[9px]' : 'text-[9px] md:text-[11px]'} font-mono font-bold text-slate-300 mt-0.5 opacity-90 drop-shadow-md leading-none`}>{time}</span>
                                         </div>
                                      ) : (
-                                        <span className={`${is6P ? 'text-[15px] md:text-[18px]' : 'text-xl md:text-2xl'} font-black mt-0.5 leading-none text-slate-400 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]`}>-</span>
+                                        <div className="flex flex-col items-center justify-center mt-1 z-10">
+                                           <span className={`${is6P ? 'text-[15px] md:text-[18px]' : 'text-xl md:text-2xl'} font-black leading-none text-slate-400 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]`}>-</span>
+                                           <span className={`${is6P ? 'text-[8px] md:text-[9px]' : 'text-[9px] md:text-[11px]'} font-mono font-bold text-transparent mt-0.5 leading-none`}>-</span>
+                                        </div>
                                      )}
                                   </div>
                                 );
                               })}
                             </div>
 
-                            <div className="relative z-10 flex flex-col items-center justify-center shrink-0 bg-gradient-to-t from-[#0f172a] via-[#0f172a]/80 to-transparent pb-2 pt-4 px-1 border-t border-white/5 h-16 md:h-20">
-                              <div className="w-full flex justify-center items-center"><AutoFitText text={mapName} /></div>
-                              {mapRecords && mapRecords[game.mapId] && (
-                                  <div className="flex flex-col items-center mt-1 w-full px-1">
-                                      <span className="text-[9px] md:text-[10px] text-[#fce300] font-black leading-none drop-shadow-md">{mapRecords[game.mapId].timeStr}</span>
-                                      <span className="text-[7px] md:text-[8px] text-slate-300 font-bold truncate w-[90%] text-center leading-none mt-0.5 opacity-80">{mapRecords[game.mapId].player}</span>
-                                  </div>
-                              )}
+                            {/* Fix 4: Xóa dòng kỉ lục dưới cột map để tiết kiệm diện tích */}
+                            <div className="relative z-10 h-8 md:h-10 shrink-0 bg-gradient-to-t from-[#0f172a] via-[#0f172a]/80 to-transparent flex items-end justify-center pb-2 px-2 border-t border-white/5">
+                              <AutoFitText text={mapName} />
                             </div>
                           </div>
                         );
@@ -1012,9 +1010,10 @@
       const [toastMsg, setToastMsg] = useState(null); 
       
       const [broadcastState, setBroadcastState] = useState({ isOpen: false, tab: 'scoreboard', gameIndex: 0 });
-
-      // Cửa sổ Dialog Custom thay thế window.alert và window.confirm
       const [dialog, setDialog] = useState({ isOpen: false, type: 'alert', message: '', onConfirm: null });
+      
+      // Fix 5: State chuyển đổi Hiệp đấu (Set)
+      const [viewSet, setViewSet] = useState(1);
 
       const showDialogAlert = (msg) => setDialog({ isOpen: true, type: 'alert', message: msg, onConfirm: null });
       const showDialogConfirm = (msg, onConfirmCallback) => setDialog({ isOpen: true, type: 'confirm', message: msg, onConfirm: onConfirmCallback });
@@ -1305,21 +1304,22 @@
 
             if (!setFinished) {
                 currentSet = s;
-                p1Rounds = s_p1Rounds;
-                p2Rounds = s_p2Rounds;
-                break;
-            }
-            if (s === soloMatchBO && setFinished) {
-                currentSet = s;
-                p1Rounds = s_p1Rounds;
-                p2Rounds = s_p2Rounds;
-            }
+            currentSet++;
+            p1Rounds = 0; p2Rounds = 0;
         }
+    });
 
-        return { p1Sets, p2Sets, p1Rounds, p2Rounds, currentSet, gameAssignments, mapsUsedSet12, mapsUsedSet3 };
-      }, [games, gameMode, soloMatchBO, soloSetBO]);
+    return { p1Sets, p2Sets, p1Rounds, p2Rounds, currentSet, gameAssignments, mapsUsedSet12, mapsUsedSet3 };
+  }, [games, gameMode, soloMatchBO, soloSetBO]);
 
-      const selectedMaps = useMemo(() => {
+  // Fix 6: Tự động chuyển màn hình SET khi có VĐV thắng hiệp
+  useEffect(() => {
+    if (gameMode === '1v1' && matchStatus1v1?.currentSet) {
+        setViewSet(matchStatus1v1.currentSet);
+    }
+  }, [matchStatus1v1?.currentSet, gameMode]);
+
+  const selectedMaps = useMemo(() => {
         if (gameMode === '1v1' && matchStatus1v1) {
             return []; // Map selection validation is handled row by row for 1v1
         }
@@ -1672,6 +1672,10 @@
             <BroadcastOverlay 
               broadcastState={broadcastState}
               setBroadcastState={setBroadcastState}
+              viewSet={viewSet}
+              setViewSet={setViewSet}
+              soloSetBO={soloSetBO}
+              soloMatchBO={soloMatchBO}
               players={players} 
               personalRecords={personalRecords}
               games={games} 
@@ -1900,25 +1904,25 @@
                 </button>
 
                 <button onClick={exportProfessionalExcel} className="flex items-center justify-center p-2 md:p-2.5 text-emerald-400 hover:text-white hover:bg-emerald-600/30 rounded-xl font-bold transition-all" title={t.export}>
-                  <Download size={18}/>
-                </button>
-                <button onClick={clearAll} className="flex items-center justify-center p-2 md:p-2.5 text-rose-400 hover:text-white hover:bg-rose-600/30 rounded-xl font-bold transition-all group" title={t.reset}>
-                  <RefreshCcw size={18} className="group-hover:-rotate-180 transition-transform duration-500"/>
-                </button>
-                <button onClick={() => setShowInfo(true)} className="flex items-center justify-center p-2 md:p-2.5 text-slate-400 hover:text-white hover:bg-slate-600/30 rounded-xl font-bold transition-all" title={t.infoBtn}>
-                  <InfoIcon size={18}/>
-                </button>
-
-              </div>
-            </header>
-
-            <div className={`grid ${gameMode === '1v1' ? 'grid-cols-1' : 'lg:grid-cols-4'} gap-4 md:gap-6`}>
+            <div className="grid lg:grid-cols-4 gap-4 md:gap-6">
               
               <div className={`${gameMode === '1v1' ? '' : 'lg:col-span-3'} bg-[#0f172a] border border-slate-700/50 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.8)] overflow-hidden animate-slide-up delay-100 flex flex-col max-h-[75vh]`}>
                 
                 <div className="overflow-x-auto overflow-y-auto flex-1 bg-[#0f172a]">
                   <table className="w-full text-xs md:text-sm border-collapse">
                     <thead className="sticky top-0 z-40 bg-[#0f172a] shadow-[0_5px_15px_rgba(0,0,0,0.8)] border-b border-slate-700">
+                      {/* Fix 7: Thanh điều hướng SET ở giao diện chính Mode Solo */}
+                      {gameMode === '1v1' && (
+                         <tr>
+                            <th colSpan={players.length + 1} className="py-2 bg-slate-900 border-b border-slate-700 shadow-inner">
+                               <div className="flex justify-center items-center gap-6">
+                                   <button onClick={() => setViewSet(v => Math.max(1, v - 1))} className="text-slate-400 hover:text-cyan-400 px-3 font-black text-xl hover:bg-slate-800 rounded transition-colors">&lt;</button>
+                                   <span className="text-cyan-400 font-black text-base uppercase tracking-[0.2em] min-w-[80px] text-center drop-shadow-md">SET {viewSet}</span>
+                                   <button onClick={() => setViewSet(v => Math.min(soloMatchBO, v + 1))} className="text-slate-400 hover:text-cyan-400 px-3 font-black text-xl hover:bg-slate-800 rounded transition-colors">&gt;</button>
+                               </div>
+                            </th>
+                         </tr>
+                      )}
                       <tr>
                         <th className="px-1 md:px-4 py-3 text-left w-32 md:w-64 tracking-widest text-slate-300 font-bold whitespace-nowrap pl-4">{t.match}</th>
                         {players.map((p, i) => {
@@ -1949,6 +1953,11 @@
                     </thead>
                     <tbody className="divide-y divide-slate-800/50 bg-slate-900/50">
                       {games.map((game, gIndex) => {
+                        // Fix 8: Lọc hiển thị Ván đấu theo Set đã chọn trong UI
+                        if (gameMode === '1v1' && matchStatus1v1) {
+                            if (matchStatus1v1.gameAssignments[gIndex]?.set !== viewSet) return null;
+                        }
+
                         const calcs = getGameCalculations(gIndex, game.times);
                         
                         let rowSelectedMaps = selectedMaps;
