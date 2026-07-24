@@ -1141,21 +1141,19 @@
       useEffect(() => { localStorage.setItem('zsm_banned_maps_1v1_v11', JSON.stringify(bannedMaps)); }, [bannedMaps]);
 
       useEffect(() => {
-          if (gameMode === '1v1') {
-              const targetLen = soloMatchBO * soloSetBO;
-              setGames(prev => {
-                  if (prev.length === targetLen) return prev;
-                  let newGames = [...prev];
-                  if (newGames.length < targetLen) {
-                      while(newGames.length < targetLen) {
-                          newGames.push({ id: Date.now() + Math.random(), mapId: "", times: Array(6).fill(''), cars: Array(6).fill(''), pets: Array(6).fill('') });
-                      }
-                  } else {
-                      newGames = newGames.slice(0, targetLen);
+          const targetLen = gameMode === '1v1' ? (soloMatchBO * soloSetBO) : 9;
+          setGames(prev => {
+              if (prev.length === targetLen) return prev;
+              let newGames = [...prev];
+              if (newGames.length < targetLen) {
+                  while(newGames.length < targetLen) {
+                      newGames.push({ id: Date.now() + Math.random(), mapId: "", times: Array(6).fill(''), cars: Array(6).fill(''), pets: Array(6).fill('') });
                   }
-                  return newGames;
-              });
-          }
+              } else {
+                  newGames = newGames.slice(0, targetLen);
+              }
+              return newGames;
+          });
       }, [gameMode, soloMatchBO, soloSetBO]);
 
       const displayTeam1Name = team1Name.trim() || t.team1;
