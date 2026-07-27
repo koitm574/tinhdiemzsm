@@ -1932,12 +1932,12 @@
 
       const WheelModal = () => {
          const wt = {
-             vi: { title: "Vòng Quay Map Random", diff: "Độ khó (Sao)", count: "Số lượng Map", countPh: "Tất cả", create: "🔄 Tạo Vòng Quay", spin: "QUAY NGAY", spinning: "Đang quay...", close: "Đóng", err: "Vui lòng chọn ít nhất 1 độ khó!" },
-             en: { title: "Random Map Wheel", diff: "Difficulty (Stars)", count: "Map Count", countPh: "All", create: "🔄 Create Wheel", spin: "SPIN NOW", spinning: "Spinning...", close: "Close", err: "Please select at least 1 difficulty!" },
-             cn: { title: "随机赛道转盘", diff: "难度 (星)", count: "赛道数量", countPh: "全部", create: "🔄 创建转盘", spin: "开始旋转", spinning: "旋转中...", close: "关闭", err: "请至少选择1个难度！" },
-             tw: { title: "隨機賽道轉盤", diff: "難度 (星)", count: "賽道數量", countPh: "全部", create: "🔄 創建轉盤", spin: "開始旋轉", spinning: "旋轉中...", close: "關閉", err: "請至少選擇1個難度！" },
-             th: { title: "วงล้อแผนที่สุ่ม", diff: "ความยาก (ดาว)", count: "จำนวนแผนที่", countPh: "ทั้งหมด", create: "🔄 สร้างวงล้อ", spin: "หมุนเลย", spinning: "กำลังหมุน...", close: "ปิด", err: "โปรดเลือกความยากอย่างน้อย 1 ระดับ!" }
-         }[lang] || { title: "Vòng Quay Map Random", diff: "Độ khó (Sao)", count: "Số lượng Map", countPh: "Tất cả", create: "🔄 Tạo Vòng Quay", spin: "QUAY NGAY", spinning: "Đang quay...", close: "Đóng", err: "Vui lòng chọn ít nhất 1 độ khó!" };
+             vi: { title: "Vòng Quay Map Random", diff: "Độ khó", count: "Số lượng Map", countPh: "Tất cả", create: "🔄 Tạo Vòng Quay", spin: "QUAY NGAY", spinning: "Đang quay...", close: "Đóng", err: "Vui lòng chọn ít nhất 1 độ khó!" },
+             en: { title: "Random Map Wheel", diff: "Difficulty", count: "Map Count", countPh: "All", create: "🔄 Create Wheel", spin: "SPIN NOW", spinning: "Spinning...", close: "Close", err: "Please select at least 1 difficulty!" },
+             cn: { title: "随机赛道转盘", diff: "难度", count: "赛道数量", countPh: "全部", create: "🔄 创建转盘", spin: "开始旋转", spinning: "旋转中...", close: "关闭", err: "请至少选择1个难度！" },
+             tw: { title: "隨機賽道轉盤", diff: "難度", count: "賽道數量", countPh: "全部", create: "🔄 創建轉盤", spin: "開始旋轉", spinning: "旋轉中...", close: "關閉", err: "請至少選擇1個難度！" },
+             th: { title: "วงล้อแผนที่สุ่ม", diff: "ความยาก", count: "จำนวนแผนที่", countPh: "ทั้งหมด", create: "🔄 สร้างวงล้อ", spin: "หมุนเลย", spinning: "กำลังหมุน...", close: "ปิด", err: "โปรดเลือกความยากอย่างน้อย 1 ระดับ!" }
+         }[lang] || { title: "Vòng Quay Map Random", diff: "Độ khó", count: "Số lượng Map", countPh: "Tất cả", create: "🔄 Tạo Vòng Quay", spin: "QUAY NGAY", spinning: "Đang quay...", close: "Đóng", err: "Vui lòng chọn ít nhất 1 độ khó!" };
 
          const [selectedStars, setSelectedStars] = useState([7, 6, 5, 4, 3]);
          const [mapCount, setMapCount] = useState('');
