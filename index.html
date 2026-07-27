@@ -103,8 +103,8 @@
     const Trophy = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg>;
     const PlayIcon = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>;
     const DatabaseIcon = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>;
+    const MenuIcon = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>;
 
-    // --- MAP POOL ---
     const MAP_POOL = [
       { stars: 7, maps: [
         { id: 'm7_1', vi: 'Sân Bay Siêu Tốc', en: 'Space Station', cn: '极速空港', tw: '極速空港', th: 'สปีดพอร์ต' },
@@ -419,7 +419,6 @@
       return { background: getMapGradient(mapId) };
     };
 
-    // UPDATE: Thêm logic Ban Map vào SearchableMapSelect
     const SearchableMapSelect = ({ currentMapId, selectedMaps = [], bannedMaps = [], onChange, lang, t, isBan = false }) => {
       const [isOpen, setIsOpen] = useState(false);
       const [searchTerm, setSearchTerm] = useState('');
@@ -1020,6 +1019,10 @@
       const [broadcastState, setBroadcastState] = useState({ isOpen: false, tab: 'scoreboard', gameIndex: 0 });
       const [dialog, setDialog] = useState({ isOpen: false, type: 'alert', message: '', onConfirm: null });
 
+      // --- SIDEBAR & MENU ---
+      const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+      const [activeSidebarMenu, setActiveSidebarMenu] = useState(null);
+
       const showDialogAlert = (msg) => setDialog({ isOpen: true, type: 'alert', message: msg, onConfirm: null });
       const showDialogConfirm = (msg, onConfirmCallback) => setDialog({ isOpen: true, type: 'confirm', message: msg, onConfirm: onConfirmCallback });
 
@@ -1050,7 +1053,6 @@
           return Array(6).fill(""); 
       });
 
-      // BANNED MAPS STATE (Mới thêm)
       const [bannedMaps, setBannedMaps] = useState(() => {
           const saved = localStorage.getItem('zsm_banned_maps_1v1_v11');
           if (saved) { try { return JSON.parse(saved); } catch(e) {} }
@@ -1172,7 +1174,6 @@
         setGames(newGames);
       };
 
-      // HÀM XỬ LÝ CẤM MAP (Mới thêm)
       const handleBanChange = (setNum, pIndex, banSlot, mapId) => {
         setBannedMaps(prev => {
             const newState = { ...prev };
@@ -1302,7 +1303,7 @@
           setGames(Array(numGames).fill(null).map((_, i) => ({ id: Date.now() + i, mapId: "", times: Array(6).fill(''), cars: Array(6).fill(''), pets: Array(6).fill('') })));
           setTeam1Name('');
           setTeam2Name('');
-          setBannedMaps({}); // Xoá luôn lịch sử ban map
+          setBannedMaps({});
         });
       };
 
@@ -1375,12 +1376,6 @@
         
         return { p1Sets, p2Sets, p1Rounds, p2Rounds, currentSet, gameAssignments, mapsUsedSet12, mapsUsedSet3 };
       }, [games, gameMode, soloMatchBO, soloSetBO]);
-
-      useEffect(() => {
-          if (gameMode === '1v1' && matchStatus1v1?.currentSet) {
-              setViewSet(matchStatus1v1.currentSet);
-          }
-      }, [matchStatus1v1?.currentSet, gameMode]);
 
       const selectedMaps = useMemo(() => {
         if (gameMode === '1v1' && matchStatus1v1) {
@@ -1852,7 +1847,6 @@
                      <button onClick={() => setShowDbModal(false)} className="text-slate-400 hover:text-red-500 transition-colors"><XIcon size={24}/></button>
                   </div>
                   
-                  {/* Tabs */}
                   <div className="flex bg-slate-950 border-b border-slate-800 shrink-0">
                      <button onClick={()=>setActiveTab('players')} className={`flex-1 py-3 font-bold text-sm uppercase tracking-wider transition-colors ${activeTab === 'players' ? 'text-cyan-400 border-b-2 border-cyan-400 bg-cyan-900/10' : 'text-slate-400 hover:bg-slate-900'}`}>{t.tabPlayers}</button>
                      <button onClick={()=>setActiveTab('cars')} className={`flex-1 py-3 font-bold text-sm uppercase tracking-wider transition-colors ${activeTab === 'cars' ? 'text-cyan-400 border-b-2 border-cyan-400 bg-cyan-900/10' : 'text-slate-400 hover:bg-slate-900'}`}>{t.tabCars}</button>
@@ -1860,8 +1854,6 @@
                   </div>
 
                   <div className="p-4 md:p-6 flex-1 overflow-y-auto hide-scrollbar bg-[#0f172a]">
-                     
-                     {/* TAB: PLAYERS */}
                      {activeTab === 'players' && (
                         <div className="space-y-4">
                            {players.map((pName, idx) => (
@@ -1888,7 +1880,6 @@
                         </div>
                      )}
 
-                     {/* TAB: CARS & PETS */}
                      {(activeTab === 'cars' || activeTab === 'pets') && (
                         <div className="flex flex-col h-full">
                            <div className="bg-slate-800/80 p-4 rounded-xl border border-slate-700 mb-6 shrink-0 flex flex-col md:flex-row gap-3 items-end">
@@ -1929,12 +1920,189 @@
          );
       };
 
+      const WheelModal = () => {
+         const wt = {
+             vi: { title: "Vòng Quay Map Random", diff: "Độ khó (Sao)", count: "Số lượng Map", countPh: "Tất cả", create: "🔄 Tạo Vòng Quay", spin: "QUAY NGAY", spinning: "Đang quay...", winner: "🎉 BẠN ĐÃ QUAY TRÚNG 🎉", close: "Đóng / Close", err: "Vui lòng chọn ít nhất 1 độ khó!" },
+             en: { title: "Random Map Wheel", diff: "Difficulty (Stars)", count: "Map Count", countPh: "All", create: "🔄 Create Wheel", spin: "SPIN NOW", spinning: "Spinning...", winner: "🎉 YOU SPUN 🎉", close: "Close", err: "Please select at least 1 difficulty!" },
+             cn: { title: "随机赛道转盘", diff: "难度 (星)", count: "赛道数量", countPh: "全部", create: "🔄 创建转盘", spin: "开始旋转", spinning: "旋转中...", winner: "🎉 恭喜你抽中 🎉", close: "关闭", err: "请至少选择1个难度！" },
+             tw: { title: "隨機賽道轉盤", diff: "難度 (星)", count: "賽道數量", countPh: "全部", create: "🔄 創建轉盤", spin: "開始旋轉", spinning: "旋轉中...", winner: "🎉 恭喜你抽中 🎉", close: "關閉", err: "請至少選擇1個難度！" },
+             th: { title: "วงล้อแผนที่สุ่ม", diff: "ความยาก (ดาว)", count: "จำนวนแผนที่", countPh: "ทั้งหมด", create: "🔄 สร้างวงล้อ", spin: "หมุนเลย", spinning: "กำลังหมุน...", winner: "🎉 คุณหมุนได้ 🎉", close: "ปิด", err: "โปรดเลือกความยากอย่างน้อย 1 ระดับ!" }
+         }[lang] || { title: "Vòng Quay Map Random", diff: "Độ khó (Sao)", count: "Số lượng Map", countPh: "Tất cả", create: "🔄 Tạo Vòng Quay", spin: "QUAY NGAY", spinning: "Đang quay...", winner: "🎉 BẠN ĐÃ QUAY TRÚNG 🎉", close: "Đóng / Close", err: "Vui lòng chọn ít nhất 1 độ khó!" };
+
+         const [selectedStars, setSelectedStars] = useState([7, 6, 5, 4, 3]);
+         const [mapCount, setMapCount] = useState('');
+         const [wheelMaps, setWheelMaps] = useState([]);
+         const [isSpinning, setIsSpinning] = useState(false);
+         const [rotation, setRotation] = useState(0);
+         const [winner, setWinner] = useState(null);
+
+         useEffect(() => {
+             generateWheel();
+         }, []);
+
+         const toggleStar = (star) => {
+             if (selectedStars.includes(star)) setSelectedStars(selectedStars.filter(s => s !== star));
+             else setSelectedStars([...selectedStars, star]);
+         };
+
+         const generateWheel = () => {
+             if (isSpinning) return;
+             let pool = [];
+             MAP_POOL.forEach(group => {
+                 if (selectedStars.includes(group.stars)) {
+                     pool = pool.concat(group.maps);
+                 }
+             });
+             if (pool.length === 0) return showDialogAlert(wt.err);
+
+             let shuffled = [...pool];
+             for (let i = shuffled.length - 1; i > 0; i--) {
+                 const j = Math.floor(Math.random() * (i + 1));
+                 [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+             }
+
+             let finalMaps = shuffled;
+             const count = parseInt(mapCount);
+             if (!isNaN(count) && count > 0 && count < shuffled.length) {
+                 finalMaps = shuffled.slice(0, count);
+             }
+
+             setWheelMaps(finalMaps);
+             setRotation(0);
+             setWinner(null);
+         };
+
+         const spinWheel = () => {
+             if (isSpinning || wheelMaps.length === 0) return;
+             setIsSpinning(true);
+             setWinner(null);
+
+             const winIdx = Math.floor(Math.random() * wheelMaps.length);
+             const angle = 360 / wheelMaps.length;
+             // Calculate target angle to align the center of the slice to the top (0 degrees)
+             const targetAngle = 360 - ((winIdx + 0.5) * angle);
+             const extraSpins = 360 * (5 + Math.floor(Math.random() * 3));
+             const currentMod = rotation % 360;
+             let rotateBy = extraSpins + targetAngle - currentMod;
+             if (rotateBy < extraSpins) rotateBy += 360;
+
+             setRotation(r => r + rotateBy);
+
+             setTimeout(() => {
+                 setIsSpinning(false);
+                 setWinner(wheelMaps[winIdx]);
+             }, 5000);
+         };
+
+         return (
+             <div className="fixed inset-0 z-[300] bg-black/90 flex flex-col items-center justify-center p-2 md:p-4 backdrop-blur-md animate-slide-up">
+                 <div className="w-full max-w-6xl h-[95vh] md:h-[90vh] bg-slate-900 border border-cyan-500/50 rounded-2xl shadow-[0_0_50px_rgba(6,182,212,0.2)] flex flex-col overflow-hidden relative">
+                     {/* Header */}
+                     <div className="bg-slate-950 p-4 border-b border-slate-800 flex justify-between items-center shrink-0">
+                         <h2 className="text-cyan-400 font-black italic tracking-widest text-lg md:text-xl uppercase flex items-center gap-2">🎡 {wt.title}</h2>
+                         <button onClick={() => !isSpinning && setActiveSidebarMenu(null)} className="text-slate-400 hover:text-red-500 transition-colors"><XIcon size={28}/></button>
+                     </div>
+
+                     {/* Content */}
+                     <div className="flex-1 flex flex-col lg:flex-row overflow-hidden relative">
+                         {/* Config Panel */}
+                         <div className="w-full lg:w-80 bg-slate-950/50 border-b lg:border-b-0 lg:border-r border-slate-800 p-4 md:p-6 flex flex-col gap-4 md:gap-6 overflow-y-auto shrink-0 z-20 shadow-xl">
+                             <div>
+                                 <h3 className="text-slate-400 font-bold text-xs uppercase tracking-widest mb-3">{wt.diff}</h3>
+                                 <div className="grid grid-cols-3 lg:grid-cols-2 gap-2">
+                                     {[7, 6, 5, 4, 3].map(star => (
+                                         <label key={star} className={`flex items-center justify-center lg:justify-start gap-2 p-2 rounded cursor-pointer border transition-colors ${selectedStars.includes(star) ? 'bg-cyan-900/30 border-cyan-500/50 text-cyan-300' : 'bg-slate-900 border-slate-700 text-slate-500'}`}>
+                                             <input type="checkbox" checked={selectedStars.includes(star)} onChange={() => toggleStar(star)} className="hidden" />
+                                             <span className="font-black text-sm">★ {star}</span>
+                                         </label>
+                                     ))}
+                                 </div>
+                             </div>
+                             <div>
+                                 <h3 className="text-slate-400 font-bold text-xs uppercase tracking-widest mb-3">{wt.count}</h3>
+                                 <input type="number" placeholder={wt.countPh} value={mapCount} onChange={e => setMapCount(e.target.value)} className="w-full bg-slate-900 border border-slate-700 rounded px-4 py-2 text-white outline-none focus:border-cyan-500 transition-colors font-bold text-center lg:text-left" />
+                             </div>
+                             <div className="flex gap-2 lg:flex-col mt-auto pt-2 lg:pt-6">
+                                 <button onClick={generateWheel} disabled={isSpinning} className="flex-1 py-3 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded shadow-md transition-colors uppercase tracking-widest text-xs md:text-sm disabled:opacity-50">
+                                     {wt.create}
+                                 </button>
+                                 <button onClick={spinWheel} disabled={isSpinning || wheelMaps.length === 0} className="flex-1 py-3 lg:py-4 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-black rounded shadow-[0_0_20px_rgba(6,182,212,0.4)] transition-all uppercase tracking-widest text-sm md:text-lg disabled:opacity-50 lg:hover:scale-105 active:scale-95">
+                                     {isSpinning ? wt.spinning : wt.spin}
+                                 </button>
+                             </div>
+                         </div>
+
+                         {/* Wheel Area */}
+                         <div className="flex-1 p-4 md:p-8 bg-[#0f172a] relative flex items-center justify-center overflow-hidden">
+                             <div className="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] [background-size:30px_30px] opacity-10 pointer-events-none"></div>
+
+                             <div className="relative w-full max-w-[320px] md:max-w-[500px] lg:max-w-[600px] aspect-square mx-auto mt-4 md:mt-0">
+                                 <div
+                                     className="w-full h-full rounded-full border-4 md:border-8 border-slate-800 bg-slate-900 overflow-hidden relative shadow-[0_0_50px_rgba(0,0,0,0.8)] ease-[cubic-bezier(0.25,1,0.5,1)]"
+                                     style={{ transform: `rotate(${rotation}deg)`, transitionProperty: 'transform', transitionDuration: isSpinning ? '5s' : '0s' }}
+                                 >
+                                     {wheelMaps.map((map, i) => {
+                                         const angle = 360 / wheelMaps.length;
+                                         return (
+                                             <div
+                                                 key={`${map.id}-${i}`}
+                                                 className="absolute inset-0 origin-center"
+                                                 style={{
+                                                     transform: `rotate(${i * angle}deg)`,
+                                                     maskImage: `conic-gradient(from 0deg at 50% 50%, black ${angle}deg, transparent ${angle}deg)`,
+                                                     WebkitMaskImage: `conic-gradient(from 0deg at 50% 50%, black ${angle}deg, transparent ${angle}deg)`
+                                                 }}
+                                             >
+                                                <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${MAP_BACKGROUNDS[map.id]})` }} />
+                                                <div className="absolute inset-0 bg-black/50" />
+                                                <div className="absolute inset-y-0 right-1/2 w-[1px] bg-white/30" style={{ transformOrigin: 'right' }} />
+                                                <div
+                                                    className="absolute top-1/2 left-1/2 flex items-center justify-end px-3 md:px-8 font-black text-white drop-shadow-[0_2px_4px_rgba(0,0,0,1)] z-10"
+                                                    style={{
+                                                        width: '50%',
+                                                        height: '40px',
+                                                        marginTop: '-20px',
+                                                        transformOrigin: 'left center',
+                                                        transform: `rotate(${angle / 2}deg)`
+                                                    }}
+                                                >
+                                                    <span className="truncate w-full text-right uppercase tracking-wider" style={{ fontSize: wheelMaps.length > 20 ? '8px' : wheelMaps.length > 10 ? '10px' : '14px' }}>
+                                                        {getMapName(map.id, lang)}
+                                                    </span>
+                                                </div>
+                                             </div>
+                                         );
+                                     })}
+                                 </div>
+                                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 md:w-16 md:h-16 bg-slate-800 border-4 md:border-8 border-slate-900 rounded-full shadow-[0_0_20px_rgba(0,0,0,0.8)] z-20 flex items-center justify-center text-lg md:text-2xl">🎡</div>
+                                 <div className="absolute -top-3 md:-top-6 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[15px] border-r-[15px] border-t-[30px] md:border-l-[20px] md:border-r-[20px] md:border-t-[40px] border-l-transparent border-r-transparent border-t-amber-500 drop-shadow-[0_5px_10px_rgba(0,0,0,0.8)] z-30" />
+                             </div>
+
+                             {/* Winner Overlay */}
+                             {winner && (
+                                 <div className="absolute inset-0 z-40 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 animate-slide-up">
+                                     <div className="bg-slate-900 border-2 border-amber-500 rounded-2xl p-6 md:p-10 flex flex-col items-center max-w-lg w-full text-center shadow-[0_0_100px_rgba(245,158,11,0.4)]">
+                                         <h3 className="text-amber-400 font-black tracking-[0.15em] md:tracking-[0.2em] uppercase text-lg md:text-2xl mb-2 drop-shadow-md">{wt.winner}</h3>
+                                         <div className="w-full aspect-video rounded-xl overflow-hidden my-4 border border-slate-700 shadow-inner relative">
+                                             <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${MAP_BACKGROUNDS[winner.id]})` }} />
+                                         </div>
+                                         <h2 className="text-2xl md:text-4xl font-black text-white uppercase tracking-widest drop-shadow-md mb-6 leading-tight">{getMapName(winner.id, lang)}</h2>
+                                         <button onClick={() => setWinner(null)} className="px-8 py-3 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-lg shadow-md transition-colors uppercase tracking-widest text-sm">{wt.close}</button>
+                                     </div>
+                                 </div>
+                             )}
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         );
+      };
+
       return (
         <div className="min-h-screen relative overflow-x-hidden pb-20">
           
           <CustomDialog dialog={dialog} setDialog={setDialog} />
 
-          {/* TAB Livestream Component */}
           {broadcastState.isOpen && (
             <BroadcastOverlay 
               broadcastState={broadcastState}
@@ -1964,7 +2132,27 @@
             />
           )}
 
-          {/* RECORDS MODAL */}
+          {/* SIDEBAR DRAWER */}
+          <>
+             <div className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-[199] transition-opacity duration-300 ${isSidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} onClick={() => setIsSidebarOpen(false)}></div>
+             <div className={`fixed inset-y-0 left-0 w-72 md:w-80 bg-slate-900 border-r border-slate-700 shadow-[20px_0_50px_rgba(0,0,0,0.5)] z-[200] transform transition-transform duration-300 flex flex-col ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+                 <div className="p-4 md:p-5 border-b border-slate-800 flex justify-between items-center bg-slate-950 shrink-0">
+                     <h2 className="text-cyan-400 font-black italic tracking-widest text-base md:text-lg uppercase">{lang === 'vi' ? 'MENU TÍNH NĂNG' : lang === 'en' ? 'FEATURES MENU' : 'MENU'}</h2>
+                     <button onClick={() => setIsSidebarOpen(false)} className="text-slate-400 hover:text-red-500 transition-colors"><XIcon size={24}/></button>
+                 </div>
+                 <div className="p-4 flex flex-col gap-2 flex-1 overflow-y-auto">
+                     <button onClick={() => { setActiveSidebarMenu('wheel'); setIsSidebarOpen(false); }} className="flex items-center gap-3 w-full p-3 bg-slate-800/50 hover:bg-cyan-900/30 text-slate-300 hover:text-cyan-300 border border-transparent hover:border-cyan-500/50 rounded-xl transition-all font-bold text-left group shadow-sm">
+                         <div className="w-10 h-10 rounded-lg bg-slate-900 border border-slate-700 flex items-center justify-center group-hover:bg-cyan-900 group-hover:border-cyan-500 group-hover:scale-110 transition-all text-xl">🎡</div>
+                         <span className="tracking-wide uppercase text-xs md:text-sm">{lang === 'vi' ? 'Vòng Quay Map Random' : lang === 'en' ? 'Random Map Wheel' : 'Random Map'}</span>
+                     </button>
+                     {/* CÁC TÍNH NĂNG TƯƠNG LAI SẼ THÊM Ở ĐÂY */}
+                 </div>
+             </div>
+          </>
+
+          {/* HIỂN THỊ WHEEL MODAL KHI KÍCH HOẠT TỪ SIDEBAR */}
+          {activeSidebarMenu === 'wheel' && <WheelModal />}
+
           {showRecordsModal && (
             <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-slide-up" onClick={() => setShowRecordsModal(false)}>
               <div className="bg-slate-900 border border-amber-500/50 rounded-xl max-w-3xl w-full shadow-[0_0_50px_rgba(245,158,11,0.2)] overflow-hidden flex flex-col max-h-[85vh]" onClick={e => e.stopPropagation()}>
@@ -2058,10 +2246,8 @@
             </div>
           )}
 
-          {/* DYNAMIC DATABASE MODAL */}
           {showDbModal && <DatabaseManagerModal />}
 
-          {/* INFO MODAL */}
           {showInfo && (
             <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-slide-up" onClick={() => setShowInfo(false)}>
               <div className="bg-slate-900 border border-slate-700 rounded-xl max-w-md w-full shadow-[0_0_40px_rgba(220,38,38,0.2)] overflow-hidden" onClick={e => e.stopPropagation()}>
@@ -2092,7 +2278,7 @@
             </div>
           )}
 
-          {/* LANG SELECTOR */}
+          {}
           <div className="absolute top-2 right-2 md:top-4 md:right-4 z-50 flex items-center gap-2 bg-slate-900/80 border border-slate-700 px-2 md:px-3 py-1.5 rounded-full backdrop-blur-md shadow-lg transition-transform hover:scale-105">
             <Globe size={14} className="text-slate-400 hidden sm:block" />
             <select value={lang} onChange={(e) => setLang(e.target.value)} className="bg-transparent text-slate-300 text-[10px] md:text-xs font-bold outline-none cursor-pointer appearance-none pr-1 md:pr-2">
@@ -2100,7 +2286,6 @@
             </select>
           </div>
 
-          {/* EFFECTS & BACKGROUND */}
           <div className="fixed inset-0 pointer-events-none z-0">
             <div className="absolute inset-0 bg-[url('https://storage.googleapis.com/chat-staging-context-data/context-images/image_4f4785.jpg')] bg-cover bg-center opacity-40"></div>
             <div className="absolute inset-0 bg-[#050510]/80 backdrop-blur-sm"></div>
@@ -2111,7 +2296,12 @@
 
           <div className="relative z-10 p-2 md:p-8 max-w-[1400px] mx-auto">
             
-            <header className="mb-6 md:mb-8 text-center animate-slide-up mt-8 md:mt-0">
+            <header className="mb-6 md:mb-8 text-center animate-slide-up mt-8 md:mt-0 relative flex flex-col items-center justify-center w-full">
+              {/* NÚT MỞ SIDEBAR MENU TRÁI */}
+              <button onClick={() => setIsSidebarOpen(true)} className="absolute left-0 top-1/2 -translate-y-1/2 p-2 md:p-3 text-slate-400 hover:text-cyan-400 hover:bg-slate-800 rounded-xl transition-all z-50 group border border-transparent hover:border-slate-700 shadow-sm" title="Menu Tính Năng">
+                  <MenuIcon size={24} className="w-6 h-6 md:w-8 md:h-8 group-hover:scale-110 transition-transform" />
+              </button>
+
               <div className="inline-flex items-center gap-2 md:gap-4 mb-1 md:mb-2 hover:scale-105 transition-transform duration-300">
                 <Flag className="w-5 h-5 md:w-8 md:h-8 text-red-500 italic transform -skew-x-12 hidden sm:block" />
                 <h1 className="text-xl sm:text-3xl md:text-5xl font-black italic tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-amber-500 to-yellow-500 uppercase drop-shadow-[0_0_15px_rgba(220,38,38,0.5)]" style={{ transform: 'skewX(-10deg)' }}>
@@ -2207,29 +2397,16 @@
                                    <button onClick={() => setViewSet(v => Math.min(soloMatchBO, v + 1))} className="text-slate-400 hover:text-cyan-400 px-3 font-black text-xl hover:bg-slate-800 rounded transition-colors">&gt;</button>
                                </div>
                                
-                               {/* KHU VỰC CẤM MAP DÀNH CHO 1V1 (Mới thêm) */}
                                <div className="mt-2 flex flex-col xl:flex-row justify-center items-center gap-2 xl:gap-8 px-4 border-t border-slate-800/50 pt-2 pb-1">
                                    <div className="flex flex-wrap items-center gap-2 justify-center">
                                        <span className="text-[10px] text-red-500/80 font-black uppercase tracking-widest flex items-center gap-1 drop-shadow-md">
                                            <XIcon size={12}/> {players[0]} BAN:
                                        </span>
                                        <div className="w-[110px] md:w-[140px]">
-                                           <SearchableMapSelect 
-                                               currentMapId={bannedMaps[viewSet]?.[0]?.[0]} 
-                                               selectedMaps={[]} 
-                                               bannedMaps={currentSetBans} 
-                                               onChange={(id) => handleBanChange(viewSet, 0, 0, id)} 
-                                               lang={lang} t={t} isBan={true} 
-                                           />
+                                           <SearchableMapSelect currentMapId={bannedMaps[viewSet]?.[0]?.[0]} selectedMaps={[]} bannedMaps={currentSetBans} onChange={(id) => handleBanChange(viewSet, 0, 0, id)} lang={lang} t={t} isBan={true} />
                                        </div>
                                        <div className="w-[110px] md:w-[140px]">
-                                           <SearchableMapSelect 
-                                               currentMapId={bannedMaps[viewSet]?.[0]?.[1]} 
-                                               selectedMaps={[]} 
-                                               bannedMaps={currentSetBans} 
-                                               onChange={(id) => handleBanChange(viewSet, 0, 1, id)} 
-                                               lang={lang} t={t} isBan={true} 
-                                           />
+                                           <SearchableMapSelect currentMapId={bannedMaps[viewSet]?.[0]?.[1]} selectedMaps={[]} bannedMaps={currentSetBans} onChange={(id) => handleBanChange(viewSet, 0, 1, id)} lang={lang} t={t} isBan={true} />
                                        </div>
                                    </div>
                                    
@@ -2240,22 +2417,10 @@
                                            <XIcon size={12}/> {players[1]} BAN:
                                        </span>
                                        <div className="w-[110px] md:w-[140px]">
-                                           <SearchableMapSelect 
-                                               currentMapId={bannedMaps[viewSet]?.[1]?.[0]} 
-                                               selectedMaps={[]} 
-                                               bannedMaps={currentSetBans} 
-                                               onChange={(id) => handleBanChange(viewSet, 1, 0, id)} 
-                                               lang={lang} t={t} isBan={true} 
-                                           />
+                                           <SearchableMapSelect currentMapId={bannedMaps[viewSet]?.[1]?.[0]} selectedMaps={[]} bannedMaps={currentSetBans} onChange={(id) => handleBanChange(viewSet, 1, 0, id)} lang={lang} t={t} isBan={true} />
                                        </div>
                                        <div className="w-[110px] md:w-[140px]">
-                                           <SearchableMapSelect 
-                                               currentMapId={bannedMaps[viewSet]?.[1]?.[1]} 
-                                               selectedMaps={[]} 
-                                               bannedMaps={currentSetBans} 
-                                               onChange={(id) => handleBanChange(viewSet, 1, 1, id)} 
-                                               lang={lang} t={t} isBan={true} 
-                                           />
+                                           <SearchableMapSelect currentMapId={bannedMaps[viewSet]?.[1]?.[1]} selectedMaps={[]} bannedMaps={currentSetBans} onChange={(id) => handleBanChange(viewSet, 1, 1, id)} lang={lang} t={t} isBan={true} />
                                        </div>
                                    </div>
                                </div>
@@ -2488,7 +2653,6 @@
                                 <span className="text-[9px] text-slate-500 font-bold hidden sm:inline">{t.pts}</span>
                               </div>
 
-                              {/* THÔNG BÁO QUYỀN CHỌN MAP */}
                               {isPicker && (
                                 <div className="absolute -top-3 -right-2 bg-purple-600 border border-purple-400 px-2 py-0.5 rounded text-[9px] font-black uppercase text-white shadow-[0_0_10px_#9333ea] animate-pulse whitespace-nowrap z-20 flex items-center gap-1">
                                   🎯 {t.pick}
@@ -2505,7 +2669,6 @@
             </div>
           </div>
           
-          {/* TOAST NOTIFICATION CHO KỶ LỤC MỚI */}
           {toastMsg && (
             <div className="fixed bottom-4 right-4 z-[9999] bg-gradient-to-r from-amber-500 to-orange-600 text-white px-4 py-3 rounded-lg shadow-[0_5px_20px_rgba(245,158,11,0.4)] flex items-center gap-3 font-bold text-sm animate-slide-up border border-amber-300">
               <Trophy size={20} className="animate-bounce" />
