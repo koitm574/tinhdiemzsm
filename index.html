@@ -105,6 +105,7 @@
     const DatabaseIcon = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>;
     const MenuIcon = ({size=24, className=""}) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} width={size} height={size}><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>;
 
+    // --- MAP POOL ---
     const MAP_POOL = [
       { stars: 7, maps: [
         { id: 'm7_1', vi: 'Sân Bay Siêu Tốc', en: 'Space Station', cn: '极速空港', tw: '極速空港', th: 'สปีดพอร์ต' },
@@ -142,7 +143,7 @@
         { id: 'm4_13', vi: 'Tiệc Rượu Bên Suối', en: 'Utopia', cn: '沁园春', tw: '沁園春', th: 'งานเลี้ยงริมลำธาร' },
         { id: 'm4_14', vi: 'Đỉnh Titan', en: 'Titan\'s Peak', cn: '泰坦巨峰', tw: '泰坦巨峰', th: 'ยอดเขาไททัน' },
         { id: 'm4_15', vi: 'Mây Cuộn Cổng Trời', en: 'Clouds Heavenly Gate', cn: '云游天府', tw: '雲遊天府', th: 'เมฆาม้วนประตูสวรรค์' },
-        { id: 'm4_16', vi: 'Vực Thẳm Trái Tim', en: 'Heart\'s Abyss', cn: '心渊', tw: '心渊', th: 'ห้วงลึกแห่งหัวใจ' }
+        { id: 'm4_16', vi: 'Tâm Uyên', en: 'Soulrift', cn: '心渊', tw: '心渊', th: 'Soulrift' }
       ]},
       { stars: 3, maps: [
         { id: 'm3_1', vi: 'Thành Phố 11', en: 'City 11', cn: '十一城', tw: '十一城', th: 'เมือง 11' },
@@ -157,7 +158,7 @@
         { id: 'm3_10', vi: 'Tuyệt Cảnh Giang Sơn', en: 'Stunning Jiangxi', cn: '绝色江西', tw: '絕色江西', th: 'ทิวทัศน์แม่น้ำ' },
         { id: 'm3_11', vi: 'Vành Đai Troy', en: 'The Circular City of Troy', cn: '特洛伊环城', tw: '特洛伊城', th: 'เมืองทรอย' },
         { id: 'm3_12', vi: 'Hồ Long Tinh', en: 'Dragon Crystal Lake', cn: '龙晶湖', tw: '龍晶湖', th: 'ทะเลสาบมังกรคริสตัล' },
-        { id: 'm3_13', vi: 'Vụ Sơn Ngũ Hành', en: 'Wushan Five Elements', cn: '雾山五行', tw: '霧山五行', th: 'ภูเขาหมอกห้าธาตุ' },
+        { id: 'm3_13', vi: 'Vụ Sơn Ngũ Hành', en: 'Wushan Five Elements', cn: '雾山五行', tw: '雾山五行', th: 'ภูเขาหมอกห้าธาตุ' },
         { id: 'm3_14', vi: 'Bờ Biển Lãng Mạn', en: 'Romantic Seaside', cn: '浪漫海岸', tw: '浪漫海岸', th: 'ชายหาดโรแมนติก' },
       ]}
     ];
@@ -2010,35 +2011,40 @@
              setIsSpinning(true);
              setWinner(null);
 
-             // Tinh toan ket qua
              const winIdx = Math.floor(Math.random() * wheelMaps.length);
              const angle = 360 / wheelMaps.length;
              // Can chinh giua map len tren cung (0 do)
              const targetAngle = 360 - ((winIdx + 0.5) * angle);
-             const extraSpins = 360 * (6 + Math.floor(Math.random() * 3));
+             const extraSpins = 360 * (10 + Math.floor(Math.random() * 5));
              const currentMod = rotation % 360;
              let rotateBy = extraSpins + targetAngle - currentMod;
              if (rotateBy < extraSpins) rotateBy += 360;
 
              setRotation(r => r + rotateBy);
 
-             // Simulate tick sound matching easing out curve
-             let ticks = 0;
-             const totalTicks = 45; 
+             const spinDuration = 10000; // Tăng thời gian quay lên 10 giây
+             const startTime = Date.now();
+             
              const tickLoop = () => {
-                 if (ticks >= totalTicks) return;
+                 const elapsed = Date.now() - startTime;
+                 // Cắt âm thanh chính xác trước khi vòng quay kết thúc
+                 if (elapsed >= spinDuration - 50) return; 
+                 
                  playTickSound();
-                 ticks++;
-                 let progress = ticks / totalTicks;
-                 let nextDelay = 20 + Math.pow(progress, 3.5) * 600; 
-                 setTimeout(tickLoop, nextDelay);
+                 let progress = elapsed / spinDuration;
+                 // Đường cong giảm tốc độ (easing out) cho thời gian delay giữa mỗi tiếng tạch
+                 let nextDelay = 20 + Math.pow(progress, 3) * 800; 
+                 
+                 if (elapsed + nextDelay <= spinDuration) {
+                     setTimeout(tickLoop, nextDelay);
+                 }
              };
              tickLoop();
 
              setTimeout(() => {
                  setIsSpinning(false);
                  setWinner(wheelMaps[winIdx]);
-             }, 5000);
+             }, spinDuration);
          };
 
          return (
@@ -2089,7 +2095,7 @@
                                  {/* Banh Xe Chinh */}
                                  <div
                                      className="w-full h-full rounded-full border-4 md:border-8 border-slate-800 bg-slate-900 overflow-hidden relative shadow-[0_0_50px_rgba(0,0,0,0.8)] ease-[cubic-bezier(0.25,1,0.5,1)]"
-                                     style={{ transform: `rotate(${rotation}deg)`, transitionProperty: 'transform', transitionDuration: isSpinning ? '5s' : '0s' }}
+                                     style={{ transform: `rotate(${rotation}deg)`, transitionProperty: 'transform', transitionDuration: isSpinning ? '10s' : '0s' }}
                                  >
                                      {wheelMaps.map((map, i) => {
                                          const angle = 360 / wheelMaps.length;
@@ -2160,6 +2166,7 @@
           
           <CustomDialog dialog={dialog} setDialog={setDialog} />
 
+          {/* TAB Livestream Component */}
           {broadcastState.isOpen && (
             <BroadcastOverlay 
               broadcastState={broadcastState}
@@ -2210,6 +2217,7 @@
           {/* HIỂN THỊ WHEEL MODAL KHI KÍCH HOẠT TỪ SIDEBAR */}
           {activeSidebarMenu === 'wheel' && <WheelModal />}
 
+          {/* RECORDS MODAL */}
           {showRecordsModal && (
             <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-slide-up" onClick={() => setShowRecordsModal(false)}>
               <div className="bg-slate-900 border border-amber-500/50 rounded-xl max-w-3xl w-full shadow-[0_0_50px_rgba(245,158,11,0.2)] overflow-hidden flex flex-col max-h-[85vh]" onClick={e => e.stopPropagation()}>
@@ -2303,8 +2311,10 @@
             </div>
           )}
 
+          {/* DYNAMIC DATABASE MODAL */}
           {showDbModal && <DatabaseManagerModal />}
 
+          {/* INFO MODAL */}
           {showInfo && (
             <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-slide-up" onClick={() => setShowInfo(false)}>
               <div className="bg-slate-900 border border-slate-700 rounded-xl max-w-md w-full shadow-[0_0_40px_rgba(220,38,38,0.2)] overflow-hidden" onClick={e => e.stopPropagation()}>
@@ -2335,7 +2345,7 @@
             </div>
           )}
 
-          {}
+          {/* LANG SELECTOR */}
           <div className="absolute top-2 right-2 md:top-4 md:right-4 z-50 flex items-center gap-2 bg-slate-900/80 border border-slate-700 px-2 md:px-3 py-1.5 rounded-full backdrop-blur-md shadow-lg transition-transform hover:scale-105">
             <Globe size={14} className="text-slate-400 hidden sm:block" />
             <select value={lang} onChange={(e) => setLang(e.target.value)} className="bg-transparent text-slate-300 text-[10px] md:text-xs font-bold outline-none cursor-pointer appearance-none pr-1 md:pr-2">
@@ -2343,6 +2353,7 @@
             </select>
           </div>
 
+          {/* EFFECTS & BACKGROUND */}
           <div className="fixed inset-0 pointer-events-none z-0">
             <div className="absolute inset-0 bg-[url('https://storage.googleapis.com/chat-staging-context-data/context-images/image_4f4785.jpg')] bg-cover bg-center opacity-40"></div>
             <div className="absolute inset-0 bg-[#050510]/80 backdrop-blur-sm"></div>
@@ -2454,16 +2465,29 @@
                                    <button onClick={() => setViewSet(v => Math.min(soloMatchBO, v + 1))} className="text-slate-400 hover:text-cyan-400 px-3 font-black text-xl hover:bg-slate-800 rounded transition-colors">&gt;</button>
                                </div>
                                
+                               {/* KHU VỰC CẤM MAP DÀNH CHO 1V1 (Mới thêm) */}
                                <div className="mt-2 flex flex-col xl:flex-row justify-center items-center gap-2 xl:gap-8 px-4 border-t border-slate-800/50 pt-2 pb-1">
                                    <div className="flex flex-wrap items-center gap-2 justify-center">
                                        <span className="text-[10px] text-red-500/80 font-black uppercase tracking-widest flex items-center gap-1 drop-shadow-md">
                                            <XIcon size={12}/> {players[0]} BAN:
                                        </span>
                                        <div className="w-[110px] md:w-[140px]">
-                                           <SearchableMapSelect currentMapId={bannedMaps[viewSet]?.[0]?.[0]} selectedMaps={[]} bannedMaps={currentSetBans} onChange={(id) => handleBanChange(viewSet, 0, 0, id)} lang={lang} t={t} isBan={true} />
+                                           <SearchableMapSelect 
+                                               currentMapId={bannedMaps[viewSet]?.[0]?.[0]} 
+                                               selectedMaps={[]} 
+                                               bannedMaps={currentSetBans} 
+                                               onChange={(id) => handleBanChange(viewSet, 0, 0, id)} 
+                                               lang={lang} t={t} isBan={true} 
+                                           />
                                        </div>
                                        <div className="w-[110px] md:w-[140px]">
-                                           <SearchableMapSelect currentMapId={bannedMaps[viewSet]?.[0]?.[1]} selectedMaps={[]} bannedMaps={currentSetBans} onChange={(id) => handleBanChange(viewSet, 0, 1, id)} lang={lang} t={t} isBan={true} />
+                                           <SearchableMapSelect 
+                                               currentMapId={bannedMaps[viewSet]?.[0]?.[1]} 
+                                               selectedMaps={[]} 
+                                               bannedMaps={currentSetBans} 
+                                               onChange={(id) => handleBanChange(viewSet, 0, 1, id)} 
+                                               lang={lang} t={t} isBan={true} 
+                                           />
                                        </div>
                                    </div>
                                    
@@ -2474,10 +2498,22 @@
                                            <XIcon size={12}/> {players[1]} BAN:
                                        </span>
                                        <div className="w-[110px] md:w-[140px]">
-                                           <SearchableMapSelect currentMapId={bannedMaps[viewSet]?.[1]?.[0]} selectedMaps={[]} bannedMaps={currentSetBans} onChange={(id) => handleBanChange(viewSet, 1, 0, id)} lang={lang} t={t} isBan={true} />
+                                           <SearchableMapSelect 
+                                               currentMapId={bannedMaps[viewSet]?.[1]?.[0]} 
+                                               selectedMaps={[]} 
+                                               bannedMaps={currentSetBans} 
+                                               onChange={(id) => handleBanChange(viewSet, 1, 0, id)} 
+                                               lang={lang} t={t} isBan={true} 
+                                           />
                                        </div>
                                        <div className="w-[110px] md:w-[140px]">
-                                           <SearchableMapSelect currentMapId={bannedMaps[viewSet]?.[1]?.[1]} selectedMaps={[]} bannedMaps={currentSetBans} onChange={(id) => handleBanChange(viewSet, 1, 1, id)} lang={lang} t={t} isBan={true} />
+                                           <SearchableMapSelect 
+                                               currentMapId={bannedMaps[viewSet]?.[1]?.[1]} 
+                                               selectedMaps={[]} 
+                                               bannedMaps={currentSetBans} 
+                                               onChange={(id) => handleBanChange(viewSet, 1, 1, id)} 
+                                               lang={lang} t={t} isBan={true} 
+                                           />
                                        </div>
                                    </div>
                                </div>
@@ -2710,6 +2746,7 @@
                                 <span className="text-[9px] text-slate-500 font-bold hidden sm:inline">{t.pts}</span>
                               </div>
 
+                              {/* THÔNG BÁO QUYỀN CHỌN MAP */}
                               {isPicker && (
                                 <div className="absolute -top-3 -right-2 bg-purple-600 border border-purple-400 px-2 py-0.5 rounded text-[9px] font-black uppercase text-white shadow-[0_0_10px_#9333ea] animate-pulse whitespace-nowrap z-20 flex items-center gap-1">
                                   🎯 {t.pick}
@@ -2726,6 +2763,7 @@
             </div>
           </div>
           
+          {/* TOAST NOTIFICATION CHO KỶ LỤC MỚI */}
           {toastMsg && (
             <div className="fixed bottom-4 right-4 z-[9999] bg-gradient-to-r from-amber-500 to-orange-600 text-white px-4 py-3 rounded-lg shadow-[0_5px_20px_rgba(245,158,11,0.4)] flex items-center gap-3 font-bold text-sm animate-slide-up border border-amber-300">
               <Trophy size={20} className="animate-bounce" />
