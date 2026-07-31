@@ -419,6 +419,70 @@
       return { background: getMapGradient(mapId) };
     };
 
+    // COMPONENT: TẠO WINDOW MỚI VÀ RENDER QUA REACT PORTAL
+    const NewWindowPortal = ({ children, onClose, title }) => {
+      const [container, setContainer] = useState(null);
+      const newWindow = useRef(null);
+
+      useEffect(() => {
+        // Mở cửa sổ popup mới
+        newWindow.current = window.open('', '', 'width=1280,height=720,left=200,top=200');
+        
+        if (!newWindow.current) {
+          alert('🚨 Trình duyệt đã chặn Pop-up!\nVui lòng cho phép trình duyệt mở Pop-ups (Allow Pop-ups) để sử dụng giao diện Livestream.');
+          onClose();
+          return;
+        }
+
+        // Setup cơ bản cho body cửa sổ mới
+        newWindow.current.document.title = title || "Livestream";
+        newWindow.current.document.body.className = "bg-[#050510] text-slate-200 m-0 p-0 selection:bg-red-500/30 font-sans";
+
+        // Sao chép toàn bộ thẻ Style và Font từ trang gốc sang trang mới
+        const head = newWindow.current.document.head;
+        Array.from(document.head.querySelectorAll('style, link')).forEach(node => {
+          head.appendChild(node.cloneNode(true));
+        });
+
+        // Bơm thêm script Tailwind vào trang mới để sinh class động (dynamic classes)
+        const tailwindScript = newWindow.current.document.createElement('script');
+        tailwindScript.src = "https://cdn.tailwindcss.com";
+        head.appendChild(tailwindScript);
+
+        const configScript = newWindow.current.document.createElement('script');
+        configScript.innerHTML = `
+          tailwind.config = {
+            theme: { extend: { fontFamily: { sans: ['"Chakra Petch"', '"Noto Sans SC"', '"Noto Sans TC"', '"Noto Sans Thai"', 'sans-serif'] } } }
+          }
+        `;
+        head.appendChild(configScript);
+
+        // Tạo thẻ div gốc để mount component
+        const targetDiv = newWindow.current.document.createElement('div');
+        targetDiv.id = 'broadcast-root';
+        targetDiv.className = 'w-full h-full flex flex-col';
+        newWindow.current.document.body.appendChild(targetDiv);
+        
+        setContainer(targetDiv);
+
+        // Lắng nghe sự kiện tắt cửa sổ con
+        const handleUnload = () => {
+          onClose();
+        };
+        newWindow.current.addEventListener('beforeunload', handleUnload);
+
+        // Cleanup: Đóng cửa sổ khi component bị unmount từ cửa sổ chính
+        return () => {
+          if (newWindow.current) {
+            newWindow.current.removeEventListener('beforeunload', handleUnload);
+            newWindow.current.close();
+          }
+        };
+      }, []);
+
+      return container ? ReactDOM.createPortal(children, container) : null;
+    };
+
     const SearchableMapSelect = ({ currentMapId, selectedMaps = [], bannedMaps = [], onChange, lang, t, isBan = false }) => {
       const [isOpen, setIsOpen] = useState(false);
       const [searchTerm, setSearchTerm] = useState('');
@@ -431,8 +495,10 @@
             setSearchTerm('');
           }
         }
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
+        // Fix for Portal Window: Lấy đúng document sở hữu component này
+        const doc = wrapperRef.current ? wrapperRef.current.ownerDocument : document;
+        doc.addEventListener("mousedown", handleClickOutside);
+        return () => doc.removeEventListener("mousedown", handleClickOutside);
       }, []);
 
       const currentName = currentMapId ? getMapName(currentMapId, lang) : '';
@@ -2187,34 +2253,36 @@
           
           <CustomDialog dialog={dialog} setDialog={setDialog} />
 
-          {/* TAB Livestream Component */}
+          {/* TAB Livestream Component (Dạng Popup Window mới) */}
           {broadcastState.isOpen && (
-            <BroadcastOverlay 
-              broadcastState={broadcastState}
-              setBroadcastState={setBroadcastState}
-              viewSet={viewSet}
-              setViewSet={setViewSet}
-              soloSetBO={soloSetBO}
-              soloMatchBO={soloMatchBO}
-              players={players} 
-              personalRecords={personalRecords}
-              games={games} 
-              totals={totals} 
-              getGameCalculations={getGameCalculations}
-              matchStatus1v1={matchStatus1v1}
-              mapRecords={mapRecords}
-              lang={lang} 
-              t={t} 
-              gameMode={gameMode} 
-              tournamentName={tournamentName}
-              team1Name={displayTeam1Name}
-              team2Name={displayTeam2Name}
-              carDatabase={carDatabase}
-              petDatabase={petDatabase}
-              playerPhotos={playerPhotos}
-              onAssetSelect={handleAssetSelect}
-              onClose={() => setBroadcastState({...broadcastState, isOpen: false})} 
-            />
+            <NewWindowPortal onClose={() => setBroadcastState({...broadcastState, isOpen: false})} title="Livestream - Scoreboard">
+              <BroadcastOverlay 
+                broadcastState={broadcastState}
+                setBroadcastState={setBroadcastState}
+                viewSet={viewSet}
+                setViewSet={setViewSet}
+                soloSetBO={soloSetBO}
+                soloMatchBO={soloMatchBO}
+                players={players} 
+                personalRecords={personalRecords}
+                games={games} 
+                totals={totals} 
+                getGameCalculations={getGameCalculations}
+                matchStatus1v1={matchStatus1v1}
+                mapRecords={mapRecords}
+                lang={lang} 
+                t={t} 
+                gameMode={gameMode} 
+                tournamentName={tournamentName}
+                team1Name={displayTeam1Name}
+                team2Name={displayTeam2Name}
+                carDatabase={carDatabase}
+                petDatabase={petDatabase}
+                playerPhotos={playerPhotos}
+                onAssetSelect={handleAssetSelect}
+                onClose={() => setBroadcastState({...broadcastState, isOpen: false})} 
+              />
+            </NewWindowPortal>
           )}
 
           {/* SIDEBAR DRAWER */}
@@ -2230,7 +2298,6 @@
                          <div className="w-10 h-10 rounded-lg bg-slate-900 border border-slate-700 flex items-center justify-center group-hover:bg-cyan-900 group-hover:border-cyan-500 group-hover:scale-110 transition-all text-xl">🎡</div>
                          <span className="tracking-wide uppercase text-xs md:text-sm">{lang === 'vi' ? 'Vòng Quay Map Random' : lang === 'en' ? 'Random Map Wheel' : 'Random Map'}</span>
                      </button>
-                     {/* CÁC TÍNH NĂNG TƯƠNG LAI SẼ THÊM Ở ĐÂY */}
                  </div>
              </div>
           </>
