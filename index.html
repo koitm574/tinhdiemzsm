@@ -636,7 +636,7 @@
       const [assetSearch, setAssetSearch] = useState('');
 
       return (
-        <div className="h-screen w-screen bg-[#050510] flex flex-col font-sans overflow-hidden animate-slide-up relative">
+        <div className="fixed inset-0 w-screen h-screen bg-[#050510] flex flex-col font-sans overflow-hidden animate-slide-up z-[9999]">
           {BROADCAST_BACKGROUND_IMAGE && (<div className="absolute inset-0 z-0 bg-cover bg-center animate-slow-zoom opacity-50 pointer-events-none" style={{ backgroundImage: `url(${BROADCAST_BACKGROUND_IMAGE})` }}></div>)}
           <div className="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] [background-size:30px_30px] opacity-60 pointer-events-none z-0"></div>
           <div className="absolute inset-0 w-full h-[8px] bg-gradient-to-b from-transparent via-cyan-400/40 to-transparent blur-[2px] pointer-events-none z-0 animate-scanline"></div>
@@ -1621,9 +1621,13 @@
         }
       }, [games, totals, players, isTeamMode, gameMode, lang, t, displayTeam1Name, displayTeam2Name, soloMatchBO, soloSetBO, matchStatus1v1]);
 
+      // NẾU MỞ Ở DẠNG TAB BROADCAST THÌ CHỈ RENDER GIAO DIỆN BROADCAST
       if (isBroadcastTab) {
           return (
-             <BroadcastOverlay broadcastState={broadcastState} setBroadcastState={setBroadcastState} viewSet={viewSet} setViewSet={setViewSet} soloSetBO={soloSetBO} soloMatchBO={soloMatchBO} players={players} personalRecords={personalRecords} games={games} totals={totals} getGameCalculations={getGameCalculations} matchStatus1v1={matchStatus1v1} mapRecords={mapRecords} lang={lang} t={t} gameMode={gameMode} tournamentName={tournamentName} team1Name={displayTeam1Name} team2Name={displayTeam2Name} carDatabase={carDatabase} petDatabase={petDatabase} playerPhotos={playerPhotos} onAssetSelect={handleAssetSelect} onClose={() => window.close()} />
+             <>
+                <style dangerouslySetInnerHTML={{__html: `html, body { zoom: 1 !important; transform: none !important; width: 100% !important; height: 100% !important; overflow: hidden !important; margin: 0; padding: 0; }`}} />
+                <BroadcastOverlay broadcastState={broadcastState} setBroadcastState={setBroadcastState} viewSet={viewSet} setViewSet={setViewSet} soloSetBO={soloSetBO} soloMatchBO={soloMatchBO} players={players} personalRecords={personalRecords} games={games} totals={totals} getGameCalculations={getGameCalculations} matchStatus1v1={matchStatus1v1} mapRecords={mapRecords} lang={lang} t={t} gameMode={gameMode} tournamentName={tournamentName} team1Name={displayTeam1Name} team2Name={displayTeam2Name} carDatabase={carDatabase} petDatabase={petDatabase} playerPhotos={playerPhotos} onAssetSelect={handleAssetSelect} onClose={() => window.close()} />
+             </>
           )
       }
 
