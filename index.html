@@ -90,7 +90,6 @@
     };
 
     const BROADCAST_BACKGROUND_IMAGE = 'https://i.ibb.co/TxWgMDKd/Untitled.png';
-    const MAX_GAMES = MAP_POOL.reduce((total, group) => total + group.maps.length, 0); 
     const NORMAL_TOP_SCORE = 11;
     const KING_TOP_SCORE = 12;
     const MAX_PLAYERS = 6;
@@ -671,13 +670,13 @@
           {broadcastState.tab === 'scoreboard' && (
             <div className="flex-1 w-full max-w-[1920px] mx-auto pb-4 md:pb-6 lg:pb-8 pt-4 px-4 md:px-6 lg:px-8 flex flex-col min-h-0 z-10 animate-slide-up">
               <div className="w-full flex-1 min-h-0 bg-[#1e293b]/60 backdrop-blur-md rounded-xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col border border-slate-700/50">
-                <div className="flex-1 overflow-x-auto overflow-y-hidden hide-scrollbar flex flex-col bg-transparent">
-                  <div className="flex flex-col h-full min-w-max">
+                <div className="flex-1 overflow-hidden hide-scrollbar flex flex-col bg-transparent">
+                  <div className="flex flex-col h-full w-full">
                     <div className="flex bg-gradient-to-r from-[#0ea5e9] to-[#0284c7] sticky top-0 z-30 shadow-md shrink-0">
                       {broadcastRounds.map((_, i) => (
-                        <div key={`header_${i}`} className="flex-1 min-w-[140px] md:min-w-[160px] py-3 md:py-4 text-center border-r border-white/20 last:border-r-0 relative overflow-hidden">
+                        <div key={`header_${i}`} className="flex-1 min-w-[80px] lg:min-w-0 py-3 md:py-4 text-center border-r border-white/20 last:border-r-0 relative overflow-hidden">
                           <div className="absolute inset-0 bg-white/10 clip-slant-reverse transform translate-x-4 opacity-50"></div>
-                          <span className="relative z-10 text-white font-black italic text-sm md:text-base lg:text-lg xl:text-xl tracking-wider drop-shadow-sm">ROUND {i + 1}</span>
+                          <span className="relative z-10 text-white font-black italic text-[1vw] md:text-sm lg:text-base xl:text-lg tracking-wider drop-shadow-sm truncate px-1 block w-full">ROUND {i + 1}</span>
                         </div>
                       ))}
                     </div>
@@ -689,14 +688,14 @@
                         const calcs = isPlayed ? getGameCalculations(gIndex, game.times) : [];
                         
                         if (!isPlayed || !game) {
-                           return (<div key={`empty_${idx}`} className="flex-1 min-w-[140px] md:min-w-[160px] flex flex-col border-r border-white/5 bg-black/20 relative bg-stripes h-full"><div className="absolute inset-0 flex items-center justify-center opacity-[0.03]"><WheelIcon size={120} /></div></div>);
+                           return (<div key={`empty_${idx}`} className="flex-1 min-w-[80px] lg:min-w-0 flex flex-col border-r border-white/5 bg-black/20 relative bg-stripes h-full"><div className="absolute inset-0 flex items-center justify-center opacity-[0.03]"><WheelIcon size={120} /></div></div>);
                         }
 
                         const mapName = game.mapId ? getMapName(game.mapId, lang) : '';
                         const style = getMapBackgroundStyle(game.mapId);
 
                         return (
-                          <div key={`play_${gIndex}`} className="flex-1 min-w-[140px] md:min-w-[160px] flex flex-col relative border-r border-white/10 h-full overflow-hidden group" style={style}>
+                          <div key={`play_${gIndex}`} className="flex-1 min-w-[80px] lg:min-w-0 flex flex-col relative border-r border-white/10 h-full overflow-hidden group" style={style}>
                             <div className="absolute inset-0 bg-black/50 backdrop-blur-[1px] transition-all group-hover:bg-black/30 z-0"></div> 
                             <div className="relative z-10 flex-1 flex flex-col py-1 md:py-2 h-full min-h-0 justify-center">
                               {game.times.map((time, pIndex) => {
@@ -706,30 +705,36 @@
                                 const isTop = c.isBest && c.score > 0;
                                 const textColor = isTop ? 'text-[#fce300]' : 'text-slate-300';
                                 const is6P = players.length > 4;
-                                let nameSize = is6P ? (gameMode==='solo'?"text-[9px] xl:text-[10px]":"text-[11px] xl:text-[14px]") : (gameMode==='solo'||gameMode==='1v1'?"text-[11px] xl:text-[13px]":"text-[13px] xl:text-[15px]");
-                                let scoreSize = is6P ? (gameMode==='solo'?"text-[15px] xl:text-[18px]":"text-[20px] xl:text-[24px]") : (gameMode==='solo'||gameMode==='1v1'?"text-[18px] lg:text-[22px] xl:text-[26px]":"text-[24px] lg:text-[28px] xl:text-[36px]");
-                                let crownSize = is6P ? (gameMode==='solo'?12:14) : (gameMode==='solo'||gameMode==='1v1'?16:18);
                                 
-                                // TĂNG KÍCH THƯỚC CHỮ THỜI GIAN
-                                let timeSize = is6P ? "text-[11px] lg:text-[13px]" : "text-[14px] lg:text-[16px]";
+                                let nameSize = "text-[0.8vw] leading-tight";
+                                let scoreSize = gameMode === '1v1' ? "text-[1.2vw]" : "text-[1.8vw]";
+                                let timeSize = "text-[0.7vw]";
+                                let crownSize = 14;
+
+                                if (is6P) {
+                                    nameSize = "text-[0.6vw] leading-tight";
+                                    scoreSize = "text-[1.4vw]";
+                                    timeSize = "text-[0.55vw]";
+                                    crownSize = 12;
+                                }
 
                                 return (
                                   <div key={`g${gIndex}_p${pIndex}`} className={`w-full flex flex-col items-center justify-center relative flex-1 min-h-0 mx-1 group/item hover:bg-white/10 transition-colors rounded ${isTeamMode && pIndex === halfLen ? 'border-t-[2px] border-white/20 mt-1.5 pt-1 md:mt-2 md:pt-1.5' : ''}`}>
                                      <div className="relative flex flex-col items-center w-full pt-3 md:pt-4">
                                        {c.isKingMap && isTop && (<div className="absolute top-0 left-1/2 -translate-x-1/2 w-full flex justify-center z-20"><Crown size={crownSize} className="text-[#fce300] animate-bounce drop-shadow-[0_0_8px_rgba(252,227,0,1)]"/></div>)}
-                                       <span className={`${nameSize} font-bold truncate w-[90%] text-center leading-tight ${textColor} drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] z-10`}>{playerName}</span>
+                                       <span className={`${nameSize} font-bold truncate w-[90%] text-center ${textColor} drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] z-10`}>{playerName}</span>
                                      </div>
                                      {time ? (
-                                        <div className="flex flex-col items-center justify-center mt-0.5 z-10">
-                                           <span className={`${scoreSize} font-black leading-none ${isTop ? 'text-[#fce300] drop-shadow-[0_0_8px_rgba(252,227,0,0.8)]' : (gameMode === '1v1' ? 'text-slate-400 drop-shadow-md' : 'text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]')}`}>
+                                        <div className="flex flex-col items-center justify-center mt-0.5 z-10 w-full px-1">
+                                           <span className={`${scoreSize} font-black leading-none truncate w-full text-center ${isTop ? 'text-[#fce300] drop-shadow-[0_0_8px_rgba(252,227,0,0.8)]' : (gameMode === '1v1' ? 'text-slate-400 drop-shadow-md' : 'text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]')}`}>
                                              {gameMode === '1v1' ? (isTop ? (lang === 'vi' ? 'THẮNG' : 'WIN') : (lang === 'vi' ? 'THUA' : 'LOSE')) : `+${c.score}`}
                                            </span>
-                                           {(gameMode === 'solo' || gameMode === '1v1') && (<span className={`${timeSize} font-mono font-black ${isTop ? 'text-cyan-200' : 'text-slate-300'} mt-1.5 opacity-100 drop-shadow-md leading-none tracking-wider`}>{time}</span>)}
+                                           {(gameMode === 'solo' || gameMode === '1v1') && (<span className={`${timeSize} font-mono font-bold truncate w-full text-center ${isTop ? 'text-cyan-200' : 'text-slate-300'} mt-1 opacity-90 drop-shadow-md leading-none`}>{time}</span>)}
                                         </div>
                                      ) : (
-                                        <div className="flex flex-col items-center justify-center mt-0.5 z-10">
-                                           <span className={`${scoreSize} font-black leading-none text-slate-400 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]`}>-</span>
-                                           {(gameMode === 'solo' || gameMode === '1v1') && (<span className={`${timeSize} font-mono font-black text-transparent mt-1.5 leading-none tracking-wider`}>-</span>)}
+                                        <div className="flex flex-col items-center justify-center mt-0.5 z-10 w-full px-1">
+                                           <span className={`${scoreSize} font-black leading-none truncate w-full text-center text-slate-400 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]`}>-</span>
+                                           {(gameMode === 'solo' || gameMode === '1v1') && (<span className={`${timeSize} font-mono font-bold text-transparent mt-1 leading-none`}>-</span>)}
                                         </div>
                                      )}
                                   </div>
@@ -1059,18 +1064,21 @@
       useEffect(() => { localStorage.setItem('zsm_banned_maps_1v1_v11', JSON.stringify(bannedMaps)); }, [bannedMaps]);
       useEffect(() => { localStorage.setItem('zsm_saved_groups_v1', JSON.stringify(savedGroups)); }, [savedGroups]);
 
+      // FIX LỖI TỰ ĐỘNG CẮT GAME: Chỉ ép độ dài mảng khi ở chế độ 1v1
       useEffect(() => {
-          const targetLen = gameMode === '1v1' ? (soloMatchBO * soloSetBO) : 9;
-          setGames(prev => {
-              if (prev.length === targetLen) return prev;
-              let newGames = [...prev];
-              if (newGames.length < targetLen) {
-                  while(newGames.length < targetLen) newGames.push({ id: Date.now() + Math.random(), mapId: "", times: Array(6).fill(''), cars: Array(6).fill(''), pets: Array(6).fill('') });
-              } else {
-                  newGames = newGames.slice(0, targetLen);
-              }
-              return newGames;
-          });
+          if (gameMode === '1v1') {
+              const targetLen = soloMatchBO * soloSetBO;
+              setGames(prev => {
+                  if (prev.length === targetLen) return prev;
+                  let newGames = [...prev];
+                  if (newGames.length < targetLen) {
+                      while(newGames.length < targetLen) newGames.push({ id: Date.now() + Math.random(), mapId: "", times: Array(6).fill(''), cars: Array(6).fill(''), pets: Array(6).fill('') });
+                  } else {
+                      newGames = newGames.slice(0, targetLen);
+                  }
+                  return newGames;
+              });
+          }
       }, [gameMode, soloMatchBO, soloSetBO]);
 
       const displayTeam1Name = team1Name.trim() || t.team1;
@@ -1620,7 +1628,7 @@
                      <div className="my-2 border-b border-slate-700/50"></div>
                      <button onClick={() => { setActiveSidebarMenu('wheel'); setIsSidebarOpen(false); }} className="flex items-center gap-3 w-full p-3 bg-slate-800/50 hover:bg-cyan-900/30 text-slate-300 hover:text-cyan-300 border border-transparent hover:border-cyan-500/50 rounded-xl transition-all font-bold text-left group shadow-sm">
                          <div className="w-10 h-10 rounded-lg bg-slate-900 border border-slate-700 flex items-center justify-center group-hover:bg-cyan-900 group-hover:border-cyan-500 group-hover:scale-110 transition-all text-xl">🎡</div>
-                         <span className="tracking-wide uppercase text-xs md:text-sm">{lang === 'vi' ? 'Vòng Quay Map Random' : lang === 'en' ? 'Random Map Wheel' : 'Random Map'}</span>
+                         <span className="tracking-wide uppercase text-xs md:text-sm">{lang === 'vi' ? 'Vòng Quay Map' : lang === 'en' ? 'Map Wheel' : 'Random Map'}</span>
                      </button>
                  </div>
              </div>
@@ -1940,6 +1948,12 @@
               )}
             </div>
           </div>
+          
+          {toastMsg && (
+            <div className="fixed bottom-4 right-4 z-[9999] bg-gradient-to-r from-amber-500 to-orange-600 text-white px-4 py-3 rounded-lg shadow-[0_5px_20px_rgba(245,158,11,0.4)] flex items-center gap-3 font-bold text-sm animate-slide-up border border-amber-300">
+              <Trophy size={20} className="animate-bounce" /> <span>{toastMsg}</span>
+            </div>
+          )}
         </div>
       );
     }
