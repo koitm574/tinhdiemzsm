@@ -893,7 +893,7 @@
                             <div className="px-1.5 py-0.5 rounded bg-black/40 text-[7px] sm:text-[8px] text-white/50 font-bold italic">{t.selectCar}</div>
                           )}
                         </div>
-                        <span className={`${is6P ? 'w-14 sm:w-16' : 'w-20 sm:w-24 md:w-28'} text-[6px] sm:text-[8px] uppercase mt-0.5 opacity-75 font-bold ${textAccent} text-center truncate`} title={carObj ? carObj.name : ''}>
+                        <span className={`${is6P ? 'max-w-[70px] sm:max-w-[85px] text-[6px] sm:text-[7px]' : 'max-w-[95px] sm:max-w-[125px] text-[7px] sm:text-[8px]'} uppercase mt-1.5 opacity-85 font-bold ${textAccent} text-center leading-tight whitespace-normal break-words`}>
                           {carObj ? carObj.name : ''}
                         </span>
                       </div>
