@@ -19,10 +19,18 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Sans+SC:wght@400;700;900&family=Noto+Sans+TC:wght@400;700;900&family=Noto+Sans+Thai:wght@400;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,600;0,700;1,700&family=Chakra+Petch:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Sans+SC:wght@400;700;900&family=Noto+Sans+TC:wght@400;700;900&family=Noto+Sans+Thai:wght@400;700;900&display=swap" rel="stylesheet">
   
   <script>
-    tailwind.config = { theme: { extend: { fontFamily: { sans: ['"Chakra Petch"', '"Noto Sans SC"', '"Noto Sans TC"', '"Noto Sans Thai"', 'sans-serif'] } } } }
+    tailwind.config = { 
+      theme: { 
+        extend: { 
+          fontFamily: { 
+            sans: ['"Chakra Petch"', '"Be Vietnam Pro"', 'sans-serif', '"Noto Sans SC"', '"Noto Sans TC"', '"Noto Sans Thai"'] 
+          } 
+        } 
+      } 
+    }
   </script>
 
   <style>
@@ -165,6 +173,32 @@
         };
       }
       return { background: getMapGradient(mapId) };
+    };
+
+    const BufferedInput = ({ value, onSave, className = "", placeholder = "" }) => {
+      const [localVal, setLocalVal] = useState(value || '');
+
+      useEffect(() => {
+        setLocalVal(value || '');
+      }, [value]);
+
+      return (
+        <input
+          type="text"
+          value={localVal}
+          placeholder={placeholder}
+          className={className}
+          onChange={(e) => setLocalVal(e.target.value)}
+          onBlur={() => {
+            if (localVal !== value) onSave(localVal);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.target.blur();
+            }
+          }}
+        />
+      );
     };
 
     const SearchableMapSelect = ({ currentMapId, selectedMaps = [], bannedMaps = [], onChange, lang, t, isBan = false }) => {
@@ -987,7 +1021,7 @@
         const saved = localStorage.getItem('zsm_games_v11_final');
         if (saved) { 
            try { 
-             const parsed = JSON.parse(saved);
+             const parsed = JSON.parse(saved); 
              return parsed.map(g => ({ ...g, cars: g.cars || Array(6).fill(''), pets: g.pets || Array(6).fill('') }));
            } catch(e) {} 
         }
@@ -1077,11 +1111,8 @@
                   return newGames;
               });
           } else {
-              // TỰ ĐỘNG THU GỌN VỀ LẠI 9 TRẬN KHI RỜI KHỎI 1V1 (HOẶC LOAD LẠI TRANG)
               setGames(prev => {
                   if (prev.length <= 9) return prev;
-                  
-                  // Kiểm tra vị trí trận đấu cuối cùng thực sự có dữ liệu (có chọn map hoặc nhập giờ)
                   let lastUsed = -1;
                   for (let i = prev.length - 1; i >= 0; i--) {
                       if (prev[i].mapId || prev[i].times.some(t => t && t.trim() !== '')) {
@@ -1089,8 +1120,6 @@
                           break;
                       }
                   }
-
-                  // Giữ tối thiểu 9 trận mặc định, hoặc giữ đến trận có dữ liệu cuối cùng nếu đã đua quá 9 trận
                   const keepCount = Math.max(9, lastUsed + 1);
                   if (keepCount < prev.length) {
                       return prev.slice(0, keepCount);
@@ -1190,10 +1219,10 @@
         showDialogConfirm(t.delP.replace('{0}', players[pIndex]), () => {
           setPlayers(players.filter((_, i) => i !== pIndex));
           setGames(games.map(g => ({ 
-             ...g, 
-             times: g.times.filter((_, i) => i !== pIndex),
-             cars: g.cars ? g.cars.filter((_, i) => i !== pIndex) : Array(6).fill(''),
-             pets: g.pets ? g.pets.filter((_, i) => i !== pIndex) : Array(6).fill('')
+              ...g, 
+              times: g.times.filter((_, i) => i !== pIndex),
+              cars: g.cars ? g.cars.filter((_, i) => i !== pIndex) : Array(6).fill(''),
+              pets: g.pets ? g.pets.filter((_, i) => i !== pIndex) : Array(6).fill('')
           })));
         });
       };
@@ -1616,7 +1645,7 @@
       }
 
       return (
-        <div className="min-h-screen relative overflow-x-hidden pb-20">
+        <div className="min-h-screen relative overflow-x-hidden pb-20 font-sans">
           <CustomDialog dialog={dialog} setDialog={setDialog} />
 
           <>
@@ -1718,7 +1747,12 @@
               <p className="text-slate-400 text-[10px] md:text-sm tracking-[0.1em] md:tracking-[0.2em] uppercase font-bold">{t.subtitle}</p>
               
               <div className="mt-3 flex justify-center w-full px-4">
-                 <input type="text" value={tournamentName} onChange={(e) => setTournamentName(e.target.value)} className="bg-transparent text-center text-cyan-400 font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-sm md:text-lg outline-none border-b border-dashed border-cyan-800/50 focus:border-cyan-400 transition-colors w-full max-w-[300px] md:max-w-[500px] pb-1 placeholder:text-cyan-900/50" placeholder={t.tourNamePh} />
+                 <BufferedInput 
+                   value={tournamentName} 
+                   onSave={(val) => setTournamentName(val.toUpperCase())} 
+                   className="bg-transparent text-center text-cyan-400 font-black tracking-[0.2em] md:tracking-[0.3em] text-sm md:text-lg outline-none border-b border-dashed border-cyan-800/50 focus:border-cyan-400 transition-colors w-full max-w-[300px] md:max-w-[500px] pb-1 placeholder:text-cyan-900/50 font-sans" 
+                   placeholder={t.tourNamePh} 
+                 />
               </div>
 
               <div className="mt-6 inline-flex flex-wrap items-center justify-center gap-1 p-1.5 bg-[#0f172a]/80 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] z-20 relative mx-4">
@@ -1802,7 +1836,11 @@
                           return (
                             <th key={i} className={`px-1 md:px-2 py-3 min-w-[80px] md:min-w-[140px] relative group border-b-2 bg-[#0f172a] ${isPicker ? 'bg-purple-900/30 border-purple-500' : isTeamMode ? (isT1 ? 'border-blue-500/50 bg-blue-900/10' : 'border-red-500/50 bg-red-900/10') : 'border-slate-800 bg-[#0f172a]'}`}>
                               {isPicker && (<div className="absolute top-1 left-1 md:left-2 text-[8px] md:text-[9px] bg-purple-600 text-white px-1.5 py-0.5 rounded animate-pulse shadow-[0_0_8px_#9333ea] z-10 pointer-events-none font-black tracking-widest flex items-center gap-0.5"><span>🎯</span> <span className="hidden sm:inline">{t.pick}</span></div>)}
-                              <input type="text" value={p} onChange={(e) => { const n=[...players]; n[i]=e.target.value; setPlayers(n); }} className={`w-full bg-transparent border-b-2 outline-none text-center pb-1 text-sm md:text-lg font-bold hover:border-slate-400 ${isPicker ? 'text-purple-300 border-purple-500 focus:border-purple-400' : isTeamMode ? (isT1 ? 'text-blue-100 border-slate-700 focus:border-blue-500' : 'text-red-100 border-slate-700 focus:border-red-500') : 'text-white border-slate-700 focus:border-cyan-400'}`} />
+                              <BufferedInput 
+                                value={p} 
+                                onSave={(val) => { const n=[...players]; n[i]=val; setPlayers(n); }} 
+                                className={`w-full bg-transparent border-b-2 outline-none text-center pb-1 text-sm md:text-lg font-bold hover:border-slate-400 font-sans ${isPicker ? 'text-purple-300 border-purple-500 focus:border-purple-400' : isTeamMode ? (isT1 ? 'text-blue-100 border-slate-700 focus:border-blue-500' : 'text-red-100 border-slate-700 focus:border-red-500') : 'text-white border-slate-700 focus:border-cyan-400'}`} 
+                              />
                               {gameMode !== '1v1' && (<button onClick={() => removePlayer(i)} className="absolute top-1 right-1 p-1 text-slate-500 hover:text-white hover:bg-red-500 opacity-100 md:opacity-0 group-hover:opacity-100 transition-all bg-slate-800 rounded-full border border-slate-700 shadow-lg z-10"><XIcon size={10}/></button>)}
                             </th>
                           )
@@ -1907,13 +1945,23 @@
                             <td className="p-0">
                                <div className="flex w-full">
                                   <div className="flex-1 px-1 md:px-2 py-1.5 md:py-2 flex flex-col items-center justify-center border-l-2 border-amber-500/30">
-                                     <input type="text" value={team1Name} onChange={(e) => setTeam1Name(e.target.value)} placeholder={t.team1} className="w-[90%] max-w-[150px] bg-transparent text-center text-[10px] md:text-xs font-bold text-blue-300 uppercase tracking-widest outline-none border-b border-dashed border-blue-900/50 focus:border-blue-400 transition-colors mb-0.5 md:mb-1 placeholder:text-blue-400/50"/>
+                                     <BufferedInput 
+                                       value={team1Name} 
+                                       onSave={(val) => setTeam1Name(val)} 
+                                       placeholder={t.team1} 
+                                       className="w-[90%] max-w-[150px] bg-transparent text-center text-[10px] md:text-xs font-bold text-blue-300 uppercase tracking-widest outline-none border-b border-dashed border-blue-900/50 focus:border-blue-400 transition-colors mb-0.5 md:mb-1 placeholder:text-blue-400/50 font-sans"
+                                     />
                                      <span className="text-xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-b from-blue-200 to-blue-500 drop-shadow-[0_0_20px_rgba(59,130,246,0.6)] cursor-default leading-none">
                                         {totals.filter((_, i) => i < Math.floor(players.length/2)).reduce((a, b) => a + b, 0)}
                                      </span>
                                   </div>
                                   <div className="flex-1 px-1 md:px-2 py-1.5 md:py-2 flex flex-col items-center justify-center border-l-2 border-amber-500/30">
-                                     <input type="text" value={team2Name} onChange={(e) => setTeam2Name(e.target.value)} placeholder={t.team2} className="w-[90%] max-w-[150px] bg-transparent text-center text-[10px] md:text-xs font-bold text-red-300 uppercase tracking-widest outline-none border-b border-dashed border-red-900/50 focus:border-red-400 transition-colors mb-0.5 md:mb-1 placeholder:text-red-400/50"/>
+                                     <BufferedInput 
+                                       value={team2Name} 
+                                       onSave={(val) => setTeam2Name(val)} 
+                                       placeholder={t.team2} 
+                                       className="w-[90%] max-w-[150px] bg-transparent text-center text-[10px] md:text-xs font-bold text-red-300 uppercase tracking-widest outline-none border-b border-dashed border-red-900/50 focus:border-red-400 transition-colors mb-0.5 md:mb-1 placeholder:text-red-400/50 font-sans"
+                                     />
                                      <span className="text-xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-b from-red-200 to-red-500 drop-shadow-[0_0_20px_rgba(239,68,68,0.6)] cursor-default leading-none">
                                         {totals.filter((_, i) => i >= Math.floor(players.length/2)).reduce((a, b) => a + b, 0)}
                                      </span>
