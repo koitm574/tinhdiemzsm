@@ -1062,11 +1062,40 @@
                   if (prev.length === targetLen) return prev;
                   let newGames = [...prev];
                   if (newGames.length < targetLen) {
-                      while(newGames.length < targetLen) newGames.push({ id: Date.now() + Math.random(), mapId: "", times: Array(6).fill(''), cars: Array(6).fill(''), pets: Array(6).fill('') });
+                      while(newGames.length < targetLen) {
+                          newGames.push({ 
+                              id: Date.now() + Math.random(), 
+                              mapId: "", 
+                              times: Array(6).fill(''), 
+                              cars: Array(6).fill(''), 
+                              pets: Array(6).fill('') 
+                          });
+                      }
                   } else {
                       newGames = newGames.slice(0, targetLen);
                   }
                   return newGames;
+              });
+          } else {
+              // TỰ ĐỘNG THU GỌN VỀ LẠI 9 TRẬN KHI RỜI KHỎI 1V1 (HOẶC LOAD LẠI TRANG)
+              setGames(prev => {
+                  if (prev.length <= 9) return prev;
+                  
+                  // Kiểm tra vị trí trận đấu cuối cùng thực sự có dữ liệu (có chọn map hoặc nhập giờ)
+                  let lastUsed = -1;
+                  for (let i = prev.length - 1; i >= 0; i--) {
+                      if (prev[i].mapId || prev[i].times.some(t => t && t.trim() !== '')) {
+                          lastUsed = i;
+                          break;
+                      }
+                  }
+
+                  // Giữ tối thiểu 9 trận mặc định, hoặc giữ đến trận có dữ liệu cuối cùng nếu đã đua quá 9 trận
+                  const keepCount = Math.max(9, lastUsed + 1);
+                  if (keepCount < prev.length) {
+                      return prev.slice(0, keepCount);
+                  }
+                  return prev;
               });
           }
       }, [gameMode, soloMatchBO, soloSetBO]);
