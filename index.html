@@ -850,17 +850,17 @@
                   <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-50"></div>
                   
                   {/* Khung ảnh VĐV: Tỉ lệ 3:4 chuẩn hóa, căn giữa trên-dưới (top-1/2), ghim sát mép trái */}
-                  <div className={`absolute left-2.5 sm:left-3 top-1/2 -translate-y-1/2 ${players.length > 4 ? 'h-[86%]' : 'h-[82%]'} aspect-[3/4] max-w-[36%] rounded-xl overflow-hidden border border-white/15 bg-slate-950/40 shadow-lg flex items-center justify-center z-10 pointer-events-none`}>
+                  <div className={`absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 ${players.length > 4 ? 'h-[88%]' : 'h-[84%]'} aspect-[3/4] max-w-[38%] flex items-center justify-center z-10 pointer-events-none`}>
                     {photoUrl ? (
                       <img 
                         src={photoUrl} 
-                        className="w-full h-full object-cover object-top" 
+                        className="max-w-full max-h-full object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)]"
                         alt={playerName} 
                         onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/200x300/transparent/white?text=?'; }} 
                       />
                     ) : (
-                      <div className="flex items-center justify-center opacity-25 text-slate-400">
-                        <User size={players.length > 4 ? 36 : 48} />
+                      <div className="flex items-center justify-center opacity-20 text-slate-400">
+                        <User size={players.length > 4 ? 40 : 56} />
                       </div>
                     )}
                   </div>
