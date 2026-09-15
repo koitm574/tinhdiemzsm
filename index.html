@@ -1068,6 +1068,7 @@
 
             const top1 = sortedPlayers[0] || { idx: 0, name: players[0], rawT: '', ms: null, score: 0 };
             const others = sortedPlayers.slice(1);
+            const is6P = players.length > 4;
             const bestTimeMs = top1.ms;
 
             const top1CarObj = carDatabase.find(c => c.id === activeGame.cars?.[top1.idx]);
@@ -1176,68 +1177,79 @@
                    </div>
 
                    {/* Cột 3: Top 2-6 */}
-                   <div className="w-full md:w-[30%] flex flex-col gap-2.5 lg:gap-3 h-full min-h-0 justify-between">
-                      {others.map((p) => {
-                         const carObj = carDatabase.find(c => c.id === activeGame.cars?.[p.idx]);
-                         const petObj = petDatabase.find(pItem => pItem.id === activeGame.pets?.[p.idx]);
-                         
-                         let gapText = "-";
-                         if (p.isDNF) gapText = "DNF";
-                         else if (bestTimeMs !== null && p.ms !== null) {
-                            const diff = (p.ms - bestTimeMs) / 1000;
-                            gapText = `+${diff.toFixed(2)}s`;
-                         }
+<div className={`w-full md:w-[30%] flex flex-col ${is6P ? 'gap-1.5 md:gap-2' : 'gap-2.5 lg:gap-3'} h-full min-h-0 justify-between`}>
+  {others.map((p) => {
+     const carObj = carDatabase.find(c => c.id === activeGame.cars?.[p.idx]);
+     const petObj = petDatabase.find(pItem => pItem.id === activeGame.pets?.[p.idx]);
+     
+     let gapText = "-";
+     if (p.isDNF) gapText = "DNF";
+     else if (bestTimeMs !== null && p.ms !== null) {
+        const diff = (p.ms - bestTimeMs) / 1000;
+        gapText = `+${diff.toFixed(2)}s`;
+     }
 
-                         return (
-                            <div key={`post_${p.idx}`} className="flex-1 min-h-0 flex rounded-xl p-2.5 bg-gradient-to-r from-[#0284c7]/85 via-[#0369a1]/75 to-[#0f172a]/95 border border-cyan-500/30 shadow-lg relative overflow-hidden">
-                               
-                               <div className="absolute top-2 left-3 z-25">
-                                  <span className="text-lg lg:text-xl font-black font-['Chakra_Petch'] text-cyan-300 drop-shadow-md">
-                                     +{p.score}
-                                  </span>
-                               </div>
+     return (
+        <div key={`post_${p.idx}`} className="flex-1 min-h-0 flex rounded-xl p-2 md:p-2.5 bg-gradient-to-r from-[#0284c7]/85 via-[#0369a1]/75 to-[#0f172a]/95 border border-cyan-500/30 shadow-lg relative overflow-hidden">
+           
+           {/* [FIX 1]: Tăng z-index lên z-30 + Thêm badge nền tối mờ để không bao giờ bị ảnh VĐV che mất số điểm */}
+           <div className="absolute top-1.5 left-2 z-30 bg-slate-950/70 border border-cyan-400/40 backdrop-blur-md px-1.5 py-0.5 rounded-md shadow-md">
+              <span className={`${is6P ? 'text-sm lg:text-base' : 'text-base lg:text-lg'} font-black font-['Chakra_Petch'] text-cyan-300 drop-shadow-md leading-none block`}>
+                 +{p.score}
+              </span>
+           </div>
 
-                               <div className="w-20 sm:w-24 h-full flex items-end justify-center shrink-0 relative z-10 pointer-events-none">
-                                  {playerPhotos[p.idx] ? (
-                                     <img src={playerPhotos[p.idx]} className="max-h-[95%] max-w-full object-contain object-bottom drop-shadow-[0_8px_16px_rgba(0,0,0,0.8)]" />
-                                  ) : (
-                                     <User size={38} className="text-white/20 mb-2" />
-                                  )}
-                               </div>
+           {/* Ảnh đại diện VĐV */}
+           <div className="w-18 sm:w-22 h-full flex items-end justify-center shrink-0 relative z-10 pointer-events-none">
+              {playerPhotos[p.idx] ? (
+                 <img src={playerPhotos[p.idx]} className="max-h-[95%] max-w-full object-contain object-bottom drop-shadow-[0_8px_16px_rgba(0,0,0,0.8)]" />
+              ) : (
+                 <User size={34} className="text-white/20 mb-2" />
+              )}
+           </div>
 
-                               {/* 3. Phóng to dòng Xe & Pet của Top 2-6 */}
-                               <div className="flex-1 flex flex-col justify-between items-end text-right pl-2 z-20 min-h-0">
-                                  <div className="w-full flex justify-between items-start">
-                                     <span className="font-black italic text-sm lg:text-base text-white truncate max-w-[55%] pl-1 text-left drop-shadow-md">
-                                        {p.name}
-                                     </span>
-                                     <div className="flex flex-col items-end leading-none">
-                                        <span className="text-[10px] font-black text-cyan-300 font-mono drop-shadow-sm mb-0.5">{gapText}</span>
-                                        <span className="text-sm lg:text-lg font-black font-['Chakra_Petch'] text-white">{p.rawT || '--:--.--'}</span>
-                                     </div>
-                                  </div>
-
-                                  <div className="flex items-center gap-3 pt-1 border-t border-white/10 w-full justify-end">
-                                     <div className="flex items-center gap-1.5">
-                                        {carObj?.img && <img src={carObj.img} className="w-10 h-5 object-contain scale-110" />}
-                                        <span className="text-[9px] font-bold text-slate-200 uppercase truncate max-w-[85px]">{carObj?.name}</span>
-                                     </div>
-                                     <div className="flex items-center gap-1.5">
-                                        {petObj?.img && <img src={petObj.img} className="w-8 h-5 object-contain scale-110" />}
-                                        <span className="text-[9px] font-bold text-slate-200 uppercase truncate max-w-[75px]">{petObj?.name}</span>
-                                     </div>
-                                  </div>
-                               </div>
-
-                            </div>
-                         );
-                      })}
-                   </div>
-
-                </div>
+           {/* Cột thông tin chi tiết */}
+           <div className="flex-1 flex flex-col justify-between items-end text-right pl-2 z-20 min-h-0">
+              
+              {/* Tên VĐV & [FIX 2] Phóng to độ trễ + Thời gian đua */}
+              <div className="w-full flex justify-between items-start">
+                 <span className="font-black italic text-xs lg:text-sm xl:text-base text-white truncate max-w-[42%] pl-1 text-left drop-shadow-md">
+                    {p.name}
+                 </span>
+                 <div className="flex flex-col items-end leading-none">
+                    {/* Độ trễ: To hơn, màu vàng chanh sáng nổi bật */}
+                    <span className={`${is6P ? 'text-[11px] lg:text-xs' : 'text-xs lg:text-sm'} font-black text-[#fce300] font-mono drop-shadow-[0_0_8px_rgba(252,227,0,0.6)] mb-0.5`}>
+                       {gapText}
+                    </span>
+                    {/* Kết quả thời gian: Tăng kích thước lớn và rõ nét */}
+                    <span className={`${is6P ? 'text-base lg:text-xl' : 'text-lg lg:text-2xl'} font-black font-['Chakra_Petch'] text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.6)]`}>
+                       {p.rawT || '--:--.--'}
+                    </span>
+                 </div>
               </div>
-            );
-          })()}
+
+              {/* [FIX 3] Hiển thị FULL tên xe (Bỏ truncate và bỏ giới hạn max-w) */}
+              <div className="flex items-center gap-2 pt-1 border-t border-white/10 w-full justify-end min-w-0">
+                 <div className="flex items-center gap-1.5 shrink-0">
+                    {carObj?.img && <img src={carObj.img} className="w-9 h-5 object-contain scale-110" />}
+                    <span className="text-[9px] lg:text-[10px] font-bold text-cyan-200 uppercase whitespace-nowrap drop-shadow-sm">
+                       {carObj?.name}
+                    </span>
+                 </div>
+                 {petObj?.img && (
+                    <div className="flex items-center gap-1.5 shrink-0 border-l border-white/15 pl-2">
+                       <img src={petObj.img} className="w-7 h-5 object-contain scale-110" />
+                       <span className="text-[9px] lg:text-[10px] font-bold text-slate-200 uppercase whitespace-nowrap drop-shadow-sm">
+                          {petObj?.name}
+                       </span>
+                    </div>
+                 )}
+              </div>
+           </div>
+        </div>
+     );
+  })}
+</div>
 
           {/* ASSET SELECT MODAL */}
           {assetModal && (
