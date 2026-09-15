@@ -1130,60 +1130,94 @@
                       </div>
                    </div>
 
-                   {/* Cột 2: Tuyển thủ Top 1 */}
-                   <div className="w-full md:w-[30%] flex flex-col rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(6,182,212,0.3)] border-2 border-cyan-400 bg-gradient-to-b from-[#0284c7]/90 via-[#0369a1]/80 to-[#0c4a6e]/90 backdrop-blur-xl relative h-full min-h-0">
-                      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white/20 via-transparent to-transparent pointer-events-none"></div>
+                   {/* Cột 2: Tuyển thủ Top 1 (Đồng bộ phong cách với Top 2-6) */}
+<div className="w-full md:w-[30%] flex flex-col rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(6,182,212,0.3)] border-2 border-cyan-400 bg-gradient-to-b from-[#0284c7]/90 via-[#0369a1]/80 to-[#0c4a6e]/90 backdrop-blur-xl relative h-full min-h-0">
+   <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white/20 via-transparent to-transparent pointer-events-none"></div>
 
-                      <div className="absolute top-4 left-5 z-30 flex items-center gap-1.5">
-                         <span className="text-4xl lg:text-6xl font-black font-['Chakra_Petch'] text-[#fce300] drop-shadow-[0_0_20px_rgba(252,227,0,0.8)]">
-                           +{top1.score}
-                         </span>
-                      </div>
+   {/* 1. Header trên cùng: Điểm số, Tên VĐV ngang hàng với Thành tích, 1ST nằm phía trên */}
+   <div className="relative z-30 p-3.5 md:p-4 lg:p-5 flex justify-between items-end w-full border-b border-white/10 bg-gradient-to-b from-black/40 to-transparent shrink-0">
+      {/* Bên trái: Điểm số + Tên VĐV */}
+      <div className="flex items-end gap-2.5 md:gap-3 min-w-0">
+         <span className="text-3xl sm:text-4xl lg:text-5xl font-black font-['Chakra_Petch'] text-[#fce300] drop-shadow-[0_0_20px_rgba(252,227,0,0.8)] leading-none shrink-0">
+            +{top1.score}
+         </span>
+         <span className="text-base sm:text-xl lg:text-2xl font-black italic text-white uppercase tracking-wider drop-shadow-md truncate leading-none pb-0.5">
+            {top1.name}
+         </span>
+      </div>
 
-                      <div className="absolute inset-x-0 bottom-28 top-10 flex items-end justify-center pointer-events-none z-10">
-                        {playerPhotos[top1.idx] ? (
-                          <img 
-                            src={playerPhotos[top1.idx]} 
-                            className="max-h-full max-w-[85%] object-contain object-bottom drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)]" 
-                            alt={top1.name} 
-                            onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/300x400/transparent/white?text=?'; }}
-                          />
-                        ) : (
-                          <User size={120} className="text-white/20 mb-8" />
-                        )}
-                      </div>
+      {/* Bên phải: 1ST (thay cho độ trễ) & Thành tích cán đích */}
+      <div className="flex flex-col items-end leading-none shrink-0 pl-2">
+         <span className="text-[10px] sm:text-xs font-black italic text-[#fce300] uppercase font-mono tracking-widest drop-shadow-[0_0_8px_rgba(252,227,0,0.6)] mb-1">
+            1ST
+         </span>
+         <span className="text-xl sm:text-2xl lg:text-3xl font-black font-['Chakra_Petch'] text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.6)] leading-none pb-0.5">
+            {top1.rawT || '--:--.--'}
+         </span>
+      </div>
+   </div>
 
-                      {/* 3. Phóng to dòng Xe & Pet của Top 1 */}
-                      <div className="mt-auto relative z-20 px-5 py-3.5 bg-gradient-to-t from-slate-950 via-slate-950/95 to-transparent flex flex-col">
-                         <div className="flex justify-between items-end pb-2 border-b-2 border-[#fce300]/60">
-                            <span className="text-xl lg:text-3xl font-black italic text-[#fce300] uppercase tracking-wider drop-shadow-md truncate max-w-[50%]">
-                              {top1.name}
-                            </span>
-                            <div className="flex items-baseline gap-2">
-                               <span className="text-[10px] font-black italic text-[#fce300] uppercase bg-black/40 px-1.5 py-0.5 rounded border border-[#fce300]/40">1st</span>
-                               <span className="text-2xl lg:text-4xl font-black font-['Chakra_Petch'] text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.6)] leading-none">
-                                 {top1.rawT || '--:--.--'}
-                               </span>
-                            </div>
-                         </div>
+   {/* 2. Ảnh VĐV: Chiếm trọn không gian nổi bật ở giữa */}
+   <div className="absolute inset-x-0 bottom-14 top-20 flex items-end justify-center pointer-events-none z-10">
+      {playerPhotos[top1.idx] ? (
+         <img 
+            src={playerPhotos[top1.idx]} 
+            className="max-h-[95%] max-w-[85%] object-contain object-bottom drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)]" 
+            alt={top1.name} 
+            onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/300x400/transparent/white?text=?'; }}
+         />
+      ) : (
+         <User size={120} className="text-white/20 mb-6" />
+      )}
+   </div>
 
-                         <div className="flex justify-around items-center pt-2.5">
-                            <div className="flex items-center gap-3">
-                               <div className="w-20 h-10 flex items-center justify-center">
-                                  {top1CarObj ? <img src={top1CarObj.img} className="max-w-full max-h-full object-contain drop-shadow-md scale-125" /> : <div className="text-[9px] text-white/50 italic">Chưa chọn xe</div>}
-                                </div>
-                               <span className="text-xs font-bold text-cyan-200 uppercase truncate max-w-[110px]">{top1CarObj?.name}</span>
-                            </div>
-                            <div className="w-px h-7 bg-white/20"></div>
-                            <div className="flex items-center gap-3">
-                               <div className="w-14 h-10 flex items-center justify-center">
-                                  {top1PetObj ? <img src={top1PetObj.img} className="max-w-full max-h-full object-contain drop-shadow-md scale-125" /> : <div className="text-[9px] text-white/50 italic">Chưa chọn pet</div>}
-                               </div>
-                              <span className="text-xs font-bold text-cyan-200 uppercase whitespace-nowrap">{top1PetObj?.name}</span>
-                            </div>
-                         </div>
-                      </div>
-                   </div>
+   {/* 3. Dòng trang bị dưới cùng: Trong suốt, không viền, có sẵn Slot giữa dự phòng */}
+   <div className="mt-auto relative z-20 px-3.5 py-2.5 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent border-t border-white/10 w-full shrink-0">
+      <div className="flex items-center gap-2.5 w-full min-w-0">
+         {/* Ô 1: XE */}
+         <div className="flex-1 min-w-0 flex items-center gap-2">
+            <div className="w-10 h-6 sm:w-12 sm:h-7 shrink-0 flex items-center justify-center">
+               {top1CarObj?.img ? (
+                  <img src={top1CarObj.img} className="max-w-full max-h-full object-contain scale-110 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" />
+               ) : (
+                  <span className="text-[8px] text-white/30 italic">No Car</span>
+               )}
+            </div>
+            <div className="flex-1 min-w-0 flex items-center">
+               <span className="text-[10px] sm:text-xs font-bold text-cyan-200 uppercase leading-tight break-words line-clamp-2 text-left drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]">
+                  {top1CarObj?.name || '---'}
+               </span>
+            </div>
+         </div>
+
+         {/* Ô 2: DÀNH SẴN CHO TƯƠNG LAI (Mở comment khi cần kích hoạt ô ở giữa) */}
+         {/* 
+         <div className="flex-1 min-w-0 flex items-center gap-2 border-l border-white/15 pl-2.5">
+            <div className="w-8 h-6 shrink-0 flex items-center justify-center">
+               <span className="text-[9px] text-amber-400">SLOT</span>
+            </div>
+            <span className="text-[10px] font-bold text-amber-200 uppercase truncate">FUTURE</span>
+         </div> 
+         */}
+
+         {/* Ô 3: PET */}
+         <div className="flex-1 min-w-0 flex items-center gap-2 border-l border-white/15 pl-2.5">
+            <div className="w-8 h-6 sm:w-10 sm:h-7 shrink-0 flex items-center justify-center">
+               {top1PetObj?.img ? (
+                  <img src={top1PetObj.img} className="max-w-full max-h-full object-contain scale-110 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" />
+               ) : (
+                  <span className="text-[8px] text-white/30 italic">No Pet</span>
+               )}
+            </div>
+            <div className="flex-1 min-w-0 flex items-center">
+               <span className="text-[10px] sm:text-xs font-bold text-slate-200 uppercase leading-tight break-words line-clamp-2 text-left drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]">
+                  {top1PetObj?.name || '---'}
+               </span>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
 
                   {/* Cột 3: Top 2-6 (Layout Khay Trang Bị Tự Động Co Giãn) */}
 <div className={`w-full md:w-[30%] flex flex-col ${is6P ? 'gap-1.5 md:gap-2' : 'gap-2.5 lg:gap-3'} h-full min-h-0 justify-between`}>
@@ -1221,8 +1255,8 @@
            <div className="flex-1 min-w-0 flex flex-col justify-between h-full pl-2 z-20">
               
               {/* Tầng trên: Tên VĐV & Thời gian về đích */}
-              <div className="w-full flex justify-between items-start">
-                 <span className="font-black italic text-xs lg:text-sm xl:text-base text-white truncate max-w-[45%] pl-1 text-left drop-shadow-md">
+              <div className="w-full flex justify-between items-end">
+                 <span className="font-black italic text-xs lg:text-sm xl:text-base text-white truncate max-w-[45%] pl-1 text-left drop-shadow-md leading-none pb-0.5">
                     {p.name}
                  </span>
                  <div className="flex flex-col items-end leading-none">
