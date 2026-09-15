@@ -709,7 +709,7 @@
 
           {/* KHUNG NỘI DUNG TỰ ĐỘNG KHÓA TỈ LỆ (18:9 / 16:9 / FULL) */}
           <div 
-            className="relative flex flex-col z-10 overflow-hidden shadow-2xl transition-all duration-300 mx-auto my-auto"
+            className="relative flex flex-col z-10 overflow-hidden shadow-2xl transition-all duration-300 mx-auto self-start"
             style={{
               width: '100%',
               height: aspectRatio === 'full' ? '100%' : 'auto',
@@ -735,29 +735,32 @@
                   </div>
               )}
             </div>
-            <div className="flex items-center gap-2.5">
-  {/* Menu chọn tỉ lệ hiển thị */}
-  <div className="flex items-center bg-slate-900/70 border border-white/10 rounded-md px-2 py-1.5 shadow-sm backdrop-blur-sm">
-    <span className="text-[10px] font-black text-slate-400 mr-1.5 uppercase hidden sm:inline tracking-wider">TỈ LỆ:</span>
+            <div className="flex items-center gap-2">
+  {/* Nút chọn tỉ lệ: Phong cách kính mờ chìm, đồng bộ hoàn toàn với nút Đóng Tab */}
+  <div 
+    className="px-3 py-2 bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white font-bold rounded border border-white/10 hover:border-white/20 transition-all text-xs clip-slant flex items-center gap-1.5 group cursor-pointer"
+    title="Chỉnh tỉ lệ khung hình"
+  >
+    <MonitorPlay size={14} className="text-slate-400 group-hover:text-cyan-300 transition-colors shrink-0" />
     <select 
       value={aspectRatio} 
       onChange={(e) => setAspectRatio(e.target.value)}
-      className="bg-transparent text-xs font-black text-cyan-300 outline-none cursor-pointer tracking-wider"
+      className="bg-transparent text-slate-400 group-hover:text-white outline-none cursor-pointer text-xs font-bold uppercase tracking-wider transition-colors appearance-none pr-0.5"
     >
-      <option value="18:9" className="bg-slate-900 text-cyan-300">18:9 (Cinematic)</option>
-      <option value="16:9" className="bg-slate-900 text-slate-200">16:9 (Chuẩn Stream)</option>
-      <option value="full" className="bg-slate-900 text-slate-200">Full (Tràn viền)</option>
+      <option value="18:9" className="bg-slate-900 text-slate-200">18:9</option>
+      <option value="16:9" className="bg-slate-900 text-slate-200">16:9</option>
+      <option value="full" className="bg-slate-900 text-slate-200">FULL</option>
     </select>
   </div>
 
   {/* Nút Đóng Tab */}
   <button 
     onClick={() => window.close()} 
-    className="px-3.5 py-1.5 bg-white/5 hover:bg-red-600/80 text-slate-400 hover:text-white font-bold rounded border border-white/10 hover:border-red-500/50 transition-all uppercase tracking-wider text-xs clip-slant flex items-center gap-1.5 group" 
+    className="px-3.5 py-2 bg-white/5 hover:bg-red-600/80 text-slate-400 hover:text-white font-bold rounded border border-white/10 hover:border-red-500/50 transition-all uppercase tracking-wider text-xs clip-slant flex items-center gap-1.5 group" 
     title={t.closeBtn}
   >
     <XIcon size={14} className="group-hover:rotate-90 transition-transform" />
-    <span>{t.closeBtn}</span>
+    <span className="hidden sm:inline">{t.closeBtn}</span>
   </button>
 </div>
           </div>
