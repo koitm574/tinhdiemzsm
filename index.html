@@ -107,6 +107,73 @@
       if (!mapId) return 1;
       return MAP_LAPS[mapId] !== undefined ? MAP_LAPS[mapId] : 2;
     };
+
+          // Cấu hình Bảng màu chủ đạo theo hệ sinh thái từng Map
+      const MAP_THEMES = {
+        // 1. Hệ Đỏ / Dung Nham / Sa Mạc (Mars, Smeltery, Titan, Canyon, Dunhuang)
+        fire: {
+          ids: ['m5_1', 'm3_3', 'm4_14', 'm6_1', 'm5_2', 'm4_4'],
+          cardBg: 'linear-gradient(180deg, #991b1b 0%, #1e111a 45%, #050510 100%)',
+          headerBg: 'linear-gradient(90deg, rgba(220, 38, 38, 0.6) 0%, transparent 100%)',
+          borderColor: 'rgba(239, 68, 68, 0.45)',
+          glowColor: 'rgba(220, 38, 38, 0.25)',
+          accentText: '#f87171'
+        },
+        // 2. Hệ Cam Mùa Thu / Cát Vàng (Autumn, Crimson Leaves, Dragon Boat, Utopia)
+        autumn: {
+          ids: ['m5_6', 'm5_8', 'm4_12', 'm4_13', 'm5_7'],
+          cardBg: 'linear-gradient(180deg, #c2410c 0%, #1f1412 45%, #050510 100%)',
+          headerBg: 'linear-gradient(90deg, rgba(234, 88, 12, 0.6) 0%, transparent 100%)',
+          borderColor: 'rgba(249, 115, 22, 0.45)',
+          glowColor: 'rgba(234, 88, 12, 0.25)',
+          accentText: '#fb923c'
+        },
+        // 3. Hệ Đại Dương / Xanh Biển Ngọc (Atlantis, Sea Eye, Fishery, Crystal Lake, Romantic Beach)
+        ocean: {
+          ids: ['m5_3', 'm5_4', 'm3_2', 'm3_6', 'm3_12', 'm3_14'],
+          cardBg: 'linear-gradient(180deg, #0f766e 0%, #0c1a24 45%, #050510 100%)',
+          headerBg: 'linear-gradient(90deg, rgba(13, 148, 136, 0.6) 0%, transparent 100%)',
+          borderColor: 'rgba(20, 184, 166, 0.45)',
+          glowColor: 'rgba(13, 148, 136, 0.25)',
+          accentText: '#2dd4bf'
+        },
+        // 4. Hệ Băng Tuyết / Hàn Cực (Snow Chasm, Snow Mountain, Spring Footsteps, Swan Castle)
+        ice: {
+          ids: ['m5_9', 'm4_8', 'm3_15', 'm4_5'],
+          cardBg: 'linear-gradient(180deg, #0284c7 0%, #0d1b2a 45%, #050510 100%)',
+          headerBg: 'linear-gradient(90deg, rgba(14, 165, 233, 0.6) 0%, transparent 100%)',
+          borderColor: 'rgba(56, 189, 248, 0.45)',
+          glowColor: 'rgba(14, 165, 233, 0.25)',
+          accentText: '#38bdf8'
+        },
+        // 5. Hệ Sơn Thủy / Cổ Phong / Rừng Trúc (Painted Landscape, West Lake, Ancient Shu, Jiangxi, Wushan)
+        nature: {
+          ids: ['m7_2', 'm4_1', 'm4_6', 'm4_9', 'm4_15', 'm3_4', 'm3_10', 'm3_13', 'm6_2'],
+          cardBg: 'linear-gradient(180deg, #047857 0%, #0c1a17 45%, #050510 100%)',
+          headerBg: 'linear-gradient(90deg, rgba(16, 185, 129, 0.6) 0%, transparent 100%)',
+          borderColor: 'rgba(52, 211, 153, 0.45)',
+          glowColor: 'rgba(16, 185, 129, 0.25)',
+          accentText: '#4ade80'
+        },
+        // 6. Hệ Cyberpunk / Không Gian / Tương Lai (Space Station, Z-Space, Soul Life, Alpha, Troy, City 11)
+        cyber: {
+          ids: ['m7_1', 'm4_10', 'm4_16', 'm3_1', 'm3_5', 'm3_7', 'm3_8', 'm3_9', 'm3_11', 'm4_11', 'm4_2', 'm4_3', 'm4_7', 'm5_5'],
+          cardBg: 'linear-gradient(180deg, #6d28d9 0%, #150f24 45%, #050510 100%)',
+          headerBg: 'linear-gradient(90deg, rgba(139, 92, 246, 0.6) 0%, transparent 100%)',
+          borderColor: 'rgba(168, 85, 247, 0.45)',
+          glowColor: 'rgba(139, 92, 246, 0.25)',
+          accentText: '#c084fc'
+        }
+      };
+
+      const getMapTheme = (mapId) => {
+        if (!mapId) return MAP_THEMES.ice;
+        for (const key in MAP_THEMES) {
+          if (MAP_THEMES[key].ids.includes(mapId)) return MAP_THEMES[key];
+        }
+        return MAP_THEMES.ice; // Mặc định tông xanh
+      };
+    
     const TRANSLATIONS={
       vi:{title:"HỆ THỐNG TÍNH ĐIỂM THEO GIÂY",subtitle:"Thiết kế và phát triển bởi koi",postmatchHeader: "KẾT QUẢ",tourNamePh:"Nhập tên giải đấu...",addPlayer:"Thêm VĐV",addMatch:"Thêm Trận",reset:"Làm mới",export:"Xuất Excel",no:"STT",match:"TRẬN ĐẤU",kingMap:"King Map",total:"TỔNG ĐIỂM",leaderboard:"BẢNG XẾP HẠNG",pts:"PTS",errMaxP:"Giải đấu giới hạn tối đa 6 VĐV!",errMinP:"Bảng thi đấu cần ít nhất 2 VĐV!",errMaxG:"Giải đấu giới hạn tối đa 90 Trận!",delP:"Bạn muốn xóa {0} khỏi giải đấu?",errMinG:"Phải có ít nhất 1 Trận đấu!",delG:"Bạn có muốn xóa Trận {0}?",confirmReset:"🚨 LÀM MỚI BẢNG ĐIỂM?\nMọi dữ liệu sẽ bị xóa và quay về trạng thái mặc định.",defPlayer:"VDV",defGame:"Game",selectMap:"Tìm & Chọn Map",searchPh:"Nhập tên map...",infoBtn:"Hướng Dẫn",infoTitle:"CƠ CHẾ TÍNH ĐIỂM & SỬ DỤNG",i1:"Nhập nhanh: Gõ thẳng số (VD: nhập 10704 hệ thống sẽ hiểu là 1:07.04).",i2:"Về nhất: 11 điểm.",i3:"King Map: Mỗi người chơi được chỉ định King Map cho mình. Về nhất đúng King Map của mình sẽ được +12 điểm.",i4:"Người về sau sẽ bị trừ dần điểm theo độ trễ thời gian:",i5:"Không hoàn thành (nhập X): 0 điểm.",soloMode:"CÁ NHÂN (4P)",mode1v1:"SOLO 1VS1",teamMode:"Đua Đội",modeSolo:"CÁ NHÂN (4P)",mode2v2:"Chế Độ: 2vs2",mode3v3:"Chế Độ: 3vs3",indivTotal:"ĐIỂM CÁ NHÂN",teamTotal:"TỔNG ĐIỂM ĐỘI",team1:"ĐỘI XANH",team2:"ĐỘI ĐỎ",i6:"Quyền chọn Map: Trận 2 đến N là King Map của từng VĐV/Đội (tự luân phiên). Các trận sau: Đua đơn -> VĐV hạng 2 chọn. Đua đội -> Đội có tổng điểm thấp hơn chọn. (Hòa điểm -> xét đội có điểm thấp hơn ở map liền trước).",map1Pick:"TRẬN 1: MAP CHỈ ĐỊNH (KHÔNG CÓ QUYỀN CHỌN)",kingMapPick:"TRẬN {0}: KING MAP CỦA {1}",normalPick:"TRẬN {0}: LƯỢT CHỌN MAP CỦA {1}",broadcastBtn:"Mở Tab Livestream",pick:"LƯỢT CHỌN",closeBtn:"Đóng Tab",preMatchTitleIndiv:"INDIVIDUAL SPRINT CLASSIC",preMatchTitleTeam:"TEAM SPRINT CLASSIC",preMatchTitle1v1:"CÁ NHÂN 1VS1",preMatchMode:"MODE",preMatchBestRecord:"BEST RECORD",scoreboardTab:"BẢNG ĐIỂM",prematchTab:"TRƯỚC TRẬN",postmatchTab:"SAU TRẬN",matchResult:"KẾT QUẢ TRẬN ĐẤU",selectCar:"CHỌN XE",selectPet:"CHỌN PET",preMatchModeSolo:"CÁ NHÂN",preMatchMode2v2:"ĐỒNG ĐỘI 2VS2",preMatchMode3v3:"ĐỒNG ĐỘI 3VS3",setScore:"TỈ SỐ HIỆP (SET)",roundScore:"TỈ SỐ VÁN (ROUND)",dbBtn:"Ảnh VĐV",dbTitle:"QUẢN LÝ ẢNH VĐV",tabPlayers:"ẢNH VĐV",tabCars:"KHO XE",tabPets:"KHO PET",carName:"Tên Xe",petName:"Tên Pet",imgUrl:"Link Ảnh (URL)",addBtn:"Thêm Mới",emptyDb:"Chưa có dữ liệu",banMap:"Cấm Map",banned:"Đã Cấm", groupMgr: "Quản Lý Bảng Đấu", groupTitle: "QUẢN LÝ CÁC BẢNG ĐẤU", saveGroup: "Lưu Bảng Đấu", loadGroup: "Tải Lại", delGroup: "Xóa Bảng", groupNamePh: "Nhập tên bảng đấu mới...", groupSaved: "Đã lưu bảng đấu thành công!", groupLoaded: "Đã tải dữ liệu bảng đấu!", newGroup: "Tạo Bảng Mới", saveCurrGroup: "Lưu Bảng Này"},
       en:{title:"SECOND-BASED SCORING SYSTEM",subtitle:"Designed and developed by koi",postmatchHeader: "RESULTS",tourNamePh:"Enter tournament name...",addPlayer:"Add Player",addMatch:"Add Match",reset:"Reset",export:"Export Excel",no:"No.",match:"MATCH",kingMap:"King Map",total:"TOTAL SCORE",leaderboard:"LEADERBOARD",pts:"PTS",errMaxP:"Maximum 6 players allowed!",errMinP:"Need at least 2 players!",errMaxG:"Maximum 90 matches allowed!",delP:"Remove {0} from the tournament?",errMinG:"Need at least 1 match!",delG:"Delete Game {0}?",confirmReset:"🚨 RESET SCOREBOARD?\nAll data will be wiped and returned to default.",defPlayer:"Player",defGame:"Match",selectMap:"Search Map",searchPh:"Type map name...",infoBtn:"Guide",infoTitle:"SCORING RULES & USAGE",i1:"Quick Input: Type numbers directly (e.g., 10704 becomes 1:07.04).",i2:"1st Place: 11 points.",i3:"King Map: Designated King Maps for each player. 1st place on their King Map gets +12 points.",i4:"Subsequent players lose points based on time gap:",i5:"DNF (type X): 0 points.",soloMode:"Solo Mode",mode1v1:"SOLO 1VS1",teamMode:"Team Mode",modeSolo:"Mode: Solo",mode2v2:"Mode: 2vs2",mode3v3:"Mode: 3vs3",indivTotal:"INDIV. SCORE",teamTotal:"TEAM TOTAL",team1:"BLUE TEAM",team2:"RED TEAM",i6:"Map Picking: Matches 2 to N are King Maps. After: Solo -> 2nd place player picks. Team -> Team with lower total score picks.",map1Pick:"MATCH 1: DESIGNATED MAP",kingMapPick:"MATCH {0}: {1}'S KING MAP",normalPick:"MATCH {0}: {1}'S PICK",broadcastBtn:"Open Live Tab",pick:"PICK",closeBtn:"Close Tab",preMatchTitleIndiv:"INDIVIDUAL SPRINT CLASSIC",preMatchTitleTeam:"TEAM SPRINT CLASSIC",preMatchTitle1v1:"1 VS 1 SPRINT CLASSIC",preMatchMode:"MODE",preMatchBestRecord:"BEST RECORD",scoreboardTab:"SCOREBOARD",prematchTab:"PRE-MATCH",postmatchTab:"POST-MATCH",matchResult:"MATCH RESULT",selectCar:"SELECT CAR",selectPet:"SELECT PET",preMatchModeSolo:"INDIVIDUAL",preMatchMode2v2:"2 VS 2 TEAM",preMatchMode3v3:"3 VS 3 TEAM",setScore:"SET SCORE",roundScore:"ROUND SCORE",dbBtn:"Player Photos",dbTitle:"PLAYER PHOTOS MANAGER",tabPlayers:"PLAYER PHOTOS",tabCars:"CAR DB",tabPets:"PET DB",carName:"Car Name",petName:"Pet Name",imgUrl:"Image Link (URL)",addBtn:"Add New",emptyDb:"No data available",banMap:"Ban Map",banned:"BANNED", groupMgr: "Group Manager", groupTitle: "TOURNAMENT GROUPS", saveGroup: "Save Group", loadGroup: "Load", delGroup: "Delete", groupNamePh: "New group name...", groupSaved: "Group saved successfully!", groupLoaded: "Group data loaded!", newGroup: "Create New Group", saveCurrGroup: "Save Group"},
@@ -1019,41 +1086,56 @@
                       {leftPlayers.map((playerName, i) => renderPlayerCard(playerName, i))}
                    </div>
 
-                   {/* Cột giữa: Bản đồ thi đấu (Chuẩn giao diện Post-Match) */}
-<div className="w-full md:w-[36%] lg:w-[34%] flex flex-col rounded-2xl overflow-hidden shadow-2xl border border-cyan-500/40 bg-gradient-to-b from-[#0284c7] via-[#0f172a] to-[#050510] h-full min-h-0 shrink-0 relative">
-    {/* Header tên Map & Số sao */}
-    <div className="p-4 bg-gradient-to-r from-cyan-600/60 to-transparent border-b border-white/10 flex flex-col shrink-0">
+                 {/* Cột giữa: Bản đồ thi đấu (Gradient động theo Map) */}
+{(() => {
+  const mapTheme = getMapTheme(activeGame.mapId);
+  return (
+    <div 
+      className="w-full md:w-[36%] lg:w-[34%] flex flex-col rounded-2xl overflow-hidden border h-full min-h-0 shrink-0 relative transition-all duration-500"
+      style={{
+        background: mapTheme.cardBg,
+        borderColor: mapTheme.borderColor,
+        boxShadow: `0 0 40px ${mapTheme.glowColor}`
+      }}
+    >
+      {/* Header tên Map & Số sao */}
+      <div 
+        className="p-4 border-b border-white/10 flex flex-col shrink-0 transition-all duration-500"
+        style={{ background: mapTheme.headerBg }}
+      >
         <span className="font-black italic text-lg lg:text-2xl text-white uppercase tracking-wider truncate">
-            {gameMode === '1v1' ? `${setRoundText} | ${mapName}` : mapName}
+          {gameMode === '1v1' ? `${setRoundText} | ${mapName}` : mapName}
         </span>
         <div className="flex text-yellow-300 text-xs mt-0.5">
-            {Array(mapStars).fill(0).map((_, i) => <span key={i}>★</span>)}
+          {Array(mapStars).fill(0).map((_, i) => <span key={i}>★</span>)}
         </div>
-    </div>
+      </div>
 
-    {/* Khung ảnh nền Map */}
-    <div className="flex-1 relative p-2 min-h-0">
+      {/* Khung ảnh nền Map */}
+      <div className="flex-1 relative p-2 min-h-0">
         <div className="w-full h-full rounded-xl overflow-hidden border border-white/10 shadow-inner relative" style={bgStyle}>
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
         </div>
-    </div>
+      </div>
 
-    {/* Thanh thông số Footer: LAPS - KING MAP - MODE */}
-    <div className="p-3 bg-slate-950/80 border-t border-white/10 flex justify-between items-center text-center shrink-0">
+      {/* Thanh thông số Footer: LAPS - KING MAP - MODE */}
+      <div className="p-3 bg-slate-950/80 border-t border-white/10 flex justify-between items-center text-center shrink-0">
         <div>
-            <span className="text-[8px] text-cyan-400 font-bold uppercase tracking-widest block">LAPS</span>
-            <span className="text-sm font-black text-white font-mono">{getMapLaps(activeGame.mapId)}</span>
+          <span className="text-[8px] font-bold uppercase tracking-widest block" style={{ color: mapTheme.accentText }}>LAPS</span>
+          <span className="text-sm font-black text-white font-mono">{getMapLaps(activeGame.mapId)}</span>
         </div>
         <div className="px-2">
-            <span className="text-[8px] text-cyan-400 font-bold uppercase tracking-widest block">KING MAP</span>
-            <span className="text-xs md:text-sm font-black text-amber-400 uppercase truncate max-w-[110px] block">{kingMapOwnerName}</span>
+          <span className="text-[8px] font-bold uppercase tracking-widest block" style={{ color: mapTheme.accentText }}>KING MAP</span>
+          <span className="text-xs md:text-sm font-black text-amber-400 uppercase truncate max-w-[110px] block">{kingMapOwnerName}</span>
         </div>
         <div>
-            <span className="text-[8px] text-cyan-400 font-bold uppercase tracking-widest block">MODE</span>
-            <span className="text-sm font-black text-white">{modeText}</span>
+          <span className="text-[8px] font-bold uppercase tracking-widest block" style={{ color: mapTheme.accentText }}>MODE</span>
+          <span className="text-sm font-black text-white">{modeText}</span>
         </div>
+      </div>
     </div>
-</div>
+  );
+})()}
 
                    {/* Cột phải: Tuyển thủ nửa sau */}
                    <div className="w-full md:w-[32%] lg:w-[33%] flex flex-col gap-3 lg:gap-4 h-full min-h-0">
@@ -1133,33 +1215,52 @@
                 {/* Khung 3 cột: Cột Map (35%) - Cột Top 1 (35%) - Cột Top 2-6 (30%) */}
                 <div className="flex-1 flex flex-col md:flex-row gap-4 lg:gap-5 min-h-0 items-stretch">
                    
-                   {/* Cột 1: Thông tin bản đồ */}
-                   <div className="w-full md:w-[40%] flex flex-col rounded-2xl overflow-hidden shadow-2xl border border-cyan-500/40 bg-gradient-to-b from-[#0284c7] via-[#0f172a] to-[#050510] h-full min-h-0 relative">
-                      <div className="p-4 bg-gradient-to-r from-cyan-600/60 to-transparent border-b border-white/10 flex flex-col">
+                {/* Cột 1: Thông tin bản đồ (Gradient động theo Map) */}
+                {(() => {
+                  const mapTheme = getMapTheme(activeGame.mapId);
+                  return (
+                    <div 
+                      className="w-full md:w-[40%] flex flex-col rounded-2xl overflow-hidden border h-full min-h-0 relative transition-all duration-500"
+                      style={{
+                        background: mapTheme.cardBg,
+                        borderColor: mapTheme.borderColor,
+                        boxShadow: `0 0 40px ${mapTheme.glowColor}`
+                      }}
+                    >
+                      {/* Header tên Map & Số sao */}
+                      <div 
+                        className="p-4 border-b border-white/10 flex flex-col shrink-0 transition-all duration-500"
+                        style={{ background: mapTheme.headerBg }}
+                      >
                         <span className="font-black italic text-lg lg:text-2xl text-white uppercase tracking-wider truncate">{mapName}</span>
                         <div className="flex text-yellow-300 text-xs mt-0.5">{Array(mapStars).fill(0).map((_, i) => <span key={i}>★</span>)}</div>
                       </div>
+                
+                      {/* Khung ảnh nền Map */}
                       <div className="flex-1 relative p-2 min-h-0">
-                         <div className="w-full h-full rounded-xl overflow-hidden border border-white/10 shadow-inner relative" style={bgStyle}>
-                           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                         </div>
+                        <div className="w-full h-full rounded-xl overflow-hidden border border-white/10 shadow-inner relative" style={bgStyle}>
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                        </div>
                       </div>
-                      <div className="p-3 bg-slate-950/80 border-t border-white/10 flex justify-between items-center text-center">
-                         {/* 2. Đổi ROUND thành LAPS */}
-                         <div>
-                            <span className="text-[8px] text-cyan-400 font-bold uppercase tracking-widest block">LAPS</span>
-                            <span className="text-sm font-black text-white font-mono">{getMapLaps(activeGame.mapId)}</span>
-                         </div>
-                         <div className="px-2">
-                            <span className="text-[8px] text-cyan-400 font-bold uppercase tracking-widest block">KING MAP</span>
-                            <span className="text-xs md:text-sm font-black text-amber-400 uppercase truncate max-w-[110px] block">{kingMapOwnerName}</span>
-                         </div>
-                         <div>
-                            <span className="text-[8px] text-cyan-400 font-bold uppercase tracking-widest block">MODE</span>
-                            <span className="text-sm font-black text-white">{modeText}</span>
-                         </div>
+                
+                      {/* Thanh Footer: LAPS - KING MAP - MODE */}
+                      <div className="p-3 bg-slate-950/80 border-t border-white/10 flex justify-between items-center text-center shrink-0">
+                        <div>
+                          <span className="text-[8px] font-bold uppercase tracking-widest block" style={{ color: mapTheme.accentText }}>LAPS</span>
+                          <span className="text-sm font-black text-white font-mono">{getMapLaps(activeGame.mapId)}</span>
+                        </div>
+                        <div className="px-2">
+                          <span className="text-[8px] font-bold uppercase tracking-widest block" style={{ color: mapTheme.accentText }}>KING MAP</span>
+                          <span className="text-xs md:text-sm font-black text-amber-400 uppercase truncate max-w-[110px] block">{kingMapOwnerName}</span>
+                        </div>
+                        <div>
+                          <span className="text-[8px] font-bold uppercase tracking-widest block" style={{ color: mapTheme.accentText }}>MODE</span>
+                          <span className="text-sm font-black text-white">{modeText}</span>
+                        </div>
                       </div>
-                   </div>
+                    </div>
+                  );
+                })()}
 
                    {/* Cột 2: Tuyển thủ Top 1 (Tên VĐV ở giữa + Trang bị phóng to) */}
 <div className="w-full md:w-[30%] flex flex-col rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(6,182,212,0.3)] border-2 border-cyan-400 bg-gradient-to-b from-[#0284c7]/90 via-[#0369a1]/80 to-[#0c4a6e]/90 backdrop-blur-xl relative h-full min-h-0">
