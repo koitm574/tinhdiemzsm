@@ -1179,13 +1179,13 @@
                                <div className="w-14 h-10 flex items-center justify-center">
                                   {top1PetObj ? <img src={top1PetObj.img} className="max-w-full max-h-full object-contain drop-shadow-md scale-125" /> : <div className="text-[9px] text-white/50 italic">Chưa chọn pet</div>}
                                </div>
-                               <span className="text-xs font-bold text-cyan-200 uppercase truncate max-w-[95px]">{top1PetObj?.name}</span>
+                              <span className="text-xs font-bold text-cyan-200 uppercase whitespace-nowrap">{top1PetObj?.name}</span>
                             </div>
                          </div>
                       </div>
                    </div>
 
-                   {/* Cột 3: Top 2-6 */}
+                  {/* Cột 3: Top 2-6 (Layout Khay Trang Bị Tự Động Co Giãn) */}
 <div className={`w-full md:w-[30%] flex flex-col ${is6P ? 'gap-1.5 md:gap-2' : 'gap-2.5 lg:gap-3'} h-full min-h-0 justify-between`}>
   {others.map((p) => {
      const carObj = carDatabase.find(c => c.id === activeGame.cars?.[p.idx]);
@@ -1201,15 +1201,15 @@
      return (
         <div key={`post_${p.idx}`} className="flex-1 min-h-0 flex rounded-xl p-2 md:p-2.5 bg-gradient-to-r from-[#0284c7]/85 via-[#0369a1]/75 to-[#0f172a]/95 border border-cyan-500/30 shadow-lg relative overflow-hidden">
            
-           {/* [FIX 1]: Tăng z-index lên z-30 + Thêm badge nền tối mờ để không bao giờ bị ảnh VĐV che mất số điểm */}
+           {/* 1. Điểm số góc trái */}
            <div className="absolute top-2 left-2.5 z-20 pointer-events-none">
-             <span className={`${is6P ? 'text-sm lg:text-base' : 'text-base lg:text-lg'} font-black font-['Chakra_Petch'] text-cyan-300 drop-shadow-[0_2px_6px_rgba(0,0,0,1)] leading-none block`}>
-              +{p.score}
+              <span className={`${is6P ? 'text-sm lg:text-base' : 'text-base lg:text-lg'} font-black font-['Chakra_Petch'] text-cyan-300 drop-shadow-[0_2px_6px_rgba(0,0,0,1)] leading-none block`}>
+                 +{p.score}
               </span>
            </div>
 
-           {/* Ảnh đại diện VĐV */}
-           <div className="w-18 sm:w-22 h-full flex items-end justify-center shrink-0 relative z-10 pointer-events-none ml-8 sm:ml-9">
+           {/* 2. Ảnh VĐV: Khung cố định, độc lập hoàn toàn với cột nội dung */}
+           <div className="w-20 sm:w-24 h-full flex items-end justify-center shrink-0 relative z-10 pointer-events-none ml-7 sm:ml-8">
               {playerPhotos[p.idx] ? (
                  <img src={playerPhotos[p.idx]} className="max-h-[95%] max-w-full object-contain object-bottom drop-shadow-[0_8px_16px_rgba(0,0,0,0.8)]" />
               ) : (
@@ -1217,44 +1217,73 @@
               )}
            </div>
 
-           {/* Cột thông tin chi tiết */}
-           <div className="flex-1 flex flex-col justify-between items-end text-right pl-2 z-20 min-h-0">
+           {/* 3. Cột thông tin: min-w-0 ngăn chặn 100% việc tràn lấn sang ảnh VĐV */}
+           <div className="flex-1 min-w-0 flex flex-col justify-between h-full pl-2 z-20">
               
-              {/* Tên VĐV & [FIX 2] Phóng to độ trễ + Thời gian đua */}
+              {/* Tầng trên: Tên VĐV & Thời gian về đích */}
               <div className="w-full flex justify-between items-start">
-                 <span className="font-black italic text-xs lg:text-sm xl:text-base text-white truncate max-w-[42%] pl-1 text-left drop-shadow-md">
+                 <span className="font-black italic text-xs lg:text-sm xl:text-base text-white truncate max-w-[45%] pl-1 text-left drop-shadow-md">
                     {p.name}
                  </span>
                  <div className="flex flex-col items-end leading-none">
-                    {/* Độ trễ: To hơn, màu vàng chanh sáng nổi bật */}
                     <span className={`${is6P ? 'text-[11px] lg:text-xs' : 'text-xs lg:text-sm'} font-black text-[#fce300] font-mono drop-shadow-[0_0_8px_rgba(252,227,0,0.6)] mb-0.5`}>
                        {gapText}
                     </span>
-                    {/* Kết quả thời gian: Tăng kích thước lớn và rõ nét */}
                     <span className={`${is6P ? 'text-base lg:text-xl' : 'text-lg lg:text-2xl'} font-black font-['Chakra_Petch'] text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.6)]`}>
                        {p.rawT || '--:--.--'}
                     </span>
                  </div>
               </div>
 
-              {/* [FIX 3] Hiển thị FULL tên xe (Bỏ truncate và bỏ giới hạn max-w) */}
-              <div className="flex items-center gap-2 pt-1 border-t border-white/10 w-full justify-end min-w-0">
-                 <div className="flex items-center gap-1.5 shrink-0">
-                    {carObj?.img && <img src={carObj.img} className="w-9 h-5 object-contain scale-110" />}
-                    <span className="text-[9px] lg:text-[10px] font-bold text-cyan-200 uppercase whitespace-nowrap drop-shadow-sm">
-                       {carObj?.name}
-                    </span>
-                 </div>
-                 {petObj?.img && (
-                    <div className="flex items-center gap-1.5 shrink-0 border-l border-white/15 pl-2">
-                       <img src={petObj.img} className="w-7 h-5 object-contain scale-110" />
-                       <span className="text-[9px] lg:text-[10px] font-bold text-slate-200 uppercase whitespace-nowrap drop-shadow-sm">
-                          {petObj?.name}
+              {/* Tầng dưới: KHAY TRANG BỊ (Tự chia đều không gian, không bao giờ tràn lấn) */}
+              <div className="flex items-center gap-1.5 pt-1.5 border-t border-white/10 w-full min-w-0">
+                 
+                 {/* Ô 1: XE */}
+                 <div className="flex-1 min-w-0 bg-slate-950/40 border border-cyan-500/20 rounded-md px-1.5 py-1 flex items-center gap-1.5 shadow-inner">
+                    <div className="w-8 h-5 sm:w-9 sm:h-6 shrink-0 flex items-center justify-center">
+                       {carObj?.img ? (
+                          <img src={carObj.img} className="max-w-full max-h-full object-contain scale-110 drop-shadow-sm" />
+                       ) : (
+                          <span className="text-[7px] text-white/30 italic">No Car</span>
+                       )}
+                    </div>
+                    <div className="flex-1 min-w-0 flex items-center">
+                       <span className="text-[8px] sm:text-[9px] font-bold text-cyan-200 uppercase leading-tight break-words line-clamp-2 text-left">
+                          {carObj?.name || '---'}
                        </span>
                     </div>
-                 )}
+                 </div>
+
+                 {/* Ô 2: DÀNH SẴN CHO TƯƠNG LAI (Hiện tại ẩn đi, khi nào cần dùng bạn chỉ việc bỏ comment khối này ra là xong) */}
+                 {/* 
+                 <div className="flex-1 min-w-0 bg-slate-950/40 border border-cyan-500/20 rounded-md px-1.5 py-1 flex items-center gap-1.5 shadow-inner">
+                    <div className="w-8 h-5 shrink-0 flex items-center justify-center">
+                       <span className="text-[8px] text-amber-400">SLOT</span>
+                    </div>
+                    <span className="text-[8px] font-bold text-amber-200 uppercase truncate">FUTURE</span>
+                 </div> 
+                 */}
+
+                 {/* Ô 3: PET */}
+                 <div className="flex-1 min-w-0 bg-slate-950/40 border border-cyan-500/20 rounded-md px-1.5 py-1 flex items-center gap-1.5 shadow-inner">
+                    <div className="w-7 h-5 sm:w-8 sm:h-6 shrink-0 flex items-center justify-center">
+                       {petObj?.img ? (
+                          <img src={petObj.img} className="max-w-full max-h-full object-contain scale-110 drop-shadow-sm" />
+                       ) : (
+                          <span className="text-[7px] text-white/30 italic">No Pet</span>
+                       )}
+                    </div>
+                    <div className="flex-1 min-w-0 flex items-center">
+                       <span className="text-[8px] sm:text-[9px] font-bold text-slate-200 uppercase leading-tight break-words line-clamp-2 text-left">
+                          {petObj?.name || '---'}
+                       </span>
+                    </div>
+                 </div>
+
               </div>
+
            </div>
+
         </div>
      );
   })}
