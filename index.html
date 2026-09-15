@@ -693,6 +693,11 @@
 
       const [assetModal, setAssetModal] = useState(null); 
       const [assetSearch, setAssetSearch] = useState('');
+      const [aspectRatio, setAspectRatio] = useState(() => localStorage.getItem('zsm_broadcast_ratio') || '18:9');
+
+      useEffect(() => {
+        localStorage.setItem('zsm_broadcast_ratio', aspectRatio);
+          }, [aspectRatio]);
 
       return (
         /* Lớp nền toàn màn hình, canh giữa khung nội dung */
@@ -702,9 +707,17 @@
           <div className="absolute inset-0 w-full h-[8px] bg-gradient-to-b from-transparent via-cyan-400/40 to-transparent blur-[2px] pointer-events-none z-0 animate-scanline"></div>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[10vw] font-black italic text-slate-300 opacity-[0.2] whitespace-nowrap pointer-events-none select-none z-0 tracking-tighter">{tournamentName}</div>
 
-          {/* KHUNG NỘI DUNG CHUẨN TỈ LỆ 16:9 (Không bao giờ bị kéo giãn biến dạng) */}
-          <div className="relative w-full h-full max-w-[1920px] max-h-[1080px] aspect-video flex flex-col z-10 overflow-hidden shadow-2xl">
-
+          {/* KHUNG NỘI DUNG TỰ ĐỘNG KHÓA TỈ LỆ (18:9 / 16:9 / FULL) */}
+          <div 
+            className="relative flex flex-col z-10 overflow-hidden shadow-2xl transition-all duration-300 mx-auto my-auto"
+            style={{
+              width: '100%',
+              height: aspectRatio === 'full' ? '100%' : 'auto',
+              aspectRatio: aspectRatio === '18:9' ? '18 / 9' : aspectRatio === '16:9' ? '16 / 9' : 'unset',
+              maxWidth: aspectRatio === '18:9' ? 'min(100vw, calc(100vh * 2))' : (aspectRatio === '16:9' ? 'min(100vw, calc(100vh * 16 / 9))' : '100vw'),
+              maxHeight: aspectRatio === '18:9' ? 'min(100vh, calc(100vw / 2))' : (aspectRatio === '16:9' ? 'min(100vh, calc(100vw * 9 / 16))' : '100vh')
+            }}
+          >
           <div className="relative w-full h-[8.5vh] min-h-[56px] max-h-[70px] flex items-center justify-between px-8 bg-slate-950/40 backdrop-blur-md border-b border-white/10 z-20 shrink-0">
           
             <div className="text-xl md:text-2xl font-black italic text-[#13c0eb] tracking-widest uppercase truncate max-w-[25%]">{tournamentName}</div>
@@ -722,16 +735,31 @@
                   </div>
               )}
             </div>
-            <div className="flex items-center gap-4">
-              <button 
-              onClick={() => window.close()} 
-              className="px-4 py-2 bg-white/5 hover:bg-red-600/80 text-slate-400 hover:text-white font-bold rounded border border-white/10 hover:border-red-500/50 transition-all uppercase tracking-wider text-xs clip-slant flex items-center gap-1.5 group" 
-              title={t.closeBtn}
-              >
-              <XIcon size={14} className="group-hover:rotate-90 transition-transform" />
-              <span>{t.closeBtn}</span>
-                </button>
-            </div>
+            <div className="flex items-center gap-2.5">
+  {/* Menu chọn tỉ lệ hiển thị */}
+  <div className="flex items-center bg-slate-900/70 border border-white/10 rounded-md px-2 py-1.5 shadow-sm backdrop-blur-sm">
+    <span className="text-[10px] font-black text-slate-400 mr-1.5 uppercase hidden sm:inline tracking-wider">TỈ LỆ:</span>
+    <select 
+      value={aspectRatio} 
+      onChange={(e) => setAspectRatio(e.target.value)}
+      className="bg-transparent text-xs font-black text-cyan-300 outline-none cursor-pointer tracking-wider"
+    >
+      <option value="18:9" className="bg-slate-900 text-cyan-300">18:9 (Cinematic)</option>
+      <option value="16:9" className="bg-slate-900 text-slate-200">16:9 (Chuẩn Stream)</option>
+      <option value="full" className="bg-slate-900 text-slate-200">Full (Tràn viền)</option>
+    </select>
+  </div>
+
+  {/* Nút Đóng Tab */}
+  <button 
+    onClick={() => window.close()} 
+    className="px-3.5 py-1.5 bg-white/5 hover:bg-red-600/80 text-slate-400 hover:text-white font-bold rounded border border-white/10 hover:border-red-500/50 transition-all uppercase tracking-wider text-xs clip-slant flex items-center gap-1.5 group" 
+    title={t.closeBtn}
+  >
+    <XIcon size={14} className="group-hover:rotate-90 transition-transform" />
+    <span>{t.closeBtn}</span>
+  </button>
+</div>
           </div>
 
           {/* TAB 1: BẢNG ĐIỂM LIVESTREAM */}
