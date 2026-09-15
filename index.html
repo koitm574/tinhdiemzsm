@@ -695,13 +695,18 @@
       const [assetSearch, setAssetSearch] = useState('');
 
       return (
-        <div className="fixed inset-0 w-screen h-screen bg-[#050510] flex flex-col font-sans overflow-hidden animate-slide-up z-[9999]">
+        /* Lớp nền toàn màn hình, canh giữa khung nội dung */
+        <div className="fixed inset-0 w-screen h-screen bg-[#050510] flex items-center justify-center font-sans overflow-hidden animate-slide-up z-[9999]">
           {BROADCAST_BACKGROUND_IMAGE && (<div className="absolute inset-0 z-0 bg-cover bg-center animate-slow-zoom opacity-50 pointer-events-none" style={{ backgroundImage: `url(${BROADCAST_BACKGROUND_IMAGE})` }}></div>)}
           <div className="absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] [background-size:30px_30px] opacity-60 pointer-events-none z-0"></div>
           <div className="absolute inset-0 w-full h-[8px] bg-gradient-to-b from-transparent via-cyan-400/40 to-transparent blur-[2px] pointer-events-none z-0 animate-scanline"></div>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[10vw] font-black italic text-slate-300 opacity-[0.2] whitespace-nowrap pointer-events-none select-none z-0 tracking-tighter">{tournamentName}</div>
 
-          <div className="relative w-full h-[9vh] min-h-[60px] flex items-center justify-between px-10 bg-white shadow-sm border-b border-gray-200 z-10 shrink-0">
+          {/* KHUNG NỘI DUNG CHUẨN TỈ LỆ 16:9 (Không bao giờ bị kéo giãn biến dạng) */}
+          <div className="relative w-full h-full max-w-[1920px] max-h-[1080px] aspect-video flex flex-col z-10 overflow-hidden shadow-2xl">
+
+            <div className="relative w-full h-[8.5vh] min-h-[56px] max-h-[70px] flex items-center justify-between px-8 bg-white shadow-sm border-b border-gray-200 z-20 shrink-0">
+            
             <div className="text-xl md:text-2xl font-black italic text-[#13c0eb] tracking-widest uppercase truncate max-w-[25%]">{tournamentName}</div>
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center mt-2">
               <div className="flex items-center gap-1.5 md:gap-3">
@@ -1232,6 +1237,7 @@
                 </div>
             </div>
           )}
+          </div> {/* Đóng thẻ khung 16:9 vừa thêm ở trên */}
         </div>
       );
     };
