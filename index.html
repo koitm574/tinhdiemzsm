@@ -1110,7 +1110,7 @@
             const calcs = getGameCalculations(broadcastState.gameIndex, activeGame.times);
             
             // Xác định ván này là King Map của VĐV nào
-            let kingMapOwnerName = "NONE";
+            let kingMapOwnerName = "---";
             if (gameMode !== '1v1') {
               const gIdx = broadcastState.gameIndex;
               players.forEach((pName, pIdx) => {
