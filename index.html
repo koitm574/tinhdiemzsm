@@ -693,11 +693,25 @@
 
       const [assetModal, setAssetModal] = useState(null); 
       const [assetSearch, setAssetSearch] = useState('');
-      const [aspectRatio, setAspectRatio] = useState(() => localStorage.getItem('zsm_broadcast_ratio') || '18:9');
-
+      // Hàm xác định tỉ lệ mặc định cho từng tab
+      const getDefaultRatio = (tab) => (tab === 'scoreboard' ? 'full' : '18:9');
+      
+      // Khởi tạo tỉ lệ theo tab hiện tại khi vừa mở trang
+      const [aspectRatio, setAspectRatio] = useState(() => {
+        const saved = localStorage.getItem(`zsm_ratio_${broadcastState.tab}`);
+        return saved || getDefaultRatio(broadcastState.tab);
+      });
+      
+      // Tự động chuyển về tỉ lệ mặc định tương ứng mỗi khi click đổi tab
       useEffect(() => {
-        localStorage.setItem('zsm_broadcast_ratio', aspectRatio);
-          }, [aspectRatio]);
+        const saved = localStorage.getItem(`zsm_ratio_${broadcastState.tab}`);
+        setAspectRatio(saved || getDefaultRatio(broadcastState.tab));
+      }, [broadcastState.tab]);
+      
+      // Lưu lựa chọn nếu bạn tự tay đổi tỉ lệ ở tab đó
+      useEffect(() => {
+        localStorage.setItem(`zsm_ratio_${broadcastState.tab}`, aspectRatio);
+      }, [aspectRatio, broadcastState.tab]);
 
       return (
         /* Lớp nền toàn màn hình, canh giữa khung nội dung */
