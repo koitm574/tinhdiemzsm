@@ -52,6 +52,28 @@
     .animate-slow-zoom { animation: slowZoom 20s ease-in-out infinite; }
     @keyframes scanline { 0% { transform: translateY(-10vh); } 100% { transform: translateY(110vh); } }
     .animate-scanline { animation: scanline 8s linear infinite; }
+    /* Hiệu ứng Flycam chuyển động lướt góc nhìn trên map */
+    @keyframes mapCinematicDrift {
+      0% { transform: scale(1.05) translate(0%, 0%); }
+      33% { transform: scale(1.15) translate(-2%, -1.5%); }
+      66% { transform: scale(1.12) translate(1.5%, -1%); }
+      100% { transform: scale(1.05) translate(0%, 0%); }
+    }
+    .animate-map-drift {
+      animation: mapCinematicDrift 20s ease-in-out infinite;
+      will-change: transform;
+    }
+
+    /* Hiệu ứng tia sáng quét radar giải đấu */
+    @keyframes lightSheen {
+      0% { transform: translateX(-150%) skewX(-25deg); opacity: 0; }
+      20% { opacity: 0.35; }
+      40% { transform: translateX(250%) skewX(-25deg); opacity: 0; }
+      100% { transform: translateX(250%) skewX(-25deg); opacity: 0; }
+    }
+    .animate-light-sheen {
+      animation: lightSheen 7s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
   </style>
 </head>
 <body class="bg-[#050510] text-slate-200 m-0 p-0 selection:bg-red-500/30 font-sans overflow-x-hidden">
@@ -1045,11 +1067,16 @@
         </div>
     </div>
 
-    {/* Khung ảnh nền Map */}
+    {/* Khung ảnh nền Map (Camera chuyển động + Vệt sáng) */}
     <div className="flex-1 relative p-2 min-h-0">
-        <div className="w-full h-full rounded-xl overflow-hidden border border-white/10 shadow-inner relative" style={bgStyle}>
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-        </div>
+      <div className="w-full h-full rounded-xl overflow-hidden border border-white/10 shadow-inner relative">
+        {/* Lớp 1: Ảnh Map chuyển động Flycam */}
+        <div className="absolute inset-0 w-full h-full animate-map-drift bg-cover bg-center" style={bgStyle}></div>
+        {/* Lớp 2: Lưới scanline viền tối tăng chiều sâu */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/30 pointer-events-none"></div>
+        {/* Lớp 3: Vệt sáng quét lướt qua mặt kính */}
+        <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-cyan-300/20 to-transparent animate-light-sheen pointer-events-none"></div>
+      </div>
     </div>
 
     {/* Thanh thông số Footer: LAPS - KING MAP - MODE */}
@@ -1153,10 +1180,16 @@
                         <span className="font-black italic text-lg lg:text-2xl text-white uppercase tracking-wider truncate">{mapName}</span>
                         <div className="flex text-yellow-300 text-xs mt-0.5">{Array(mapStars).fill(0).map((_, i) => <span key={i}>★</span>)}</div>
                       </div>
+                      {/* Khung ảnh nền Map (Camera chuyển động + Vệt sáng) */}
                       <div className="flex-1 relative p-2 min-h-0">
-                         <div className="w-full h-full rounded-xl overflow-hidden border border-white/10 shadow-inner relative" style={bgStyle}>
-                           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                         </div>
+                        <div className="w-full h-full rounded-xl overflow-hidden border border-white/10 shadow-inner relative">
+                          {/* Lớp 1: Ảnh Map chuyển động Flycam */}
+                          <div className="absolute inset-0 w-full h-full animate-map-drift bg-cover bg-center" style={bgStyle}></div>
+                          {/* Lớp 2: Lưới scanline viền tối tăng chiều sâu */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/30 pointer-events-none"></div>
+                          {/* Lớp 3: Vệt sáng quét lướt qua mặt kính */}
+                          <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-cyan-300/20 to-transparent animate-light-sheen pointer-events-none"></div>
+                        </div>
                       </div>
                       <div className="p-3 bg-slate-950/80 border-t border-white/10 flex justify-between items-center text-center">
                          {/* 2. Đổi ROUND thành LAPS */}
@@ -2229,7 +2262,7 @@
 
               <div className="mt-6 inline-flex flex-wrap items-center justify-center gap-1.5 p-1.5 bg-[#0f172a]/80 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] z-20 relative mx-4">
                 <button onClick={() => window.open(window.location.pathname + '?broadcast=true&tab=scoreboard', '_blank')} className="flex items-center gap-1.5 px-3 py-2 md:py-2.5 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-black rounded-xl hover:scale-105 active:scale-95 transition-all shadow-[0_0_15px_rgba(6,182,212,0.4)] text-[10px] md:text-xs uppercase tracking-wider">
-                  <MonitorPlay size={14}/> <span>BẢNG ĐIỂM LIVE</span>
+                  <MonitorPlay size={14}/> <span>BẢNG ĐIỂM</span>
                 </button>
                 <button onClick={() => window.open(window.location.pathname + '?broadcast=true&tab=prematch', '_blank')} className="flex items-center gap-1.5 px-3 py-2 md:py-2.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-black rounded-xl hover:scale-105 active:scale-95 transition-all shadow-[0_0_15px_rgba(168,85,247,0.4)] text-[10px] md:text-xs uppercase tracking-wider">
                   <PlayIcon size={14}/> <span>TRƯỚC TRẬN</span>
