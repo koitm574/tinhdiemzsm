@@ -138,6 +138,7 @@
     };
 
     const BROADCAST_BACKGROUND_IMAGE = 'https://i.ibb.co/TxWgMDKd/Untitled.png';
+    const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbxkyzTtx4aOKoF8bg-irv2B5NNkHOBtoooJ4UFrifGdhbc-VU-Q3rrAGz-gITLTGtpDPg/exec";
     const NORMAL_TOP_SCORE = 11;
     const KING_TOP_SCORE = 12;
     const MAX_PLAYERS = 6;
@@ -1714,6 +1715,76 @@
           }
       }, [gameMode, soloMatchBO, soloSetBO]);
 
+      const syncFromGoogleSheet = async (isManual = false) => {
+          if (!GOOGLE_SHEET_API_URL || GOOGLE_SHEET_API_URL.includes("DÁN_LINK")) return;
+          try {
+            const res = await fetch(GOOGLE_SHEET_API_URL);
+            if (!res.ok) throw new Error("HTTP error " + res.status);
+            const data = await res.json();
+        
+            // 1. Đồng bộ Xe
+            if (data.cars && Array.isArray(data.cars) && data.cars.length > 0) {
+              const formattedCars = data.cars.map(c => ({
+                id: String(c.id || c.Id || '').trim(),
+                name: String(c.name || c.Name || '').trim(),
+                img: String(c.img || c.Img || c.photo || '').trim()
+              })).filter(c => c.id && c.name);
+              
+              if (formattedCars.length > 0) {
+                setCarDatabase(formattedCars);
+                localStorage.setItem('zsm_cars_db_v1', JSON.stringify(formattedCars));
+              }
+            }
+
+            // 2. Đồng bộ Pet
+            if (data.pets && Array.isArray(data.pets) && data.pets.length > 0) {
+              const formattedPets = data.pets.map(p => ({
+                id: String(p.id || p.Id || '').trim(),
+                name: String(p.name || p.Name || '').trim(),
+                img: String(p.img || p.Img || p.photo || '').trim()
+              })).filter(p => p.id && p.name);
+
+              if (formattedPets.length > 0) {
+                setPetDatabase(formattedPets);
+                localStorage.setItem('zsm_pets_db_v1', JSON.stringify(formattedPets));
+              }
+            }
+
+            // 3. Đồng bộ Ảnh Tuyển Thủ (Hỗ trợ xóa ảnh nếu ô trên Sheet trống)
+            if (data.players && Array.isArray(data.players) && data.players.length > 0) {
+              setPlayerPhotos(prev => {
+                const nextPhotos = [...prev];
+                while (nextPhotos.length < 6) nextPhotos.push("");
+                
+                data.players.forEach(p => {
+                  const idx = parseInt(p.index !== undefined ? p.index : p.Index, 10);
+                  const photoUrl = String(p.photo || p.Photo || p.img || p.Img || '').trim();
+                  if (!isNaN(idx) && idx >= 0 && idx < 6) {
+                    nextPhotos[idx] = photoUrl; // Tự động gán rỗng nếu trên Sheet bị xóa
+                  }
+                });
+                
+                localStorage.setItem('zsm_player_photos_v1', JSON.stringify(nextPhotos));
+                return nextPhotos;
+              });
+            }
+
+            if (isManual) {
+              showDialogAlert(lang === 'vi' ? "Đồng bộ dữ liệu thành công!" : "Data synced successfully!");
+            }
+          } catch (err) {
+            console.error("Lỗi đồng bộ Google Sheets:", err);
+            if (isManual) {
+              showDialogAlert(lang === 'vi' ? "Lỗi: Không thể kết nối Google Sheets! Vui lòng kiểm tra quyền truy cập Web App." : "Error: Cannot connect to Google Sheets!");
+            }
+          }
+        };
+        
+        // Tự động kéo dữ liệu một lần khi vừa vào web
+        useEffect(() => {
+          syncFromGoogleSheet(false);
+        }, []);
+
       const displayTeam1Name = team1Name.trim() || t.team1;
       const displayTeam2Name = team2Name.trim() || t.team2;
 
@@ -2263,6 +2334,17 @@
                          <div className="w-10 h-10 rounded-lg bg-slate-900 border border-slate-700 flex items-center justify-center group-hover:bg-cyan-900 group-hover:border-cyan-500 group-hover:scale-110 transition-all text-xl">🎡</div>
                          <span className="tracking-wide uppercase text-xs md:text-sm">{lang === 'vi' ? 'Vòng Quay Map' : lang === 'en' ? 'Map Wheel' : 'Random Map'}</span>
                      </button>
+                     <button 
+                      onClick={() => { syncFromGoogleSheet(true); setIsSidebarOpen(false); }} 
+                      className="flex items-center gap-3 w-full p-3 bg-slate-800/50 hover:bg-emerald-900/30 text-slate-300 hover:text-emerald-300 border border-transparent hover:border-emerald-500/50 rounded-xl transition-all font-bold text-left group shadow-sm mt-2"
+                    >
+                      <div className="w-10 h-10 rounded-lg bg-slate-900 border border-slate-700 flex items-center justify-center group-hover:bg-emerald-900 group-hover:border-emerald-500 group-hover:scale-110 transition-all text-xl">
+                        <RefreshCcw size={20}/>
+                      </div>
+                      <span className="tracking-wide uppercase text-xs md:text-sm">
+                        {lang === 'vi' ? 'Đồng Bộ Google Sheets' : 'Sync Google Sheets'}
+                      </span>
+                    </button>
                  </div>
              </div>
           </>
