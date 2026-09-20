@@ -1391,87 +1391,111 @@
         gapText = `+${diff.toFixed(2)}s`;
      }
 
-     return (
-        <div key={`post_${p.idx}`} className="flex-1 min-h-0 flex rounded-xl p-2 md:p-2.5 bg-gradient-to-r from-[#0284c7]/85 via-[#0369a1]/75 to-[#0f172a]/95 border border-cyan-500/30 shadow-lg relative overflow-hidden">
-           
-           {/* 1. Điểm số góc trái */}
-           <div className="absolute top-2 left-2.5 z-20 pointer-events-none">
-              <span className={`${is6P ? 'text-base lg:text-lg' : 'text-lg lg:text-xl'} font-black font-['Chakra_Petch'] text-cyan-300 drop-shadow-[0_2px_6px_rgba(0,0,0,1)] leading-none block`}>
-                 +{p.score}
-              </span>
-           </div>
+     {others.map((p) => {
+   const carObj = carDatabase.find(c => c.id === activeGame.cars?.[p.idx]);
+   const petObj = petDatabase.find(pItem => pItem.id === activeGame.pets?.[p.idx]);
+   
+   let gapText = "-";
+   if (p.isDNF) gapText = "DNF";
+   else if (bestTimeMs !== null && p.ms !== null) {
+      const diff = (p.ms - bestTimeMs) / 1000;
+      gapText = `+${diff.toFixed(2)}s`;
+   }
 
-           {/* 2. Ảnh VĐV: Khung cố định, độc lập hoàn toàn với cột nội dung */}
-           <div className="w-20 sm:w-24 h-full flex items-end justify-center shrink-0 relative z-10 pointer-events-none ml-7 sm:ml-8">
-              {playerPhotos[p.idx] ? (
-                 <img src={playerPhotos[p.idx]} className="max-h-[95%] max-w-full object-contain object-bottom drop-shadow-[0_8px_16px_rgba(0,0,0,0.8)]" />
-              ) : (
-                 <User size={34} className="text-white/20 mb-2" />
-              )}
-           </div>
+   return (
+      <div 
+         key={`post_${p.idx}`} 
+         className="flex-1 min-h-0 flex flex-col justify-between rounded-xl overflow-hidden bg-gradient-to-r from-[#0284c7]/85 via-[#0369a1]/75 to-[#0f172a]/95 border border-cyan-500/30 shadow-lg relative"
+      >
+         {/* 1. Điểm số góc trên cùng bên trái */}
+         <div className="absolute top-2 left-2.5 z-20 pointer-events-none">
+            <span className={`${is6P ? 'text-base lg:text-lg' : 'text-lg lg:text-xl'} font-black font-['Chakra_Petch'] text-cyan-300 drop-shadow-[0_2px_6px_rgba(0,0,0,1)] leading-none block`}>
+               +{p.score}
+            </span>
+         </div>
 
-           {/* 3. Cột thông tin: min-w-0 ngăn chặn 100% việc tràn lấn sang ảnh VĐV */}
-           <div className="flex-1 min-w-0 flex flex-col justify-between h-full pl-2 z-20">
-              
-              {/* Tầng trên: Tên VĐV & Thời gian về đích */}
-              <div className="w-full flex justify-between items-end">
-                 <span className="font-black italic text-xs lg:text-sm xl:text-base text-white truncate max-w-[45%] pl-1 text-left drop-shadow-md leading-none pb-0.5">
-                    {p.name}
-                 </span>
-                 <div className="flex flex-col items-end leading-none">
-                    <span className={`${is6P ? 'text-[11px] lg:text-xs' : 'text-xs lg:text-sm'} font-black text-[#fce300] font-mono drop-shadow-[0_0_8px_rgba(252,227,0,0.6)] mb-0.5`}>
-                       {gapText}
-                    </span>
-                    <span className={`${is6P ? 'text-base lg:text-xl' : 'text-lg lg:text-2xl'} font-black font-['Chakra_Petch'] text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.6)]`}>
-                       {p.rawT || '--:--.--'}
-                    </span>
-                 </div>
-              </div>
+         {/* ================= TẦNG 1: AVATAR + TÊN DỊCH PHẢI + THỜI GIAN ================= */}
+         <div className="flex-1 min-h-0 flex items-center justify-between px-3 pt-1.5 pb-1 relative z-10">
+            
+            {/* Ảnh Avatar (Đã đẩy lên tầng trên, không còn đè khay đồ) */}
+            <div className="w-14 sm:w-16 h-full flex items-end justify-center shrink-0 ml-7 sm:ml-8 pointer-events-none">
+               {playerPhotos[p.idx] ? (
+                  <img 
+                     src={playerPhotos[p.idx]} 
+                     className="max-h-[95%] max-w-full object-contain object-bottom drop-shadow-[0_6px_12px_rgba(0,0,0,0.8)]" 
+                  />
+               ) : (
+                  <User size={30} className="text-white/20 mb-1" />
+               )}
+            </div>
 
-          {/* Tầng dưới: KHAY TRANG BỊ (PHÓNG TO THÊM KÍCH THƯỚC) */}
-          <div className="flex items-center gap-1.5 pt-1.5 border-t border-white/10 w-full min-w-0">
-             
-             {/* Ô 1: XE (40%) */}
-             <div className="flex-[2] min-w-0 flex items-center gap-1.5">
-                <div className="w-9 h-6 sm:w-11 sm:h-7 shrink-0 flex items-center justify-center">
-                   {carObj?.img ? (
-                      <img src={carObj.img} className="max-w-full max-h-full object-contain scale-110 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" />
-                   ) : (
-                      <span className="text-[7px] text-white/30 italic">No Car</span>
-                   )}
-                </div>
-                <div className="flex-1 min-w-0 flex items-center">
-                   <span className="text-[9px] sm:text-[10px] lg:text-[11px] font-bold text-cyan-200 uppercase leading-tight break-words line-clamp-2 text-left drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]">
-                      {carObj?.name || '---'}
-                   </span>
-                </div>
-             </div>
-          
-             {/* Ô 2: ECU / Ô CHỜ (20%) - ĐÃ MỞ RA VÀ ĐỒNG BỘ */}
-             <div className="flex-[1] min-w-0 flex items-center justify-center border-l border-white/15 px-0.5 opacity-40">
-                <span className="text-[7px] sm:text-[8px] font-mono tracking-widest text-slate-400 font-bold uppercase">ECU</span>
-             </div>
-          
-             {/* Ô 3: PET (40%) */}
-             <div className="flex-[2] min-w-0 flex items-center gap-1.5 border-l border-white/15 pl-1.5">
-                <div className="w-8 h-6 sm:w-10 sm:h-7 shrink-0 flex items-center justify-center">
-                   {petObj?.img ? (
-                      <img src={petObj.img} className="max-w-full max-h-full object-contain scale-110 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" />
-                   ) : (
-                      <span className="text-[7px] text-white/30 italic">No Pet</span>
-                   )}
-                </div>
-                <div className="flex-1 min-w-0 flex items-center">
-                   <span className="text-[9px] sm:text-[10px] lg:text-[11px] font-bold text-slate-200 uppercase leading-tight break-words line-clamp-2 text-left drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]">
-                      {petObj?.name || '---'}
-                   </span>
-                </div>
-             </div>
-          </div>
-           </div>
-        </div>
-     );
-  })}
+            {/* Tên VĐV (Dịch qua phải cạnh Avatar) & Thành tích bên phải */}
+            <div className="flex-1 min-w-0 flex items-end justify-between pl-3">
+               {/* Tên VĐV dịch phải */}
+               <span className="font-black italic text-xs sm:text-sm lg:text-base text-white truncate max-w-[52%] text-left drop-shadow-md leading-none pb-0.5">
+                  {p.name}
+               </span>
+
+               {/* Cột Gap Time + Thành tích cán đích */}
+               <div className="flex flex-col items-end leading-none shrink-0 pl-2">
+                  <span className={`${is6P ? 'text-[10px] lg:text-[11px]' : 'text-xs lg:text-sm'} font-black text-[#fce300] font-mono drop-shadow-[0_0_8px_rgba(252,227,0,0.6)] mb-0.5`}>
+                     {gapText}
+                  </span>
+                  <span className={`${is6P ? 'text-sm lg:text-lg' : 'text-base lg:text-xl'} font-black font-['Chakra_Petch'] text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.6)]`}>
+                     {p.rawT || '--:--.--'}
+                  </span>
+               </div>
+            </div>
+
+         </div>
+
+         {/* ================= TẦNG 2: KHAY TRANG BỊ TRẢI DÀI 100% BỀ NGANG ================= */}
+         <div className="w-full px-3 py-1.5 bg-slate-950/60 border-t border-white/10 shrink-0 z-20">
+            <div className="flex items-center gap-2 w-full min-w-0">
+               
+               {/* Ô 1: XE (40%) */}
+               <div className="flex-[2] min-w-0 flex items-center gap-1.5">
+                  <div className="w-9 h-6 sm:w-11 sm:h-7 shrink-0 flex items-center justify-center">
+                     {carObj?.img ? (
+                        <img src={carObj.img} className="max-w-full max-h-full object-contain scale-110 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" />
+                     ) : (
+                        <span className="text-[7px] text-white/30 italic">No Car</span>
+                     )}
+                  </div>
+                  <div className="flex-1 min-w-0 flex items-center">
+                     <span className="text-[9px] sm:text-[10px] lg:text-[11px] font-bold text-cyan-200 uppercase leading-tight break-words line-clamp-2 text-left drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]">
+                        {carObj?.name || '---'}
+                     </span>
+                  </div>
+               </div>
+
+               {/* Ô 2: ECU (20%) */}
+               <div className="flex-[1] min-w-0 flex items-center justify-center border-l border-white/15 px-0.5 opacity-40">
+                  <span className="text-[7px] sm:text-[8px] font-mono tracking-widest text-slate-400 font-bold uppercase">ECU</span>
+               </div>
+
+               {/* Ô 3: PET (40%) */}
+               <div className="flex-[2] min-w-0 flex items-center gap-1.5 border-l border-white/15 pl-1.5">
+                  <div className="w-8 h-6 sm:w-10 sm:h-7 shrink-0 flex items-center justify-center">
+                     {petObj?.img ? (
+                        <img src={petObj.img} className="max-w-full max-h-full object-contain scale-110 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" />
+                     ) : (
+                        <span className="text-[7px] text-white/30 italic">No Pet</span>
+                     )}
+                  </div>
+                  <div className="flex-1 min-w-0 flex items-center">
+                     <span className="text-[9px] sm:text-[10px] lg:text-[11px] font-bold text-slate-200 uppercase leading-tight break-words line-clamp-2 text-left drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]">
+                        {petObj?.name || '---'}
+                     </span>
+                  </div>
+               </div>
+
+            </div>
+         </div>
+
+      </div>
+   );
+})}
 </div>
                   </div>
       </div>
