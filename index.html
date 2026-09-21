@@ -120,6 +120,7 @@
     const CarProfile = (p) => <IconWrapper icon="ph-fill ph-car-profile" {...p} />;
     const Cat = (p) => <IconWrapper icon="ph-fill ph-cat" {...p} />;
     const UserCircle = (p) => <IconWrapper icon="ph-fill ph-user-circle" {...p} />;
+    const Cpu = (p) => <IconWrapper icon="ph-fill ph-cpu" {...p} />;
 
     const MAP_POOL=[{stars:7,maps:[{id:'m7_1',vi:'Sân Bay Siêu Tốc',en:'Space Station',cn:'极速空港',tw:'極速空港',th:'สปีดพอร์ต'},{id:'m7_2',vi:'Sơn Hải Họa Cảnh',en:'Painted Landscape',cn:'山海画境',tw:'山海畫境',th:'ดินแดนซานไh่'}]},{stars:6,maps:[{id:'m6_1',vi:'Hẻm Núi Lớn',en:'Grand Canyon',cn:'美洲大峡谷',tw:'美洲大峽谷',th:'แกรนด์แคนยอน'},{id:'m6_2',vi:'Scotland',en:'Scotland Yard',cn:'苏格兰微风',tw:'蘇格蘭微風',th:'สกอตแลนด์'}]},{stars:5,maps:[{id:'m5_1',vi:'Căn Cứ Sao Hỏa',en:'Mars Base',cn:'火星基地',tw:'火星基地',th:'ฐานดาวอังคาร'},{id:'m5_2',vi:'Mạc Cao Quật',en:'Mogao Grottoes',cn:'莫高窟',tw:'莫高窟',th:'ถ้ำมั่วเกา'},{id:'m5_3',vi:'Atlantis',en:'Atlantis',cn:'亚特兰蒂斯',tw:'亞特蘭提斯',th:'แอตแลนติส'},{id:'m5_4',vi:'Atlantis (Ngược)',en:'Atlantis(Reversed)',cn:'亚特兰蒂斯（反向）',tw:'亞特蘭提斯(反向)',th:'แอตแลนติส(ย้อนกลับ)'},{id:'m5_5',vi:'Chuyến Đi Huyền Thoại',en:'Epic Legend',cn:'传奇之旅',tw:'傳奇之旅',th:'การเดินทางในตำนาน'},{id:'m5_6',vi:'Núi Mùa Thu',en:'Scenic Hills',cn:'秋之物语',tw:'秋名山',th:'ภูเขาฤดูใบไม้ร่วง'},{id:'m5_7',vi:'Công Trường Phố Cổ',en:'Old Street Construction',cn:'老街工地',tw:'老街工地',th:'เขตก่อสร้างเมืองเก่า'},{id:'m5_8',vi:'Thành Lá Đỏ',en:'Crimson Leaves Town',cn:'红叶城',tw:'紅葉城',th:'เมืองใบไม้แดง'},{id:'m5_9',vi:'Vực Sâu Băng Giá',en:'Snow Chasm',cn:'冰川深渊',tw:'冰川深淵',th:'หุบเหวน้ำแข็ง'}]},{stars:4,maps:[{id:'m4_1',vi:'Tây Hồ',en:'West Lake',cn:'西湖',tw:'西湖',th:'ทะเลสาบซีหู'},{id:'m4_2',vi:'Trường Thành',en:'Great Wall',cn:'长城',tw:'長城',th:'กำแพงเมืองจีน'},{id:'m4_3',vi:'Đại Lộ 1',en:'Highway 1',cn:'1号公路',tw:'1号公路',th:'ทางหลวงหมายเลข 1'},{id:'m4_4',vi:'TROY-Sân Thử Nghiệm Số 0',en:'TROY - Experiment Field O',cn:'特洛伊-零号试验场',tw:'特洛伊-零號試驗場',th:'TROY-สนามทดสอบหมายเลข 0'},{id:'m4_5',vi:'Thiên Hộ Miêu Trại',en:'Thousand-House Miaozhai',cn:'千户苗寨',tw:'千戶苗寨',th:'หมู่บ้านแม้ว'},{id:'m4_6',vi:'Sân Bay Cuồng Phong',en:'Windy Airport',cn:'狂风机场',tw:'狂風機場',th:'สนามบินพายุ'},{id:'m4_7',vi:'Quyết Chiến! Đỉnh Núi Tuyết',en:'Decisive Battle! Snow Mountain',cn:'决战！雪山之巅',tw:'決戰！雪山之巔',th:'ศึกตัดสิน! ยอดเขาหิมะ'},{id:'m4_8',vi:'Mơ Về Cổ Thục',en:'Back to Ancient Shu',cn:'梦回古蜀',tw:'夢回古蜀',th:'ฝันถึงสู่โบราณ'},{id:'m4_9',vi:'Z-Space',en:'Z-Space',cn:'Z-Space',tw:'Z-Space',th:'Z-Space'},{id:'m4_10',vi:'Cổ Đô Thiên Chiếu',en:'Eternal Ancient Capital',cn:'天照古都',tw:'天照古都',th:'เมืองหลวงอามาเทราสึ'},{id:'m4_11',vi:'Đua Thuyền Đoan Ngọ',en:'Dragon Boat Race',cn:'端午龙舟',tw:'端午龍舟',th:'แข่งเรือยาว'},{id:'m4_12',vi:'Tiệc Rượu Bên Suối',en:'Utopia',cn:'沁园春',tw:'沁園春',th:'งานเลี้ยงริมลำธาร'},{id:'m4_13',vi:'Đỉnh Titan',en:'Titan\'s Peak',cn:'泰坦巨峰',tw:'泰坦巨峰',th:'ยอดเขาไททัน'},{id:'m4_14',vi:'Mây Cuộn Cổng Trời',en:'Clouds Heavenly Gate',cn:'云游天府',tw:'雲遊天府',th:'เมฆาม้วนประตูสวรรค์'},{id:'m4_15',vi:'Tâm Uyên',en:'Soul life',cn:'心渊',tw:'心渊',th:'Soul life'}]},{stars:3,maps:[{id:'m3_1',vi:'Thành Phố 11',en:'City 11',cn:'十一城',tw:'十一城',th:'เมือง 11'},{id:'m3_2',vi:'Ngư Trường',en:'North Sea',cn:'渔场',tw:'漁場',th:'ประมง'},{id:'m3_3',vi:'TROY-Xưởng Nung Chảy',en:'TROY - Smeltery',cn:'熔炉车间',tw:'特洛伊-熔爐車間',th:'TROY-โรงหลอม'},{id:'m3_4',vi:'Quý Châu Lộ',en:'All the way to Qian',cn:'一路向黔',tw:'貴州大道',th:'ถนนกุ้ยโจว'},{id:'m3_5',vi:'Trụ Sở Chính Alpha',en:'Alpha Headquarters',cn:'阿尔法总部',tw:'阿爾法總部',th:'ศูนย์บัญชาการอัลฟ่า'},{id:'m3_6',vi:'Quyết chiến! Đôi Mắt Miền Biển',en:'Decisive Battle! Eye of the Sea',cn:'决战！海滨之眼',tw:'決戰！海濱之眼',th:'ศึกตัดสิน! ดวงตาแห่งท้องทะเล'},{id:'m3_7',vi:'Thiên Cung Tầm Mộng',en:'Dream of Heavenly Palace',cn:'寻梦天宫',tw:'尋夢天宫',th:'วังในฝัน'},{id:'m3_8',vi:'Căn Cứ Siêu Huyền',en:'超弦基地',tw:'超級基地',th:'ฐานทัพซุปเปอร์'},{id:'m3_9',vi:'Bóng Hình Eden',en:'Glimpses of Eden',cn:'伊甸幻象',tw:'伊甸幻象',th:'เงาแห่งอีเดน'},{id:'m3_10',vi:'Tuyệt Cảnh Giang Sơn',en:'Stunning Jiangxi',cn:'绝色江西',tw:'絕色江西',th:'ทิวทัศน์แม่น้ำ'},{id:'m3_11',vi:'Vành Đai Troy',en:'The Circular City of Troy',cn:'特洛伊环城',tw:'特洛伊城',th:'เมืองทรอย'},{id:'m3_12',vi:'Hồ Long Tinh',en:'Dragon Crystal Lake',cn:'龙晶湖',tw:'龍晶湖',th:'ทะเลสาบมังกรคริสตัล'},{id:'m3_13',vi:'Vụ Sơn Ngũ Hành',en:'Wushan Five Elements',cn:'雾山五行',tw:'雾山五行',th:'ภูเขาหมอกห้าธาตุ'},{id:'m3_14',vi:'Bờ Biển Lãng Mạn',en:'Romantic Seaside',cn:'浪漫海岸',tw:'浪漫海岸',th:'ชายหาดโรแมนติก'},{id:'m3_15',vi:'Đạp Tuyết Tầm Xuân',en:'Spring\'s Footsteps',cn:'踏雪寻春',tw:'踏雪寻春',th:'ย่างก้าวแห่งฤดูใบไม้ผลิ'}]}];
     const MAP_BACKGROUNDS={'m7_1':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20190108/1e2681225a98cd914a54fc0765478dd3.jpg','m7_2':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20250113/17367779105688.png','m6_1':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/61_9394613.jpg','m6_2':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20211115/16369731693212.png','m5_1':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20250325/17428875469403.png','m5_2':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20180904/e4e67d4825b6cc7ecf1a5a3491488314.jpg','m5_3':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/54_976883.jpg','m5_4':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/55_9801857.jpg','m5_5':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/53_9496680.jpg','m5_6':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/52_9429115.jpg','m5_7':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20220324/16481195029550.png','m5_8':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20230111/16734277903891.png','m5_9':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20240326/17114615429011.png','m4_1':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20180424/4ceb12a7da81fc78485cd451738f1ddf.jpg','m4_2':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20180326/ed0633a8e49bc3058e8eda3219440918.jpg','m4_3':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20180119/a4d8882662a3508ced77be491fd925ff.jpg','m4_4':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20190717/07b7aec16c1011992fb28c12a399092f.jpg','m4_5':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20200921/3265566121a19cae1d3546619b686fb0.jpg','m4_6':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20210312/16155457318502.jpg','m4_7':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20210715/16263281507258.jpg','m4_8':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20210915/16316995903827.jpg','m4_9':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20220516/16526869593306.png','m4_10':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20221011/16654598587252.png','m4_11':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20240526/17167362763162.png','m4_12':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20231221/17031734536016.png','m4_13':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20241126/17326359998189.png','m4_14':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20250919/17582127372131.png','m4_15':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20251118/17634577032615.png','m3_1':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps///image/20171211/31_8827468.jpg','m3_2':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20181011/b1b25310d6f371cf1a1d607a585e8d82.jpg','m3_3':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20190717/54ec6a4988a53867f527e2be8cb0f92b.jpg','m3_4':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20200921/25267e48557d7452e401e470886dc721.jpg','m3_5':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps///image/20210108/c4234de94254c7118bcd8c15517b42a6.jpg','m3_6':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20210823/16296862647665.jpg','m3_7':'https://i.ibb.co/VYXpsN9b/16526827657994.png','m3_8':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20221123/16692118937198.png','m3_9':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20231121/17005788209567.png','m3_10':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20230919/16951270513077.png','m3_11':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20230724/16901918219353.png','m3_12':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20230724/16901915868769.png','m3_13':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20240725/17218374934897.png','m3_14':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20250721/17530812968308.png','m3_15':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20260206/17703114652236.png'};
@@ -409,15 +410,15 @@
 
          if(!show) return null;
 
-         const title = type === 'cars' ? t.tabCars : t.tabPets;
-         const itemName = type === 'cars' ? t.carName : t.petName;
+         const title = type === 'cars' ? t.tabCars : type === 'pets' ? t.tabPets : 'KHO ECU';
+         const itemName = type === 'cars' ? t.carName : type === 'pets' ? t.petName : 'Tên ECU';
 
          return (
             <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-slide-up" onClick={() => setShow(false)}>
                <div className="bg-slate-900 border border-cyan-500/50 rounded-xl max-w-4xl w-full shadow-[0_0_50px_rgba(6,182,212,0.2)] overflow-hidden flex flex-col max-h-[85vh]" onClick={e => e.stopPropagation()}>
                   <div className="bg-slate-950 px-4 py-3 md:py-4 border-b border-slate-800 flex justify-between items-center shrink-0">
                      <h3 className="font-black text-cyan-400 italic tracking-widest uppercase text-lg flex items-center gap-2">
-                        {type === 'cars' ? <CarProfile size={20}/> : <Cat size={20}/>} QUẢN LÝ {title}
+                      {type === 'cars' ? <CarProfile size={20}/> : type === 'pets' ? <Cat size={20}/> : <Cpu size={20}/>} QUẢN LÝ {title}
                      </h3>
                      <button onClick={() => setShow(false)} className="text-slate-400 hover:text-red-500 transition-colors"><XIcon size={24}/></button>
                   </div>
@@ -699,7 +700,7 @@
          );
     };
 
-    const BroadcastOverlay = ({ broadcastState, setBroadcastState, viewSet, setViewSet, soloSetBO, soloMatchBO, players, personalRecords, games, totals, getGameCalculations, matchStatus1v1, lang, t, gameMode, tournamentName, team1Name, team2Name, onAssetSelect, onClose, carDatabase, petDatabase, playerPhotos }) => {
+    const BroadcastOverlay = ({ broadcastState, setBroadcastState, viewSet, setViewSet, soloSetBO, soloMatchBO, players, personalRecords, games, totals, getGameCalculations, matchStatus1v1, lang, t, gameMode, tournamentName, team1Name, team2Name, onAssetSelect, onClose, carDatabase, petDatabase, ecuDatabase, playerPhotos }) => {
       const isTeamMode = gameMode === '2v2' || gameMode === '3v3';
       let broadcastRounds = [];
       let broadcastIndices = [];
@@ -1118,6 +1119,8 @@
               const carId = activeGame.cars?.[pIdx] || '';
               const petId = activeGame.pets?.[pIdx] || '';
               const carObj = carDatabase.find(c => c.id === carId);
+              const ecuId = activeGame.ecus?.[pIdx] || '';
+              const ecuObj = ecuDatabase.find(e => e.id === ecuId);
               const petObj = petDatabase.find(p => p.id === petId);
               const is6P = players.length > 4;
             
@@ -1183,9 +1186,17 @@
                           </div>
                       </div>
             
-                      {/* Ô 2: Ô CHỜ Ở GIỮA */}
-                      <div className="flex-[1] min-w-0 flex items-center justify-center border-l border-white/15 px-1 opacity-40">
-                        <span className="text-[8px] sm:text-[9px] font-mono tracking-widest text-slate-400 font-bold uppercase">ECU</span>
+                      {/* Ô 2: ECU (20%) - CHỈ HIỆN ICON */}
+                      <div 
+                        className="flex-[1] min-w-0 flex items-center justify-center border-l border-white/15 px-0.5 cursor-pointer group hover:opacity-90"
+                        onClick={() => setAssetModal({ type: 'ecu', pIndex: pIdx })}
+                        title="Bấm để chọn ECU"
+                      >
+                        {ecuObj?.img ? (
+                          <img src={ecuObj.img} className="max-h-6 sm:max-h-7 max-w-full object-contain drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] group-hover:scale-110 transition-transform" />
+                        ) : (
+                          <span className="text-[7px] sm:text-[8px] font-mono tracking-widest text-slate-400/40 font-bold uppercase group-hover:text-cyan-300">ECU</span>
+                        )}
                       </div>
             
                       {/* Ô 3: PET */}
@@ -1334,6 +1345,7 @@
             const bestTimeMs = top1.ms;
 
             const top1CarObj = carDatabase.find(c => c.id === activeGame.cars?.[top1.idx]);
+            const top1EcuObj = ecuDatabase.find(e => e.id === activeGame.ecus?.[top1.idx]);
             const top1PetObj = petDatabase.find(p => p.id === activeGame.pets?.[top1.idx]);
 
             return (
@@ -1457,10 +1469,18 @@
             </div>
          </div>
     
-         {/* Ô 2: ECU / Ô CHỜ (20%) - ĐÃ MỞ RA VÀ ĐỒNG BỘ */}
-         <div className="flex-[1] min-w-0 flex items-center justify-center border-l border-white/15 px-1 opacity-40">
-            <span className="text-[8px] sm:text-[9px] font-mono tracking-widest text-slate-400 font-bold uppercase">ECU</span>
-         </div>
+         {/* Ô 2: ECU (20%) - CHỈ HIỆN ICON */}
+          <div 
+            className="flex-[1] min-w-0 flex items-center justify-center border-l border-white/15 px-1 cursor-pointer group hover:opacity-90"
+            onClick={() => setAssetModal({ type: 'ecu', pIndex: top1.idx })}
+            title="Bấm để chọn ECU"
+          >
+            {top1EcuObj?.img ? (
+              <img src={top1EcuObj.img} className="max-h-7 sm:max-h-8 max-w-full object-contain drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] group-hover:scale-110 transition-transform" />
+            ) : (
+              <span className="text-[8px] sm:text-[9px] font-mono tracking-widest text-slate-400/40 font-bold uppercase group-hover:text-cyan-300">ECU</span>
+            )}
+          </div>
     
          {/* Ô 3: PET (40%) */}
          <div className="flex-[2] min-w-0 flex items-center gap-2 border-l border-white/15 pl-2">
@@ -1488,6 +1508,7 @@
       <div className={`w-full md:w-[30%] flex flex-col ${is6P ? 'gap-1.5 md:gap-2' : 'gap-2.5 lg:gap-3'} h-full min-h-0 justify-between`}>
        {others.map((p) => {
      const carObj = carDatabase.find(c => c.id === activeGame.cars?.[p.idx]);
+     const ecuObj = ecuDatabase.find(e => e.id === activeGame.ecus?.[p.idx]);
      const petObj = petDatabase.find(pItem => pItem.id === activeGame.pets?.[p.idx]);
      
      let gapText = "-";
@@ -1567,10 +1588,18 @@
                   </div>
                </div>
 
-               {/* Ô 2: ECU (20%) */}
-               <div className="flex-[1] min-w-0 flex items-center justify-center border-l border-white/15 px-0.5 opacity-40">
-                  <span className="text-[7px] sm:text-[8px] font-mono tracking-widest text-slate-400 font-bold uppercase">ECU</span>
-               </div>
+               {/* Ô 2: ECU (20%) - CHỈ HIỆN ICON */}
+                <div 
+                  className="flex-[1] min-w-0 flex items-center justify-center border-l border-white/15 px-0.5 cursor-pointer group hover:opacity-90"
+                  onClick={() => setAssetModal({ type: 'ecu', pIndex: p.idx })}
+                  title="Bấm để chọn ECU"
+                >
+                  {ecuObj?.img ? (
+                    <img src={ecuObj.img} className="max-h-6 sm:max-h-7 max-w-full object-contain drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] group-hover:scale-110 transition-transform" />
+                  ) : (
+                    <span className="text-[7px] sm:text-[8px] font-mono tracking-widest text-slate-400/40 font-bold uppercase group-hover:text-cyan-300">ECU</span>
+                  )}
+                </div>
 
                {/* Ô 3: PET (40%) */}
                <div className="flex-[2] min-w-0 flex items-center gap-1.5 border-l border-white/15 pl-1.5">
@@ -1608,8 +1637,10 @@
             <div className="absolute inset-0 z-[2000] bg-black/80 flex items-center justify-center p-4 backdrop-blur-sm animate-slide-up">
                 <div className="bg-slate-900 border border-slate-700 rounded-xl max-w-2xl w-full shadow-[0_0_50px_rgba(0,0,0,0.5)] flex flex-col h-[70vh] overflow-hidden">
                     <div className="flex justify-between items-center p-4 bg-slate-950 border-b border-slate-800">
-                        <h3 className="text-white font-black italic tracking-widest uppercase">{assetModal.type === 'car' ? t.selectCar : t.selectPet} - PLAYER {assetModal.pIndex + 1}</h3>
-                        <button onClick={() => {setAssetModal(null); setAssetSearch('');}} className="text-slate-400 hover:text-red-500"><XIcon size={24}/></button>
+                      <h3 className="text-white font-black italic tracking-widest uppercase">
+                        {assetModal.type === 'car' ? t.selectCar : assetModal.type === 'pet' ? t.selectPet : 'CHỌN ECU'} - PLAYER {assetModal.pIndex + 1}
+                      </h3>                       
+                      <button onClick={() => {setAssetModal(null); setAssetSearch('');}} className="text-slate-400 hover:text-red-500"><XIcon size={24}/></button>
                     </div>
                     <div className="p-3 bg-slate-950 border-b border-slate-800">
                         <input type="text" autoFocus placeholder="Tìm kiếm / Search..." value={assetSearch} onChange={e => setAssetSearch(e.target.value)} className="w-full bg-slate-900 border border-slate-700 rounded px-4 py-2 text-white outline-none focus:border-cyan-500 transition-colors" />
@@ -1619,8 +1650,7 @@
                             <Trash2 size={24} className="mb-2" />
                             <span className="text-[10px] font-bold">Xóa / Clear</span>
                         </div>
-                        {(assetModal.type === 'car' ? carDatabase : petDatabase).filter(item => item.name.toLowerCase().includes(assetSearch.toLowerCase())).map(item => (
-                                <div key={item.id} onClick={() => { onAssetSelect(broadcastState.gameIndex, assetModal.pIndex, assetModal.type, item.id); setAssetModal(null); setAssetSearch(''); }} className="bg-slate-800/80 border border-slate-700 rounded-lg p-3 flex flex-col items-center justify-between gap-3 cursor-pointer hover:bg-slate-700 hover:border-cyan-400 transition-all shadow-md group">
+                            {(assetModal.type === 'car' ? carDatabase : assetModal.type === 'pet' ? petDatabase : ecuDatabase).filter(item => item.name.toLowerCase().includes(assetSearch.toLowerCase())).map(item => (                                <div key={item.id} onClick={() => { onAssetSelect(broadcastState.gameIndex, assetModal.pIndex, assetModal.type, item.id); setAssetModal(null); setAssetSearch(''); }} className="bg-slate-800/80 border border-slate-700 rounded-lg p-3 flex flex-col items-center justify-between gap-3 cursor-pointer hover:bg-slate-700 hover:border-cyan-400 transition-all shadow-md group">
                                     <div className="w-full h-16 bg-black/40 rounded flex items-center justify-center p-1 shadow-inner overflow-hidden">
                                         <img src={item.img} className="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform" onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/100x50/333/white?text=?'; }} />
                                     </div>
@@ -1695,6 +1725,15 @@
           return [{ id: 'p1', name: 'Hellfire Dragon', img: 'https://i.ibb.co/3s6Vp6Z/car1.png' }, { id: 'p2', name: 'Angel Feather', img: 'https://i.ibb.co/3s6Vp6Z/car1.png' }];
       });
 
+      const [ecuDatabase, setEcuDatabase] = useState(() => {
+          const saved = localStorage.getItem('zsm_ecus_db_v1');
+          if (saved) { try { return JSON.parse(saved); } catch(e) {} }
+          return [
+            { id: 'ecu_1', name: 'ECU Lướt Gió', img: 'https://i.ibb.co/3s6Vp6Z/car1.png' },
+            { id: 'ecu_2', name: 'ECU Gia Tốc', img: 'https://i.ibb.co/3s6Vp6Z/car1.png' }
+          ];
+        });
+
       const [playerPhotos, setPlayerPhotos] = useState(() => {
           const saved = localStorage.getItem('zsm_player_photos_v1');
           if (saved) { try { return JSON.parse(saved); } catch(e) {} }
@@ -1734,11 +1773,11 @@
         if (saved) { 
            try { 
              const parsed = JSON.parse(saved); 
-             return parsed.map(g => ({ ...g, cars: g.cars || Array(6).fill(''), pets: g.pets || Array(6).fill('') }));
+             return parsed.map(g => ({ ...g, cars: g.cars || Array(6).fill(''), ecus: g.ecus || Array(6).fill(''), pets: g.pets || Array(6).fill('') }));
            } catch(e) {} 
         }
-        return Array(9).fill(null).map((_, i) => ({ id: Date.now() + i, mapId: "", times: Array(6).fill(''), cars: Array(6).fill(''), pets: Array(6).fill('') }));
-      });
+        return Array(9).fill(null).map((_, i) => ({ id: Date.now() + i, mapId: "", times: Array(6).fill(''), cars: Array(6).fill(''), ecus: Array(6).fill(''), pets: Array(6).fill('') }));      
+        });
 
       const [personalRecords, setPersonalRecords] = useState(() => {
         const saved = localStorage.getItem('zsm_personal_records_v11_final');
@@ -1765,6 +1804,7 @@
                   else if (e.key === 'zsm_cars_db_v1') setCarDatabase(JSON.parse(e.newValue));
                   else if (e.key === 'zsm_pets_db_v1') setPetDatabase(JSON.parse(e.newValue));
                   else if (e.key === 'zsm_personal_records_v11_final') setPersonalRecords(JSON.parse(e.newValue));
+                  else if (e.key === 'zsm_ecus_db_v1') setEcuDatabase(JSON.parse(e.newValue));
               } catch(err) { console.error("Sync Error", err); }
           };
           window.addEventListener('storage', handleStorageChange);
@@ -1800,6 +1840,7 @@
       useEffect(() => { localStorage.setItem('zsm_player_photos_v1', JSON.stringify(playerPhotos)); }, [playerPhotos]);
       useEffect(() => { localStorage.setItem('zsm_banned_maps_1v1_v11', JSON.stringify(bannedMaps)); }, [bannedMaps]);
       useEffect(() => { localStorage.setItem('zsm_saved_groups_v1', JSON.stringify(savedGroups)); }, [savedGroups]);
+      useEffect(() => { localStorage.setItem('zsm_ecus_db_v1', JSON.stringify(ecuDatabase)); }, [ecuDatabase]);
 
       useEffect(() => {
           if (gameMode === '1v1') {
@@ -1814,6 +1855,7 @@
                               mapId: "", 
                               times: Array(6).fill(''), 
                               cars: Array(6).fill(''), 
+                              ecus: Array(6).fill(''),
                               pets: Array(6).fill('') 
                           });
                       }
@@ -1876,23 +1918,18 @@
               }
             }
 
-            // 3. Đồng bộ Ảnh Tuyển Thủ (Hỗ trợ xóa ảnh nếu ô trên Sheet trống)
-            if (data.players && Array.isArray(data.players) && data.players.length > 0) {
-              setPlayerPhotos(prev => {
-                const nextPhotos = [...prev];
-                while (nextPhotos.length < 6) nextPhotos.push("");
-                
-                data.players.forEach(p => {
-                  const idx = parseInt(p.index !== undefined ? p.index : p.Index, 10);
-                  const photoUrl = String(p.photo || p.Photo || p.img || p.Img || '').trim();
-                  if (!isNaN(idx) && idx >= 0 && idx < 6) {
-                    nextPhotos[idx] = photoUrl; // Tự động gán rỗng nếu trên Sheet bị xóa
-                  }
-                });
-                
-                localStorage.setItem('zsm_player_photos_v1', JSON.stringify(nextPhotos));
-                return nextPhotos;
-              });
+            // 3. Đồng bộ Tab ECU từ Google Sheets (3 cột: id, name, img)
+            if (data.ecus && Array.isArray(data.ecus) && data.ecus.length > 0) {
+              const formattedEcus = data.ecus.map(e => ({
+                id: String(e.id || e.Id || '').trim(),
+                name: String(e.name || e.Name || '').trim(),
+                img: String(e.img || e.Img || e.photo || '').trim()
+              })).filter(e => e.id && e.img);
+            
+              if (formattedEcus.length > 0) {
+                setEcuDatabase(formattedEcus);
+                localStorage.setItem('zsm_ecus_db_v1', JSON.stringify(formattedEcus));
+              }
             }
 
             if (isManual) {
@@ -1921,8 +1958,11 @@
       const handleAssetSelect = (gIndex, pIndex, type, assetId) => {
         const newGames = [...games];
         if (!newGames[gIndex].cars) newGames[gIndex].cars = Array(6).fill('');
+        if (!newGames[gIndex].ecus) newGames[gIndex].ecus = Array(6).fill('');
         if (!newGames[gIndex].pets) newGames[gIndex].pets = Array(6).fill('');
+      
         if (type === 'car') newGames[gIndex].cars[pIndex] = assetId;
+        if (type === 'ecu') newGames[gIndex].ecus[pIndex] = assetId;
         if (type === 'pet') newGames[gIndex].pets[pIndex] = assetId;
         setGames(newGames);
       };
@@ -2004,6 +2044,7 @@
               ...g, 
               times: g.times.filter((_, i) => i !== pIndex),
               cars: g.cars ? g.cars.filter((_, i) => i !== pIndex) : Array(6).fill(''),
+              ecus: g.ecus ? g.ecus.filter((_, i) => i !== pIndex) : Array(6).fill(''),
               pets: g.pets ? g.pets.filter((_, i) => i !== pIndex) : Array(6).fill('')
           })));
         });
@@ -2042,7 +2083,7 @@
       const resetGroupState = () => {
           setPlayers(gameMode === '1v1' ? [`${t.defPlayer} 1`, `${t.defPlayer} 2`] : [`${t.defPlayer} 1`, `${t.defPlayer} 2`, `${t.defPlayer} 3`, `${t.defPlayer} 4`]);
           const numGames = gameMode === '1v1' ? (soloMatchBO * soloSetBO) : 9;
-          setGames(Array(numGames).fill(null).map((_, i) => ({ id: Date.now() + i, mapId: "", times: Array(6).fill(''), cars: Array(6).fill(''), pets: Array(6).fill('') })));
+          setGames(Array(numGames).fill(null).map((_, i) => ({ id: Date.now() + i, mapId: "", times: Array(6).fill(''), cars: Array(6).fill(''), ecus: Array(6).fill(''), pets: Array(6).fill('') })));          
           setTeam1Name(''); setTeam2Name(''); setBannedMaps({}); 
       };
 
@@ -2421,7 +2462,7 @@
           return (
              <>
                 <style dangerouslySetInnerHTML={{__html: `html, body { zoom: 1 !important; transform: none !important; width: 100vw !important; height: 100vh !important; overflow: hidden !important; margin: 0; padding: 0; }`}} />
-                <BroadcastOverlay broadcastState={broadcastState} setBroadcastState={setBroadcastState} viewSet={viewSet} setViewSet={setViewSet} soloSetBO={soloSetBO} soloMatchBO={soloMatchBO} players={players} personalRecords={personalRecords} games={games} totals={totals} getGameCalculations={getGameCalculations} matchStatus1v1={matchStatus1v1} lang={lang} t={t} gameMode={gameMode} tournamentName={tournamentName} team1Name={displayTeam1Name} team2Name={displayTeam2Name} carDatabase={carDatabase} petDatabase={petDatabase} playerPhotos={playerPhotos} onAssetSelect={handleAssetSelect} onClose={() => window.close()} />
+                <BroadcastOverlay broadcastState={broadcastState} setBroadcastState={setBroadcastState} viewSet={viewSet} setViewSet={setViewSet} soloSetBO={soloSetBO} soloMatchBO={soloMatchBO} players={players} personalRecords={personalRecords} games={games} totals={totals} getGameCalculations={getGameCalculations} matchStatus1v1={matchStatus1v1} lang={lang} t={t} gameMode={gameMode} tournamentName={tournamentName} team1Name={displayTeam1Name} team2Name={displayTeam2Name} carDatabase={carDatabase} petDatabase={petDatabase} ecuDatabase={ecuDatabase} playerPhotos={playerPhotos} onAssetSelect={handleAssetSelect} onClose={() => window.close()} />
              </>
           )
       }
@@ -2455,6 +2496,15 @@
                          <div className="w-10 h-10 rounded-lg bg-slate-900 border border-slate-700 flex items-center justify-center group-hover:bg-amber-900 group-hover:border-amber-500 group-hover:scale-110 transition-all text-xl"><Cat size={20}/></div>
                          <span className="tracking-wide uppercase text-xs md:text-sm">{lang === 'vi' ? 'Quản Lý Kho Pet' : 'Pet Manager'}</span>
                      </button>
+                     <button 
+                      onClick={() => { setShowAssetManager('ecus'); setIsSidebarOpen(false); }} 
+                      className="flex items-center gap-3 w-full p-3 bg-slate-800/50 hover:bg-cyan-900/30 text-slate-300 hover:text-cyan-300 border border-transparent hover:border-cyan-500/50 rounded-xl transition-all font-bold text-left group shadow-sm mt-2"
+                    >
+                      <div className="w-10 h-10 rounded-lg bg-slate-900 border border-slate-700 flex items-center justify-center group-hover:bg-cyan-900 group-hover:border-cyan-500 group-hover:scale-110 transition-all text-xl">
+                        <Cpu size={20}/>
+                      </div>
+                      <span className="tracking-wide uppercase text-xs md:text-sm">Quản Lý Kho ECU</span>
+                    </button>
                      <div className="my-2 border-b border-slate-700/50"></div>
                      <button onClick={() => { setActiveSidebarMenu('wheel'); setIsSidebarOpen(false); }} className="flex items-center gap-3 w-full p-3 bg-slate-800/50 hover:bg-cyan-900/30 text-slate-300 hover:text-cyan-300 border border-transparent hover:border-cyan-500/50 rounded-xl transition-all font-bold text-left group shadow-sm">
                          <div className="w-10 h-10 rounded-lg bg-slate-900 border border-slate-700 flex items-center justify-center group-hover:bg-cyan-900 group-hover:border-cyan-500 group-hover:scale-110 transition-all text-xl">🎡</div>
@@ -2483,8 +2533,16 @@
 
           <PlayerPhotoManagerModal showDbModal={showDbModal} setShowDbModal={setShowDbModal} lang={lang} t={t} players={players} playerPhotos={playerPhotos} setPlayerPhotos={setPlayerPhotos} />
 
-          <AssetManagerModal show={showAssetManager !== null} setShow={() => setShowAssetManager(null)} type={showAssetManager} data={showAssetManager === 'cars' ? carDatabase : petDatabase} setData={showAssetManager === 'cars' ? setCarDatabase : setPetDatabase} t={t} lang={lang} showDialogConfirm={showDialogConfirm} />
-
+          <AssetManagerModal 
+            show={showAssetManager !== null} 
+            setShow={() => setShowAssetManager(null)} 
+            type={showAssetManager} 
+            data={showAssetManager === 'cars' ? carDatabase : showAssetManager === 'pets' ? petDatabase : ecuDatabase} 
+            setData={showAssetManager === 'cars' ? setCarDatabase : showAssetManager === 'pets' ? setPetDatabase : setEcuDatabase} 
+            t={t} 
+            lang={lang} 
+            showDialogConfirm={showDialogConfirm} 
+          />
           {showInfo && (
             <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-slide-up" onClick={() => setShowInfo(false)}>
               <div className="bg-slate-900 border border-slate-700 rounded-xl max-w-md w-full shadow-[0_0_40px_rgba(220,38,38,0.2)] overflow-hidden" onClick={e => e.stopPropagation()}>
