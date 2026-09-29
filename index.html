@@ -1662,19 +1662,19 @@
                 </div>
             </div>
           )}
-            {/* ================= THANH CHẠY CHỮ TUẦN HOÀN CHÂN MÀN HÌNH ================= */}
-            <div className="w-full h-6 md:h-7 bg-slate-950/90 border-t border-cyan-500/30 flex items-center overflow-hidden shrink-0 z-30 select-none backdrop-blur-md">
-              <div className="animate-marquee items-center text-[10px] md:text-xs font-black italic tracking-widest text-cyan-300 uppercase whitespace-nowrap">
-                {Array(6).fill(0).map((_, i) => (
-                  <span key={i} className="flex items-center">
-                    <span className="text-white drop-shadow-md">ZINGSPEED MOBILE</span>
-                    <span className="mx-3 text-cyan-400 opacity-60">❖</span>
-                    <span className="text-[#fce300] drop-shadow-[0_0_8px_rgba(252,227,0,0.5)]">{tournamentName}</span>
-                    <span className="mx-3 text-cyan-400 opacity-60">❖</span>
-                  </span>
-                ))}
-              </div>
+           {/* ================= THANH CHẠY CHỮ ĐƯỢC ĐƯA RA NGOÀI ĐỂ LUÔN DÍNH ĐÁY ================= */}
+          <div className="absolute bottom-0 left-0 w-full h-6 md:h-7 bg-slate-950/90 border-t border-cyan-500/30 flex items-center overflow-hidden z-30 select-none backdrop-blur-md">
+            <div className="animate-marquee items-center text-[10px] md:text-xs font-black italic tracking-widest text-cyan-300 uppercase whitespace-nowrap">
+              {Array(6).fill(0).map((_, i) => (
+                <span key={i} className="flex items-center">
+                  <span className="text-white drop-shadow-md">ZINGSPEED MOBILE</span>
+                  <span className="mx-3 text-cyan-400 opacity-60">❖</span>
+                  <span className="text-[#fce300] drop-shadow-[0_0_8px_rgba(252,227,0,0.5)]">{tournamentName}</span>
+                  <span className="mx-3 text-cyan-400 opacity-60">❖</span>
+                </span>
+              ))}
             </div>
+          </div>
           </div> {/* Đóng thẻ khung 16:9 vừa thêm ở trên */}
         </div>
       );
