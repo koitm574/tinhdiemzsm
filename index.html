@@ -1125,107 +1125,115 @@
               const is6P = players.length > 4;
             
               return (
-                <div key={pIdx} className={`relative flex-1 min-h-0 flex flex-col justify-between rounded-2xl overflow-hidden shadow-2xl border backdrop-blur-md bg-gradient-to-br ${cardGradient} transition-transform hover:-translate-y-0.5 duration-300`}>
-                  <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-50 pointer-events-none"></div>
-                  
-                  {/* Thân trên: Ảnh VĐV (trái) & Tên + Best Record (phải) */}
-                  <div className="flex-1 relative min-h-0 w-full flex items-center justify-between px-3 pt-2">
-                    {/* Ảnh VĐV */}
-                    <div className={`h-[95%] ${is6P ? 'w-[32%]' : 'w-[36%]'} aspect-[3/4] flex items-end justify-center z-10 pointer-events-none`}>
-                      {photoUrl ? (
-                        <img 
-                          src={photoUrl} 
-                          className="max-w-full max-h-full object-contain object-bottom drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)]" 
-                          alt={playerName} 
-                          onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/200x300/transparent/white?text=?'; }} 
-                        />
-                      ) : (
-                        <div className="flex items-center justify-center opacity-20 text-slate-400 mb-2">
-                          <User size={is6P ? 34 : 46} />
+                  <div key={pIdx} className={`relative flex-1 min-h-0 flex flex-col justify-between rounded-2xl overflow-hidden shadow-2xl border backdrop-blur-md bg-gradient-to-br ${cardGradient} transition-transform hover:-translate-y-0.5 duration-300`}>
+                    <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-50 pointer-events-none"></div>
+                    
+                    {/* Số thứ tự mờ chìm (Esports Watermark) giúp lấp khoảng trống phía sau */}
+                    <span className="absolute top-1 right-3 text-6xl sm:text-7xl md:text-8xl font-black italic text-white/5 select-none pointer-events-none font-['Chakra_Petch']">
+                      {String(pIdx + 1).padStart(2, '0')}
+                    </span>
+              
+                    {/* Thân trên: Avatar to phóng khoáng (trái) & Tên + Best Record (phải) */}
+                    <div className={`flex-1 relative min-h-0 w-full flex items-end justify-between ${is6P ? 'px-3 pt-2' : 'px-4 pt-3'}`}>
+                      
+                      {/* Ảnh VĐV: Tự động mở rộng khi mode 4P / 2v2 */}
+                      <div className={`h-full ${is6P ? 'w-[32%]' : 'w-[42%] md:w-[44%]'} flex items-end justify-center z-10 pointer-events-none shrink-0`}>
+                        {photoUrl ? (
+                          <img 
+                            src={photoUrl} 
+                            className={`max-w-full max-h-full object-contain object-bottom drop-shadow-[0_12px_24px_rgba(0,0,0,0.85)] ${is6P ? '' : 'scale-105'}`} 
+                            alt={playerName} 
+                            onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/200x300/transparent/white?text=?'; }} 
+                          />
+                        ) : (
+                          <div className="flex items-center justify-center opacity-20 text-slate-400 mb-3">
+                            <User size={is6P ? 36 : 64} />
+                          </div>
+                        )}
+                      </div>
+              
+                      {/* Cụm Tên VĐV & Kỷ lục: Canh giữa theo chiều dọc, chữ to nổi bật */}
+                      <div className={`flex-1 flex flex-col items-end text-right pl-3 z-20 self-center ${is6P ? 'gap-0.5' : 'gap-1.5'}`}>
+                        <span className={`${is6P ? 'text-sm md:text-base' : 'text-xl sm:text-2xl md:text-3xl'} font-black italic text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] truncate w-full leading-tight uppercase`}>
+                          {playerName}
+                        </span>
+                        <span className={`${is6P ? 'text-[7px] md:text-[8px]' : 'text-[9px] md:text-[10px]'} font-bold tracking-widest uppercase opacity-90 ${textAccent}`}>
+                          {t.preMatchBestRecord}
+                        </span>
+                        <div className={`${is6P ? 'text-xl sm:text-2xl md:text-3xl' : 'text-3xl sm:text-4xl md:text-5xl'} font-black font-['Chakra_Petch'] text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.7)] leading-none`}>
+                          {displayRecord}
                         </div>
-                      )}
-                    </div>
-            
-                    {/* Tên VĐV & Kỷ lục cá nhân */}
-                    <div className="flex-1 flex flex-col items-end text-right pl-2 z-20">
-                      <span className={`${is6P ? 'text-xs sm:text-sm md:text-base' : 'text-base sm:text-xl md:text-2xl'} font-black italic text-white drop-shadow-md truncate w-full leading-tight`}>
-                        {playerName}
-                      </span>
-                      <span className={`${is6P ? 'text-[7px] md:text-[8px]' : 'text-[8px] md:text-[9px]'} font-bold tracking-widest uppercase mt-0.5 opacity-90 ${textAccent}`}>
-                        {t.preMatchBestRecord}
-                      </span>
-                      <div className={`${is6P ? 'text-lg sm:text-2xl md:text-3xl' : 'text-2xl sm:text-3xl md:text-4xl'} font-black font-['Chakra_Petch'] text-white drop-shadow-[0_4px_8px_rgba(0,0,0,0.6)] leading-none mt-0.5`}>
-                        {displayRecord}
                       </div>
                     </div>
-                  </div>
-            
-                  {/* Dòng dưới cùng: Khay trang bị đồng bộ (XE - Ô CHỜ - PET) */}
-                  <div className="relative z-20 px-3 py-2 bg-gradient-to-b from-transparent to-black/25 border-t border-white/5 w-full shrink-0">
-                    <div className="flex items-center gap-2.5 w-full min-w-0">
-                      {/* Ô 1: XE */}
-                      <div 
-                        className="flex-[2] min-w-0 flex items-center gap-1.5 cursor-pointer group hover:opacity-90"
-                        onClick={() => setAssetModal({ type: 'car', pIndex: pIdx })}
-                        title="Bấm để chọn Xe"
-                      >
-                        <div className="w-9 h-6 sm:w-11 sm:h-7 shrink-0 flex items-center justify-center">
-                          {carObj?.img ? (
-                            <img src={carObj.img} className="max-w-full max-h-full object-contain scale-110 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" />
-                          ) : (
-                            <span className="text-[7px] sm:text-[8px] text-white/40 font-bold italic">{t.selectCar}</span>
-                          )}
-                        </div>
+              
+                    {/* Dòng dưới cùng: Khay trang bị (Được nới rộng kích thước khi 4P/2v2) */}
+                    <div className={`relative z-20 ${is6P ? 'px-3 py-2' : 'px-4 py-2.5 md:py-3'} bg-gradient-to-b from-transparent to-black/35 border-t border-white/10 w-full shrink-0`}>
+                      <div className="flex items-center gap-2.5 w-full min-w-0">
+                        
+                        {/* Ô 1: XE */}
+                        <div 
+                          className="flex-[2] min-w-0 flex items-center gap-2 cursor-pointer group hover:opacity-90"
+                          onClick={() => setAssetModal({ type: 'car', pIndex: pIdx })}
+                          title="Bấm để chọn Xe"
+                        >
+                          <div className={`${is6P ? 'w-9 h-6 sm:w-11 sm:h-7' : 'w-12 h-7 sm:w-14 sm:h-8'} shrink-0 flex items-center justify-center`}>
+                            {carObj?.img ? (
+                              <img src={carObj.img} className="max-w-full max-h-full object-contain scale-110 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" />
+                            ) : (
+                              <span className="text-[7px] sm:text-[8px] text-white/40 font-bold italic">{t.selectCar}</span>
+                            )}
+                          </div>
                           <div className="flex-1 min-w-0 flex items-center justify-center">
                             <span 
-                              className="w-full text-[8px] sm:text-[9px] lg:text-[10px] font-bold text-cyan-200 uppercase leading-tight break-words line-clamp-2 text-center drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]" 
+                              className={`w-full ${is6P ? 'text-[8px] sm:text-[9px]' : 'text-[10px] sm:text-xs'} font-bold text-cyan-200 uppercase leading-tight break-words line-clamp-2 text-center drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]`} 
                               style={{ textWrap: 'balance' }}
                             >
                               {carObj?.name || '---'}
                             </span>
                           </div>
-                      </div>
-            
-                      {/* Ô 2: ECU (20%) - CHỈ HIỆN ICON */}
-                      <div 
-                        className="flex-[1] min-w-0 flex items-center justify-center border-l border-white/15 px-0.5 cursor-pointer group hover:opacity-90"
-                        onClick={() => setAssetModal({ type: 'ecu', pIndex: pIdx })}
-                        title="Bấm để chọn ECU"
-                      >
-                        {ecuObj?.img ? (
-                          <img src={ecuObj.img} className="max-h-6 sm:max-h-7 max-w-full object-contain drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] group-hover:scale-110 transition-transform" />
-                        ) : (
-                          <span className="text-[7px] sm:text-[8px] font-mono tracking-widest text-slate-400/40 font-bold uppercase group-hover:text-cyan-300">ECU</span>
-                        )}
-                      </div>
-            
-                      {/* Ô 3: PET */}
-                      <div 
-                        className="flex-[2] min-w-0 flex items-center gap-1.5 border-l border-white/15 pl-2 cursor-pointer group hover:opacity-90"
-                        onClick={() => setAssetModal({ type: 'pet', pIndex: pIdx })}
-                        title="Bấm để chọn Pet"
-                      >
-                        <div className="w-8 h-6 sm:w-10 sm:h-7 shrink-0 flex items-center justify-center">
-                          {petObj?.img ? (
-                            <img src={petObj.img} className="max-w-full max-h-full object-contain scale-110 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" />
+                        </div>
+              
+                        {/* Ô 2: ECU */}
+                        <div 
+                          className="flex-[1] min-w-0 flex items-center justify-center border-l border-white/15 px-1 cursor-pointer group hover:opacity-90"
+                          onClick={() => setAssetModal({ type: 'ecu', pIndex: pIdx })}
+                          title="Bấm để chọn ECU"
+                        >
+                          {ecuObj?.img ? (
+                            <img src={ecuObj.img} className={`${is6P ? 'max-h-6 sm:max-h-7' : 'max-h-7 sm:max-h-8'} max-w-full object-contain drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] group-hover:scale-110 transition-transform`} />
                           ) : (
-                            <span className="text-[7px] sm:text-[8px] text-white/40 font-bold italic">{t.selectPet}</span>
+                            <span className={`${is6P ? 'text-[7px]' : 'text-[9px]'} font-mono tracking-widest text-slate-400/40 font-bold uppercase group-hover:text-cyan-300`}>ECU</span>
                           )}
                         </div>
-                         <div className="flex-1 min-w-0 flex items-center justify-center">
+              
+                        {/* Ô 3: PET */}
+                        <div 
+                          className="flex-[2] min-w-0 flex items-center gap-2 border-l border-white/15 pl-2 cursor-pointer group hover:opacity-90"
+                          onClick={() => setAssetModal({ type: 'pet', pIndex: pIdx })}
+                          title="Bấm để chọn Pet"
+                        >
+                          <div className={`${is6P ? 'w-8 h-6 sm:w-10 sm:h-7' : 'w-11 h-7 sm:w-13 sm:h-8'} shrink-0 flex items-center justify-center`}>
+                            {petObj?.img ? (
+                              <img src={petObj.img} className="max-w-full max-h-full object-contain scale-110 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" />
+                            ) : (
+                              <span className="text-[7px] sm:text-[8px] text-white/40 font-bold italic">{t.selectPet}</span>
+                            )}
+                          </div>
+                          <div className="flex-1 min-w-0 flex items-center justify-center">
                             <span 
-                              className="w-full text-[8px] sm:text-[9px] lg:text-[10px] font-bold text-slate-200 uppercase leading-tight break-words line-clamp-2 text-center drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]" 
+                              className={`w-full ${is6P ? 'text-[8px] sm:text-[9px]' : 'text-[10px] sm:text-xs'} font-bold text-slate-200 uppercase leading-tight break-words line-clamp-2 text-center drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]`} 
                               style={{ textWrap: 'balance' }}
                             >
                               {petObj?.name || '---'}
                             </span>
                           </div>
+                        </div>
+              
                       </div>
                     </div>
                   </div>
-                </div>
-              );
-            };
+                );
+              };
 
             return (
               <div className="flex-1 w-full max-w-[1920px] mx-auto p-3 md:p-6 lg:p-8 flex flex-col z-10 relative animate-slide-up min-h-0">
