@@ -2013,11 +2013,8 @@
         }
       };
 
-      const toggleMode = () => {
-          let nextMode = 'solo';
-          if (gameMode === 'solo') nextMode = '2v2';
-          else if (gameMode === '2v2') nextMode = '3v3';
-          else if (gameMode === '3v3') nextMode = '1v1';
+      const changeMode = (nextMode) => {
+          if (nextMode === gameMode) return;
           setGameMode(nextMode);
 
           if (nextMode === 'solo' || nextMode === '2v2') {
@@ -2627,10 +2624,26 @@
 
                 <div className="w-px h-6 bg-slate-700/80 mx-1 hidden md:block"></div>
                 
-                <button onClick={toggleMode} className="flex items-center gap-1.5 px-3 py-2 md:py-2.5 text-slate-300 hover:text-white hover:bg-slate-800 rounded-xl font-bold transition-all text-[10px] md:text-xs uppercase" title="Chế độ đua">
+                <div className="relative flex items-center gap-1.5 px-3 py-2 md:py-2.5 text-slate-300 hover:text-white bg-slate-800/60 hover:bg-slate-800 border border-slate-700/60 rounded-xl font-bold transition-all text-[10px] md:text-xs uppercase cursor-pointer group shadow-sm" title="Chọn chế độ thi đấu">
                   {gameMode === 'solo' ? <User size={14}/> : <Users size={14}/>} 
-                  <span className="hidden md:inline">{gameMode === 'solo' ? t.modeSolo : gameMode === '2v2' ? t.mode2v2 : gameMode === '3v3' ? t.mode3v3 : t.mode1v1}</span>
-                </button>
+                  <span className="hidden md:inline">
+                    {gameMode === 'solo' ? t.modeSolo : gameMode === '2v2' ? t.mode2v2 : gameMode === '3v3' ? t.mode3v3 : t.mode1v1}
+                  </span>
+                  <ChevronDown size={12} className="text-slate-400 group-hover:text-white transition-colors" />
+                  
+                  {/* Menu ẩn phủ lên trên: click là bung danh sách chọn ngay */}
+                  <select 
+                    value={gameMode} 
+                    onChange={(e) => changeMode(e.target.value)} 
+                    className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+                  >
+                    <option value="solo" className="bg-slate-900 text-white">{t.modeSolo}</option>
+                    <option value="1v1" className="bg-slate-900 text-white">{t.mode1v1}</option>
+                    <option value="2v2" className="bg-slate-900 text-white">{t.mode2v2}</option>
+                    <option value="3v3" className="bg-slate-900 text-white">{t.mode3v3}</option>
+                  </select>
+                </div>
+                
                 {gameMode === '1v1' && (
                     <div className="flex items-center gap-1 mx-2 bg-slate-800/80 p-1 rounded-lg border border-slate-700 shadow-inner">
                         <select value={soloMatchBO} onChange={e=>setSoloMatchBO(Number(e.target.value))} className="bg-transparent text-cyan-300 font-bold text-[10px] md:text-xs outline-none cursor-pointer text-center">
