@@ -969,7 +969,7 @@
    <div key={`g${gIndex}_p${pIndex}`} className={`w-full flex-1 min-h-0 flex flex-col items-center justify-between px-1 py-1.5 md:py-2 relative group/item hover:bg-white/5 transition-colors ${pIndex === 0 ? 'border-b border-white/20' : ''}`}>
      <div className="w-full flex flex-col items-center shrink-0 pt-0.5">
       <span className="text-xs sm:text-sm md:text-base lg:text-lg font-black uppercase tracking-wider truncate w-full px-1 text-center text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)] leading-tight">{playerName}</span>
-      <span className={`text-sm sm:text-lg md:text-2xl lg:text-3xl font-black italic tracking-wider leading-none mt-1 ${isTop ? 'text-[#fce300] drop-shadow-[0_0_15px_rgba(252,227,0,0.9)]' : time ? 'text-slate-400 drop-shadow-md' : 'text-slate-600'}`}>{time ? (isTop ? (lang === 'vi' ? 'THẮNG' : 'WIN') : (lang === 'vi' ? 'THUA' : 'LOSE')) : '-'}</span>
+      <span className={`text-sm sm:text-lg md:text-xl lg:text-2xl font-black italic tracking-wider leading-none mt-1 ${isTop ? 'text-[#fce300] drop-shadow-[0_0_15px_rgba(252,227,0,0.9)]' : time ? 'text-slate-400 drop-shadow-md' : 'text-slate-600'}`}>{time ? (isTop ? (lang === 'vi' ? 'THẮNG' : 'WIN') : (lang === 'vi' ? 'THUA' : 'LOSE')) : '-'}</span>
      </div>
     <div className="w-full flex-1 min-h-[40px] max-h-[85px] md:max-h-[110px] flex items-center justify-center relative my-0.5">
      {carObj?.img ? (
