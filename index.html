@@ -658,6 +658,138 @@
               <span className="text-3xl md:text-4xl text-[#fce300] font-black drop-shadow-[0_0_10px_rgba(252,227,0,0.6)]">{matchStatus1v1.p2Sets}</span>
             </div>
           </div>);
+  const Solo1v1Scene = ({ scene, players, playerPhotos, activeGame, personalRecords, carDatabase, petDatabase, ecuDatabase, lang, t, mapName, mapStars, bgStyle, setRoundText, gameSelect, onSelectAsset }) => {
+    const post = scene === 'postmatch';
+    const labels = ({
+      vi: { title: 'TỐC ĐỘ - ĐƠN', result: 'KẾT QUẢ THI ĐẤU', records: 'NGƯỜI NẮM GIỮ KỶ LỤC', empty: 'Chưa có kỷ lục ở map này', laps: 'VÒNG ĐUA', mode: 'CHẾ ĐỘ', solo: 'CÁ NHÂN', time: 'THÀNH TÍCH', pending: 'CHỜ KẾT QUẢ', draw: 'HÒA' },
+      en: { title: 'SOLO SPRINT', result: 'RACE RESULTS', records: 'MAP RECORD HOLDERS', empty: 'No saved records for this map', laps: 'LAPS', mode: 'MODE', solo: 'SOLO', time: 'FINISH TIME', pending: 'AWAITING RESULT', draw: 'DRAW' },
+      cn: { title: '个人竞速', result: '比赛结果', records: '赛道纪录保持者', empty: '此赛道暂无已保存纪录', laps: '圈数', mode: '模式', solo: '个人', time: '完赛时间', pending: '等待结果', draw: '平局' },
+      tw: { title: '個人競速', result: '比賽結果', records: '賽道紀錄保持者', empty: '此賽道暫無已儲存紀錄', laps: '圈數', mode: '模式', solo: '個人', time: '完賽時間', pending: '等待結果', draw: '平局' },
+      th: { title: 'แข่งขันเดี่ยว', result: 'ผลการแข่งขัน', records: 'เจ้าของสถิติสนาม', empty: 'ยังไม่มีสถิติที่บันทึกสำหรับสนามนี้', laps: 'จำนวนรอบ', mode: 'โหมด', solo: 'เดี่ยว', time: 'เวลาเข้าเส้นชัย', pending: 'รอผลการแข่งขัน', draw: 'เสมอ' }
+    })[lang] || { title: 'SOLO SPRINT', result: 'RACE RESULTS', records: 'MAP RECORD HOLDERS', empty: 'No saved records for this map', laps: 'LAPS', mode: 'MODE', solo: 'SOLO', time: 'FINISH TIME', pending: 'AWAITING RESULT', draw: 'DRAW' };
+    const pair = [0, 1].map(i => {
+      const raw = activeGame.times?.[i] || '';
+      return { raw, ms: parseTime(raw), dnf: raw.toUpperCase() === 'X', final: !!raw && (raw.includes(':') || raw.toUpperCase() === 'X') };
+    });
+    const complete = pair.every(p => p.final);
+    const winner = complete ? getFinalWinner(pair[0].raw, pair[1].raw) : -1;
+    const suffix = activeGame.mapId ? `_${activeGame.mapId}` : '';
+    const records = suffix ? Object.entries(personalRecords || {}).filter(([key, record]) => key.endsWith(suffix) && record && Number.isFinite(record.timeMs)).map(([key, record]) => ({ name: key.slice(0, -suffix.length), ...record })).sort((a, b) => a.timeMs - b.timeMs).slice(0, 5) : [];
+    const lead = records[0];
+    const hideBrokenImage = e => { e.currentTarget.style.display = 'none'; };
+    const renderEquipment = i => {
+      const assets = [
+        { type: 'car', item: carDatabase.find(a => a.id === activeGame.cars?.[i]), Icon: CarProfile, placeholder: t.selectCar },
+        { type: 'ecu', item: ecuDatabase.find(a => a.id === activeGame.ecus?.[i]), Icon: Cpu, placeholder: 'ECU' },
+        { type: 'pet', item: petDatabase.find(a => a.id === activeGame.pets?.[i]), Icon: Cat, placeholder: t.selectPet }
+      ];
+      return <div className="zsm-duel-equipment">{assets.map(({ type, item, Icon, placeholder }) => {
+        const editable = !post || type === 'ecu';
+        return <button key={type} type="button" className={`zsm-duel-asset zsm-duel-asset-${type}`} disabled={!editable} onClick={editable ? () => onSelectAsset({ type, pIndex: i }) : undefined} title={item?.name || placeholder} aria-label={`${players[i]}: ${item?.name || placeholder}`}>
+          <span className="zsm-duel-asset-image"><Icon size={30} className="zsm-duel-asset-placeholder" />{item?.img && <img key={item.img} src={item.img} alt={item.name || placeholder} onError={hideBrokenImage} />}</span>
+          {type !== 'ecu' && <span className="zsm-duel-asset-name">{item?.name || placeholder}</span>}
+        </button>;
+      })}</div>;
+    };
+    const renderPlayer = i => {
+      const player = players[i] || `PLAYER ${i + 1}`;
+      const pb = personalRecords?.[`${player}_${activeGame.mapId}`];
+      const time = pair[i];
+      const won = complete && !time.dnf && winner === i;
+      const status = time.dnf ? 'DNF' : !complete ? '—' : winner === -1 ? labels.draw : won ? 'WIN' : 'LOSE';
+      let placement = labels.pending;
+      if (complete) {
+        if (time.dnf) placement = 'DNF';
+        else if (won) placement = '1ST';
+        else if (time.ms !== null && pair[1 - i].ms !== null) placement = `+${(Math.abs(time.ms - pair[1 - i].ms) / 1000).toFixed(2)}s`;
+        else placement = '—';
+      }
+      return <article className={`zsm-duel-player${post ? ' zsm-duel-player-result' : ''}${won && post ? ' zsm-duel-winner' : ''}`} data-player-index={i}>
+        <div className="zsm-duel-portrait">
+          <span className="zsm-duel-watermark">{String(i + 1).padStart(2, '0')}</span>
+          <User size={128} className="zsm-duel-avatar-placeholder" />
+          {playerPhotos[i] && <img key={playerPhotos[i]} src={playerPhotos[i]} alt={player} className="zsm-duel-avatar" onError={hideBrokenImage} />}
+          <div className="zsm-duel-portrait-fade" />
+          {post ? <div className="zsm-duel-result"><strong className={`zsm-duel-result-label${won ? ' is-win' : ''}`}>{status}</strong><span className="zsm-duel-gap">{placement}</span></div> : <div className="zsm-duel-player-tag"><span>PLAYER {String(i + 1).padStart(2, '0')}</span><User size={14} /></div>}
+        </div>
+        <div className="zsm-duel-player-info">
+          <h3 title={player}>{player}</h3>
+          <div className="zsm-duel-player-time"><span>{post ? labels.time : t.preMatchBestRecord}</span><strong>{post ? time.raw || '--:--.--' : pb?.timeStr || '--:--.--'}</strong></div>
+        </div>
+        {renderEquipment(i)}
+      </article>;
+    };
+    const mapCaption = <div className="zsm-duel-map-caption"><h3 title={mapName}>{mapName}</h3><div className="zsm-duel-stars" aria-label={`${mapStars} stars`}>{'★'.repeat(mapStars)}</div></div>;
+    return <section className={`zsm-duel zsm-duel-${scene}`} data-duel-scene={scene}>
+      <style>{`
+        .zsm-duel{width:100%;max-width:1920px;margin:0 auto;flex:1;min-height:0;display:flex;flex-direction:column;position:relative;z-index:10;padding:8px clamp(16px,3.1vw,60px) 36px;container-type:inline-size}
+        .zsm-duel *{box-sizing:border-box}
+        .zsm-duel-heading{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-shrink:0;margin-bottom:16px}
+        .zsm-duel-heading h2{margin:0;font-weight:900;font-style:italic;letter-spacing:.075em;font-size:clamp(23px,3.15cqw,52px);line-height:1.05;color:#13c0eb;text-transform:uppercase;text-shadow:0 0 24px #13c0eb40}
+        .zsm-duel-heading-title>span{display:block;color:#94a3b8;font-size:clamp(9px,.75cqw,13px);font-weight:700;letter-spacing:.24em;margin-bottom:5px}
+        .zsm-duel-game-select{min-width:0;max-width:36%;width:310px;align-self:flex-end}
+        .zsm-duel-game-select select{max-width:100%;width:100%;text-overflow:ellipsis;font-size:clamp(10px,.86cqw,14px)}
+        .zsm-duel-board{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.45fr) minmax(0,1fr);gap:clamp(12px,1.1cqw,24px);align-items:stretch}
+        .zsm-duel-postmatch .zsm-duel-board{grid-template-columns:repeat(3,minmax(0,1fr))}
+        .zsm-duel-player,.zsm-duel-map{position:relative;display:flex;flex-direction:column;min-width:0;min-height:0;overflow:hidden;border:1px solid #22d3ee66;border-radius:15px;background:linear-gradient(155deg,#0c4a6eeb 0%,#0f172af5 56%,#020617f7 100%);box-shadow:0 14px 38px #0008,inset 0 1px 0 #ffffff14}
+        .zsm-duel-player:before,.zsm-duel-map:before{content:'';position:absolute;top:0;left:10%;right:10%;height:2px;z-index:4;background:linear-gradient(90deg,transparent,#67e8f9,transparent);box-shadow:0 0 16px #22d3ee}
+        .zsm-duel-winner{border-color:#fce300b3;box-shadow:0 0 35px #fce30012,0 14px 38px #0008}
+        .zsm-duel-winner:before{background:linear-gradient(90deg,transparent,#fce300,transparent);box-shadow:0 0 16px #fce30080}
+        .zsm-duel-portrait{flex:1;min-height:0;position:relative;isolation:isolate;background:radial-gradient(ellipse at 50% 60%,#0284c738,transparent 70%),linear-gradient(145deg,#ffffff05,transparent)}
+        .zsm-duel-watermark{position:absolute;right:6%;top:7%;font-size:clamp(90px,15cqw,260px);font-weight:900;font-style:italic;line-height:1;color:#ffffff04;letter-spacing:-.1em;z-index:-1}
+        .zsm-duel-avatar-placeholder{position:absolute;left:50%;top:54%;transform:translate(-50%,-50%);color:#67e8f918;font-size:clamp(60px,11cqw,180px)!important}
+        .zsm-duel-avatar{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 12px 18px #0009);z-index:1}
+        .zsm-duel-portrait-fade{position:absolute;inset:55% 0 -1px;background:linear-gradient(transparent,#0f172a);z-index:2;pointer-events:none}
+        .zsm-duel-player-tag{position:absolute;inset:14px 16px auto;display:flex;align-items:center;justify-content:space-between;color:#a5f3fc99;font-weight:700;font-size:clamp(8px,.7cqw,12px);letter-spacing:.2em;z-index:3}
+        .zsm-duel-player-info{position:relative;z-index:3;flex-shrink:0;display:flex;align-items:flex-end;justify-content:space-between;gap:10px;padding:7px 15px 12px;background:#0f172a}
+        .zsm-duel-player-info h3{margin:0;min-width:0;flex:1;font-size:clamp(16px,1.9cqw,34px);line-height:1.05;font-weight:900;font-style:italic;text-transform:uppercase;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#f8fafc;text-shadow:0 2px 10px #0008}
+        .zsm-duel-player-time{flex-shrink:0;text-align:right}
+        .zsm-duel-player-time>span{display:block;font-size:clamp(7px,.64cqw,11px);font-weight:700;letter-spacing:.04em;color:#a5f3fc;margin-bottom:3px}
+        .zsm-duel-player-time>strong{display:block;font-size:clamp(20px,2.35cqw,42px);font-weight:900;line-height:1;color:#f8fafc;font-variant-numeric:tabular-nums;text-shadow:0 2px 12px #0006}
+        .zsm-duel-equipment{flex-shrink:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.65fr) minmax(0,1fr);gap:0;border-top:1px solid #67e8f94d;background:linear-gradient(135deg,#082f49d9,#0f172af5);padding:9px 7px 8px}
+        .zsm-duel-asset{min-width:0;padding:0 5px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:0;border-right:1px solid #ffffff12;background:transparent;color:#e2e8f0;cursor:pointer;transition:filter .2s,transform .2s;font:inherit}
+        .zsm-duel-asset:last-child{border-right:0}.zsm-duel-asset:disabled{cursor:default}.zsm-duel-asset:not(:disabled):hover{filter:brightness(1.25);transform:translateY(-2px)}
+        .zsm-duel-asset:focus-visible{outline:1px solid #22d3ee;outline-offset:3px;border-radius:3px}
+        .zsm-duel-asset-image{width:100%;height:clamp(28px,3.3cqw,56px);position:relative;display:flex;align-items:center;justify-content:center}
+        .zsm-duel-asset-image img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 3px 5px #0009)}
+        .zsm-duel-asset-placeholder{color:#64748b44}.zsm-duel-asset-name{max-width:100%;font-size:clamp(7px,.65cqw,11px);font-weight:700;line-height:1.15;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.3em;text-align:center;color:#a5f3fc}
+        .zsm-duel-asset-pet .zsm-duel-asset-name{color:#cbd5e1}.zsm-duel-asset-ecu .zsm-duel-asset-image{width:85%}
+        .zsm-duel-map{background:linear-gradient(155deg,#075985,#0f172a 80%)}
+        .zsm-duel-map-image{position:relative;flex:1;min-height:0;overflow:hidden;background:#0c1d33}
+        .zsm-duel-map-drift{position:absolute;inset:0;background-size:cover;background-position:center;animation:mapCinematicDrift 20s ease-in-out infinite}
+        .zsm-duel-map-shade{position:absolute;inset:0;background:linear-gradient(180deg,#0206170d 35%,#020617b3 100%)}
+        .zsm-duel-map-caption{position:relative;z-index:2;padding:12px 15px 10px;flex-shrink:0;background:linear-gradient(100deg,#0284c76b,#0f172adb);border-bottom:1px solid #67e8f933}
+        .zsm-duel-prematch .zsm-duel-map-caption{position:absolute;inset:auto 0 0;background:linear-gradient(transparent,#020617f2);padding-top:30px;border:0}
+        .zsm-duel-map-caption h3{margin:0;font-weight:900;font-style:italic;font-size:clamp(17px,1.7cqw,30px);line-height:1.12;color:white;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;text-shadow:0 2px 8px #000}
+        .zsm-duel-stars{color:#22d3ee;letter-spacing:.06em;font-size:clamp(11px,1.2cqw,20px);line-height:1.15;margin-top:4px;text-shadow:0 0 12px #22d3ee66}
+        .zsm-duel-records{flex-shrink:0;min-height:100px;padding:12px 14px;background:linear-gradient(120deg,#082f49,#0f172a);border-top:1px solid #67e8f94d}
+        .zsm-duel-records-title{font-weight:800;font-size:clamp(9px,.78cqw,14px);letter-spacing:.06em;color:#cbd5e1;text-transform:uppercase;margin-bottom:7px}
+        .zsm-duel-records-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);align-items:center;gap:14px}
+        .zsm-duel-record-leader{min-width:0;display:flex;flex-direction:column;gap:4px}.zsm-duel-record-leader>span{display:flex;gap:7px;font-size:clamp(15px,1.6cqw,28px);font-weight:900;color:#22d3ee;line-height:1.05}
+        .zsm-duel-record-leader b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.zsm-duel-record-leader strong{font-size:clamp(22px,2.5cqw,43px);color:#f8fafc;font-weight:900;line-height:1;font-variant-numeric:tabular-nums}
+        .zsm-duel-record-others{display:flex;flex-direction:column;gap:4px;min-width:0;border-left:1px solid #ffffff1a;padding-left:12px}.zsm-duel-record-row{display:flex;align-items:center;gap:6px;font-size:clamp(8px,.8cqw,14px);font-weight:700;line-height:1.1;color:#cbd5e1}
+        .zsm-duel-record-row>span:first-child{color:#64748b}.zsm-duel-record-row>span:nth-child(2){flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.zsm-duel-record-row strong{color:#f1f5f9;font-variant-numeric:tabular-nums}
+        .zsm-duel-records-empty{font-size:clamp(11px,1cqw,17px);color:#64748b;padding:10px 0}
+        .zsm-duel-map-stats{display:grid;grid-template-columns:1fr 1fr;flex-shrink:0;padding:13px 8px;background:linear-gradient(110deg,#082f49,#0f172a);border-top:1px solid #67e8f94d}
+        .zsm-duel-map-stats>div{text-align:center;min-width:0}.zsm-duel-map-stats>div+div{border-left:1px solid #ffffff1a}.zsm-duel-map-stats span{display:block;font-size:clamp(9px,.8cqw,14px);font-weight:700;color:#67e8f9;letter-spacing:.1em;margin-bottom:5px}.zsm-duel-map-stats strong{display:block;font-size:clamp(19px,1.9cqw,34px);font-weight:900;line-height:1.1;color:#f8fafc}
+        .zsm-duel-result{position:absolute;inset:16px 16px auto;z-index:3;display:flex;justify-content:space-between;align-items:flex-start;gap:8px}.zsm-duel-result-label{font-size:clamp(36px,5.3cqw,88px);font-weight:900;font-style:italic;line-height:.95;letter-spacing:-.04em;color:#94a3b8;text-shadow:0 4px 20px #0008}.zsm-duel-result-label.is-win{color:#fce300;text-shadow:0 0 25px #fce30044,0 3px 10px #0008}
+        .zsm-duel-gap{font-size:clamp(11px,1.65cqw,29px);font-weight:900;line-height:1.1;color:#e2e8f0;padding-top:3px;white-space:nowrap}.zsm-duel-player-result .zsm-duel-avatar{top:12%;height:88%}
+        @media(max-height:650px){.zsm-duel-heading{margin-bottom:10px}.zsm-duel-equipment{padding-top:6px;padding-bottom:5px}.zsm-duel-records{min-height:85px;padding-top:9px;padding-bottom:9px}.zsm-duel-player-info{padding-bottom:9px}.zsm-duel-map-stats{padding-top:9px;padding-bottom:9px}}
+        @media(max-width:700px){.zsm-duel{padding:8px 12px 30px;overflow:auto}.zsm-duel-heading{gap:10px}.zsm-duel-heading h2{font-size:20px}.zsm-duel-heading-title>span{font-size:8px}.zsm-duel-game-select{max-width:42%}.zsm-duel-board,.zsm-duel-postmatch .zsm-duel-board{gap:8px;min-height:260px}.zsm-duel-player,.zsm-duel-map{border-radius:9px}.zsm-duel-player-info{padding:6px;display:block}.zsm-duel-player-info h3{font-size:14px}.zsm-duel-player-time{margin-top:6px;text-align:left}.zsm-duel-player-time>strong{font-size:19px}.zsm-duel-player-time>span{font-size:7px}.zsm-duel-equipment{padding:6px 2px}.zsm-duel-asset{padding:0 2px}.zsm-duel-asset-name{font-size:6px}.zsm-duel-player-tag{inset:10px 8px auto;font-size:6px}.zsm-duel-player-tag i{display:none}.zsm-duel-map-caption{padding:9px}.zsm-duel-map-caption h3{font-size:13px}.zsm-duel-stars{font-size:11px}.zsm-duel-records{padding:8px;min-height:85px}.zsm-duel-records-title{font-size:7px}.zsm-duel-records-grid{gap:6px;grid-template-columns:1fr}.zsm-duel-record-leader{flex-direction:row;justify-content:space-between;align-items:center;gap:5px}.zsm-duel-record-leader>span{font-size:11px;min-width:0}.zsm-duel-record-leader strong{font-size:16px}.zsm-duel-record-others{display:none}.zsm-duel-records-empty{font-size:9px}.zsm-duel-result{inset:10px 8px auto;flex-direction:column;gap:4px}.zsm-duel-result-label{font-size:30px}.zsm-duel-gap{font-size:12px}.zsm-duel-map-stats{padding:9px 3px}.zsm-duel-map-stats span{font-size:7px}.zsm-duel-map-stats strong{font-size:14px}}
+      `}</style>
+      <div className="zsm-duel-heading"><div className="zsm-duel-heading-title"><span>{setRoundText || 'SOLO 1VS1'}</span><h2>{post ? labels.result : labels.title}</h2></div><div className="zsm-duel-game-select">{gameSelect}</div></div>
+      <div className="zsm-duel-board">
+        {renderPlayer(0)}
+        <article className="zsm-duel-map">
+          {post && mapCaption}
+          <div className="zsm-duel-map-image"><div className="zsm-duel-map-drift" style={bgStyle} /><div className="zsm-duel-map-shade" /><div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-cyan-300/20 to-transparent animate-light-sheen pointer-events-none" />{!post && mapCaption}</div>
+          {post ? <div className="zsm-duel-map-stats"><div><span>{labels.laps}</span><strong>{getMapLaps(activeGame.mapId)}</strong></div><div><span>{labels.mode}</span><strong>{labels.solo}</strong></div></div> : <div className="zsm-duel-records"><div className="zsm-duel-records-title">{labels.records}</div>{lead ? <div className="zsm-duel-records-grid"><div className="zsm-duel-record-leader"><span>#1 <b title={lead.name}>{lead.name}</b></span><strong>{lead.timeStr}</strong></div><div className="zsm-duel-record-others">{[1, 2, 3, 4].map(i => <div className="zsm-duel-record-row" key={i}><span>#{i + 1}</span><span title={records[i]?.name}>{records[i]?.name || '—'}</span><strong>{records[i]?.timeStr || '—'}</strong></div>)}</div></div> : <div className="zsm-duel-records-empty">{labels.empty}</div>}</div>}
+        </article>
+        {renderPlayer(1)}
+      </div>
+    </section>;
+  };
+
   const BroadcastOverlay = ({ broadcastState, setBroadcastState, viewSet, setViewSet, soloSetBO, soloMatchBO, players, personalRecords, games, totals, getGameCalculations, matchStatus1v1, lang, t, gameMode, tournamentName, team1Name, team2Name, onAssetSelect, onClose, carDatabase, petDatabase, ecuDatabase, playerPhotos }) => {
    const isTeamMode = gameMode === '2v2' || gameMode === '3v3';
    let broadcastRounds = [];
@@ -903,6 +1035,7 @@
       </div>
      )}
      {broadcastState.tab === 'prematch' && (() => {
+      if (gameMode === '1v1') return <Solo1v1Scene scene="prematch" players={players} playerPhotos={playerPhotos} activeGame={activeGame} personalRecords={personalRecords} carDatabase={carDatabase} petDatabase={petDatabase} ecuDatabase={ecuDatabase} lang={lang} t={t} mapName={mapName} mapStars={mapStars} bgStyle={bgStyle} setRoundText={setRoundText} gameSelect={renderGameSelect()} onSelectAsset={setAssetModal} />;
       const leftPlayers = players.slice(0, halfLen);
       const rightPlayers = players.slice(halfLen);
       const kingMapOwnerName = getKingMapOwnerName();
@@ -1014,6 +1147,7 @@
       );
      })()}
      {broadcastState.tab === 'postmatch' && (() => {
+      if (gameMode === '1v1') return <Solo1v1Scene scene="postmatch" players={players} playerPhotos={playerPhotos} activeGame={activeGame} personalRecords={personalRecords} carDatabase={carDatabase} petDatabase={petDatabase} ecuDatabase={ecuDatabase} lang={lang} t={t} mapName={mapName} mapStars={mapStars} bgStyle={bgStyle} setRoundText={setRoundText} gameSelect={renderGameSelect()} onSelectAsset={setAssetModal} />;
       const calcs = getGameCalculations(broadcastState.gameIndex, activeGame.times);
       const kingMapOwnerName = getKingMapOwnerName();
       const sortedPlayers = players.map((name, idx) => {
