@@ -675,35 +675,35 @@
         .zsm-map-panel *{box-sizing:border-box}
         .zsm-map-image{position:relative;flex:1;min-height:0;overflow:hidden;background:linear-gradient(135deg,#07598580,#0f172a80);border:0;padding:0}
         .zsm-map-image-bg{position:absolute;inset:0;background-size:cover;background-position:center}
-        .zsm-map-image-shade{position:absolute;inset:0;background:linear-gradient(180deg,#02061766,transparent 45%,#02061780);pointer-events:none}
-        .zsm-map-caption{position:absolute;top:clamp(12px,3.4cqw,22px);right:clamp(12px,3.4cqw,22px);left:12px;z-index:2;text-align:right;filter:drop-shadow(0 2px 5px #000)}
-        .zsm-map-caption h3{margin:0;font-size:clamp(18px,5.8cqw,36px);font-weight:900;font-style:italic;line-height:1.15;color:#fff;overflow-wrap:anywhere;text-wrap:balance;text-shadow:0 2px 8px #000a}
-        .zsm-map-stars{margin-top:5px;color:#fce300;font-size:clamp(13px,4.2cqw,25px);line-height:1;letter-spacing:.06em;text-shadow:0 0 12px #fce30044}
-        .zsm-map-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));flex-shrink:0;padding:clamp(9px,2.8cqw,16px) 8px;background:linear-gradient(110deg,#075985c9,#0f172adb);border-top:1px solid #67e8f94d;border-bottom:1px solid #67e8f933;backdrop-filter:blur(8px)}
+        .zsm-map-image-shade{position:absolute;inset:0;background:linear-gradient(180deg,#02061760,transparent 38%,transparent 60%,#020617c0);pointer-events:none}
+        .zsm-map-caption{position:absolute;top:clamp(12px,3cqw,18px);left:clamp(12px,3cqw,18px);right:12px;z-index:2;text-align:left;filter:drop-shadow(0 2px 5px #000)}
+        .zsm-map-caption h3{margin:0;font-size:clamp(14px,3.5cqw,22px);font-weight:900;font-style:italic;line-height:1.15;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 2px 8px #000a}
+        .zsm-map-stars{margin-top:5px;color:#fce300;font-size:clamp(10px,2.7cqw,16px);line-height:1;letter-spacing:.06em;text-shadow:0 0 12px #fce30044}
+        .zsm-map-stats{position:absolute;left:clamp(12px,3cqw,18px);right:clamp(12px,3cqw,18px);bottom:clamp(12px,3cqw,18px);z-index:2;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:end;gap:10px;padding:0;border:0;background:transparent;backdrop-filter:none;text-shadow:0 2px 8px #000b}
         .zsm-map-stats.is-duel{grid-template-columns:repeat(2,minmax(0,1fr))}
-        .zsm-map-stat{text-align:center;min-width:0;padding:0 6px}.zsm-map-stat+.zsm-map-stat{border-left:1px solid #ffffff24}
-        .zsm-map-stat>span{display:block;color:#67e8f9;font-size:clamp(9px,2.7cqw,14px);line-height:1.15;font-weight:800;letter-spacing:.1em;margin-bottom:6px}
-        .zsm-map-stat>strong{display:block;color:#f8fafc;font-size:clamp(14px,4.6cqw,26px);font-weight:900;line-height:1.1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-        .zsm-map-stat-laps>strong{font-size:clamp(21px,6cqw,34px)}.zsm-map-stat-king>strong{color:#fbbf24;font-size:clamp(13px,4cqw,23px)}
-        .zsm-map-stat-mode>strong{font-size:clamp(13px,4cqw,23px);white-space:normal;overflow:visible;overflow-wrap:anywhere;text-wrap:balance;line-height:1.15}
-        .zsm-map-records{flex-shrink:0;padding:clamp(10px,3cqw,18px);background:linear-gradient(115deg,#0369a1e6,#075985d9 55%,#0f172aeb);min-height:clamp(88px,22cqw,135px);backdrop-filter:blur(8px)}
-        .zsm-map-records-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);align-items:center;gap:clamp(10px,3cqw,20px)}
-        .zsm-map-record-lead{min-width:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(8px,2.4cqw,16px);align-items:end}
-        .zsm-map-record-field{min-width:0}.zsm-map-record-field>span{display:flex;align-items:flex-end;min-height:2.4em;margin-bottom:6px;color:#bae6fd;font-size:clamp(8px,2.7cqw,14px);font-weight:800;line-height:1.2;letter-spacing:.035em;text-transform:uppercase}
-        .zsm-map-record-field>strong{display:block;color:#f8fafc;font-size:clamp(16px,5.5cqw,34px);line-height:1.1;font-weight:900;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-shadow:0 2px 7px #0004}
-        .zsm-map-record-time>strong{font-size:clamp(19px,6cqw,38px);font-variant-numeric:tabular-nums;letter-spacing:-.025em}
-        .zsm-map-record-others{min-width:0;display:flex;flex-direction:column;gap:clamp(6px,1.7cqw,10px);border-left:1px solid #ffffff24;padding-left:clamp(8px,2.5cqw,16px)}
-        .zsm-map-record-row{min-width:0;display:flex;align-items:baseline;gap:clamp(5px,1.3cqw,9px);font-size:clamp(11px,3.5cqw,21px);line-height:1.05;font-weight:700;color:#e2e8f0}
+        .zsm-map-stat{min-width:0;text-align:center;padding:0;border:0}.zsm-map-stat:first-child{text-align:left}.zsm-map-stat:last-child{text-align:right}
+        .zsm-map-stat>span{display:block;color:#67e8f9;font-size:clamp(8px,2cqw,10px);line-height:1.15;font-weight:700;letter-spacing:.08em;margin-bottom:5px;white-space:nowrap}
+        .zsm-map-stat>strong{display:block;color:#f8fafc;font-size:clamp(12px,3cqw,17px);font-weight:900;line-height:1.15;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .zsm-map-stat-laps>strong{font-size:clamp(14px,3.6cqw,20px)}.zsm-map-stat-king>strong{color:#fbbf24;font-size:clamp(11px,2.8cqw,16px)}.zsm-map-stat-mode>strong{font-size:clamp(10px,2.65cqw,15px)}
+        .zsm-map-records{flex-shrink:0;padding:clamp(10px,2.4cqw,14px);background:linear-gradient(115deg,#0369a1e6,#075985d9 55%,#0f172aeb);min-height:clamp(72px,16.5cqw,100px);backdrop-filter:blur(8px)}
+        .zsm-map-records-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);align-items:center;gap:clamp(8px,2.4cqw,15px)}
+        .zsm-map-record-lead{min-width:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(7px,2cqw,12px);align-items:end}
+        .zsm-map-record-field{min-width:0}.zsm-map-record-field>span{display:block;margin-bottom:6px;color:#bae6fd;font-size:clamp(7px,1.8cqw,10px);font-weight:700;line-height:1.2;letter-spacing:.015em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .zsm-map-record-field>strong{display:block;color:#f8fafc;font-size:clamp(14px,4cqw,24px);line-height:1.1;font-weight:900;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-shadow:0 2px 7px #0004}
+        .zsm-map-record-time>strong{font-size:clamp(16px,4.4cqw,25px);font-variant-numeric:tabular-nums;letter-spacing:-.025em}
+        .zsm-map-record-others{min-width:0;display:flex;flex-direction:column;gap:clamp(5px,1.3cqw,8px);border-left:1px solid #ffffff1a;padding-left:clamp(8px,2cqw,12px)}
+        .zsm-map-record-row{min-width:0;display:flex;align-items:baseline;gap:clamp(4px,1cqw,7px);font-size:clamp(10px,2.7cqw,16px);line-height:1.05;font-weight:700;color:#e2e8f0;white-space:nowrap}
         .zsm-map-record-rank{flex-shrink:0;color:#fce300;font-weight:900}.zsm-map-record-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.zsm-map-record-row>strong{flex-shrink:0;color:white;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.03em}
-        .zsm-map-records-empty{display:flex;align-items:center;min-height:60px;color:#cbd5e1;font-size:clamp(13px,4cqw,23px);font-weight:700;line-height:1.3}
-        @container(max-width:300px){.zsm-map-records-grid{grid-template-columns:1fr;gap:10px}.zsm-map-record-field>span{font-size:8px}.zsm-map-record-field>strong{font-size:15px}.zsm-map-record-time>strong{font-size:17px}.zsm-map-record-others{padding-left:0;border:0;gap:6px}.zsm-map-record-row{font-size:11px}.zsm-map-caption h3{font-size:15px}.zsm-map-stars{font-size:12px}.zsm-map-stat{padding:0 3px}.zsm-map-stat>span{font-size:7px;letter-spacing:0}.zsm-map-stat>strong{font-size:11px}.zsm-map-stat-laps>strong{font-size:16px}.zsm-map-stat-king>strong{font-size:10px}}
+        .zsm-map-records-empty{display:flex;align-items:center;min-height:45px;color:#cbd5e1;font-size:clamp(11px,3cqw,16px);font-weight:700;line-height:1.3}
+        @container(max-width:300px){.zsm-map-records-grid{grid-template-columns:1fr;gap:9px}.zsm-map-record-field>span{font-size:7px}.zsm-map-record-field>strong{font-size:13px}.zsm-map-record-time>strong{font-size:15px}.zsm-map-record-others{padding-left:0;border:0;gap:5px}.zsm-map-record-row{font-size:10px}.zsm-map-caption h3{font-size:13px}.zsm-map-stars{font-size:10px}.zsm-map-stats{gap:5px}.zsm-map-stat>span{font-size:7px;letter-spacing:0}.zsm-map-stat>strong{font-size:10px}.zsm-map-stat-laps>strong{font-size:14px}.zsm-map-stat-mode>strong,.zsm-map-stat-king>strong{font-size:9px}}
+        @media(max-width:700px){.zsm-map-panel{min-height:190px}.zsm-map-image{min-height:110px}}
       `}</style>
-      <div className="zsm-map-image"><div className="zsm-map-image-bg animate-map-drift" style={bgStyle} /><div className="zsm-map-image-shade" /><div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-cyan-300/20 to-transparent animate-light-sheen pointer-events-none" /><div className="zsm-map-caption"><h3>{mapName}</h3><div className="zsm-map-stars" aria-label={`${mapStars} stars`}>{'★'.repeat(mapStars)}</div></div></div>
-      <div className={`zsm-map-stats${gameMode === '1v1' ? ' is-duel' : ''}`}>
+      <div className="zsm-map-image"><div className="zsm-map-image-bg animate-map-drift" style={bgStyle} /><div className="zsm-map-image-shade" /><div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-cyan-300/20 to-transparent animate-light-sheen pointer-events-none" /><div className="zsm-map-caption"><h3>{mapName}</h3><div className="zsm-map-stars" aria-label={`${mapStars} stars`}>{'★'.repeat(mapStars)}</div></div><div className={`zsm-map-stats${gameMode === '1v1' ? ' is-duel' : ''}`}>
         <div className="zsm-map-stat zsm-map-stat-laps"><span>LAPS</span><strong>{getMapLaps(activeGame.mapId)}</strong></div>
         {gameMode !== '1v1' && <div className="zsm-map-stat zsm-map-stat-king"><span>KING MAP</span><strong title={kingMapOwnerName}>{kingMapOwnerName}</strong></div>}
         <div className="zsm-map-stat zsm-map-stat-mode"><span>MODE</span><strong title={modeText}>{modeText}</strong></div>
-      </div>
+      </div></div>
+      
       <div className="zsm-map-records">{lead ? <div className="zsm-map-records-grid"><div className="zsm-map-record-lead" data-record-rank="1"><div className="zsm-map-record-field"><span>{copy.holder}</span><strong title={lead.name}>{lead.name}</strong></div><div className="zsm-map-record-field zsm-map-record-time"><span>{copy.best}</span><strong>{lead.timeStr}</strong></div></div><div className="zsm-map-record-others">{[1, 2, 3].map(i => <div className="zsm-map-record-row" key={i} data-record-rank={records[i] ? i + 1 : undefined}><span className="zsm-map-record-rank">#{i + 1}</span><span className="zsm-map-record-name" title={records[i]?.name}>{records[i]?.name || '—'}</span><strong>{records[i]?.timeStr || '—'}</strong></div>)}</div></div> : <div className="zsm-map-records-empty">{copy.empty}</div>}</div>
     </article>;
   };
@@ -756,11 +756,11 @@
           {playerPhotos[i] && <img key={playerPhotos[i]} src={playerPhotos[i]} alt={player} className="zsm-duel-avatar" onError={hideBrokenImage} />}
           <div className="zsm-duel-portrait-fade" />
           {post && <div className="zsm-duel-result"><strong className={`zsm-duel-result-label${won ? ' is-win' : ''}`}>{status}</strong><span className="zsm-duel-gap">{placement}</span></div>}
-        </div>
         <div className="zsm-duel-player-info">
           <h3 title={player}>{player}</h3>
           <div className="zsm-duel-player-time"><span>{post ? labels.time : t.preMatchBestRecord}</span><strong>{post ? time.raw || '--:--.--' : pb?.timeStr || '--:--.--'}</strong></div>
-        </div>
+        </div></div>
+        
         {renderEquipment(i)}
       </article>;
     };
@@ -775,19 +775,19 @@
         .zsm-duel-game-select select{max-width:100%;width:100%;text-overflow:ellipsis;font-size:clamp(10px,.86cqw,14px)}
         .zsm-duel-board{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.45fr) minmax(0,1fr);gap:clamp(12px,1.1cqw,24px);align-items:stretch}
         .zsm-duel-postmatch .zsm-duel-board{grid-template-columns:repeat(3,minmax(0,1fr))}
-        .zsm-duel-player{position:relative;display:flex;flex-direction:column;min-width:0;min-height:0;overflow:hidden;border:1px solid #22d3ee66;border-radius:15px;background:linear-gradient(155deg,#0c4a6e55 0%,#0f172a55 56%,#02061766 100%);box-shadow:0 14px 38px #0008,inset 0 1px 0 #ffffff14;backdrop-filter:blur(6px)}
+        .zsm-duel-player{position:relative;display:flex;flex-direction:column;min-width:0;min-height:0;overflow:hidden;border:1px solid rgba(59,130,246,.4);border-radius:15px;background:linear-gradient(to bottom right,rgba(30,58,138,.6),rgba(30,64,175,.4));box-shadow:0 14px 38px #0008,inset 0 1px 0 #ffffff14;backdrop-filter:blur(12px)}
         .zsm-duel-player:before{content:'';position:absolute;top:0;left:10%;right:10%;height:2px;z-index:4;background:linear-gradient(90deg,transparent,#67e8f9,transparent);box-shadow:0 0 16px #22d3ee}
         .zsm-duel-winner{border-color:#fce300b3;box-shadow:0 0 35px #fce30012,0 14px 38px #0008}
         .zsm-duel-winner:before{background:linear-gradient(90deg,transparent,#fce300,transparent);box-shadow:0 0 16px #fce30080}
-        .zsm-duel-portrait{flex:1;min-height:0;position:relative;isolation:isolate;background:radial-gradient(ellipse at 50% 60%,#0284c714,transparent 70%),linear-gradient(145deg,#ffffff02,transparent)}
+        .zsm-duel-portrait{flex:1;min-height:0;position:relative;isolation:isolate;background:linear-gradient(to top right,rgba(255,255,255,.025),transparent)}
         .zsm-duel-avatar{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 12px 18px #0009);z-index:1}
-        .zsm-duel-portrait-fade{position:absolute;inset:55% 0 -1px;background:linear-gradient(transparent,#0f172a66);z-index:2;pointer-events:none}
-        .zsm-duel-player-info{position:relative;z-index:3;flex-shrink:0;display:flex;align-items:flex-end;justify-content:space-between;gap:10px;padding:7px 15px 12px;background:#0f172a45}
+        .zsm-duel-portrait-fade{position:absolute;inset:55% 0 -1px;background:linear-gradient(transparent,rgba(2,6,23,.65));z-index:2;pointer-events:none}
+        .zsm-duel-player-info{position:absolute;z-index:3;flex-shrink:0;display:flex;align-items:flex-end;justify-content:space-between;gap:10px;padding:7px 15px 12px;background:transparent;left:0;right:0;bottom:0;border:0}
         .zsm-duel-player-info h3{margin:0;min-width:0;flex:1;font-size:clamp(16px,1.9cqw,34px);line-height:1.05;font-weight:900;font-style:italic;text-transform:uppercase;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#f8fafc;text-shadow:0 2px 10px #0008}
         .zsm-duel-player-time{flex-shrink:0;text-align:right}
         .zsm-duel-player-time>span{display:block;font-size:clamp(7px,.64cqw,11px);font-weight:700;letter-spacing:.04em;color:#a5f3fc;margin-bottom:3px}
         .zsm-duel-player-time>strong{display:block;font-size:clamp(20px,2.35cqw,42px);font-weight:900;line-height:1;color:#f8fafc;font-variant-numeric:tabular-nums;text-shadow:0 2px 12px #0006}
-        .zsm-duel-equipment{flex-shrink:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.65fr) minmax(0,1fr);gap:0;border-top:1px solid #67e8f94d;background:linear-gradient(135deg,#082f4966,#0f172a66);padding:9px 7px 8px}
+        .zsm-duel-equipment{flex-shrink:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.65fr) minmax(0,1fr);gap:0;border-top:1px solid rgba(255,255,255,.1);background:linear-gradient(to bottom,transparent,rgba(0,0,0,.35));padding:9px 7px 8px}
         .zsm-duel-asset{min-width:0;padding:0 5px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:0;border-right:1px solid #ffffff12;background:transparent;color:#e2e8f0;cursor:pointer;transition:filter .2s,transform .2s;font:inherit}
         .zsm-duel-asset:last-child{border-right:0}.zsm-duel-asset:disabled{cursor:default}.zsm-duel-asset:not(:disabled):hover{filter:brightness(1.25);transform:translateY(-2px)}
         .zsm-duel-asset:focus-visible{outline:1px solid #22d3ee;outline-offset:3px;border-radius:3px}
@@ -797,8 +797,8 @@
         .zsm-duel-asset-pet .zsm-duel-asset-name{color:#cbd5e1}.zsm-duel-asset-ecu .zsm-duel-asset-image{width:85%}
         .zsm-duel-result{position:absolute;inset:16px 16px auto;z-index:3;display:flex;justify-content:space-between;align-items:flex-start;gap:8px}.zsm-duel-result-label{font-size:clamp(36px,5.3cqw,88px);font-weight:900;font-style:italic;line-height:.95;letter-spacing:-.04em;color:#94a3b8;text-shadow:0 4px 20px #0008}.zsm-duel-result-label.is-win{color:#fce300;text-shadow:0 0 25px #fce30044,0 3px 10px #0008}
         .zsm-duel-gap{font-size:clamp(11px,1.65cqw,29px);font-weight:900;line-height:1.1;color:#e2e8f0;padding-top:3px;white-space:nowrap}.zsm-duel-player-result .zsm-duel-avatar{top:12%;height:88%}
-        @media(max-height:650px){.zsm-duel-heading{margin-bottom:10px}.zsm-duel-equipment{padding-top:6px;padding-bottom:5px;background:linear-gradient(135deg,#082f4966,#0f172a66)}.zsm-duel-player-info{padding-bottom:9px;background:#0f172a45}}
-        @media(max-width:700px){.zsm-duel{padding:8px 12px 30px;overflow:auto}.zsm-duel-heading{gap:10px}.zsm-duel-heading h2{font-size:20px}.zsm-duel-heading-title>span{font-size:8px}.zsm-duel-game-select{max-width:42%}.zsm-duel-board,.zsm-duel-postmatch .zsm-duel-board{gap:8px;min-height:260px}.zsm-duel-player{border-radius:9px;background:linear-gradient(155deg,#0c4a6e55 0%,#0f172a55 56%,#02061766 100%);backdrop-filter:blur(6px)}.zsm-duel-player-info{padding:6px;display:block;background:#0f172a45}.zsm-duel-player-info h3{font-size:14px}.zsm-duel-player-time{margin-top:6px;text-align:left}.zsm-duel-player-time>strong{font-size:19px}.zsm-duel-player-time>span{font-size:7px}.zsm-duel-equipment{padding:6px 2px;background:linear-gradient(135deg,#082f4966,#0f172a66)}.zsm-duel-asset{padding:0 2px}.zsm-duel-asset-name{font-size:6px}.zsm-duel-result{inset:10px 8px auto;flex-direction:column;gap:4px}.zsm-duel-result-label{font-size:30px}.zsm-duel-gap{font-size:12px}}
+        @media(max-height:650px){.zsm-duel-heading{margin-bottom:10px}.zsm-duel-equipment{padding-top:6px;padding-bottom:5px;background:linear-gradient(to bottom,transparent,rgba(0,0,0,.35));border-top:1px solid rgba(255,255,255,.1)}.zsm-duel-player-info{padding-bottom:9px;background:transparent;position:absolute;left:0;right:0;bottom:0;border:0}}
+        @media(max-width:700px){.zsm-duel{padding:8px 12px 30px;overflow:auto}.zsm-duel-heading{gap:10px}.zsm-duel-heading h2{font-size:20px}.zsm-duel-heading-title>span{font-size:8px}.zsm-duel-game-select{max-width:42%}.zsm-duel-board,.zsm-duel-postmatch .zsm-duel-board{gap:8px;min-height:260px}.zsm-duel-player{border-radius:9px;background:linear-gradient(to bottom right,rgba(30,58,138,.6),rgba(30,64,175,.4));backdrop-filter:blur(12px);border:1px solid rgba(59,130,246,.4)}.zsm-duel-player-info{padding:6px;display:block;background:transparent;position:absolute;left:0;right:0;bottom:0;border:0}.zsm-duel-player-info h3{font-size:14px}.zsm-duel-player-time{margin-top:6px;text-align:left}.zsm-duel-player-time>strong{font-size:19px}.zsm-duel-player-time>span{font-size:7px}.zsm-duel-equipment{padding:6px 2px;background:linear-gradient(to bottom,transparent,rgba(0,0,0,.35));border-top:1px solid rgba(255,255,255,.1)}.zsm-duel-asset{padding:0 2px}.zsm-duel-asset-name{font-size:6px}.zsm-duel-result{inset:10px 8px auto;flex-direction:column;gap:4px}.zsm-duel-result-label{font-size:30px}.zsm-duel-gap{font-size:12px}}
       `}</style>
       <div className="zsm-duel-heading"><div className="zsm-duel-heading-title"><span>{setRoundText || 'SOLO 1VS1'}</span><h2>{post ? labels.result : labels.title}</h2></div><div className="zsm-duel-game-select">{gameSelect}</div></div>
       <div className="zsm-duel-board">
