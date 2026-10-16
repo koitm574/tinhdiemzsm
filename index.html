@@ -19,14 +19,14 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,600;0,700;1,700&family=Chakra+Petch:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Sans+SC:wght@400;700;900&family=Noto+Sans+TC:wght@400;700;900&family=Noto+Sans+Thai:wght@400;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,600;0,700;1,700&family=Chakra+Petch:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Sans+SC:wght@400;700;900&family=Noto+Sans+Thai:wght@400;700;900&display=swap" rel="stylesheet">
   
   <script>
     tailwind.config = { 
       theme: { 
         extend: { 
           fontFamily: { 
-            sans: ['"Chakra Petch"', '"Be Vietnam Pro"', 'sans-serif', '"Noto Sans SC"', '"Noto Sans TC"', '"Noto Sans Thai"'] 
+            sans: ['"Chakra Petch"', '"Be Vietnam Pro"', 'sans-serif', '"Noto Sans SC"', '"Noto Sans Thai"'] 
           } 
         } 
       } 
@@ -120,7 +120,7 @@
   const Cat = (p) => <IconWrapper icon="ph-fill ph-cat" {...p} />;
   const UserCircle = (p) => <IconWrapper icon="ph-fill ph-user-circle" {...p} />;
   const Cpu = (p) => <IconWrapper icon="ph-fill ph-cpu" {...p} />;
-  const MAP_POOL=[{stars:7,maps:[{id:'m7_1',vi:'Sân Bay Siêu Tốc',en:'Space Station',cn:'极速空港',tw:'極速空港',th:'สปีดพอร์ต'},{id:'m7_2',vi:'Sơn Hải Họa Cảnh',en:'Painted Landscape',cn:'山海画境',tw:'山海畫境',th:'ดินแดนซานไh่'}]},{stars:6,maps:[{id:'m6_1',vi:'Hẻm Núi Lớn',en:'Grand Canyon',cn:'美洲大峡谷',tw:'美洲大峽谷',th:'แกรนด์แคนยอน'},{id:'m6_2',vi:'Scotland',en:'Scotland Yard',cn:'苏格兰微风',tw:'蘇格蘭微風',th:'สกอตแลนด์'}]},{stars:5,maps:[{id:'m5_1',vi:'Căn Cứ Sao Hỏa',en:'Mars Base',cn:'火星基地',tw:'火星基地',th:'ฐานดาวอังคาร'},{id:'m5_2',vi:'Mạc Cao Quật',en:'Mogao Grottoes',cn:'莫高窟',tw:'莫高窟',th:'ถ้ำมั่วเกา'},{id:'m5_3',vi:'Atlantis',en:'Atlantis',cn:'亚特兰蒂斯',tw:'亞特蘭提斯',th:'แอตแลนติส'},{id:'m5_4',vi:'Atlantis (Ngược)',en:'Atlantis(Reversed)',cn:'亚特兰蒂斯（反向）',tw:'亞特蘭提斯(反向)',th:'แอตแลนติส(ย้อนกลับ)'},{id:'m5_5',vi:'Chuyến Đi Huyền Thoại',en:'Epic Legend',cn:'传奇之旅',tw:'傳奇之旅',th:'การเดินทางในตำนาน'},{id:'m5_6',vi:'Núi Mùa Thu',en:'Scenic Hills',cn:'秋之物语',tw:'秋名山',th:'ภูเขาฤดูใบไม้ร่วง'},{id:'m5_7',vi:'Công Trường Phố Cổ',en:'Old Street Construction',cn:'老街工地',tw:'老街工地',th:'เขตก่อสร้างเมืองเก่า'},{id:'m5_8',vi:'Thành Lá Đỏ',en:'Crimson Leaves Town',cn:'红叶城',tw:'紅葉城',th:'เมืองใบไม้แดง'},{id:'m5_9',vi:'Vực Sâu Băng Giá',en:'Snow Chasm',cn:'冰川深渊',tw:'冰川深淵',th:'หุบเหวน้ำแข็ง'}]},{stars:4,maps:[{id:'m4_1',vi:'Tây Hồ',en:'West Lake',cn:'西湖',tw:'西湖',th:'ทะเลสาบซีหู'},{id:'m4_2',vi:'Trường Thành',en:'Great Wall',cn:'长城',tw:'長城',th:'กำแพงเมืองจีน'},{id:'m4_3',vi:'Đại Lộ 1',en:'Highway 1',cn:'1号公路',tw:'1号公路',th:'ทางหลวงหมายเลข 1'},{id:'m4_4',vi:'TROY-Sân Thử Nghiệm Số 0',en:'TROY - Experiment Field O',cn:'特洛伊-零号试验场',tw:'特洛伊-零號試驗場',th:'TROY-สนามทดสอบหมายเลข 0'},{id:'m4_5',vi:'Thiên Hộ Miêu Trại',en:'Thousand-House Miaozhai',cn:'千户苗寨',tw:'千戶苗寨',th:'หมู่บ้านแม้ว'},{id:'m4_6',vi:'Sân Bay Cuồng Phong',en:'Windy Airport',cn:'狂风机场',tw:'狂風機場',th:'สนามบินพายุ'},{id:'m4_7',vi:'Quyết Chiến! Đỉnh Núi Tuyết',en:'Decisive Battle! Snow Mountain',cn:'决战！雪山之巅',tw:'決戰！雪山之巔',th:'ศึกตัดสิน! ยอดเขาหิมะ'},{id:'m4_8',vi:'Mơ Về Cổ Thục',en:'Back to Ancient Shu',cn:'梦回古蜀',tw:'夢回古蜀',th:'ฝันถึงสู่โบราณ'},{id:'m4_9',vi:'Z-Space',en:'Z-Space',cn:'Z-Space',tw:'Z-Space',th:'Z-Space'},{id:'m4_10',vi:'Cổ Đô Thiên Chiếu',en:'Eternal Ancient Capital',cn:'天照古都',tw:'天照古都',th:'เมืองหลวงอามาเทราสึ'},{id:'m4_11',vi:'Đua Thuyền Đoan Ngọ',en:'Dragon Boat Race',cn:'端午龙舟',tw:'端午龍舟',th:'แข่งเรือยาว'},{id:'m4_12',vi:'Tiệc Rượu Bên Suối',en:'Utopia',cn:'沁园春',tw:'沁園春',th:'งานเลี้ยงริมลำธาร'},{id:'m4_13',vi:'Đỉnh Titan',en:'Titan\'s Peak',cn:'泰坦巨峰',tw:'泰坦巨峰',th:'ยอดเขาไททัน'},{id:'m4_14',vi:'Mây Cuộn Cổng Trời',en:'Clouds Heavenly Gate',cn:'云游天府',tw:'雲遊天府',th:'เมฆาม้วนประตูสวรรค์'},{id:'m4_15',vi:'Tâm Uyên',en:'Soul life',cn:'心渊',tw:'心渊',th:'Soul life'}]},{stars:3,maps:[{id:'m3_1',vi:'Thành Phố 11',en:'City 11',cn:'十一城',tw:'十一城',th:'เมือง 11'},{id:'m3_2',vi:'Ngư Trường',en:'North Sea',cn:'渔场',tw:'漁場',th:'ประมง'},{id:'m3_3',vi:'TROY-Xưởng Nung Chảy',en:'TROY - Smeltery',cn:'熔炉车间',tw:'特洛伊-熔爐車間',th:'TROY-โรงหลอม'},{id:'m3_4',vi:'Quý Châu Lộ',en:'All the way to Qian',cn:'一路向黔',tw:'貴州大道',th:'ถนนกุ้ยโจว'},{id:'m3_5',vi:'Trụ Sở Chính Alpha',en:'Alpha Headquarters',cn:'阿尔法总部',tw:'阿爾法總部',th:'ศูนย์บัญชาการอัลฟ่า'},{id:'m3_6',vi:'Quyết chiến! Đôi Mắt Miền Biển',en:'Decisive Battle! Eye of the Sea',cn:'决战！海滨之眼',tw:'決戰！海濱之眼',th:'ศึกตัดสิน! ดวงตาแห่งท้องทะเล'},{id:'m3_7',vi:'Thiên Cung Tầm Mộng',en:'Dream of Heavenly Palace',cn:'寻梦天宫',tw:'尋夢天宫',th:'วังในฝัน'},{id:'m3_8',vi:'Căn Cứ Siêu Huyền',en:'超弦基地',cn:'超弦基地',tw:'超級基地',th:'ฐานทัพซุปเปอร์'},{id:'m3_9',vi:'Bóng Hình Eden',en:'Glimpses of Eden',cn:'伊甸幻象',tw:'伊甸幻象',th:'เงาแห่งอีเดน'},{id:'m3_10',vi:'Tuyệt Cảnh Giang Sơn',en:'Stunning Jiangxi',cn:'绝色江西',tw:'絕色江西',th:'ทิวทัศน์แม่น้ำ'},{id:'m3_11',vi:'Vành Đai Troy',en:'The Circular City of Troy',cn:'特洛伊环城',tw:'特洛伊城',th:'เมืองทรอย'},{id:'m3_12',vi:'Hồ Long Tinh',en:'Dragon Crystal Lake',cn:'龙晶湖',tw:'龍晶湖',th:'ทะเลสาบมังกรคริสตัล'},{id:'m3_13',vi:'Vụ Sơn Ngũ Hành',en:'Wushan Five Elements',cn:'雾山五行',tw:'雾山五行',th:'ภูเขาหมอกห้าธาตุ'},{id:'m3_14',vi:'Bờ Biển Lãng Mạn',en:'Romantic Seaside',cn:'浪漫海岸',tw:'浪漫海岸',th:'ชายหาดโรแมนติก'},{id:'m3_15',vi:'Đạp Tuyết Tầm Xuân',en:'Spring\'s Footsteps',cn:'踏雪寻春',tw:'踏雪寻春',th:'ย่างก้าวแห่งฤดูใบไม้ผลิ'}]}];
+  const MAP_POOL=[{stars:7,maps:[{id:'m7_1',vi:'Sân Bay Siêu Tốc',en:'Space Station',cn:'极速空港',th:'สปีดพอร์ต'},{id:'m7_2',vi:'Sơn Hải Họa Cảnh',en:'Painted Landscape',cn:'山海画境',th:'ดินแดนซานไh่'}]},{stars:6,maps:[{id:'m6_1',vi:'Hẻm Núi Lớn',en:'Grand Canyon',cn:'美洲大峡谷',th:'แกรนด์แคนยอน'},{id:'m6_2',vi:'Scotland',en:'Scotland Yard',cn:'苏格兰微风',th:'สกอตแลนด์'}]},{stars:5,maps:[{id:'m5_1',vi:'Căn Cứ Sao Hỏa',en:'Mars Base',cn:'火星基地',th:'ฐานดาวอังคาร'},{id:'m5_2',vi:'Mạc Cao Quật',en:'Mogao Grottoes',cn:'莫高窟',th:'ถ้ำมั่วเกา'},{id:'m5_3',vi:'Atlantis',en:'Atlantis',cn:'亚特兰蒂斯',th:'แอตแลนติส'},{id:'m5_4',vi:'Atlantis (Ngược)',en:'Atlantis(Reversed)',cn:'亚特兰蒂斯（反向）',th:'แอตแลนติส(ย้อนกลับ)'},{id:'m5_5',vi:'Chuyến Đi Huyền Thoại',en:'Epic Legend',cn:'传奇之旅',th:'การเดินทางในตำนาน'},{id:'m5_6',vi:'Núi Mùa Thu',en:'Scenic Hills',cn:'秋之物语',th:'ภูเขาฤดูใบไม้ร่วง'},{id:'m5_7',vi:'Công Trường Phố Cổ',en:'Old Street Construction',cn:'老街工地',th:'เขตก่อสร้างเมืองเก่า'},{id:'m5_8',vi:'Thành Lá Đỏ',en:'Crimson Leaves Town',cn:'红叶城',th:'เมืองใบไม้แดง'},{id:'m5_9',vi:'Vực Sâu Băng Giá',en:'Snow Chasm',cn:'冰川深渊',th:'หุบเหวน้ำแข็ง'}]},{stars:4,maps:[{id:'m4_1',vi:'Tây Hồ',en:'West Lake',cn:'西湖',th:'ทะเลสาบซีหู'},{id:'m4_2',vi:'Trường Thành',en:'Great Wall',cn:'长城',th:'กำแพงเมืองจีน'},{id:'m4_3',vi:'Đại Lộ 1',en:'Highway 1',cn:'1号公路',th:'ทางหลวงหมายเลข 1'},{id:'m4_4',vi:'TROY-Sân Thử Nghiệm Số 0',en:'TROY - Experiment Field O',cn:'特洛伊-零号试验场',th:'TROY-สนามทดสอบหมายเลข 0'},{id:'m4_5',vi:'Thiên Hộ Miêu Trại',en:'Thousand-House Miaozhai',cn:'千户苗寨',th:'หมู่บ้านแม้ว'},{id:'m4_6',vi:'Sân Bay Cuồng Phong',en:'Windy Airport',cn:'狂风机场',th:'สนามบินพายุ'},{id:'m4_7',vi:'Quyết Chiến! Đỉnh Núi Tuyết',en:'Decisive Battle! Snow Mountain',cn:'决战！雪山之巅',th:'ศึกตัดสิน! ยอดเขาหิมะ'},{id:'m4_8',vi:'Mơ Về Cổ Thục',en:'Back to Ancient Shu',cn:'梦回古蜀',th:'ฝันถึงสู่โบราณ'},{id:'m4_9',vi:'Z-Space',en:'Z-Space',cn:'Z-Space',th:'Z-Space'},{id:'m4_10',vi:'Cổ Đô Thiên Chiếu',en:'Eternal Ancient Capital',cn:'天照古都',th:'เมืองหลวงอามาเทราสึ'},{id:'m4_11',vi:'Đua Thuyền Đoan Ngọ',en:'Dragon Boat Race',cn:'端午龙舟',th:'แข่งเรือยาว'},{id:'m4_12',vi:'Tiệc Rượu Bên Suối',en:'Utopia',cn:'沁园春',th:'งานเลี้ยงริมลำธาร'},{id:'m4_13',vi:'Đỉnh Titan',en:'Titan\'s Peak',cn:'泰坦巨峰',th:'ยอดเขาไททัน'},{id:'m4_14',vi:'Mây Cuộn Cổng Trời',en:'Clouds Heavenly Gate',cn:'云游天府',th:'เมฆาม้วนประตูสวรรค์'},{id:'m4_15',vi:'Tâm Uyên',en:'Soul life',cn:'心渊',th:'Soul life'}]},{stars:3,maps:[{id:'m3_1',vi:'Thành Phố 11',en:'City 11',cn:'十一城',th:'เมือง 11'},{id:'m3_2',vi:'Ngư Trường',en:'North Sea',cn:'渔场',th:'ประมง'},{id:'m3_3',vi:'TROY-Xưởng Nung Chảy',en:'TROY - Smeltery',cn:'熔炉车间',th:'TROY-โรงหลอม'},{id:'m3_4',vi:'Quý Châu Lộ',en:'All the way to Qian',cn:'一路向黔',th:'ถนนกุ้ยโจว'},{id:'m3_5',vi:'Trụ Sở Chính Alpha',en:'Alpha Headquarters',cn:'阿尔法总部',th:'ศูนย์บัญชาการอัลฟ่า'},{id:'m3_6',vi:'Quyết chiến! Đôi Mắt Miền Biển',en:'Decisive Battle! Eye of the Sea',cn:'决战！海滨之眼',th:'ศึกตัดสิน! ดวงตาแห่งท้องทะเล'},{id:'m3_7',vi:'Thiên Cung Tầm Mộng',en:'Dream of Heavenly Palace',cn:'寻梦天宫',th:'วังในฝัน'},{id:'m3_8',vi:'Căn Cứ Siêu Huyền',en:'超弦基地',cn:'超弦基地',th:'ฐานทัพซุปเปอร์'},{id:'m3_9',vi:'Bóng Hình Eden',en:'Glimpses of Eden',cn:'伊甸幻象',th:'เงาแห่งอีเดน'},{id:'m3_10',vi:'Tuyệt Cảnh Giang Sơn',en:'Stunning Jiangxi',cn:'绝色江西',th:'ทิวทัศน์แม่น้ำ'},{id:'m3_11',vi:'Vành Đai Troy',en:'The Circular City of Troy',cn:'特洛伊环城',th:'เมืองทรอย'},{id:'m3_12',vi:'Hồ Long Tinh',en:'Dragon Crystal Lake',cn:'龙晶湖',th:'ทะเลสาบมังกรคริสตัล'},{id:'m3_13',vi:'Vụ Sơn Ngũ Hành',en:'Wushan Five Elements',cn:'雾山五行',th:'ภูเขาหมอกห้าธาตุ'},{id:'m3_14',vi:'Bờ Biển Lãng Mạn',en:'Romantic Seaside',cn:'浪漫海岸',th:'ชายหาดโรแมนติก'},{id:'m3_15',vi:'Đạp Tuyết Tầm Xuân',en:'Spring\'s Footsteps',cn:'踏雪寻春',th:'ย่างก้าวแห่งฤดูใบไม้ผลิ'}]}];
   const MAP_BACKGROUNDS={'m7_1':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20190108/1e2681225a98cd914a54fc0765478dd3.jpg','m7_2':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20250113/17367779105688.png','m6_1':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/61_9394613.jpg','m6_2':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20211115/16369731693212.png','m5_1':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20250325/17428875469403.png','m5_2':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20180904/e4e67d4825b6cc7ecf1a5a3491488314.jpg','m5_3':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/54_976883.jpg','m5_4':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/55_9801857.jpg','m5_5':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/53_9496680.jpg','m5_6':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/52_9429115.jpg','m5_7':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20220324/16481195029550.png','m5_8':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20230111/16734277903891.png','m5_9':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20240326/17114615429011.png','m4_1':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20180424/4ceb12a7da81fc78485cd451738f1ddf.jpg','m4_2':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20180326/ed0633a8e49bc3058e8eda3219440918.jpg','m4_3':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20180119/a4d8882662a3508ced77be491fd925ff.jpg','m4_4':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20190717/07b7aec16c1011992fb28c12a399092f.jpg','m4_5':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20200921/3265566121a19cae1d3546619b686fb0.jpg','m4_6':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20210312/16155457318502.jpg','m4_7':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20210715/16263281507258.jpg','m4_8':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20210915/16316995903827.jpg','m4_9':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20220516/16526869593306.png','m4_10':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20221011/16654598587252.png','m4_11':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20240526/17167362763162.png','m4_12':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20231221/17031734536016.png','m4_13':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20241126/17326359998189.png','m4_14':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20250919/17582127372131.png','m4_15':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20251118/17634577032615.png','m3_1':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps///image/20171211/31_8827468.jpg','m3_2':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20181011/b1b25310d6f371cf1a1d607a585e8d82.jpg','m3_3':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20190717/54ec6a4988a53867f527e2be8cb0f92b.jpg','m3_4':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20200921/25267e48557d7452e401e470886dc721.jpg','m3_5':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps///image/20210108/c4234de94254c7118bcd8c15517b42a6.jpg','m3_6':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20210823/16296862647665.jpg','m3_7':'https://i.ibb.co/VYXpsN9b/16526827657994.png','m3_8':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20221123/16692118937198.png','m3_9':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20231121/17005788209567.png','m3_10':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20230919/16951270513077.png','m3_11':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20230724/16901918219353.png','m3_12':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20230724/16901915868769.png','m3_13':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20240725/17218374934897.png','m3_14':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20250721/17530812968308.png','m3_15':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20260206/17703114652236.png'};
   const MAP_LAPS = {
    'm7_1': 1, 'm7_2': 1,
@@ -137,7 +137,6 @@
    vi:{title:"HỆ THỐNG TÍNH ĐIỂM THEO GIÂY",subtitle:"Thiết kế và phát triển bởi koi",postmatchHeader: "KẾT QUẢ",tourNamePh:"Nhập tên giải đấu...",addPlayer:"Thêm VĐV",addMatch:"Thêm Trận",reset:"Làm mới",export:"Xuất Excel",no:"STT",match:"TRẬN ĐẤU",kingMap:"King Map",total:"TỔNG ĐIỂM",leaderboard:"BẢNG XẾP HẠNG",pts:"PTS",errMaxP:"Giải đấu giới hạn tối đa 6 VĐV!",errMinP:"Bảng thi đấu cần ít nhất 2 VĐV!",errMaxG:"Giải đấu giới hạn tối đa 90 Trận!",delP:"Bạn muốn xóa {0} khỏi giải đấu?",errMinG:"Phải có ít nhất 1 Trận đấu!",delG:"Bạn có muốn xóa Trận {0}?",confirmReset:"🚨 LÀM MỚI BẢNG ĐIỂM?\nMọi dữ liệu sẽ bị xóa và quay về trạng thái mặc định.",defPlayer:"VDV",defGame:"Game",selectMap:"Tìm & Chọn Map",searchPh:"Nhập tên map...",infoBtn:"Hướng Dẫn",infoTitle:"CƠ CHẾ TÍNH ĐIỂM & SỬ DỤNG",i1:"Nhập nhanh: Gõ thẳng số (VD: nhập 10704 hệ thống sẽ hiểu là 1:07.04).",i2:"Về nhất: 11 điểm.",i3:"King Map: Mỗi người chơi được chỉ định King Map cho mình. Về nhất đúng King Map của mình sẽ được +12 điểm.",i4:"Người về sau sẽ bị trừ dần điểm theo độ trễ thời gian:",i5:"Không hoàn thành (nhập X): 0 điểm.",soloMode:"CÁ NHÂN (4P)",mode1v1:"SOLO 1vs1",teamMode:"Đua Đội",modeSolo:"CÁ NHÂN 1vs1vs1vs1",mode2v2:"ĐỒNG ĐỘI 2vs2",mode3v3:"ĐỒNG ĐỘI 3vs3",indivTotal:"ĐIỂM CÁ NHÂN",teamTotal:"TỔNG ĐIỂM ĐỘI",team1:"ĐỘI XANH",team2:"ĐỘI ĐỎ",i6:"Quyền chọn Map: Trận 2 đến N là King Map của từng VĐV/Đội (tự luân phiên). Các trận sau: Đua đơn -> VĐV hạng 2 chọn. Đua đội -> Đội có tổng điểm thấp hơn chọn. (Hòa điểm -> xét đội có điểm thấp hơn ở map liền trước).",map1Pick:"TRẬN 1: MAP CHỈ ĐỊNH (KHÔNG CÓ QUYỀN CHỌN)",kingMapPick:"TRẬN {0}: KING MAP CỦA {1}",normalPick:"TRẬN {0}: LƯỢT CHỌN MAP CỦA {1}",broadcastBtn:"Mở Tab Livestream",pick:"LƯỢT CHỌN",closeBtn:"Đóng Tab",preMatchTitleIndiv:"ĐUA TỐC ĐỘ CÁ NHÂN",preMatchTitleTeam:"ĐUA TỐC ĐỘ ĐỒNG ĐỘI",preMatchTitle1v1:"CÁ NHÂN 1VS1",preMatchMode:"MODE",preMatchBestRecord:"BEST RECORD",scoreboardTab:"BẢNG ĐIỂM",prematchTab:"TRƯỚC TRẬN",postmatchTab:"SAU TRẬN",matchResult:"KẾT QUẢ TRẬN ĐẤU",selectCar:"CHỌN XE",selectPet:"CHỌN PET",preMatchModeSolo:"CÁ NHÂN",preMatchMode2v2:"ĐỒNG ĐỘI 2VS2",preMatchMode3v3:"ĐỒNG ĐỘI 3VS3",setScore:"TỈ SỐ HIỆP (SET)",roundScore:"TỈ SỐ VÁN (ROUND)",dbBtn:"Ảnh VĐV",dbTitle:"QUẢN LÝ ẢNH VĐV",tabPlayers:"ẢNH VĐV",tabCars:"KHO XE",tabPets:"KHO PET",carName:"Tên Xe",petName:"Tên Pet",imgUrl:"Link Ảnh (URL)",addBtn:"Thêm Mới",emptyDb:"Chưa có dữ liệu",banMap:"Cấm Map",banned:"Đã Cấm", groupMgr: "Quản Lý Bảng Đấu", groupTitle: "QUẢN LÝ CÁC BẢNG ĐẤU", saveGroup: "Lưu Bảng Đấu", loadGroup: "Tải Lại", delGroup: "Xóa Bảng", groupNamePh: "Nhập tên bảng đấu mới...", groupSaved: "Đã lưu bảng đấu thành công!", groupLoaded: "Đã tải dữ liệu bảng đấu!", newGroup: "Tạo Bảng Mới", saveCurrGroup: "Lưu Bảng Này"},
    en:{title:"SECOND-BASED SCORING SYSTEM",subtitle:"Designed and developed by koi",postmatchHeader: "RESULTS",tourNamePh:"Enter tournament name...",addPlayer:"Add Player",addMatch:"Add Match",reset:"Reset",export:"Export Excel",no:"No.",match:"MATCH",kingMap:"King Map",total:"TOTAL SCORE",leaderboard:"LEADERBOARD",pts:"PTS",errMaxP:"Maximum 6 players allowed!",errMinP:"Need at least 2 players!",errMaxG:"Maximum 90 matches allowed!",delP:"Remove {0} from the tournament?",errMinG:"Need at least 1 match!",delG:"Delete Game {0}?",confirmReset:"🚨 RESET SCOREBOARD?\nAll data will be wiped and returned to default.",defPlayer:"Player",defGame:"Match",selectMap:"Search Map",searchPh:"Type map name...",infoBtn:"Guide",infoTitle:"SCORING RULES & USAGE",i1:"Quick Input: Type numbers directly (e.g., 10704 becomes 1:07.04).",i2:"1st Place: 11 points.",i3:"King Map: Designated King Maps for each player. 1st place on their King Map gets +12 points.",i4:"Subsequent players lose points based on time gap:",i5:"DNF (type X): 0 points.",soloMode:"Solo Mode",mode1v1:"SOLO 1VS1",teamMode:"Team Mode",modeSolo:"Mode: Solo",mode2v2:"Mode: 2vs2",mode3v3:"Mode: 3vs3",indivTotal:"INDIV. SCORE",teamTotal:"TEAM TOTAL",team1:"BLUE TEAM",team2:"RED TEAM",i6:"Map Picking: Matches 2 to N are King Maps. After: Solo -> 2nd place player picks. Team -> Team with lower total score picks.",map1Pick:"MATCH 1: DESIGNATED MAP",kingMapPick:"MATCH {0}: {1}'S KING MAP",normalPick:"MATCH {0}: {1}'S PICK",broadcastBtn:"Open Live Tab",pick:"PICK",closeBtn:"Close Tab",preMatchTitleIndiv:"INDIVIDUAL SPRINT CLASSIC",preMatchTitleTeam:"TEAM SPRINT CLASSIC",preMatchTitle1v1:"1 VS 1 SPRINT CLASSIC",preMatchMode:"MODE",preMatchBestRecord:"BEST RECORD",scoreboardTab:"SCOREBOARD",prematchTab:"PRE-MATCH",postmatchTab:"POST-MATCH",matchResult:"MATCH RESULT",selectCar:"SELECT CAR",selectPet:"SELECT PET",preMatchModeSolo:"INDIVIDUAL",preMatchMode2v2:"2 VS 2 TEAM",preMatchMode3v3:"3 VS 3 TEAM",setScore:"SET SCORE",roundScore:"ROUND SCORE",dbBtn:"Player Photos",dbTitle:"PLAYER PHOTOS MANAGER",tabPlayers:"PLAYER PHOTOS",tabCars:"CAR DB",tabPets:"PET DB",carName:"Car Name",petName:"Pet Name",imgUrl:"Image Link (URL)",addBtn:"Add New",emptyDb:"No data available",banMap:"Ban Map",banned:"BANNED", groupMgr: "Group Manager", groupTitle: "TOURNAMENT GROUPS", saveGroup: "Save Group", loadGroup: "Load", delGroup: "Delete", groupNamePh: "New group name...", groupSaved: "Group saved successfully!", groupLoaded: "Group data loaded!", newGroup: "Create New Group", saveCurrGroup: "Save Group"},
    cn:{title:"秒数计分系统",subtitle:"由 koi 设计与开发",postmatchHeader: "比赛结果",tourNamePh:"输入锦标赛名称...",addPlayer:"添加选手",addMatch:"添加比赛",reset:"重置",export:"导出表格",no:"序号",match:"比赛",kingMap:"王牌赛道",total:"总分",leaderboard:"排行榜",pts:"分",errMaxP:"最多允许 6 名选手！",errMinP:"至少需要 2 名选手！",errMaxG:"最多允许 90 场比赛！",delP:"是否将 {0} 移出比赛？",errMinG:"至少需要 1 场比赛！",delG:"确定要删除 第{0}场 吗？",confirmReset:"🚨 重置计分板？\n所有数据将被清除并恢复为默认状态。",defPlayer:"选手",defGame:"比赛",selectMap:"搜索赛道",searchPh:"输入赛道名称...",infoBtn:"指南",infoTitle:"计分规则与使用方法",i1:"快速输入: 直接输入数字（例：10704 会自动转为 1:07.04）。",i2:"第一名：11分。",i3:"王牌赛道：选手的专属王牌赛道。获得第一名可得 12分。",i4:"后续选手根据落后时间扣分：",i5:"未完成（输入 X）：0分。",soloMode:"单人赛",mode1v1:"SOLO 1VS1",teamMode:"组队赛",modeSolo:"模式：单人赛",mode2v2:"模式：2v2",mode3v3:"模式：3v3",indivTotal:"个人总分",teamTotal:"队伍总分",team1:"蓝队",team2:"红队",i6:"选图规则: 第2到N局为王牌赛道。之后：单人赛 -> 总分第二的选手选图。组队赛 -> 总分较低的队伍选图。",map1Pick:"第1局：官方指定赛道",kingMapPick:"第{0}局：{1} 的王牌赛道",normalPick:"第{0}局：由 {1} 选图",broadcastBtn:"打开直播标签",pick:"选图",closeBtn:"关闭标签",preMatchTitleIndiv:"个人竞速赛",preMatchTitleTeam:"组队竞速赛",preMatchTitle1v1:"1 VS 1 个人赛",preMatchMode:"模式",preMatchBestRecord:"最高纪录",scoreboardTab:"计分板",prematchTab:"赛前界面",postmatchTab:"赛后结算",matchResult:"比赛结果",selectCar:"选择车辆",selectPet:"选择宠物",preMatchModeSolo:"单人赛",preMatchMode2v2:"2 VS 2 组队",preMatchMode3v3:"3 VS 3 组队",setScore:"大局比分 (SET)",roundScore:"小局比分 (ROUND)",dbBtn:"选手照片",dbTitle:"选手照片管理",tabPlayers:"选手照片",tabCars:"车辆库",tabPets:"宠物库",carName:"车名",petName:"宠物名",imgUrl:"图片链接 (URL)",addBtn:"添加新",emptyDb:"暂无数据",banMap:"禁用赛道",banned:"已禁用", groupMgr: "小组管理", groupTitle: "比赛小组管理", saveGroup: "保存小组", loadGroup: "加载", delGroup: "删除", groupNamePh: "输入新小组名称...", groupSaved: "小组保存成功！", groupLoaded: "小组数据已加载！", newGroup: "创建新小组", saveCurrGroup: "保存本组"},
-   tw:{title:"秒數計分系統",subtitle:"由 koi 設計與開發",postmatchHeader: "比赛结果",tourNamePh:"輸入錦標賽名稱...",addPlayer:"新增選手",addMatch:"新增比賽",reset:"重置",export:"匯出表格",no:"序號",match:"比賽",kingMap:"王牌賽道",total:"總分",leaderboard:"排行榜",pts:"分",errMaxP:"最多允許 6 名選手！",errMinP:"至少需要 2 名選手！",errMaxG:"最多允許 90 場比賽！",delP:"是否將 {0} 移出比賽？",errMinG:"至少需要 1 場比賽！",delG:"確定要刪除 第{0}場 嗎？",confirmReset:"🚨 重置計分板？\n所有數據將被清除並恢復為預設狀態。",defPlayer:"選手",defGame:"比賽",selectMap:"搜尋賽道",searchPh:"輸入賽道名稱...",infoBtn:"指南",infoTitle:"計分規則與使用方法",i1:"快速輸入: 直接輸入數字（例：10704 會自動轉為 1:07.04）。",i2:"第一名：11分。",i3:"王牌賽道：選手專屬的王牌賽道。獲得第一名可得 12分。",i4:"後續選手根據落後時間扣分：",i5:"未完成（輸入 X）：0分。",soloMode:"單人賽",mode1v1:"SOLO 1VS1",teamMode:"組隊賽",modeSolo:"模式：單人賽",mode2v2:"模式：2v2",mode3v3:"模式：3v3",indivTotal:"個人總分",teamTotal:"隊伍總分",team1:"藍隊",team2:"紅隊",i6:"選圖規則: 第2到N局為王牌賽道。之後：單人賽 -> 總分第二的選手選圖。組隊賽 -> 總分較低的隊伍選圖。",map1Pick:"第1局：官方指定賽道",kingMapPick:"第{0}局：{1} 的王牌賽道",normalPick:"第{0}局：由 {1} 選圖",broadcastBtn:"打開直播標籤",pick:"選圖",closeBtn:"關閉標籤",preMatchTitleIndiv:"個人競速赛",preMatchTitleTeam:"組隊競速赛",preMatchTitle1v1:"1 VS 1 個人赛",preMatchMode:"模式",preMatchBestRecord:"最高紀錄",scoreboardTab:"計分板",prematchTab:"賽前介面",postmatchTab:"賽後結算",matchResult:"比賽結果",selectCar:"選擇車輛",selectPet:"選擇寵物",preMatchModeSolo:"單人賽",preMatchMode2v2:"2 VS 2 組隊",preMatchMode3v3:"3 VS 3 組隊",setScore:"大局比分 (SET)",roundScore:"小局比分 (ROUND)",dbBtn:"選手照片",dbTitle:"選手照片管理",tabPlayers:"選手照片",tabCars:"車輛庫",tabPets:"寵物庫",carName:"車名",petName:"寵物名",imgUrl:"圖片連結 (URL)",addBtn:"新增",emptyDb:"暫無資料",banMap:"禁用賽道",banned:"已禁用", groupMgr: "小組管理", groupTitle: "比賽小組管理", saveGroup: "保存小組", loadGroup: "加載", delGroup: "刪除", groupNamePh: "輸入新小組名稱...", groupSaved: "小組保存成功！", groupLoaded: "小組數據已加載！", newGroup: "創建新小組", saveCurrGroup: "保存本組"},
    th:{title:"ระบบการนับคะแนนตามวินาที",subtitle:"ออกแบบและพัฒนาโดย koi",postmatchHeader: "ผลการแข่งขัน",tourNamePh:"ป้อนชื่อการแข่งขัน...",addPlayer:"เพิ่มผู้เล่น",addMatch:"เพิ่มแข่ง",reset:"รีเซ็ต",export:"ส่งออก Excel",no:"ลำดับ",match:"การแข่งขัน",kingMap:"แผนที่คิง",total:"คะแนนรวม",leaderboard:"ตารางคะแนน",pts:"แต้ม",errMaxP:"อนุญาตสูงสุด 6 คน!",errMinP:"ต้องมีอย่างน้อย 2 คน!",errMaxG:"อนุญาตสูงสุด 90 นัด!",delP:"ลบ {0} ออกหรือไม่?",errMinG:"ต้องมีอย่างน้อย 1 นัด!",delG:"ลบ เกมที่ {0} หรือไม่?",confirmReset:"🚨 รีเซ็ตกระดานคะแนน?\nข้อมูลทั้งหมดจะถูกลบและกลับสู่ค่าเริ่มต้น",defPlayer:"ผู้เล่น",defGame:"เกม",selectMap:"ค้นหาแผนที่",searchPh:"พิมพ์ชื่อแผนที่...",infoBtn:"คู่มือ",infoTitle:"กฎการให้คะแนนและการใช้งาน",i1:"ป้อนข้อมูลด่วน: พิมพ์ตัวเลข (เช่น 10704 จะกลายเป็น 1:07.04)",i2:"อันดับ 1: 11 แต้ม",i3:"King Map: แผนที่ King สำหรับผู้เล่นแต่ละคน หากได้อันดับ 1 ใน King Map จะได้ +12 แต้ม",i4:"ผู้เล่นคนอื่นจะถูกหักคะแนนตามช่องว่างเวลา:",i5:"ไม่จบการแข่งขัน (พิมพ์ X): 0 แต้ม",soloMode:"แข่งเดี่ยว",mode1v1:"SOLO 1VS1",teamMode:"แข่งทีม",modeSolo:"โหมด: เดี่ยว",mode2v2:"โหมด: 2vs2",mode3v3:"โหมด: 3vs3",indivTotal:"คะแนนส่วนตัว",teamTotal:"คะแนนทีมรวม",team1:"ทีมสีน้ำเงิน",team2:"ทีมสีแดง",i6:"การเลือกแผนที่: แมตช์ 2 ถึง N คือ King Maps หลังจากนั้น: เดี่ยว -> ผู้เล่นอันดับ 2 เลือก ทีม -> ทีมที่มีคะแนนรวมต่ำกว่าเลือก",map1Pick:"แมตช์ 1: แผนที่ที่กำหนด",kingMapPick:"แมตช์ {0}: KING MAP ของ {1}",normalPick:"แมตช์ {0}: สิทธิ์การเลือกของ {1}",broadcastBtn:"เปิดแท็บถ่ายทอดสด",pick:"เลือก",closeBtn:"ปิดแท็บ",preMatchTitleIndiv:"เดี่ยวสปรินต์คลาสสิก",preMatchTitleTeam:"ทีมสปรินต์คลาสสิก",preMatchTitle1v1:"1 VS 1 สปรินต์คลาสสิก",preMatchMode:"โหมด",preMatchBestRecord:"สถิติที่ดีที่สุด",scoreboardTab:"กระดานคะแนน",prematchTab:"ก่อนการแข่งขัน",postmatchTab:"หลังการแข่ง",matchResult:"ผลการแข่งขัน",selectCar:"เลือกรถ",selectPet:"เลือกสัตว์เลี้ยง",preMatchModeSolo:"เดี่ยว",preMatchMode2v2:"ทีม 2VS2",preMatchMode3v3:"ทีม 3VS3",setScore:"คะแนนเซ็ต",roundScore:"คะแนนรอบ",dbBtn:"รูปผู้เล่น",dbTitle:"การจัดการรูปผู้เล่น",tabPlayers:"รูปผู้เล่น",tabCars:"คลังรถ",tabPets:"คลังสัตว์เลี้ยง",carName:"ชื่อรถ",petName:"ชื่อสัตว์เลี้ยง",imgUrl:"ลิงก์รูปภาพ (URL)",addBtn:"เพิ่มใหม่",emptyDb:"ไม่มีข้อมูล",banMap:"แบนแผนที่",banned:"ถูกแบน", groupMgr: "จัดการกลุ่ม", groupTitle: "จัดการกลุ่มการแข่งขัน", saveGroup: "บันทึกกลุ่ม", loadGroup: "โหลด", delGroup: "ลบ", groupNamePh: "ชื่อกลุ่มใหม่...", groupSaved: "บันทึกกลุ่มสำเร็จ!", groupLoaded: "โหลดข้อมูลกลุ่มแล้ว!", newGroup: "สร้างกลุ่มใหม่", saveCurrGroup: "บันทึกกลุ่มนี้"}
   };
   const BROADCAST_BACKGROUND_IMAGE = 'https://i.ibb.co/TxWgMDKd/Untitled.png';
@@ -148,19 +147,21 @@
   const MAP_INDEX = new Map(MAP_POOL.flatMap(group => group.maps.map(map => [map.id, { map, stars: group.stars }])));
   const getMapName = (id, lang) => {
    const entry = MAP_INDEX.get(id);
-   return entry ? entry.map[lang === 'th' ? 'en' : lang] : '';
+   return entry ? (entry.map[lang === 'th' ? 'en' : lang] || entry.map.en || entry.map.vi || '') : '';
   };
   const getMapStars = id => MAP_INDEX.get(id)?.stars || 0;
   const parseTime = (val) => {
-   if (!val || val.toUpperCase() === 'X') return null;
-   if (val.includes(':') || val.includes('.')) {
+   val = String(val ?? '').trim();
+   if (!val || val.toUpperCase() === 'X' || !/^[0-9:.,]+$/.test(val)) return null;
+   if (val.includes(':') || val.includes('.') || val.includes(',')) {
     let m = 0, s = 0, c = 0;
     const parts = val.replace(',', '.').split(/[:.]/);
+    if (parts.some(part => !/^\d+$/.test(part))) return null;
     if (parts.length === 3) [m, s, c] = parts.map(Number);
     else if (parts.length === 2) [s, c] = parts.map(Number);
     else return null;
-    if (isNaN(m) || isNaN(s) || isNaN(c)) return null;
-    return (m * 60000) + (s * 1000) + (c * 10);
+    const ms = (m * 60000) + (s * 1000) + (c * 10);
+    return Number.isSafeInteger(ms) && ms >= 0 ? ms : null;
    }
    const digits = val.replace(/\D/g, '');
    if (!digits) return null;
@@ -172,9 +173,11 @@
    } else {
     c = Number(digits);
    }
-   return (m * 60000) + (s * 1000) + (c * 10);
+   const ms = (m * 60000) + (s * 1000) + (c * 10);
+   return Number.isSafeInteger(ms) && ms >= 0 ? ms : null;
   };
   const formatTimeDisplay = (val) => {
+   val = String(val ?? '').trim();
    if (!val) return '';
    if (val.toUpperCase() === 'X') return 'X';
    const ms = parseTime(val);
@@ -203,10 +206,40 @@
    }
    return { background: getMapGradient(mapId) };
   };
+  const readStorageValue = (key) => {
+   try { return localStorage.getItem(key); } catch (error) { return null; }
+  };
+  let storageWarningShown = false;
+  const writeStorageValue = (key, value) => {
+   try {
+    const text = String(value);
+    if (localStorage.getItem(key) !== text) localStorage.setItem(key, text);
+    return true;
+   } catch (error) {
+    console.error('Không thể lưu dữ liệu:', error);
+    if (!storageWarningShown) {
+     storageWarningShown = true;
+     window.dispatchEvent(new CustomEvent('zsm-storage-error'));
+    }
+    return false;
+   }
+  };
   const readStoredJSON = (key, fallback) => {
-   const saved = localStorage.getItem(key);
-   if (saved) { try { return JSON.parse(saved); } catch (e) {} }
+   try {
+    const parsed = JSON.parse(readStorageValue(key));
+    const sample = fallback();
+    if (Array.isArray(sample) ? Array.isArray(parsed) : parsed && typeof parsed === 'object' && !Array.isArray(parsed)) return parsed;
+   } catch (error) {}
    return fallback();
+  };
+  const normalizeLanguage = value => value === 'tw' ? 'cn' : ['vi', 'en', 'cn', 'th'].includes(value) ? value : 'vi';
+  const cloneData = value => JSON.parse(JSON.stringify(value));
+  const normalizeSlots = values => Array.from({ length: MAX_PLAYERS }, (_, i) => String(values?.[i] ?? ''));
+  const createGame = () => ({ id: `${Date.now()}_${Math.random().toString(36).slice(2)}`, mapId: '', times: normalizeSlots(), cars: normalizeSlots(), ecus: normalizeSlots(), pets: normalizeSlots() });
+  const normalizeGames = values => Array.isArray(values) && values.length ? values.filter(g => g && typeof g === 'object').slice(0, 90).map(g => ({ ...g, id: g.id ?? createGame().id, mapId: String(g.mapId || ''), times: normalizeSlots(g.times), cars: normalizeSlots(g.cars), ecus: normalizeSlots(g.ecus), pets: normalizeSlots(g.pets) })) : [];
+  const isFinalTime = value => {
+   const text = String(value ?? '').trim();
+   return text.toUpperCase() === 'X' || (/^\d+:\d{2}\.\d{2}$/.test(text) && parseTime(text) !== null);
   };
   const getKingMapIndex = (pIndex, playerCount, gameMode) => {
    if (gameMode === 'solo') return pIndex + 1;
@@ -214,19 +247,39 @@
    return pIndex < half ? 1 + pIndex * 2 : 2 + (pIndex - half) * 2;
   };
   const getFinalWinner = (t1, t2) => {
-   const isT1Final = t1 && (t1.includes(':') || t1.toUpperCase() === 'X');
-   const isT2Final = t2 && (t2.includes(':') || t2.toUpperCase() === 'X');
-   if (isT1Final && isT2Final) {
-    const v1 = parseTime(t1), v2 = parseTime(t2);
-    const p1DNF = t1.toUpperCase() === 'X', p2DNF = t2.toUpperCase() === 'X';
-    if (v1 !== null && v2 !== null) return v1 < v2 ? 0 : v2 < v1 ? 1 : -1;
-    if (v1 !== null || p2DNF) return 0;
-    if (v2 !== null || p1DNF) return 1;
+   if (!isFinalTime(t1) || !isFinalTime(t2)) return -1;
+   const v1 = parseTime(t1), v2 = parseTime(t2);
+   if (v1 === null && v2 === null) return -1;
+   if (v1 === null) return 1;
+   if (v2 === null) return 0;
+   return v1 < v2 ? 0 : v2 < v1 ? 1 : -1;
+  };
+  const get1v1MatchStatus = (games, matchBO, setBO) => {
+   const gameAssignments = games.map((g, i) => ({ set: Math.floor(i / setBO) + 1, round: i % setBO + 1 }));
+   const mapsUsedSet12 = [], mapsUsedSet3 = [], sets = [], countedGames = [];
+   games.forEach((g, i) => { if (g.mapId) (gameAssignments[i].set < 3 ? mapsUsedSet12 : mapsUsedSet3).push(g.mapId); });
+   const winCond = Math.ceil(setBO / 2), matchWinCond = Math.ceil(matchBO / 2);
+   let p1Sets = 0, p2Sets = 0, p1Rounds = 0, p2Rounds = 0, currentSet = 1, winner = -1;
+   for (let set = 1; set <= matchBO; set++) {
+    const info = { set, p1Rounds: 0, p2Rounds: 0, finished: false, lastGameIndex: -1, lastWinner: -1 };
+    for (let round = 0; round < setBO; round++) {
+     const index = (set - 1) * setBO + round, game = games[index];
+     if (!game || !isFinalTime(game.times[0]) || !isFinalTime(game.times[1])) continue;
+     const result = getFinalWinner(game.times[0], game.times[1]);
+     countedGames.push(index); info.lastGameIndex = index; info.lastWinner = result;
+     if (result === 0) info.p1Rounds++;
+     if (result === 1) info.p2Rounds++;
+     if (info.p1Rounds >= winCond || info.p2Rounds >= winCond) { info.finished = true; break; }
+    }
+    sets.push(info); currentSet = set; p1Rounds = info.p1Rounds; p2Rounds = info.p2Rounds;
+    if (!info.finished) break;
+    if (info.p1Rounds >= winCond) p1Sets++; else p2Sets++;
+    if (p1Sets >= matchWinCond || p2Sets >= matchWinCond) { winner = p1Sets >= matchWinCond ? 0 : 1; break; }
    }
-   return -1;
+   return { p1Sets, p2Sets, p1Rounds, p2Rounds, currentSet, winner, isFinished: winner !== -1, sets, countedGames, gameAssignments, mapsUsedSet12, mapsUsedSet3 };
   };
   const rankByScore = items => {
-   const sorted = items.sort((a, b) => b.score - a.score);
+   const sorted = [...items].sort((a, b) => b.score - a.score);
    let rank = 1;
    return sorted.map((item, i) => {
     if (i > 0 && item.score < sorted[i - 1].score) rank = i + 1;
@@ -269,7 +322,7 @@
         <div className="px-2 py-1.5 text-xs text-slate-400 hover:bg-slate-800 rounded cursor-pointer mb-1" onClick={() => { onChange(''); setIsOpen(false); setSearchTerm(''); }}>-- {isBan ? t.banMap : t.selectMap} --</div>
         {MAP_POOL.map(group => {
          const mapLang = lang === 'th' ? 'en' : lang;
-         const filteredMaps = group.maps.filter(m => m[mapLang].toLowerCase().includes(searchTerm.toLowerCase()));
+         const filteredMaps = group.maps.filter(m => getMapName(m.id, lang).toLowerCase().includes(searchTerm.toLowerCase()));
          if (filteredMaps.length === 0) return null;
          return (
           <div key={group.stars} className="mb-2">
@@ -280,7 +333,7 @@
             const notAllowed = isSelectedByOther || isBannedByOther;
             return (
              <div key={m.id} onClick={() => { if (!notAllowed) { onChange(m.id); setIsOpen(false); setSearchTerm(''); } }} className={`px-2 py-1.5 text-xs rounded transition-colors flex items-center justify-between ${isBannedByOther ? 'text-red-500/50 cursor-not-allowed line-through' : isSelectedByOther ? 'text-slate-600 cursor-not-allowed line-through' : m.id === currentMapId ? (isBan ? 'bg-red-900/40 text-red-400 font-bold' : 'bg-cyan-900/40 text-cyan-400 font-bold') : 'text-slate-300 hover:bg-slate-800 cursor-pointer'}`}>
-              <span className="truncate">{m[mapLang]}</span>
+              <span className="truncate">{getMapName(m.id, lang)}</span>
               {isBannedByOther && <span className="text-[9px] text-red-500 ml-1 border border-red-500/50 rounded px-1 flex-shrink-0">{t.banned}</span>}
              </div>
             );
@@ -331,7 +384,7 @@
        <p className="text-white font-bold mb-6 whitespace-pre-wrap">{dialog.message}</p>
        <div className="flex gap-3 w-full justify-center">
         {dialog.type === 'confirm' && (<button onClick={() => setDialog({ ...dialog, isOpen: false })} className="flex-1 px-4 py-2 bg-slate-800 text-slate-300 rounded font-bold hover:bg-slate-700 transition-colors">Hủy</button>)}
-        <button onClick={() => { if (dialog.onConfirm) dialog.onConfirm(); setDialog({ ...dialog, isOpen: false }); }} className="flex-1 px-4 py-2 bg-red-600 text-white rounded font-bold hover:bg-red-500 transition-colors">OK</button>
+        <button onClick={() => { setDialog({ ...dialog, isOpen: false }); if (dialog.onConfirm) dialog.onConfirm(); }} className="flex-1 px-4 py-2 bg-red-600 text-white rounded font-bold hover:bg-red-500 transition-colors">OK</button>
        </div>
      </div>
     </div>
@@ -432,7 +485,7 @@
          <input autoFocus type="text" value={name} onChange={e=>setName(e.target.value)} placeholder={t.groupNamePh} className="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-white mb-4 outline-none focus:border-emerald-500" />
          <div className="flex justify-end gap-2">
            <button onClick={() => setShow(false)} className="px-4 py-2 bg-slate-800 text-slate-300 rounded font-bold hover:bg-slate-700">{t.closeBtn || 'Hủy'}</button>
-           <button onClick={() => { onSave(name); setName(''); setShow(false); }} className="px-4 py-2 bg-emerald-600 text-white rounded font-bold hover:bg-emerald-500">OK</button>
+           <button onClick={() => { if (onSave(name)) { setName(''); setShow(false); } }} className="px-4 py-2 bg-emerald-600 text-white rounded font-bold hover:bg-emerald-500">OK</button>
          </div>
        </div>
       </div>
@@ -495,7 +548,6 @@
       vi: { title: "Vòng Quay Map Random", diff: "Độ khó", count: "Số lượng Map", countPh: "Tất cả", create: "🔄 Tạo Vòng Quay", spin: "QUAY NGAY", spinning: "Đang quay...", close: "Đóng", err: "Vui lòng chọn ít nhất 1 độ khó!" },
       en: { title: "Random Map Wheel", diff: "Difficulty", count: "Map Count", countPh: "All", create: "🔄 Create Wheel", spin: "SPIN NOW", spinning: "Spinning...", close: "Close", err: "Please select at least 1 difficulty!" },
       cn: { title: "随机赛道转盘", diff: "难度", count: "赛道数量", countPh: "全部", create: "🔄 创建转盘", spin: "开始旋转", spinning: "旋转中...", close: "关闭", err: "请至少选择1个难度！" },
-      tw: { title: "隨機賽道轉盤", diff: "難度", count: "賽道數量", countPh: "全部", create: "🔄 創建轉盤", spin: "開始旋轉", spinning: "旋轉中...", close: "關閉", err: "請至少選擇1個難度！" },
       th: { title: "วงล้อแผนที่สุ่ม", diff: "ความยาก", count: "จำนวนแผนที่", countPh: "ทั้งหมด", create: "🔄 สร้างวงล้อ", spin: "หมุนเลย", spinning: "กำลังหมุน...", close: "ปิด", err: "โปรดเลือกความยากอย่างน้อย 1 ระดับ!" }
     }[lang] || { title: "Vòng Quay Map Random", diff: "Độ khó", count: "Số lượng Map", countPh: "Tất cả", create: "🔄 Tạo Vòng Quay", spin: "QUAY NGAY", spinning: "Đang quay...", close: "Đóng", err: "Vui lòng chọn ít nhất 1 độ khó!" };
     const [selectedStars, setSelectedStars] = useState([7, 6, 5, 4, 3]);
@@ -505,6 +557,9 @@
     const [rotation, setRotation] = useState(0);
     const [winner, setWinner] = useState(null);
     const audioCtxRef = useRef(null);
+    const timersRef = useRef(new Set());
+    const schedule = (callback, delay) => { const id = setTimeout(() => { timersRef.current.delete(id); callback(); }, delay); timersRef.current.add(id); };
+    useEffect(() => () => { timersRef.current.forEach(clearTimeout); audioCtxRef.current?.close().catch(() => {}); }, []);
     useEffect(() => { generateWheel(); }, []);
     const toggleStar = (star) => {
       if (selectedStars.includes(star)) setSelectedStars(selectedStars.filter(s => s !== star));
@@ -561,10 +616,10 @@
         playTickSound();
         let progress = elapsed / spinDuration;
         let nextDelay = 20 + Math.pow(progress, 3) * 800;
-        if (elapsed + nextDelay <= spinDuration) setTimeout(tickLoop, nextDelay);
+        if (elapsed + nextDelay <= spinDuration) schedule(tickLoop, nextDelay);
       };
       tickLoop();
-      setTimeout(() => { setIsSpinning(false); setWinner(wheelMaps[winIdx]); }, spinDuration);
+      schedule(() => { setIsSpinning(false); setWinner(wheelMaps[winIdx]); }, spinDuration);
     };
     return (
       <div className="fixed inset-0 z-[300] bg-black/90 flex flex-col items-center justify-center p-2 md:p-4 backdrop-blur-md animate-slide-up">
@@ -663,7 +718,6 @@
       vi: { holder: 'NGƯỜI GIỮ KỶ LỤC', best: 'KỶ LỤC TỐT NHẤT', empty: 'Chưa có kỷ lục ở map này' },
       en: { holder: 'MAP RECORD HOLDER', best: 'BEST RECORD', empty: 'No saved records for this map' },
       cn: { holder: '赛道纪录保持者', best: '最佳纪录', empty: '此赛道暂无已保存纪录' },
-      tw: { holder: '賽道紀錄保持者', best: '最佳紀錄', empty: '此賽道暫無已儲存紀錄' },
       th: { holder: 'เจ้าของสถิติสนาม', best: 'สถิติที่ดีที่สุด', empty: 'ยังไม่มีสถิติที่บันทึกสำหรับสนามนี้' }
     })[lang] || { holder: 'MAP RECORD HOLDER', best: 'BEST RECORD', empty: 'No saved records for this map' };
     const suffix = activeGame.mapId ? `_${activeGame.mapId}` : '';
@@ -714,12 +768,11 @@
       vi: { title: 'TỐC ĐỘ - ĐƠN', result: 'KẾT QUẢ THI ĐẤU', records: 'NGƯỜI NẮM GIỮ KỶ LỤC', empty: 'Chưa có kỷ lục ở map này', laps: 'VÒNG ĐUA', mode: 'CHẾ ĐỘ', solo: 'CÁ NHÂN', time: 'THÀNH TÍCH', pending: 'CHỜ KẾT QUẢ', draw: 'HÒA' },
       en: { title: 'SOLO SPRINT', result: 'RACE RESULTS', records: 'MAP RECORD HOLDERS', empty: 'No saved records for this map', laps: 'LAPS', mode: 'MODE', solo: 'SOLO', time: 'FINISH TIME', pending: 'AWAITING RESULT', draw: 'DRAW' },
       cn: { title: '个人竞速', result: '比赛结果', records: '赛道纪录保持者', empty: '此赛道暂无已保存纪录', laps: '圈数', mode: '模式', solo: '个人', time: '完赛时间', pending: '等待结果', draw: '平局' },
-      tw: { title: '個人競速', result: '比賽結果', records: '賽道紀錄保持者', empty: '此賽道暫無已儲存紀錄', laps: '圈數', mode: '模式', solo: '個人', time: '完賽時間', pending: '等待結果', draw: '平局' },
       th: { title: 'แข่งขันเดี่ยว', result: 'ผลการแข่งขัน', records: 'เจ้าของสถิติสนาม', empty: 'ยังไม่มีสถิติที่บันทึกสำหรับสนามนี้', laps: 'จำนวนรอบ', mode: 'โหมด', solo: 'เดี่ยว', time: 'เวลาเข้าเส้นชัย', pending: 'รอผลการแข่งขัน', draw: 'เสมอ' }
     })[lang] || { title: 'SOLO SPRINT', result: 'RACE RESULTS', records: 'MAP RECORD HOLDERS', empty: 'No saved records for this map', laps: 'LAPS', mode: 'MODE', solo: 'SOLO', time: 'FINISH TIME', pending: 'AWAITING RESULT', draw: 'DRAW' };
     const pair = [0, 1].map(i => {
       const raw = activeGame.times?.[i] || '';
-      return { raw, ms: parseTime(raw), dnf: raw.toUpperCase() === 'X', final: !!raw && (raw.includes(':') || raw.toUpperCase() === 'X') };
+      return { raw, ms: parseTime(raw), dnf: raw.toUpperCase() === 'X', final: isFinalTime(raw) };
     });
     const complete = pair.every(p => p.final);
     const winner = complete ? getFinalWinner(pair[0].raw, pair[1].raw) : -1;
@@ -836,17 +889,13 @@
    const [assetModal, setAssetModal] = useState(null);
    const [assetSearch, setAssetSearch] = useState('');
    const getDefaultRatio = (tab) => (tab === 'scoreboard' ? 'full' : '18:9');
-   const [aspectRatio, setAspectRatio] = useState(() => {
-    const saved = localStorage.getItem(`zsm_ratio_${broadcastState.tab}`);
-    return saved || getDefaultRatio(broadcastState.tab);
-   });
-   useEffect(() => {
-    const saved = localStorage.getItem(`zsm_ratio_${broadcastState.tab}`);
-    setAspectRatio(saved || getDefaultRatio(broadcastState.tab));
-   }, [broadcastState.tab]);
-   useEffect(() => {
-    localStorage.setItem(`zsm_ratio_${broadcastState.tab}`, aspectRatio);
-   }, [aspectRatio, broadcastState.tab]);
+   const [aspectRatios, setAspectRatios] = useState(() => Object.fromEntries(['scoreboard', 'prematch', 'postmatch'].map(tab => {
+    const saved = readStorageValue(`zsm_ratio_${tab}`);
+    return [tab, ['full', '18:9', '16:9'].includes(saved) ? saved : getDefaultRatio(tab)];
+   })));
+   const aspectRatio = aspectRatios[broadcastState.tab] || getDefaultRatio(broadcastState.tab);
+   const setAspectRatio = value => setAspectRatios(prev => ({ ...prev, [broadcastState.tab]: value }));
+   useEffect(() => { writeStorageValue(`zsm_ratio_${broadcastState.tab}`, aspectRatio); }, [aspectRatio, broadcastState.tab]);
    const getCenterBannerTitle = () => {
     if (broadcastState.tab === 'scoreboard') return lang === 'vi' ? 'BẢNG ĐIỂM' : 'SCOREBOARD';
     if (gameMode === '1v1') return 'SOLO 1VS1';
@@ -962,13 +1011,16 @@
                     const playerName = players[pIndex];
                     const isTop = c.isBest && c.score > 0;
  if (gameMode === '1v1') {
+  const complete = isFinalTime(game.times[0]) && isFinalTime(game.times[1]);
+  const result = getFinalWinner(game.times[0], game.times[1]);
+  const outcome = !complete ? '—' : result === -1 ? (lang === 'vi' ? 'HÒA' : 'DRAW') : result === pIndex ? (lang === 'vi' ? 'THẮNG' : 'WIN') : (lang === 'vi' ? 'THUA' : 'LOSE');
   const carId = game.cars?.[pIndex];
   const carObj = carDatabase.find(item => item.id === carId);
   return (
    <div key={`g${gIndex}_p${pIndex}`} className={`w-full flex-1 min-h-0 flex flex-col items-center justify-between px-1 py-1.5 md:py-2 relative group/item hover:bg-white/5 transition-colors ${pIndex === 0 ? 'border-b border-white/20' : ''}`}>
      <div className="w-full flex flex-col items-center shrink-0 pt-0.5">
       <span className="text-xs sm:text-sm md:text-base lg:text-lg font-black uppercase tracking-wider truncate w-full px-1 text-center text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)] leading-tight">{playerName}</span>
-      <span className={`text-sm sm:text-lg md:text-xl lg:text-2xl font-black italic tracking-wider leading-none mt-1 ${isTop ? 'text-[#fce300] drop-shadow-[0_0_15px_rgba(252,227,0,0.9)]' : time ? 'text-slate-400 drop-shadow-md' : 'text-slate-600'}`}>{time ? (isTop ? (lang === 'vi' ? 'THẮNG' : 'WIN') : (lang === 'vi' ? 'THUA' : 'LOSE')) : '-'}</span>
+      <span className={`text-sm sm:text-lg md:text-xl lg:text-2xl font-black italic tracking-wider leading-none mt-1 ${isTop ? 'text-[#fce300] drop-shadow-[0_0_15px_rgba(252,227,0,0.9)]' : time ? 'text-slate-400 drop-shadow-md' : 'text-slate-600'}`}>{outcome}</span>
      </div>
     <div className="w-full flex-1 min-h-[40px] max-h-[85px] md:max-h-[110px] flex items-center justify-center relative my-0.5">
      {carObj?.img ? (
@@ -1197,7 +1249,7 @@
    </div>
    <div className="flex flex-col items-end leading-none shrink-0 pl-2">
     <span className="text-[10px] sm:text-xs font-black italic text-[#fce300] uppercase font-mono tracking-widest drop-shadow-[0_0_8px_rgba(252,227,0,0.6)] mb-1">
-      1ST
+      {top1.ms !== null ? '1ST' : top1.isDNF ? 'DNF' : '—'}
     </span>
     <span className="text-xl sm:text-2xl lg:text-3xl font-black font-['Chakra_Petch'] text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.6)] leading-none pb-0.5">{top1.rawT || '--:--.--'}</span>
    </div>
@@ -1368,12 +1420,12 @@
    );
   };
   function App() {
-   const isBroadcastTab = window.location.search.includes('broadcast=true');
    const urlParams = new URLSearchParams(window.location.search);
-   const initialTab = urlParams.get('tab') || 'scoreboard';
-   const initialGameIndex = Number(urlParams.get('gameIndex')) || 0;
-   const [lang, setLang] = useState(() => localStorage.getItem('zsm_lang_v11_final') || 'vi');
-   const t = TRANSLATIONS[lang];
+   const isBroadcastTab = urlParams.get('broadcast') === 'true';
+   const initialTab = ['scoreboard', 'prematch', 'postmatch'].includes(urlParams.get('tab')) ? urlParams.get('tab') : 'scoreboard';
+   const initialGameIndex = Math.max(0, Math.floor(Number(urlParams.get('gameIndex')) || 0));
+   const [lang, setLang] = useState(() => normalizeLanguage(readStorageValue('zsm_lang_v11_final')));
+   const t = TRANSLATIONS[lang] || TRANSLATIONS.vi;
    const [showInfo, setShowInfo] = useState(false);
    const [showDbModal, setShowDbModal] = useState(false);
    const [showGroupModal, setShowGroupModal] = useState(false);
@@ -1403,51 +1455,55 @@
    const [playerPhotos, setPlayerPhotos] = useState(() => readStoredJSON('zsm_player_photos_v1', () => (Array(6).fill(""))));
    const [bannedMaps, setBannedMaps] = useState(() => readStoredJSON('zsm_banned_maps_1v1_v11', () => ({})));
    const [savedGroups, setSavedGroups] = useState(() => readStoredJSON('zsm_saved_groups_v1', () => ([])));
-   const [tournamentName, setTournamentName] = useState(() => localStorage.getItem('zsm_tour_name') || 'CUSTOM TOURNAMENT');
-   const [team1Name, setTeam1Name] = useState(() => localStorage.getItem('zsm_team1_name') || '');
-   const [team2Name, setTeam2Name] = useState(() => localStorage.getItem('zsm_team2_name') || '');
-   const [gameMode, setGameMode] = useState(() => localStorage.getItem('zsm_game_mode_v11') || 'solo');
+   const [tournamentName, setTournamentName] = useState(() => readStorageValue('zsm_tour_name') || 'CUSTOM TOURNAMENT');
+   const [team1Name, setTeam1Name] = useState(() => readStorageValue('zsm_team1_name') || '');
+   const [team2Name, setTeam2Name] = useState(() => readStorageValue('zsm_team2_name') || '');
+   const [gameMode, setGameMode] = useState(() => ['solo', '1v1', '2v2', '3v3'].includes(readStorageValue('zsm_game_mode_v11')) ? readStorageValue('zsm_game_mode_v11') : 'solo');
    const isTeamMode = gameMode === '2v2' || gameMode === '3v3';
-   const [soloMatchBO, setSoloMatchBO] = useState(() => Number(localStorage.getItem('zsm_solo_match_bo')) || 3);
-   const [soloSetBO, setSoloSetBO] = useState(() => Number(localStorage.getItem('zsm_solo_set_bo')) || 7);
+   const [soloMatchBO, setSoloMatchBO] = useState(() => [1, 3].includes(Number(readStorageValue('zsm_solo_match_bo'))) ? Number(readStorageValue('zsm_solo_match_bo')) : 3);
+   const [soloSetBO, setSoloSetBO] = useState(() => [7, 9, 11, 13].includes(Number(readStorageValue('zsm_solo_set_bo'))) ? Number(readStorageValue('zsm_solo_set_bo')) : 7);
    const [players, setPlayers] = useState(() => readStoredJSON('zsm_players_v11_final', () => ([`${t.defPlayer} 1`, `${t.defPlayer} 2`, `${t.defPlayer} 3`, `${t.defPlayer} 4`])));
    const [games, setGames] = useState(() => {
-    const saved = localStorage.getItem('zsm_games_v11_final');
-    if (saved) {
-     try {
-      const parsed = JSON.parse(saved);
-      return parsed.map(g => ({ ...g, cars: g.cars || Array(6).fill(''), ecus: g.ecus || Array(6).fill(''), pets: g.pets || Array(6).fill('') }));
-     } catch(e) {}
-    }
-    return Array(9).fill(null).map((_, i) => ({ id: Date.now() + i, mapId: "", times: Array(6).fill(''), cars: Array(6).fill(''), ecus: Array(6).fill(''), pets: Array(6).fill('') }));
-    });
+    const stored = normalizeGames(readStoredJSON('zsm_games_v11_final', () => []));
+    return stored.length ? stored : Array.from({ length: 9 }, createGame);
+   });
    const [personalRecords, setPersonalRecords] = useState(() => readStoredJSON('zsm_personal_records_v11_final', () => ({})));
    const [viewSet, setViewSet] = useState(1);
+   const sheetSyncRef = useRef(null);
+   useEffect(() => {
+    const notify = () => showDialogAlert(lang === 'vi' ? 'Không thể tự lưu dữ liệu. Hãy xuất Excel trước khi đóng trang và kiểm tra bộ nhớ/quyền lưu của trình duyệt.' : 'Data could not be saved. Export Excel before closing this page and check browser storage permissions or available space.');
+    window.addEventListener('zsm-storage-error', notify);
+    return () => window.removeEventListener('zsm-storage-error', notify);
+   }, [lang]);
    useEffect(() => {
      const handleStorageChange = (e) => {
-       if(!e.newValue) return;
+       if (e.newValue === null) return;
+       const value = readStorageValue(e.key);
+       if (value === null) return;
        try {
-         if (e.key === 'zsm_games_v11_final') setGames(JSON.parse(e.newValue));
-         else if (e.key === 'zsm_players_v11_final') setPlayers(JSON.parse(e.newValue));
-         else if (e.key === 'zsm_tour_name') setTournamentName(e.newValue);
-         else if (e.key === 'zsm_team1_name') setTeam1Name(e.newValue);
-         else if (e.key === 'zsm_team2_name') setTeam2Name(e.newValue);
-         else if (e.key === 'zsm_game_mode_v11') setGameMode(e.newValue);
-         else if (e.key === 'zsm_solo_match_bo') setSoloMatchBO(Number(e.newValue));
-         else if (e.key === 'zsm_solo_set_bo') setSoloSetBO(Number(e.newValue));
-         else if (e.key === 'zsm_banned_maps_1v1_v11') setBannedMaps(JSON.parse(e.newValue));
-         else if (e.key === 'zsm_player_photos_v1') setPlayerPhotos(JSON.parse(e.newValue));
-         else if (e.key === 'zsm_cars_db_v1') setCarDatabase(JSON.parse(e.newValue));
-         else if (e.key === 'zsm_pets_db_v1') setPetDatabase(JSON.parse(e.newValue));
-         else if (e.key === 'zsm_personal_records_v11_final') setPersonalRecords(JSON.parse(e.newValue));
-         else if (e.key === 'zsm_ecus_db_v1') setEcuDatabase(JSON.parse(e.newValue));
+         if (e.key === 'zsm_games_v11_final') setGames(prev => { const next = normalizeGames(JSON.parse(value)); return next.length ? next : prev; });
+         else if (e.key === 'zsm_players_v11_final') setPlayers(prev => { const next = JSON.parse(value); return Array.isArray(next) && next.length >= 2 && next.length <= MAX_PLAYERS && next.every(p => typeof p === 'string') ? next : prev; });
+         else if (e.key === 'zsm_tour_name') setTournamentName(value);
+         else if (e.key === 'zsm_team1_name') setTeam1Name(value);
+         else if (e.key === 'zsm_team2_name') setTeam2Name(value);
+         else if (e.key === 'zsm_game_mode_v11' && ['solo', '1v1', '2v2', '3v3'].includes(value)) setGameMode(value);
+         else if (e.key === 'zsm_solo_match_bo' && [1, 3].includes(Number(value))) setSoloMatchBO(Number(value));
+         else if (e.key === 'zsm_solo_set_bo' && [7, 9, 11, 13].includes(Number(value))) setSoloSetBO(Number(value));
+         else if (e.key === 'zsm_banned_maps_1v1_v11') setBannedMaps(JSON.parse(value));
+         else if (e.key === 'zsm_player_photos_v1') setPlayerPhotos(JSON.parse(value));
+         else if (e.key === 'zsm_cars_db_v1') setCarDatabase(JSON.parse(value));
+         else if (e.key === 'zsm_pets_db_v1') setPetDatabase(JSON.parse(value));
+         else if (e.key === 'zsm_personal_records_v11_final') setPersonalRecords(JSON.parse(value));
+         else if (e.key === 'zsm_lang_v11_final') setLang(normalizeLanguage(value));
+         else if (e.key === 'zsm_saved_groups_v1') setSavedGroups(JSON.parse(value));
+         else if (e.key === 'zsm_ecus_db_v1') setEcuDatabase(JSON.parse(value));
        } catch(err) { console.error("Sync Error", err); }
      };
      window.addEventListener('storage', handleStorageChange);
      return () => window.removeEventListener('storage', handleStorageChange);
    }, []);
    useEffect(() => {
-    const allDefP = Object.values(TRANSLATIONS).map(tr => tr.defPlayer);
+    const allDefP = [...Object.values(TRANSLATIONS).map(tr => tr.defPlayer), '選手'];
     const currentT = TRANSLATIONS[lang];
     setPlayers(prev => prev.map(p => {
      for (let def of allDefP) {
@@ -1459,22 +1515,22 @@
      return p;
     }));
    }, [lang]);
-   useEffect(() => { localStorage.setItem('zsm_lang_v11_final', lang); }, [lang]);
-   useEffect(() => { localStorage.setItem('zsm_tour_name', tournamentName); }, [tournamentName]);
-   useEffect(() => { localStorage.setItem('zsm_team1_name', team1Name); }, [team1Name]);
-   useEffect(() => { localStorage.setItem('zsm_team2_name', team2Name); }, [team2Name]);
-   useEffect(() => { localStorage.setItem('zsm_game_mode_v11', gameMode); }, [gameMode]);
-   useEffect(() => { localStorage.setItem('zsm_solo_match_bo', soloMatchBO); }, [soloMatchBO]);
-   useEffect(() => { localStorage.setItem('zsm_solo_set_bo', soloSetBO); }, [soloSetBO]);
-   useEffect(() => { localStorage.setItem('zsm_players_v11_final', JSON.stringify(players)); }, [players]);
-   useEffect(() => { localStorage.setItem('zsm_games_v11_final', JSON.stringify(games)); }, [games]);
-   useEffect(() => { localStorage.setItem('zsm_personal_records_v11_final', JSON.stringify(personalRecords)); }, [personalRecords]);
-   useEffect(() => { localStorage.setItem('zsm_cars_db_v1', JSON.stringify(carDatabase)); }, [carDatabase]);
-   useEffect(() => { localStorage.setItem('zsm_pets_db_v1', JSON.stringify(petDatabase)); }, [petDatabase]);
-   useEffect(() => { localStorage.setItem('zsm_player_photos_v1', JSON.stringify(playerPhotos)); }, [playerPhotos]);
-   useEffect(() => { localStorage.setItem('zsm_banned_maps_1v1_v11', JSON.stringify(bannedMaps)); }, [bannedMaps]);
-   useEffect(() => { localStorage.setItem('zsm_saved_groups_v1', JSON.stringify(savedGroups)); }, [savedGroups]);
-   useEffect(() => { localStorage.setItem('zsm_ecus_db_v1', JSON.stringify(ecuDatabase)); }, [ecuDatabase]);
+   useEffect(() => { writeStorageValue('zsm_lang_v11_final', lang); }, [lang]);
+   useEffect(() => { writeStorageValue('zsm_tour_name', tournamentName); }, [tournamentName]);
+   useEffect(() => { writeStorageValue('zsm_team1_name', team1Name); }, [team1Name]);
+   useEffect(() => { writeStorageValue('zsm_team2_name', team2Name); }, [team2Name]);
+   useEffect(() => { writeStorageValue('zsm_game_mode_v11', gameMode); }, [gameMode]);
+   useEffect(() => { writeStorageValue('zsm_solo_match_bo', soloMatchBO); }, [soloMatchBO]);
+   useEffect(() => { writeStorageValue('zsm_solo_set_bo', soloSetBO); }, [soloSetBO]);
+   useEffect(() => { writeStorageValue('zsm_players_v11_final', JSON.stringify(players)); }, [players]);
+   useEffect(() => { writeStorageValue('zsm_games_v11_final', JSON.stringify(games)); }, [games]);
+   useEffect(() => { writeStorageValue('zsm_personal_records_v11_final', JSON.stringify(personalRecords)); }, [personalRecords]);
+   useEffect(() => { writeStorageValue('zsm_cars_db_v1', JSON.stringify(carDatabase)); }, [carDatabase]);
+   useEffect(() => { writeStorageValue('zsm_pets_db_v1', JSON.stringify(petDatabase)); }, [petDatabase]);
+   useEffect(() => { writeStorageValue('zsm_player_photos_v1', JSON.stringify(playerPhotos)); }, [playerPhotos]);
+   useEffect(() => { writeStorageValue('zsm_banned_maps_1v1_v11', JSON.stringify(bannedMaps)); }, [bannedMaps]);
+   useEffect(() => { writeStorageValue('zsm_saved_groups_v1', JSON.stringify(savedGroups)); }, [savedGroups]);
+   useEffect(() => { writeStorageValue('zsm_ecus_db_v1', JSON.stringify(ecuDatabase)); }, [ecuDatabase]);
    useEffect(() => {
      if (gameMode === '1v1') {
        const targetLen = soloMatchBO * soloSetBO;
@@ -1517,8 +1573,12 @@
    }, [gameMode, soloMatchBO, soloSetBO]);
    const syncFromGoogleSheet = async (isManual = false) => {
      if (!GOOGLE_SHEET_API_URL || GOOGLE_SHEET_API_URL.includes("DÁN_LINK")) return;
+     if (sheetSyncRef.current) return;
+     const controller = new AbortController();
+     sheetSyncRef.current = controller;
+     const timeout = setTimeout(() => controller.abort(), 15000);
      try {
-      const res = await fetch(GOOGLE_SHEET_API_URL);
+      const res = await fetch(GOOGLE_SHEET_API_URL, { signal: controller.signal });
       if (!res.ok) throw new Error("HTTP error " + res.status);
       const data = await res.json();
       for (const [type, setData, key] of [
@@ -1535,7 +1595,7 @@
        })).filter(item => item.id && (type === 'ecus' ? item.img : item.name));
        if (formatted.length) {
         setData(formatted);
-        localStorage.setItem(key, JSON.stringify(formatted));
+        // The persistence effect saves the validated list.
        }
       }
       if (isManual) {
@@ -1546,56 +1606,57 @@
       if (isManual) {
        showDialogAlert(lang === 'vi' ? "Lỗi: Không thể kết nối Google Sheets! Vui lòng kiểm tra quyền truy cập Web App." : "Error: Cannot connect to Google Sheets!");
       }
-     }
+     } finally { clearTimeout(timeout); sheetSyncRef.current = null; }
     };
     useEffect(() => {
      syncFromGoogleSheet(false);
+     return () => sheetSyncRef.current?.abort();
     }, []);
    const displayTeam1Name = team1Name.trim() || t.team1;
    const displayTeam2Name = team2Name.trim() || t.team2;
-   const handleTimeChange = (gIndex, pIndex, val) => {
-    const newGames = [...games]; newGames[gIndex].times[pIndex] = val; setGames(newGames);
-   };
+   const updateGame = (gIndex, updater) => setGames(prev => prev.map((game, index) => index === gIndex ? updater(game) : game));
+   const handleTimeChange = (gIndex, pIndex, val) => updateGame(gIndex, game => ({ ...game, times: game.times.map((time, i) => i === pIndex ? val : time) }));
    const handleAssetSelect = (gIndex, pIndex, type, assetId) => {
-    const newGames = [...games];
-    if (!newGames[gIndex].cars) newGames[gIndex].cars = Array(6).fill('');
-    if (!newGames[gIndex].ecus) newGames[gIndex].ecus = Array(6).fill('');
-    if (!newGames[gIndex].pets) newGames[gIndex].pets = Array(6).fill('');
-    if (type === 'car') newGames[gIndex].cars[pIndex] = assetId;
-    if (type === 'ecu') newGames[gIndex].ecus[pIndex] = assetId;
-    if (type === 'pet') newGames[gIndex].pets[pIndex] = assetId;
-    setGames(newGames);
-   };
-   const handleBanChange = (setNum, pIndex, banSlot, mapId) => {
-    setBannedMaps(prev => {
-      const newState = { ...prev };
-      if (!newState[setNum]) newState[setNum] = { 0: ['', ''], 1: ['', ''] };
-      newState[setNum][pIndex][banSlot] = mapId;
-      return newState;
+    const field = { car: 'cars', ecu: 'ecus', pet: 'pets' }[type];
+    if (!field) return;
+    setGames(prev => {
+     const latest = isBroadcastTab ? normalizeGames(readStoredJSON('zsm_games_v11_final', () => [])) : [];
+     const source = latest.length ? latest : prev;
+     return source.map((game, index) => index === gIndex ? { ...game, [field]: normalizeSlots(game[field]).map((value, i) => i === pIndex ? assetId : value) } : game);
     });
    };
-   const getBannedMapsForSet = (setNum) => {
-     if (!bannedMaps[setNum]) return [];
-     return [...(bannedMaps[setNum][0] || []), ...(bannedMaps[setNum][1] || [])].filter(id => id);
-   };
+   const handleBanChange = (setNum, pIndex, banSlot, mapId) => setBannedMaps(prev => {
+    const setBans = prev[setNum] || { 0: ['', ''], 1: ['', ''] };
+    return { ...prev, [setNum]: { ...setBans, [pIndex]: [0, 1].map(i => i === banSlot ? mapId : setBans[pIndex]?.[i] || '') } };
+   });
+   const getBannedMapsForSet = setNum => [...(bannedMaps[setNum]?.[0] || []), ...(bannedMaps[setNum]?.[1] || [])].filter(Boolean);
    const currentSetBans = useMemo(() => getBannedMapsForSet(viewSet), [bannedMaps, viewSet]);
-   const handleTimeBlur = (gIndex, pIndex) => {
-    const newGames = [...games];
-    const rawTime = newGames[gIndex].times[pIndex];
+   const handleTimeBlur = (gIndex, pIndex, inputValue) => {
+    const game = games[gIndex];
+    if (!game) return;
+    const rawTime = String(inputValue ?? game.times[pIndex] ?? '');
     const formattedTime = formatTimeDisplay(rawTime);
-    newGames[gIndex].times[pIndex] = formattedTime;
-    setGames(newGames);
-    const mapId = newGames[gIndex].mapId;
+    updateGame(gIndex, current => ({ ...current, times: current.times.map((time, i) => i === pIndex ? formattedTime : time) }));
     const timeMs = parseTime(formattedTime);
-    if (mapId && timeMs !== null && rawTime.toUpperCase() !== 'X') {
-     const playerName = players[pIndex];
-     const pbKey = `${playerName}_${mapId}`;
-     setPersonalRecords(prev => {
-       const currentPB = prev[pbKey];
-       if (!currentPB || timeMs < currentPB.timeMs) return { ...prev, [pbKey]: { timeMs: timeMs, timeStr: formattedTime } };
-       return prev;
-     });
+    if (game.mapId && timeMs !== null) {
+     const pbKey = `${players[pIndex]}_${game.mapId}`;
+     setPersonalRecords(prev => !prev[pbKey] || timeMs < prev[pbKey].timeMs ? { ...prev, [pbKey]: { timeMs, timeStr: formattedTime } } : prev);
     }
+   };
+   const renamePlayer = (pIndex, name) => {
+    const oldName = players[pIndex];
+    setPlayers(prev => prev.map((player, i) => i === pIndex ? name : player));
+    if (name === oldName) return;
+    setPersonalRecords(prev => {
+     const next = { ...prev };
+     MAP_INDEX.forEach((_, mapId) => {
+      const oldKey = `${oldName}_${mapId}`, newKey = `${name}_${mapId}`, record = prev[oldKey];
+      if (!record) return;
+      if (!next[newKey] || record.timeMs < next[newKey].timeMs) next[newKey] = { ...record };
+      if (!players.some((player, i) => i !== pIndex && player === oldName)) delete next[oldKey];
+     });
+     return next;
+    });
    };
    const changeMode = (nextMode) => {
      if (nextMode === gameMode) return;
@@ -1625,25 +1686,26 @@
     if (gameMode === '1v1') return showDialogAlert(lang === 'vi' ? "Mode SOLO 1VS1 bắt buộc có 2 VĐV!" : "SOLO 1VS1 requires exactly 2 players!");
     if (players.length <= 2) return showDialogAlert(t.errMinP);
     showDialogConfirm(t.delP.replace('{0}', players[pIndex]), () => {
-     setPlayers(players.filter((_, i) => i !== pIndex));
-     setGames(games.map(g => ({
+     setPlayers(prev => prev.filter((_, i) => i !== pIndex));
+     setPlayerPhotos(prev => normalizeSlots(prev.filter((_, i) => i !== pIndex)));
+     setGames(prev => prev.map(g => ({
        ...g,
-       times: g.times.filter((_, i) => i !== pIndex),
-       cars: g.cars ? g.cars.filter((_, i) => i !== pIndex) : Array(6).fill(''),
-       ecus: g.ecus ? g.ecus.filter((_, i) => i !== pIndex) : Array(6).fill(''),
-       pets: g.pets ? g.pets.filter((_, i) => i !== pIndex) : Array(6).fill('')
+       times: normalizeSlots(g.times.filter((_, i) => i !== pIndex)),
+       cars: normalizeSlots((g.cars || []).filter((_, i) => i !== pIndex)),
+       ecus: normalizeSlots((g.ecus || []).filter((_, i) => i !== pIndex)),
+       pets: normalizeSlots((g.pets || []).filter((_, i) => i !== pIndex))
      })));
     });
    };
    const addGame = () => {
     if (gameMode === '1v1') return showDialogAlert(lang === 'vi' ? "Mode SOLO 1VS1 tự động sinh ván đấu theo thiết lập (BO)." : "1VS1 Mode auto-generates matches based on BO format.");
     if (games.length >= 90) return showDialogAlert(t.errMaxG);
-    setGames([...games, { id: Date.now(), mapId: "", times: Array(6).fill(''), cars: Array(6).fill(''), pets: Array(6).fill('') }]);
+    setGames(prev => [...prev, createGame()]);
    };
    const removeGame = (gIndex) => {
     if (gameMode === '1v1') return showDialogAlert(lang === 'vi' ? "Mode SOLO 1VS1 không được tự xóa trận." : "Cannot delete games in 1VS1 Mode.");
     if (games.length <= 1) return showDialogAlert(t.errMinG);
-    showDialogConfirm(t.delG.replace('{0}', gIndex + 1), () => { setGames(games.filter((_, i) => i !== gIndex)); });
+    showDialogConfirm(t.delG.replace('{0}', gIndex + 1), () => { setGames(prev => prev.filter((_, i) => i !== gIndex)); });
    };
    const clearAll = () => {
     showDialogConfirm(t.confirmReset, () => {
@@ -1651,62 +1713,44 @@
     });
    };
    const handleSaveCurrentGroup = (name) => {
-     if (!name.trim()) return showDialogAlert(t.groupNamePh);
+     if (!name.trim()) { showDialogAlert(t.groupNamePh); return false; }
      const newGroup = {
        id: `group_${Date.now()}`,
        name: name,
        date: new Date().toLocaleDateString(),
-       data: { players, games, gameMode, tournamentName, team1Name, team2Name, soloMatchBO, soloSetBO, bannedMaps }
+       data: cloneData({ players, games, gameMode, tournamentName, team1Name, team2Name, soloMatchBO, soloSetBO, bannedMaps, playerPhotos })
      };
-     setSavedGroups([newGroup, ...savedGroups]);
+     setSavedGroups(prev => [newGroup, ...prev]);
      showDialogAlert(t.groupSaved);
+     return true;
    };
    const resetGroupState = () => {
-     setPlayers(gameMode === '1v1' ? [`${t.defPlayer} 1`, `${t.defPlayer} 2`] : [`${t.defPlayer} 1`, `${t.defPlayer} 2`, `${t.defPlayer} 3`, `${t.defPlayer} 4`]);
+     setPlayers(Array.from({ length: gameMode === '1v1' ? 2 : gameMode === '3v3' ? 6 : 4 }, (_, i) => `${t.defPlayer} ${i + 1}`));
      const numGames = gameMode === '1v1' ? (soloMatchBO * soloSetBO) : 9;
-     setGames(Array(numGames).fill(null).map((_, i) => ({ id: Date.now() + i, mapId: "", times: Array(6).fill(''), cars: Array(6).fill(''), ecus: Array(6).fill(''), pets: Array(6).fill('') })));
+     setGames(Array.from({ length: numGames }, createGame));
+     setViewSet(1);
      setTeam1Name(''); setTeam2Name(''); setBannedMaps({});
    };
-   const loadGroupState = (data) => {
-     if(data.players) setPlayers(data.players);
-     if(data.games) setGames(data.games);
-     if(data.gameMode) setGameMode(data.gameMode);
-     if(data.tournamentName) setTournamentName(data.tournamentName);
-     if(data.team1Name) setTeam1Name(data.team1Name);
-     if(data.team2Name) setTeam2Name(data.team2Name);
-     if(data.soloMatchBO) setSoloMatchBO(data.soloMatchBO);
-     if(data.soloSetBO) setSoloSetBO(data.soloSetBO);
-     if(data.bannedMaps) setBannedMaps(data.bannedMaps);
+   const loadGroupState = (savedData) => {
+     if (!savedData || typeof savedData !== 'object') return;
+     const data = cloneData(savedData), restoredGames = normalizeGames(data.games);
+     if (Array.isArray(data.players) && data.players.length >= 2 && data.players.length <= MAX_PLAYERS) setPlayers(data.players);
+     if (restoredGames.length) setGames(restoredGames);
+     if (['solo', '1v1', '2v2', '3v3'].includes(data.gameMode)) setGameMode(data.gameMode);
+     for (const [key, setter] of [['tournamentName', setTournamentName], ['team1Name', setTeam1Name], ['team2Name', setTeam2Name]]) {
+      if (typeof data[key] === 'string') setter(data[key]);
+     }
+     if ([1, 3].includes(data.soloMatchBO)) setSoloMatchBO(data.soloMatchBO);
+     if ([7, 9, 11, 13].includes(data.soloSetBO)) setSoloSetBO(data.soloSetBO);
+     if (data.bannedMaps && typeof data.bannedMaps === 'object') setBannedMaps(data.bannedMaps);
+     if (Array.isArray(data.playerPhotos)) setPlayerPhotos(normalizeSlots(data.playerPhotos));
+     setViewSet(1);
      showDialogAlert(t.groupLoaded);
    };
-   const matchStatus1v1 = useMemo(() => {
-    if (gameMode !== '1v1') return null;
-    let p1Sets = 0, p2Sets = 0, p1Rounds = 0, p2Rounds = 0, currentSet = 1, gameAssignments = [], mapsUsedSet12 = [], mapsUsedSet3 = [];
-    const winCond = Math.ceil(soloSetBO / 2);
-    games.forEach((g, idx) => {
-      const setNum = Math.floor(idx / soloSetBO) + 1;
-      const roundNum = (idx % soloSetBO) + 1;
-      gameAssignments.push({ set: setNum, round: roundNum });
-      if (g.mapId) { if (setNum < 3) mapsUsedSet12.push(g.mapId); else mapsUsedSet3.push(g.mapId); }
-    });
-    for (let s = 1; s <= soloMatchBO; s++) {
-      let s_p1Rounds = 0, s_p2Rounds = 0, setFinished = false;
-      for (let r = 1; r <= soloSetBO; r++) {
-        const gIdx = (s - 1) * soloSetBO + (r - 1);
-        if (gIdx >= games.length) continue;
-        const g = games[gIdx];
-        const t1 = g.times[0]; const t2 = g.times[1];
-        const winner = getFinalWinner(t1, t2);
-        if (winner === 0) s_p1Rounds++;
-        if (winner === 1) s_p2Rounds++;
-        if (s_p1Rounds >= winCond) { p1Sets++; setFinished = true; break; }
-        if (s_p2Rounds >= winCond) { p2Sets++; setFinished = true; break; }
-      }
-      if (!setFinished) { currentSet = s; p1Rounds = s_p1Rounds; p2Rounds = s_p2Rounds; break;  }
-    }
-    return { p1Sets, p2Sets, p1Rounds, p2Rounds, currentSet, gameAssignments, mapsUsedSet12, mapsUsedSet3 };
-   }, [games, gameMode, soloMatchBO, soloSetBO]);
+   const matchStatus1v1 = useMemo(() => gameMode === '1v1' ? get1v1MatchStatus(games, soloMatchBO, soloSetBO) : null, [games, gameMode, soloMatchBO, soloSetBO]);
    useEffect(() => { if (gameMode === '1v1' && matchStatus1v1?.currentSet) setViewSet(matchStatus1v1.currentSet); }, [matchStatus1v1?.currentSet, gameMode]);
+   useEffect(() => { setViewSet(value => Math.max(1, Math.min(soloMatchBO, value))); }, [soloMatchBO]);
+   useEffect(() => { setBroadcastState(prev => prev.gameIndex < games.length ? prev : { ...prev, gameIndex: Math.max(0, games.length - 1) }); }, [games.length]);
    const selectedMaps = useMemo(() => {
     if (gameMode === '1v1' && matchStatus1v1) return [];
     return games.map(g => g.mapId).filter(id => id !== "");
@@ -1822,12 +1866,12 @@
     window.URL.revokeObjectURL(url);
    };
    const calculateGame = (gameIndex, times) => {
-    const parsed = times.map(parseTime);
+    const parsed = times.slice(0, players.length).map(parseTime);
     const valids = parsed.filter(t => t !== null);
     const bestTime = valids.length > 0 ? Math.min(...valids) : null;
     return parsed.map((timeMs, pIndex) => {
      if (gameMode === '1v1') {
-      const isBest = timeMs === bestTime && timeMs !== null;
+      const isBest = getFinalWinner(times[0], times[1]) === pIndex && !!matchStatus1v1?.countedGames.includes(gameIndex);
       return { score: isBest ? 1 : 0, isBest: isBest, isKingMap: false, colorClass: isBest ? 'text-amber-950 bg-amber-400 font-black shadow-[0_5px_15px_rgba(251,191,36,0.4)] border-amber-300' : 'text-slate-500 bg-slate-900/80 border-transparent' };
      }
      const kingMapGameIndex = getKingMapIndex(pIndex, players.length, gameMode);
@@ -1846,7 +1890,7 @@
      return { score, isBest, isKingMap, colorClass };
     });
    };
-   const gameCalculations = useMemo(() => new Map(), [games, players.length, gameMode]);
+   const gameCalculations = useMemo(() => new Map(), [games, players.length, gameMode, matchStatus1v1]);
    const getGameCalculations = (gameIndex, times) => {
     if (times !== games[gameIndex]?.times) return calculateGame(gameIndex, times);
     if (!gameCalculations.has(gameIndex)) gameCalculations.set(gameIndex, calculateGame(gameIndex, times));
@@ -1876,53 +1920,23 @@
    const nextPickerData = useMemo(() => {
     const nextIdx = games.findIndex(g => { return g.times.slice(0, players.length).every(time => !time || time.trim() === ''); });
     if (gameMode === '1v1') {
-      let lastPlayedIdx = -1;
-      for (let i = games.length - 1; i >= 0; i--) {
-        const t1 = games[i].times[0]; const t2 = games[i].times[1];
-        if ((t1 && t1.trim() !== '') || (t2 && t2.trim() !== '')) { lastPlayedIdx = i; break; }
-      }
-      if (lastPlayedIdx === -1) return { show: true, text: t.map1Pick };
-      const winCond = Math.ceil(soloSetBO / 2);
-      let s_p1Rounds = 0, s_p2Rounds = 0, lastGameWinner = -1;
-      for (let s = 1; s <= soloMatchBO; s++) {
-        s_p1Rounds = 0; s_p2Rounds = 0;
-        for (let r = 1; r <= soloSetBO; r++) {
-          const gIdx = (s - 1) * soloSetBO + (r - 1);
-          if (gIdx > lastPlayedIdx) break;
-          const g = games[gIdx];
-          const t1 = g.times[0]; const t2 = g.times[1];
-          const winner = getFinalWinner(t1, t2);
-          if (winner === 0) s_p1Rounds++;
-          if (winner === 1) s_p2Rounds++;
-          if (gIdx === lastPlayedIdx) lastGameWinner = winner;
-          if (s_p1Rounds >= winCond || s_p2Rounds >= winCond) break;
-        }
-        if (lastPlayedIdx < s * soloSetBO) break;
-      }
+      if (!matchStatus1v1 || matchStatus1v1.isFinished) return { show: false };
+      const status = matchStatus1v1, info = status.sets[status.sets.length - 1];
+      const previous = status.sets[status.sets.length - 2];
+      if (info.lastGameIndex === -1 && !previous) return { show: true, text: t.map1Pick };
       let pickerIndex = 0;
-      let isNewSet = (s_p1Rounds >= winCond || s_p2Rounds >= winCond);
-      if (isNewSet) { pickerIndex = s_p1Rounds >= winCond ? 1 : 0;
-      } else {
-        if (s_p1Rounds < s_p2Rounds) pickerIndex = 0;
-        else if (s_p2Rounds < s_p1Rounds) pickerIndex = 1;
-        else {
-          if (lastGameWinner === 0) pickerIndex = 1;
-          else if (lastGameWinner === 1) pickerIndex = 0;
-          else {
-            const lastG = games[lastPlayedIdx];
-            const v1 = parseTime(lastG.times[0]); const v2 = parseTime(lastG.times[1]);
-            if (v1 !== null && v2 !== null) pickerIndex = v1 > v2 ? 0 : 1;
-            else pickerIndex = 0;
-          }
-        }
+      if (info.lastGameIndex === -1 && previous) pickerIndex = previous.p1Rounds > previous.p2Rounds ? 1 : 0;
+      else if (info.p1Rounds < info.p2Rounds) pickerIndex = 0;
+      else if (info.p2Rounds < info.p1Rounds) pickerIndex = 1;
+      else if (info.lastWinner !== -1) pickerIndex = 1 - info.lastWinner;
+      else {
+       const last = games[info.lastGameIndex], v1 = parseTime(last?.times[0]), v2 = parseTime(last?.times[1]);
+       pickerIndex = v1 !== null && v2 !== null ? (v1 > v2 ? 0 : 1) : 0;
       }
-      const pickerName = players[pickerIndex];
-      let nextAssign = matchStatus1v1?.gameAssignments[lastPlayedIdx + 1];
-      if (isNewSet) { const currentSet = Math.floor(lastPlayedIdx / soloSetBO) + 1; nextAssign = { set: currentSet + 1, round: 1 }; }
-      let displayText = "";
-      if (nextAssign) displayText = lang === 'vi' ? `SET ${nextAssign.set} - GAME ${nextAssign.round}: LƯỢT CHỌN MAP CỦA ${pickerName}` : `SET ${nextAssign.set} - GAME ${nextAssign.round}: ${pickerName}'S PICK`;
-      else displayText = t.normalPick.replace('{0}', lastPlayedIdx + 2).replace('{1}', pickerName);
-      return { show: true, text: displayText, pIndex: pickerIndex };
+      const round = info.lastGameIndex === -1 ? 1 : (info.lastGameIndex % soloSetBO) + 2;
+      if (round > soloSetBO) return { show: false };
+      const name = players[pickerIndex];
+      return { show: true, pIndex: pickerIndex, text: lang === 'vi' ? `SET ${status.currentSet} - GAME ${round}: LƯỢT CHỌN MAP CỦA ${name}` : `SET ${status.currentSet} - GAME ${round}: ${name}'S PICK` };
     }
     if (nextIdx === -1) return { show: false };
     if (nextIdx === 0) return { show: true, text: t.map1Pick };
@@ -2059,7 +2073,7 @@
      <div className="absolute top-2 right-2 md:top-4 md:right-4 z-50 flex items-center gap-2 bg-slate-900/80 border border-slate-700 px-2 md:px-3 py-1.5 rounded-full backdrop-blur-md shadow-lg transition-transform hover:scale-105">
       <Globe size={14} className="text-slate-400 hidden sm:block" />
       <select value={lang} onChange={(e) => setLang(e.target.value)} className="bg-transparent text-slate-300 text-[10px] md:text-xs font-bold outline-none cursor-pointer appearance-none pr-1 md:pr-2">
-       <option value="vi">🇻🇳 VI - Tiếng Việt</option><option value="en">🇬🇧 EN - English</option><option value="cn">🇨🇳 CN - 简体中文</option><option value="tw">🇹🇼 TW - 繁體中文</option><option value="th">🇹🇭 TH - ไทย</option>
+       <option value="vi">🇻🇳 VI - Tiếng Việt</option><option value="en">🇬🇧 EN - English</option><option value="cn">🇨🇳 CN - 简体中文</option><option value="th">🇹🇭 TH - ไทย</option>
       </select>
      </div>
      <div className="fixed inset-0 pointer-events-none z-0">
@@ -2176,7 +2190,7 @@
              return (
               <th key={i} className={`px-1 md:px-2 py-3 min-w-[80px] md:min-w-[140px] relative group border-b-2 bg-[#0f172a] ${isPicker ? 'bg-purple-900/30 border-purple-500' : isTeamMode ? (isT1 ? 'border-blue-500/50 bg-blue-900/10' : 'border-red-500/50 bg-red-900/10') : 'border-slate-800 bg-[#0f172a]'}`}>
                {isPicker && (<div className="absolute top-1 left-1 md:left-2 text-[8px] md:text-[9px] bg-purple-600 text-white px-1.5 py-0.5 rounded animate-pulse shadow-[0_0_8px_#9333ea] z-10 pointer-events-none font-black tracking-widest flex items-center gap-0.5"><span>🎯</span>{" "}<span className="hidden sm:inline">{t.pick}</span></div>)}
-               <BufferedInput value={p} onSave={val => { const n = [...players]; n[i] = val; setPlayers(n); }} className={`w-full bg-transparent border-b-2 outline-none text-center pb-1 text-sm md:text-lg font-bold hover:border-slate-400 font-sans ${isPicker ? 'text-purple-300 border-purple-500 focus:border-purple-400' : isTeamMode ? isT1 ? 'text-blue-100 border-slate-700 focus:border-blue-500' : 'text-red-100 border-slate-700 focus:border-red-500' : 'text-white border-slate-700 focus:border-cyan-400'}`} />
+               <BufferedInput value={p} onSave={val => renamePlayer(i, val)} className={`w-full bg-transparent border-b-2 outline-none text-center pb-1 text-sm md:text-lg font-bold hover:border-slate-400 font-sans ${isPicker ? 'text-purple-300 border-purple-500 focus:border-purple-400' : isTeamMode ? isT1 ? 'text-blue-100 border-slate-700 focus:border-blue-500' : 'text-red-100 border-slate-700 focus:border-red-500' : 'text-white border-slate-700 focus:border-cyan-400'}`} />
                {gameMode !== '1v1' && (<button onClick={() => removePlayer(i)} className="absolute top-1 right-1 p-1 text-slate-500 hover:text-white hover:bg-red-500 opacity-100 md:opacity-0 group-hover:opacity-100 transition-all bg-slate-800 rounded-full border border-slate-700 shadow-lg z-10"><XIcon size={10}/></button>)}
               </th>
              )
@@ -2211,7 +2225,7 @@
                   {gameMode !== '1v1' && (<button onClick={() => removeGame(gIndex)} className="text-slate-600 hover:text-red-500 cursor-pointer flex-shrink-0" title="Xóa trận"><Trash2 size={12} className="md:w-[14px] md:h-[14px]"/></button>)}
                  </div>
                 </div>
-                <SearchableMapSelect gameIndex={gIndex} currentMapId={game.mapId} selectedMaps={rowSelectedMaps} bannedMaps={rowBannedMaps} onChange={(id) => { const n = [...games]; n[gIndex].mapId = id; setGames(n); }} lang={lang} t={t} />
+                <SearchableMapSelect gameIndex={gIndex} currentMapId={game.mapId} selectedMaps={rowSelectedMaps} bannedMaps={rowBannedMaps} onChange={id => updateGame(gIndex, current => ({ ...current, mapId: id }))} lang={lang} t={t} />
                </div>
               </td>
               {game.times.map((time, pIndex) => {
@@ -2221,7 +2235,7 @@
                 <td key={pIndex} className={`px-1 md:px-2 py-2 relative z-10 ${(isTeamMode || gameMode === '1v1') && pIndex === Math.floor(players.length / 2) ? 'border-l-2 border-slate-700/50 bg-black/10' : ''}`}>
                  <div className={`relative flex flex-col gap-0.5 md:gap-1 p-1 md:p-2 rounded md:rounded-lg border transition-all duration-300 hover:bg-white/[0.05] hover:-translate-y-[1px] ${colorClass}`}>
                   {isKingMap && (<div className="absolute -top-2 md:-top-3 left-1/2 -translate-x-1/2 flex items-center gap-0.5 bg-red-600 px-1 md:px-2 rounded text-[7px] md:text-[9px] uppercase font-bold tracking-widest text-white shadow-[0_0_15px_#dc2626] z-10 whitespace-nowrap animate-pulse"><Crown size={8} className="md:w-[10px] md:h-[10px]" />{" "}<span className="hidden sm:inline">{t.kingMap}</span></div>)}
-                  <input type="text" value={time} onChange={(e) => handleTimeChange(gIndex, pIndex, e.target.value)} onBlur={() => handleTimeBlur(gIndex, pIndex)} placeholder="X" className={`w-full text-center bg-black/40 border border-slate-700 rounded px-1 py-1 outline-none tracking-widest text-xs md:text-sm transition-all duration-300 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 hover:border-slate-500 hover:bg-black/60 ${time ? 'text-white' : 'text-slate-600'}`} />
+                  <input type="text" value={time} onChange={(e) => handleTimeChange(gIndex, pIndex, e.target.value)} onBlur={e => handleTimeBlur(gIndex, pIndex, e.target.value)} onKeyDown={e => { if (e.key === 'Enter') e.currentTarget.blur(); }} placeholder="X" className={`w-full text-center bg-black/40 border border-slate-700 rounded px-1 py-1 outline-none tracking-widest text-xs md:text-sm transition-all duration-300 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 hover:border-slate-500 hover:bg-black/60 ${time ? 'text-white' : 'text-slate-600'}`} />
                   <div className="mt-0.5 text-center py-0.5 rounded text-[10px] md:text-sm tracking-wider font-bold">{time ? `+${score}` : '-'}</div>
                  </div>
                 </td>
