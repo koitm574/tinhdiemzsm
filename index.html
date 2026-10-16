@@ -7,6 +7,10 @@
   
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <link rel="stylesheet" href="./access.css">
+  <script src="./access-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js"></script>
+  <script src="./access.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   
   <script>
@@ -141,8 +145,6 @@
   };
   const BROADCAST_BACKGROUND_IMAGE = 'https://i.ibb.co/TxWgMDKd/Untitled.png';
   const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbxkyzTtx4aOKoF8bg-irv2B5NNkHOBtoooJ4UFrifGdhbc-VU-Q3rrAGz-gITLTGtpDPg/exec";
-  const NORMAL_TOP_SCORE = 11;
-  const KING_TOP_SCORE = 12;
   const MAX_PLAYERS = 6;
   const MAP_INDEX = new Map(MAP_POOL.flatMap(group => group.maps.map(map => [map.id, { map, stars: group.stars }])));
   const getMapName = (id, lang) => {
@@ -207,13 +209,13 @@
    return { background: getMapGradient(mapId) };
   };
   const readStorageValue = (key) => {
-   try { return localStorage.getItem(key); } catch (error) { return null; }
+   try { return window.ZsmAccess.storage.get(key); } catch (error) { return null; }
   };
   let storageWarningShown = false;
   const writeStorageValue = (key, value) => {
    try {
     const text = String(value);
-    if (localStorage.getItem(key) !== text) localStorage.setItem(key, text);
+    window.ZsmAccess.storage.set(key, text);
     return true;
    } catch (error) {
     console.error('Không thể lưu dữ liệu:', error);
@@ -253,30 +255,6 @@
    if (v1 === null) return 1;
    if (v2 === null) return 0;
    return v1 < v2 ? 0 : v2 < v1 ? 1 : -1;
-  };
-  const get1v1MatchStatus = (games, matchBO, setBO) => {
-   const gameAssignments = games.map((g, i) => ({ set: Math.floor(i / setBO) + 1, round: i % setBO + 1 }));
-   const mapsUsedSet12 = [], mapsUsedSet3 = [], sets = [], countedGames = [];
-   games.forEach((g, i) => { if (g.mapId) (gameAssignments[i].set < 3 ? mapsUsedSet12 : mapsUsedSet3).push(g.mapId); });
-   const winCond = Math.ceil(setBO / 2), matchWinCond = Math.ceil(matchBO / 2);
-   let p1Sets = 0, p2Sets = 0, p1Rounds = 0, p2Rounds = 0, currentSet = 1, winner = -1;
-   for (let set = 1; set <= matchBO; set++) {
-    const info = { set, p1Rounds: 0, p2Rounds: 0, finished: false, lastGameIndex: -1, lastWinner: -1 };
-    for (let round = 0; round < setBO; round++) {
-     const index = (set - 1) * setBO + round, game = games[index];
-     if (!game || !isFinalTime(game.times[0]) || !isFinalTime(game.times[1])) continue;
-     const result = getFinalWinner(game.times[0], game.times[1]);
-     countedGames.push(index); info.lastGameIndex = index; info.lastWinner = result;
-     if (result === 0) info.p1Rounds++;
-     if (result === 1) info.p2Rounds++;
-     if (info.p1Rounds >= winCond || info.p2Rounds >= winCond) { info.finished = true; break; }
-    }
-    sets.push(info); currentSet = set; p1Rounds = info.p1Rounds; p2Rounds = info.p2Rounds;
-    if (!info.finished) break;
-    if (info.p1Rounds >= winCond) p1Sets++; else p2Sets++;
-    if (p1Sets >= matchWinCond || p2Sets >= matchWinCond) { winner = p1Sets >= matchWinCond ? 0 : 1; break; }
-   }
-   return { p1Sets, p2Sets, p1Rounds, p2Rounds, currentSet, winner, isFinished: winner !== -1, sets, countedGames, gameAssignments, mapsUsedSet12, mapsUsedSet3 };
   };
   const rankByScore = items => {
    const sorted = [...items].sort((a, b) => b.score - a.score);
@@ -1478,25 +1456,27 @@
    useEffect(() => {
      const handleStorageChange = (e) => {
        if (e.newValue === null) return;
-       const value = readStorageValue(e.key);
+       const storageKey = window.ZsmAccess.storage.logicalKey(e.key);
+       if (!storageKey) return;
+       const value = readStorageValue(storageKey);
        if (value === null) return;
        try {
-         if (e.key === 'zsm_games_v11_final') setGames(prev => { const next = normalizeGames(JSON.parse(value)); return next.length ? next : prev; });
-         else if (e.key === 'zsm_players_v11_final') setPlayers(prev => { const next = JSON.parse(value); return Array.isArray(next) && next.length >= 2 && next.length <= MAX_PLAYERS && next.every(p => typeof p === 'string') ? next : prev; });
-         else if (e.key === 'zsm_tour_name') setTournamentName(value);
-         else if (e.key === 'zsm_team1_name') setTeam1Name(value);
-         else if (e.key === 'zsm_team2_name') setTeam2Name(value);
-         else if (e.key === 'zsm_game_mode_v11' && ['solo', '1v1', '2v2', '3v3'].includes(value)) setGameMode(value);
-         else if (e.key === 'zsm_solo_match_bo' && [1, 3].includes(Number(value))) setSoloMatchBO(Number(value));
-         else if (e.key === 'zsm_solo_set_bo' && [7, 9, 11, 13].includes(Number(value))) setSoloSetBO(Number(value));
-         else if (e.key === 'zsm_banned_maps_1v1_v11') setBannedMaps(JSON.parse(value));
-         else if (e.key === 'zsm_player_photos_v1') setPlayerPhotos(JSON.parse(value));
-         else if (e.key === 'zsm_cars_db_v1') setCarDatabase(JSON.parse(value));
-         else if (e.key === 'zsm_pets_db_v1') setPetDatabase(JSON.parse(value));
-         else if (e.key === 'zsm_personal_records_v11_final') setPersonalRecords(JSON.parse(value));
-         else if (e.key === 'zsm_lang_v11_final') setLang(normalizeLanguage(value));
-         else if (e.key === 'zsm_saved_groups_v1') setSavedGroups(JSON.parse(value));
-         else if (e.key === 'zsm_ecus_db_v1') setEcuDatabase(JSON.parse(value));
+         if (storageKey === 'zsm_games_v11_final') setGames(prev => { const next = normalizeGames(JSON.parse(value)); return next.length ? next : prev; });
+         else if (storageKey === 'zsm_players_v11_final') setPlayers(prev => { const next = JSON.parse(value); return Array.isArray(next) && next.length >= 2 && next.length <= MAX_PLAYERS && next.every(p => typeof p === 'string') ? next : prev; });
+         else if (storageKey === 'zsm_tour_name') setTournamentName(value);
+         else if (storageKey === 'zsm_team1_name') setTeam1Name(value);
+         else if (storageKey === 'zsm_team2_name') setTeam2Name(value);
+         else if (storageKey === 'zsm_game_mode_v11' && ['solo', '1v1', '2v2', '3v3'].includes(value)) setGameMode(value);
+         else if (storageKey === 'zsm_solo_match_bo' && [1, 3].includes(Number(value))) setSoloMatchBO(Number(value));
+         else if (storageKey === 'zsm_solo_set_bo' && [7, 9, 11, 13].includes(Number(value))) setSoloSetBO(Number(value));
+         else if (storageKey === 'zsm_banned_maps_1v1_v11') setBannedMaps(JSON.parse(value));
+         else if (storageKey === 'zsm_player_photos_v1') setPlayerPhotos(JSON.parse(value));
+         else if (storageKey === 'zsm_cars_db_v1') setCarDatabase(JSON.parse(value));
+         else if (storageKey === 'zsm_pets_db_v1') setPetDatabase(JSON.parse(value));
+         else if (storageKey === 'zsm_personal_records_v11_final') setPersonalRecords(JSON.parse(value));
+         else if (storageKey === 'zsm_lang_v11_final') setLang(normalizeLanguage(value));
+         else if (storageKey === 'zsm_saved_groups_v1') setSavedGroups(JSON.parse(value));
+         else if (storageKey === 'zsm_ecus_db_v1') setEcuDatabase(JSON.parse(value));
        } catch(err) { console.error("Sync Error", err); }
      };
      window.addEventListener('storage', handleStorageChange);
@@ -1747,7 +1727,46 @@
      setViewSet(1);
      showDialogAlert(t.groupLoaded);
    };
-   const matchStatus1v1 = useMemo(() => gameMode === '1v1' ? get1v1MatchStatus(games, soloMatchBO, soloSetBO) : null, [games, gameMode, soloMatchBO, soloSetBO]);
+   const scoreRequestKey = useMemo(() => JSON.stringify({
+    p_player_count: players.length, p_mode: gameMode, p_match_bo: soloMatchBO, p_set_bo: soloSetBO,
+    p_games: games.map(game => ({ mapId: game.mapId, times: game.times }))
+   }), [players.length, gameMode, soloMatchBO, soloSetBO, games]);
+   const scoreTopology = `${gameMode}:${soloMatchBO}:${soloSetBO}`;
+   const [serverScores, setServerScores] = useState({ key: '', topology: '', scores: [], matchStatus: null });
+   const [scoreError, setScoreError] = useState('');
+   const [scoreRetry, setScoreRetry] = useState(0);
+   const scoreReady = serverScores.key === scoreRequestKey && !scoreError;
+   useEffect(() => {
+    let alive = true;
+    const controller = new AbortController();
+    let timedOut = false, requestTimeout;
+    setScoreError('');
+    const timer = setTimeout(async () => {
+     requestTimeout = setTimeout(() => { timedOut = true; controller.abort(); }, 15000);
+     try {
+      const result = await window.ZsmAccess.calculate(JSON.parse(scoreRequestKey), controller.signal);
+      if (alive) setServerScores({ ...result, key: scoreRequestKey, topology: scoreTopology });
+     } catch (error) {
+      if (alive && (!controller.signal.aborted || timedOut)) setScoreError(lang === 'vi' ? 'Chưa lấy được điểm. Kiểm tra kết nối rồi thử lại.' : 'Scores unavailable. Check your connection and retry.');
+     } finally { clearTimeout(requestTimeout); }
+    }, 250);
+    return () => { alive = false; clearTimeout(timer); clearTimeout(requestTimeout); controller.abort(); };
+   }, [scoreRequestKey, scoreRetry]);
+   const matchStatus1v1 = useMemo(() => {
+    if (gameMode !== '1v1') return null;
+    const gameAssignments = games.map((game, i) => ({ set: Math.floor(i / soloSetBO) + 1, round: i % soloSetBO + 1 }));
+    const mapsUsedSet12 = [], mapsUsedSet3 = [];
+    games.forEach((game, i) => { if (game.mapId) (gameAssignments[i].set < 3 ? mapsUsedSet12 : mapsUsedSet3).push(game.mapId); });
+    const status = serverScores.topology === scoreTopology && serverScores.matchStatus ? serverScores.matchStatus : {
+     p1Sets: 0, p2Sets: 0, p1Rounds: 0, p2Rounds: 0, currentSet: 1, winner: -1, isFinished: false,
+     sets: [{ set: 1, p1Rounds: 0, p2Rounds: 0, finished: false, lastGameIndex: -1, lastWinner: -1 }], countedGames: []
+    };
+    return { ...status, gameAssignments, mapsUsedSet12, mapsUsedSet3 };
+   }, [gameMode, games, soloSetBO, scoreTopology, serverScores]);
+   const scoringNotice = !scoreReady && <div className="zsm-scoring-notice" role={scoreError ? 'alert' : 'status'}>
+    {scoreError || (lang === 'vi' ? 'Đang tính điểm…' : 'Calculating scores…')}
+    {scoreError && <button type="button" onClick={() => setScoreRetry(n => n + 1)}>{lang === 'vi' ? 'Thử lại' : 'Retry'}</button>}
+   </div>;
    useEffect(() => { if (gameMode === '1v1' && matchStatus1v1?.currentSet) setViewSet(matchStatus1v1.currentSet); }, [matchStatus1v1?.currentSet, gameMode]);
    useEffect(() => { setViewSet(value => Math.max(1, Math.min(soloMatchBO, value))); }, [soloMatchBO]);
    useEffect(() => { setBroadcastState(prev => prev.gameIndex < games.length ? prev : { ...prev, gameIndex: Math.max(0, games.length - 1) }); }, [games.length]);
@@ -1756,6 +1775,7 @@
     return games.map(g => g.mapId).filter(id => id !== "");
    }, [games, gameMode, matchStatus1v1]);
    const exportProfessionalExcel = async () => {
+    if (!scoreReady) return showDialogAlert(lang === 'vi' ? 'Hãy chờ hệ thống tính điểm xong trước khi xuất Excel.' : 'Wait for scoring before exporting Excel.');
     const workbook = new ExcelJS.Workbook();
     const sheet = workbook.addWorksheet('Leaderboard');
     const halfLen = Math.floor(players.length / 2);
@@ -1865,43 +1885,20 @@
     anchor.download = `Leaderboard_${new Date().getTime()}.xlsx`; anchor.click();
     window.URL.revokeObjectURL(url);
    };
-   const calculateGame = (gameIndex, times) => {
-    const parsed = times.slice(0, players.length).map(parseTime);
-    const valids = parsed.filter(t => t !== null);
-    const bestTime = valids.length > 0 ? Math.min(...valids) : null;
-    return parsed.map((timeMs, pIndex) => {
-     if (gameMode === '1v1') {
-      const isBest = getFinalWinner(times[0], times[1]) === pIndex && !!matchStatus1v1?.countedGames.includes(gameIndex);
-      return { score: isBest ? 1 : 0, isBest: isBest, isKingMap: false, colorClass: isBest ? 'text-amber-950 bg-amber-400 font-black shadow-[0_5px_15px_rgba(251,191,36,0.4)] border-amber-300' : 'text-slate-500 bg-slate-900/80 border-transparent' };
-     }
-     const kingMapGameIndex = getKingMapIndex(pIndex, players.length, gameMode);
-     const isKingMap = (gameIndex === kingMapGameIndex);
-     if (timeMs === null) return { score: 0, isBest: false, isKingMap, colorClass: 'text-slate-600 bg-slate-900/50 border-transparent' };
-     const isBest = (timeMs === bestTime);
-     let score = 0, colorClass = 'text-cyan-400 bg-slate-800/80 border-transparent hover:border-slate-600';
-     if (isBest) {
-      score = isKingMap ? KING_TOP_SCORE : NORMAL_TOP_SCORE;
-      colorClass = isKingMap ? 'text-red-100 bg-red-600 font-black shadow-[0_5px_15px_rgba(220,38,38,0.4)] border-red-400' : 'text-amber-950 bg-amber-400 font-black shadow-[0_5px_15px_rgba(251,191,36,0.4)] border-amber-300';
-     } else {
-      const diffSec = Math.floor((timeMs - bestTime) / 1000);
-      score = Math.max(0, 10 - diffSec);
-      if (score === 0) colorClass = 'text-slate-500 bg-slate-900/80 border-transparent';
-     }
-     return { score, isBest, isKingMap, colorClass };
-    });
-   };
-   const gameCalculations = useMemo(() => new Map(), [games, players.length, gameMode, matchStatus1v1]);
-   const getGameCalculations = (gameIndex, times) => {
-    if (times !== games[gameIndex]?.times) return calculateGame(gameIndex, times);
-    if (!gameCalculations.has(gameIndex)) gameCalculations.set(gameIndex, calculateGame(gameIndex, times));
-    return gameCalculations.get(gameIndex);
-   };
+   const getGameCalculations = (gameIndex) => players.map((_, pIndex) => {
+    const result = scoreReady ? serverScores.scores[gameIndex]?.[pIndex] : null;
+    if (!result) return { score: 0, isBest: false, isKingMap: false, colorClass: 'text-slate-600 bg-slate-900/50 border-transparent' };
+    const { score, isBest, isKingMap } = result;
+    const colorClass = isBest ? (isKingMap ? 'text-red-100 bg-red-600 font-black shadow-[0_5px_15px_rgba(220,38,38,0.4)] border-red-400' : 'text-amber-950 bg-amber-400 font-black shadow-[0_5px_15px_rgba(251,191,36,0.4)] border-amber-300') :
+     score === 0 ? 'text-slate-500 bg-slate-900/80 border-transparent' : 'text-cyan-400 bg-slate-800/80 border-transparent hover:border-slate-600';
+    return { score, isBest, isKingMap, colorClass };
+   });
    const totals = useMemo(() => {
     if (gameMode === '1v1' && matchStatus1v1) return [matchStatus1v1.p1Rounds, matchStatus1v1.p2Rounds];
     const sums = Array(players.length).fill(0);
     games.forEach((g, gIdx) => { getGameCalculations(gIdx, g.times).forEach((c, pIdx) => { if (pIdx < players.length) sums[pIdx] += c.score; }); });
     return sums;
-   }, [games, players, gameMode, matchStatus1v1]);
+   }, [games, players, gameMode, matchStatus1v1, serverScores, scoreReady]);
    const activeLeaderboard = useMemo(() => {
     const halfLen = Math.floor(players.length / 2);
     if (isTeamMode) {
@@ -1987,6 +1984,7 @@
    if (isBroadcastTab) {
      return (
       <>
+         {scoringNotice}
         <style dangerouslySetInnerHTML={{__html: `html, body { zoom: 1 !important; transform: none !important; width: 100vw !important; height: 100vh !important; overflow: hidden !important; margin: 0; padding: 0; }`}} />
         <BroadcastOverlay broadcastState={broadcastState} setBroadcastState={setBroadcastState} viewSet={viewSet} setViewSet={setViewSet} soloSetBO={soloSetBO} soloMatchBO={soloMatchBO} players={players} personalRecords={personalRecords} games={games} totals={totals} getGameCalculations={getGameCalculations} matchStatus1v1={matchStatus1v1} lang={lang} t={t} gameMode={gameMode} tournamentName={tournamentName} team1Name={displayTeam1Name} team2Name={displayTeam2Name} carDatabase={carDatabase} petDatabase={petDatabase} ecuDatabase={ecuDatabase} playerPhotos={playerPhotos} onAssetSelect={handleAssetSelect} onClose={() => window.close()} />
       </>
@@ -1994,6 +1992,7 @@
    }
    return (
     <div className="min-h-screen relative overflow-x-hidden pb-20 font-sans">
+     {scoringNotice}
      <CustomDialog dialog={dialog} setDialog={setDialog} />
      <>
       <div className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-[199] transition-opacity duration-300 ${isSidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} onClick={() => setIsSidebarOpen(false)}></div>
@@ -2141,7 +2140,7 @@
         <button onClick={() => setShowDbModal(true)} className="flex items-center justify-center p-2 md:p-2.5 text-cyan-400 hover:text-white hover:bg-cyan-600/30 rounded-xl font-bold transition-all group" title={t.dbBtn}>
          <UserCircle size={18} className="group-hover:scale-110 transition-transform"/>
         </button>
-        <button onClick={exportProfessionalExcel} className="flex items-center justify-center p-2 md:p-2.5 text-emerald-400 hover:text-white hover:bg-emerald-600/30 rounded-xl font-bold transition-all" title={t.export}>
+        <button disabled={!scoreReady} onClick={exportProfessionalExcel} className="flex items-center justify-center p-2 md:p-2.5 text-emerald-400 hover:text-white hover:bg-emerald-600/30 rounded-xl font-bold transition-all" title={t.export}>
          <Download size={18}/>
         </button>
         <button onClick={clearAll} className="flex items-center justify-center p-2 md:p-2.5 text-rose-400 hover:text-white hover:bg-rose-600/30 rounded-xl font-bold transition-all group" title={t.reset}>
@@ -2330,7 +2329,9 @@
    );
   }
   const root = ReactDOM.createRoot(document.getElementById('root'));
-  root.render(<App />);
+  // Fail closed if the access controller could not load. App never mounts first.
+  const AccessBoundary = window.ZsmAccess?.Boundary;
+  root.render(AccessBoundary ? <AccessBoundary><App /></AccessBoundary> : <div role="alert" style={{padding:32,color:'#e2e8f0'}}>Không tải được đăng nhập. Vui lòng kiểm tra kết nối rồi tải lại trang.</div>);
   </script>
 </body>
 </html>
