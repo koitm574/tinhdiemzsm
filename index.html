@@ -14,6 +14,7 @@
   </script>
 
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
   
@@ -120,7 +121,7 @@
   const Cat = (p) => <IconWrapper icon="ph-fill ph-cat" {...p} />;
   const UserCircle = (p) => <IconWrapper icon="ph-fill ph-user-circle" {...p} />;
   const Cpu = (p) => <IconWrapper icon="ph-fill ph-cpu" {...p} />;
-  const MAP_POOL=[{stars:7,maps:[{id:'m7_1',vi:'Sân Bay Siêu Tốc',en:'Space Station',cn:'极速空港',th:'สปีดพอร์ต'},{id:'m7_2',vi:'Sơn Hải Họa Cảnh',en:'Painted Landscape',cn:'山海画境',th:'ดินแดนซานไh่'}]},{stars:6,maps:[{id:'m6_1',vi:'Hẻm Núi Lớn',en:'Grand Canyon',cn:'美洲大峡谷',th:'แกรนด์แคนยอน'},{id:'m6_2',vi:'Scotland',en:'Scotland Yard',cn:'苏格兰微风',th:'สกอตแลนด์'}]},{stars:5,maps:[{id:'m5_1',vi:'Căn Cứ Sao Hỏa',en:'Mars Base',cn:'火星基地',th:'ฐานดาวอังคาร'},{id:'m5_2',vi:'Mạc Cao Quật',en:'Mogao Grottoes',cn:'莫高窟',th:'ถ้ำมั่วเกา'},{id:'m5_3',vi:'Atlantis',en:'Atlantis',cn:'亚特兰蒂斯',th:'แอตแลนติส'},{id:'m5_4',vi:'Atlantis (Ngược)',en:'Atlantis(Reversed)',cn:'亚特兰蒂斯（反向）',th:'แอตแลนติส(ย้อนกลับ)'},{id:'m5_5',vi:'Chuyến Đi Huyền Thoại',en:'Epic Legend',cn:'传奇之旅',th:'การเดินทางในตำนาน'},{id:'m5_6',vi:'Núi Mùa Thu',en:'Scenic Hills',cn:'秋之物语',th:'ภูเขาฤดูใบไม้ร่วง'},{id:'m5_7',vi:'Công Trường Phố Cổ',en:'Old Street Construction',cn:'老街工地',th:'เขตก่อสร้างเมืองเก่า'},{id:'m5_8',vi:'Thành Lá Đỏ',en:'Crimson Leaves Town',cn:'红叶城',th:'เมืองใบไม้แดง'},{id:'m5_9',vi:'Vực Sâu Băng Giá',en:'Snow Chasm',cn:'冰川深渊',th:'หุบเหวน้ำแข็ง'}]},{stars:4,maps:[{id:'m4_1',vi:'Tây Hồ',en:'West Lake',cn:'西湖',th:'ทะเลสาบซีหู'},{id:'m4_2',vi:'Trường Thành',en:'Great Wall',cn:'长城',th:'กำแพงเมืองจีน'},{id:'m4_3',vi:'Đại Lộ 1',en:'Highway 1',cn:'1号公路',th:'ทางหลวงหมายเลข 1'},{id:'m4_4',vi:'TROY-Sân Thử Nghiệm Số 0',en:'TROY - Experiment Field O',cn:'特洛伊-零号试验场',th:'TROY-สนามทดสอบหมายเลข 0'},{id:'m4_5',vi:'Thiên Hộ Miêu Trại',en:'Thousand-House Miaozhai',cn:'千户苗寨',th:'หมู่บ้านแม้ว'},{id:'m4_6',vi:'Sân Bay Cuồng Phong',en:'Windy Airport',cn:'狂风机场',th:'สนามบินพายุ'},{id:'m4_7',vi:'Quyết Chiến! Đỉnh Núi Tuyết',en:'Decisive Battle! Snow Mountain',cn:'决战！雪山之巅',th:'ศึกตัดสิน! ยอดเขาหิมะ'},{id:'m4_8',vi:'Mơ Về Cổ Thục',en:'Back to Ancient Shu',cn:'梦回古蜀',th:'ฝันถึงสู่โบราณ'},{id:'m4_9',vi:'Z-Space',en:'Z-Space',cn:'Z-Space',th:'Z-Space'},{id:'m4_10',vi:'Cổ Đô Thiên Chiếu',en:'Eternal Ancient Capital',cn:'天照古都',th:'เมืองหลวงอามาเทราสึ'},{id:'m4_11',vi:'Đua Thuyền Đoan Ngọ',en:'Dragon Boat Race',cn:'端午龙舟',th:'แข่งเรือยาว'},{id:'m4_12',vi:'Tiệc Rượu Bên Suối',en:'Utopia',cn:'沁园春',th:'งานเลี้ยงริมลำธาร'},{id:'m4_13',vi:'Đỉnh Titan',en:'Titan\'s Peak',cn:'泰坦巨峰',th:'ยอดเขาไททัน'},{id:'m4_14',vi:'Mây Cuộn Cổng Trời',en:'Clouds Heavenly Gate',cn:'云游天府',th:'เมฆาม้วนประตูสวรรค์'},{id:'m4_15',vi:'Tâm Uyên',en:'Soul life',cn:'心渊',th:'Soul life'}]},{stars:3,maps:[{id:'m3_1',vi:'Thành Phố 11',en:'City 11',cn:'十一城',th:'เมือง 11'},{id:'m3_2',vi:'Ngư Trường',en:'North Sea',cn:'渔场',th:'ประมง'},{id:'m3_3',vi:'TROY-Xưởng Nung Chảy',en:'TROY - Smeltery',cn:'熔炉车间',th:'TROY-โรงหลอม'},{id:'m3_4',vi:'Quý Châu Lộ',en:'All the way to Qian',cn:'一路向黔',th:'ถนนกุ้ยโจว'},{id:'m3_5',vi:'Trụ Sở Chính Alpha',en:'Alpha Headquarters',cn:'阿尔法总部',th:'ศูนย์บัญชาการอัลฟ่า'},{id:'m3_6',vi:'Quyết chiến! Đôi Mắt Miền Biển',en:'Decisive Battle! Eye of the Sea',cn:'决战！海滨之眼',th:'ศึกตัดสิน! ดวงตาแห่งท้องทะเล'},{id:'m3_7',vi:'Thiên Cung Tầm Mộng',en:'Dream of Heavenly Palace',cn:'寻梦天宫',th:'วังในฝัน'},{id:'m3_8',vi:'Căn Cứ Siêu Huyền',en:'超弦基地',cn:'超弦基地',th:'ฐานทัพซุปเปอร์'},{id:'m3_9',vi:'Bóng Hình Eden',en:'Glimpses of Eden',cn:'伊甸幻象',th:'เงาแห่งอีเดน'},{id:'m3_10',vi:'Tuyệt Cảnh Giang Sơn',en:'Stunning Jiangxi',cn:'绝色江西',th:'ทิวทัศน์แม่น้ำ'},{id:'m3_11',vi:'Vành Đai Troy',en:'The Circular City of Troy',cn:'特洛伊环城',th:'เมืองทรอย'},{id:'m3_12',vi:'Hồ Long Tinh',en:'Dragon Crystal Lake',cn:'龙晶湖',th:'ทะเลสาบมังกรคริสตัล'},{id:'m3_13',vi:'Vụ Sơn Ngũ Hành',en:'Wushan Five Elements',cn:'雾山五行',th:'ภูเขาหมอกห้าธาตุ'},{id:'m3_14',vi:'Bờ Biển Lãng Mạn',en:'Romantic Seaside',cn:'浪漫海岸',th:'ชายหาดโรแมนติก'},{id:'m3_15',vi:'Đạp Tuyết Tầm Xuân',en:'Spring\'s Footsteps',cn:'踏雪寻春',th:'ย่างก้าวแห่งฤดูใบไม้ผลิ'},{id:'m3_16',vi:'Thuyền Nhỏ Giữa Tuyết',en:'Crimson Plum In Snow',cn:'兰舟听雪',th:'ย่างก้าวแห่งฤดูใบไม้ผลิ'}]}];
+  const MAP_POOL=[{stars:7,maps:[{id:'m7_1',vi:'Sân Bay Siêu Tốc',en:'Space Station',cn:'极速空港'},{id:'m7_2',vi:'Sơn Hải Họa Cảnh',en:'Painted Landscape',cn:'山海画境'}]},{stars:6,maps:[{id:'m6_1',vi:'Hẻm Núi Lớn',en:'Grand Canyon',cn:'美洲大峡谷'},{id:'m6_2',vi:'Scotland',en:'Scotland Yard',cn:'苏格兰微风'}]},{stars:5,maps:[{id:'m5_1',vi:'Căn Cứ Sao Hỏa',en:'Mars Base',cn:'火星基地'},{id:'m5_2',vi:'Mạc Cao Quật',en:'Mogao Grottoes',cn:'莫高窟'},{id:'m5_3',vi:'Atlantis',en:'Atlantis',cn:'亚特兰蒂斯'},{id:'m5_4',vi:'Atlantis (Ngược)',en:'Atlantis(Reversed)',cn:'亚特兰蒂斯（反向）'},{id:'m5_5',vi:'Chuyến Đi Huyền Thoại',en:'Epic Legend',cn:'传奇之旅'},{id:'m5_6',vi:'Núi Mùa Thu',en:'Scenic Hills',cn:'秋之物语'},{id:'m5_7',vi:'Công Trường Phố Cổ',en:'Old Street Construction',cn:'老街工地'},{id:'m5_8',vi:'Thành Lá Đỏ',en:'Crimson Leaves Town',cn:'红叶城'},{id:'m5_9',vi:'Vực Sâu Băng Giá',en:'Snow Chasm',cn:'冰川深渊'}]},{stars:4,maps:[{id:'m4_1',vi:'Tây Hồ',en:'West Lake',cn:'西湖'},{id:'m4_2',vi:'Trường Thành',en:'Great Wall',cn:'长城'},{id:'m4_3',vi:'Đại Lộ 1',en:'Highway 1',cn:'1号公路'},{id:'m4_4',vi:'TROY-Sân Thử Nghiệm Số 0',en:'TROY - Experiment Field O',cn:'特洛伊-零号试验场'},{id:'m4_5',vi:'Thiên Hộ Miêu Trại',en:'Thousand-House Miaozhai',cn:'千户苗寨'},{id:'m4_6',vi:'Sân Bay Cuồng Phong',en:'Windy Airport',cn:'狂风机场'},{id:'m4_7',vi:'Quyết Chiến! Đỉnh Núi Tuyết',en:'Decisive Battle! Snow Mountain',cn:'决战！雪山之巅'},{id:'m4_8',vi:'Mơ Về Cổ Thục',en:'Back to Ancient Shu',cn:'梦回古蜀'},{id:'m4_9',vi:'Z-Space',en:'Z-Space',cn:'Z-Space'},{id:'m4_10',vi:'Cổ Đô Thiên Chiếu',en:'Eternal Ancient Capital',cn:'天照古都'},{id:'m4_11',vi:'Đua Thuyền Đoan Ngọ',en:'Dragon Boat Race',cn:'端午龙舟'},{id:'m4_12',vi:'Tiệc Rượu Bên Suối',en:'Utopia',cn:'沁园春'},{id:'m4_13',vi:'Đỉnh Titan',en:'Titan\'s Peak',cn:'泰坦巨峰'},{id:'m4_14',vi:'Mây Cuộn Cổng Trời',en:'Clouds Heavenly Gate',cn:'云游天府'},{id:'m4_15',vi:'Tâm Uyên',en:'Soul life',cn:'心渊'}]},{stars:3,maps:[{id:'m3_1',vi:'Thành Phố 11',en:'City 11',cn:'十一城'},{id:'m3_2',vi:'Ngư Trường',en:'North Sea',cn:'渔场'},{id:'m3_3',vi:'TROY-Xưởng Nung Chảy',en:'TROY - Smeltery',cn:'熔炉车间'},{id:'m3_4',vi:'Quý Châu Lộ',en:'All the way to Qian',cn:'一路向黔'},{id:'m3_5',vi:'Trụ Sở Chính Alpha',en:'Alpha Headquarters',cn:'阿尔法总部'},{id:'m3_6',vi:'Quyết chiến! Đôi Mắt Miền Biển',en:'Decisive Battle! Eye of the Sea',cn:'决战！海滨之眼'},{id:'m3_7',vi:'Thiên Cung Tầm Mộng',en:'Dream of Heavenly Palace',cn:'寻梦天宫'},{id:'m3_8',vi:'Căn Cứ Siêu Huyền',en:'超弦基地',cn:'超弦基地'},{id:'m3_9',vi:'Bóng Hình Eden',en:'Glimpses of Eden',cn:'伊甸幻象'},{id:'m3_10',vi:'Tuyệt Cảnh Giang Sơn',en:'Stunning Jiangxi',cn:'绝色江西'},{id:'m3_11',vi:'Vành Đai Troy',en:'The Circular City of Troy',cn:'特洛伊环城'},{id:'m3_12',vi:'Hồ Long Tinh',en:'Dragon Crystal Lake',cn:'龙晶湖'},{id:'m3_13',vi:'Vụ Sơn Ngũ Hành',en:'Wushan Five Elements',cn:'雾山五行'},{id:'m3_14',vi:'Bờ Biển Lãng Mạn',en:'Romantic Seaside',cn:'浪漫海岸'},{id:'m3_15',vi:'Đạp Tuyết Tầm Xuân',en:'Spring\'s Footsteps',cn:'踏雪寻春'},{id:'m3_16',vi:'Thuyền Nhỏ Giữa Tuyết',en:'Crimson Plum In Snow',cn:'兰舟听雪'}]}];
   const MAP_BACKGROUNDS={'m7_1':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20190108/1e2681225a98cd914a54fc0765478dd3.jpg','m7_2':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20250113/17367779105688.png','m6_1':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/61_9394613.jpg','m6_2':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20211115/16369731693212.png','m5_1':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20250325/17428875469403.png','m5_2':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20180904/e4e67d4825b6cc7ecf1a5a3491488314.jpg','m5_3':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/54_976883.jpg','m5_4':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/55_9801857.jpg','m5_5':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/53_9496680.jpg','m5_6':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/52_9429115.jpg','m5_7':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20220324/16481195029550.png','m5_8':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20230111/16734277903891.png','m5_9':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20240326/17114615429011.png','m4_1':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20180424/4ceb12a7da81fc78485cd451738f1ddf.jpg','m4_2':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20180326/ed0633a8e49bc3058e8eda3219440918.jpg','m4_3':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20180119/a4d8882662a3508ced77be491fd925ff.jpg','m4_4':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20190717/07b7aec16c1011992fb28c12a399092f.jpg','m4_5':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20200921/3265566121a19cae1d3546619b686fb0.jpg','m4_6':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20210312/16155457318502.jpg','m4_7':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20210715/16263281507258.jpg','m4_8':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20210915/16316995903827.jpg','m4_9':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20220516/16526869593306.png','m4_10':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20221011/16654598587252.png','m4_11':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20240526/17167362763162.png','m4_12':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20231221/17031734536016.png','m4_13':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20241126/17326359998189.png','m4_14':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20250919/17582127372131.png','m4_15':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20251118/17634577032615.png','m3_1':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps///image/20171211/31_8827468.jpg','m3_2':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20181011/b1b25310d6f371cf1a1d607a585e8d82.jpg','m3_3':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20190717/54ec6a4988a53867f527e2be8cb0f92b.jpg','m3_4':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20200921/25267e48557d7452e401e470886dc721.jpg','m3_5':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps///image/20210108/c4234de94254c7118bcd8c15517b42a6.jpg','m3_6':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20210823/16296862647665.jpg','m3_7':'https://i.ibb.co/VYXpsN9b/16526827657994.png','m3_8':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20221123/16692118937198.png','m3_9':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20231121/17005788209567.png','m3_10':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20230919/16951270513077.png','m3_11':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20230724/16901918219353.png','m3_12':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20230724/16901915868769.png','m3_13':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20240725/17218374934897.png','m3_14':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20250721/17530812968308.png','m3_15':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20260206/17703114652236.png','m3_16':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20260206/17703122288303.png'};
   const MAP_LAPS = {
    'm7_1': 1, 'm7_2': 1,
@@ -206,14 +207,33 @@
    }
    return { background: getMapGradient(mapId) };
   };
+  let accountStorageId = null;
+  const accountStorageKey = key => accountStorageId && key !== 'zsm_lang_v11_final' ? `zsm_user:${accountStorageId}:${key}` : key;
+  const accountEventKey = key => key === 'zsm_lang_v11_final' ? key : accountStorageId && key?.startsWith(`zsm_user:${accountStorageId}:`) ? key.slice(`zsm_user:${accountStorageId}:`.length) : null;
+  const activateAccountStorage = profile => {
+   accountStorageId = profile.id;
+   // Preserve old browser data for the first administrator, without deleting
+   // the original keys. Any newer account data is retained in a backup first.
+   if(profile.role !== 'admin') return;
+   try {
+    if(localStorage.getItem('zsm_legacy_owner_v1')) return;
+    const keys = ['zsm_tour_name','zsm_team1_name','zsm_team2_name','zsm_game_mode_v11','zsm_solo_match_bo','zsm_solo_set_bo','zsm_players_v11_final','zsm_games_v11_final','zsm_personal_records_v11_final','zsm_cars_db_v1','zsm_pets_db_v1','zsm_ecus_db_v1','zsm_player_photos_v1','zsm_banned_maps_1v1_v11','zsm_saved_groups_v1','zsm_ratio_scoreboard','zsm_ratio_prematch','zsm_ratio_postmatch'];
+    const backup = {};
+    keys.forEach(key => { const value=localStorage.getItem(accountStorageKey(key)); if(value!==null)backup[key]=value; });
+    if(Object.keys(backup).length)localStorage.setItem(`zsm_backup:${profile.id}:${Date.now()}`,JSON.stringify(backup));
+    keys.forEach(key => { const value=localStorage.getItem(key); if(value!==null)localStorage.setItem(accountStorageKey(key),value); });
+    localStorage.setItem('zsm_legacy_owner_v1',profile.id);
+   } catch(error) { console.error('Legacy data migration failed',error); }
+  };
   const readStorageValue = (key) => {
-   try { return localStorage.getItem(key); } catch (error) { return null; }
+   try { return localStorage.getItem(accountStorageKey(key)); } catch (error) { return null; }
   };
   let storageWarningShown = false;
   const writeStorageValue = (key, value) => {
    try {
     const text = String(value);
-    if (localStorage.getItem(key) !== text) localStorage.setItem(key, text);
+    const storageKey = accountStorageKey(key);
+    if (localStorage.getItem(storageKey) !== text) localStorage.setItem(storageKey, text);
     return true;
    } catch (error) {
     console.error('Không thể lưu dữ liệu:', error);
@@ -321,7 +341,6 @@
        <div className="p-1">
         <div className="px-2 py-1.5 text-xs text-slate-400 hover:bg-slate-800 rounded cursor-pointer mb-1" onClick={() => { onChange(''); setIsOpen(false); setSearchTerm(''); }}>-- {isBan ? t.banMap : t.selectMap} --</div>
         {MAP_POOL.map(group => {
-         const mapLang = lang === 'th' ? 'en' : lang;
          const filteredMaps = group.maps.filter(m => getMapName(m.id, lang).toLowerCase().includes(searchTerm.toLowerCase()));
          if (filteredMaps.length === 0) return null;
          return (
@@ -1419,13 +1438,183 @@
     </div>
    );
   };
-  function App() {
+  // Account UI is isolated from the scoring and broadcast components.
+  const SUPABASE_URL = 'https://aoqxlqakamjyrybxqmby.supabase.co';
+  const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_6FYRU_tTf7NeLy2QkkLE_Q_7V7kBBjg';
+  const accountClient = window.supabase?.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+  const ACCOUNT_COPY = {
+   vi: { account:'Tài khoản', login:'Đăng nhập', register:'Đăng ký', logout:'Đăng xuất', email:'Email', password:'Mật khẩu', name:'Tên hiển thị', confirmPassword:'Nhập lại mật khẩu', forgot:'Quên mật khẩu?', reset:'Gửi liên kết đặt lại', back:'Quay lại đăng nhập', newPassword:'Mật khẩu mới', changePassword:'Đổi mật khẩu', save:'Lưu', close:'Đóng', wait:'Đang xử lý…', loading:'Đang kiểm tra tài khoản…', admin:'Quản trị viên', member:'Thành viên', active:'Hoạt động', blocked:'Đã khóa', manager:'Quản trị tài khoản', create:'Tạo tài khoản', refresh:'Làm mới', role:'Quyền', status:'Trạng thái', actions:'Thao tác', search:'Tìm email hoặc tên trong trang này…', empty:'Không có tài khoản phù hợp.', previous:'Trang trước', next:'Trang sau', page:'Trang', created:'Ngày tạo', lastLogin:'Đăng nhập gần nhất', never:'Chưa đăng nhập', checkEmail:'Hãy kiểm tra email để xác nhận tài khoản.', resetSent:'Nếu email tồn tại, bạn sẽ nhận được liên kết đặt lại mật khẩu.', passwordChanged:'Đã đổi mật khẩu.', createdOk:'Đã tạo tài khoản. Hãy cung cấp mật khẩu riêng cho người dùng.', saved:'Đã lưu thay đổi.', minPassword:'Mật khẩu cần từ 10 đến 128 ký tự.', mismatch:'Hai mật khẩu không trùng nhau.', blockedMessage:'Tài khoản đã bị khóa. Vui lòng liên hệ quản trị viên.', connection:'Chưa thể xác minh tài khoản. Kiểm tra kết nối rồi thử lại.', retry:'Thử lại', signInNeeded:'Đăng nhập để sử dụng bảng tính điểm.', confirmUpdate:'Lưu thay đổi tên, quyền và trạng thái cho tài khoản này?', selfProtected:'Bạn không thể tự hạ quyền hoặc tự khóa tài khoản.', noAdmin:'Chỉ quản trị viên đang hoạt động mới được quản lý tài khoản.', invalid:'Thông tin chưa hợp lệ.', authFailed:'Email hoặc mật khẩu không đúng, hoặc tài khoản chưa được kích hoạt.', emailUnconfirmed:'Bạn cần xác nhận email trước khi đăng nhập.', rateLimit:'Bạn thao tác quá nhanh. Vui lòng thử lại sau.', failed:'Thao tác chưa thành công. Vui lòng thử lại.', createFailed:'Không thể tạo tài khoản. Kiểm tra email đã tồn tại và yêu cầu mật khẩu.', lastAdmin:'Phải còn ít nhất một quản trị viên hoạt động.', notFound:'Không tìm thấy tài khoản.', sdkMissing:'Không tải được phần đăng nhập. Kiểm tra mạng rồi tải lại trang.', registration:'Chưa có tài khoản?', existing:'Đã có tài khoản?', temporaryPassword:'Mật khẩu ban đầu (10–128 ký tự)', passwordHint:'Bạn có thể đổi mật khẩu trong menu tài khoản.', me:'Bạn', cancel:'Hủy' },
+   en: { account:'Account', login:'Sign in', register:'Sign up', logout:'Sign out', email:'Email', password:'Password', name:'Display name', confirmPassword:'Confirm password', forgot:'Forgot password?', reset:'Send reset link', back:'Back to sign in', newPassword:'New password', changePassword:'Change password', save:'Save', close:'Close', wait:'Working…', loading:'Checking account…', admin:'Administrator', member:'Member', active:'Active', blocked:'Blocked', manager:'Account administration', create:'Create account', refresh:'Refresh', role:'Role', status:'Status', actions:'Actions', search:'Find email or name on this page…', empty:'No matching accounts.', previous:'Previous', next:'Next', page:'Page', created:'Created', lastLogin:'Last sign in', never:'Never', checkEmail:'Check your email to confirm your account.', resetSent:'If this email exists, a password reset link will be sent.', passwordChanged:'Password changed.', createdOk:'Account created. Share its password privately with the user.', saved:'Changes saved.', minPassword:'Use 10 to 128 characters for the password.', mismatch:'The passwords do not match.', blockedMessage:'Your account is blocked. Contact an administrator.', connection:'Your account could not be verified. Check your connection and retry.', retry:'Retry', signInNeeded:'Sign in to use the scoreboard.', confirmUpdate:'Save the name, role and status changes for this account?', selfProtected:'You cannot demote or block your own account.', noAdmin:'Only active administrators may manage accounts.', invalid:'Please check the supplied information.', authFailed:'Incorrect email or password, or the account is not active.', emailUnconfirmed:'Confirm your email before signing in.', rateLimit:'Too many requests. Please try again later.', failed:'The operation failed. Please retry.', createFailed:'Could not create account. Check for an existing email and password requirements.', lastAdmin:'At least one active administrator is required.', notFound:'Account not found.', sdkMissing:'Sign-in could not load. Check your connection and reload.', registration:'No account yet?', existing:'Already have an account?', temporaryPassword:'Initial password (10–128 characters)', passwordHint:'You can change the password in the account menu.', me:'You', cancel:'Cancel' },
+   cn: { account:'账户', login:'登录', register:'注册', logout:'退出登录', email:'邮箱', password:'密码', name:'显示名称', confirmPassword:'确认密码', forgot:'忘记密码？', reset:'发送重置链接', back:'返回登录', newPassword:'新密码', changePassword:'修改密码', save:'保存', close:'关闭', wait:'处理中…', loading:'正在检查账户…', admin:'管理员', member:'成员', active:'正常', blocked:'已停用', manager:'账户管理', create:'创建账户', refresh:'刷新', role:'权限', status:'状态', actions:'操作', search:'搜索本页邮箱或名称…', empty:'没有匹配的账户。', previous:'上一页', next:'下一页', page:'页', created:'创建日期', lastLogin:'上次登录', never:'尚未登录', checkEmail:'请查看邮箱并确认账户。', resetSent:'如果邮箱存在，您将收到密码重置链接。', passwordChanged:'密码已修改。', createdOk:'账户已创建。请通过私密方式向用户提供密码。', saved:'更改已保存。', minPassword:'密码长度须为10至128个字符。', mismatch:'两次输入的密码不一致。', blockedMessage:'账户已被停用，请联系管理员。', connection:'暂时无法验证账户，请检查网络后重试。', retry:'重试', signInNeeded:'请登录以使用计分板。', confirmUpdate:'保存此账户的名称、权限及状态更改？', selfProtected:'不能降低自己的权限或停用自己的账户。', noAdmin:'仅正常状态的管理员可管理账户。', invalid:'请检查输入的信息。', authFailed:'邮箱或密码错误，或账户尚未激活。', emailUnconfirmed:'请先确认邮箱再登录。', rateLimit:'操作过于频繁，请稍后重试。', failed:'操作失败，请重试。', createFailed:'无法创建账户，请检查邮箱是否已存在及密码要求。', lastAdmin:'必须保留至少一名正常状态的管理员。', notFound:'找不到账户。', sdkMissing:'无法加载登录功能，请检查网络后刷新。', registration:'还没有账户？', existing:'已有账户？', temporaryPassword:'初始密码（10至128个字符）', passwordHint:'可在账户菜单修改密码。', me:'您', cancel:'取消' },
+   th: { account:'บัญชี', login:'เข้าสู่ระบบ', register:'สมัครสมาชิก', logout:'ออกจากระบบ', email:'อีเมล', password:'รหัสผ่าน', name:'ชื่อที่แสดง', confirmPassword:'ยืนยันรหัสผ่าน', forgot:'ลืมรหัสผ่าน?', reset:'ส่งลิงก์รีเซ็ตรหัสผ่าน', back:'กลับไปเข้าสู่ระบบ', newPassword:'รหัสผ่านใหม่', changePassword:'เปลี่ยนรหัสผ่าน', save:'บันทึก', close:'ปิด', wait:'กำลังดำเนินการ…', loading:'กำลังตรวจสอบบัญชี…', admin:'ผู้ดูแลระบบ', member:'สมาชิก', active:'ใช้งาน', blocked:'ถูกระงับ', manager:'จัดการบัญชี', create:'สร้างบัญชี', refresh:'รีเฟรช', role:'สิทธิ์', status:'สถานะ', actions:'การดำเนินการ', search:'ค้นหาอีเมลหรือชื่อในหน้านี้…', empty:'ไม่พบบัญชีที่ตรงกัน', previous:'หน้าก่อน', next:'หน้าถัดไป', page:'หน้า', created:'วันที่สร้าง', lastLogin:'เข้าสู่ระบบล่าสุด', never:'ยังไม่เคยเข้าสู่ระบบ', checkEmail:'ตรวจสอบอีเมลเพื่อยืนยันบัญชี', resetSent:'หากมีอีเมลนี้ในระบบ คุณจะได้รับลิงก์รีเซ็ตรหัสผ่าน', passwordChanged:'เปลี่ยนรหัสผ่านแล้ว', createdOk:'สร้างบัญชีแล้ว โปรดส่งรหัสผ่านให้ผู้ใช้เป็นการส่วนตัว', saved:'บันทึกการเปลี่ยนแปลงแล้ว', minPassword:'รหัสผ่านต้องมี 10 ถึง 128 ตัวอักษร', mismatch:'รหัสผ่านไม่ตรงกัน', blockedMessage:'บัญชีถูกระงับ โปรดติดต่อผู้ดูแลระบบ', connection:'ไม่สามารถยืนยันบัญชีได้ โปรดตรวจสอบการเชื่อมต่อแล้วลองอีกครั้ง', retry:'ลองอีกครั้ง', signInNeeded:'เข้าสู่ระบบเพื่อใช้ตารางคะแนน', confirmUpdate:'บันทึกการเปลี่ยนแปลงชื่อ สิทธิ์ และสถานะของบัญชีนี้?', selfProtected:'คุณไม่สามารถลดสิทธิ์หรือระงับบัญชีของตัวเองได้', noAdmin:'เฉพาะผู้ดูแลระบบที่ใช้งานอยู่เท่านั้นที่จัดการบัญชีได้', invalid:'โปรดตรวจสอบข้อมูลที่กรอก', authFailed:'อีเมลหรือรหัสผ่านไม่ถูกต้อง หรือบัญชียังไม่เปิดใช้งาน', emailUnconfirmed:'โปรดยืนยันอีเมลก่อนเข้าสู่ระบบ', rateLimit:'ดำเนินการบ่อยเกินไป โปรดลองใหม่ภายหลัง', failed:'ดำเนินการไม่สำเร็จ โปรดลองอีกครั้ง', createFailed:'สร้างบัญชีไม่สำเร็จ โปรดตรวจสอบอีเมลที่ซ้ำและข้อกำหนดรหัสผ่าน', lastAdmin:'ต้องมีผู้ดูแลระบบที่ใช้งานอย่างน้อยหนึ่งคน', notFound:'ไม่พบบัญชี', sdkMissing:'โหลดการเข้าสู่ระบบไม่สำเร็จ โปรดตรวจสอบเครือข่ายแล้วโหลดใหม่', registration:'ยังไม่มีบัญชี?', existing:'มีบัญชีแล้ว?', temporaryPassword:'รหัสผ่านเริ่มต้น (10–128 ตัวอักษร)', passwordHint:'คุณสามารถเปลี่ยนรหัสผ่านได้ในเมนูบัญชี', me:'คุณ', cancel:'ยกเลิก' }
+  };
+  const accountCopy = lang => ACCOUNT_COPY[lang] || ACCOUNT_COPY.vi;
+  const accountError = (error, a) => {
+   const code = error?.code || error?.message || '';
+   if (['invalid_credentials', 'user_banned', 'AUTH_REQUIRED'].includes(code)) return a.authFailed;
+   if (code === 'email_not_confirmed') return a.emailUnconfirmed;
+   if (code.includes('rate_limit') || error?.status === 429) return a.rateLimit;
+   return ({ ADMIN_REQUIRED:a.noAdmin, SELF_PROTECTED:a.selfProtected, LAST_ADMIN:a.lastAdmin, ACCOUNT_NOT_FOUND:a.notFound, INVALID_INPUT:a.invalid, CREATE_FAILED:a.createFailed })[code] || a.failed;
+  };
+  const accountInputClass = 'w-full bg-slate-950 border border-slate-700 rounded-lg px-3 py-2.5 text-white outline-none focus:border-cyan-400 text-sm';
+  const accountButtonClass = 'whitespace-nowrap px-4 py-2.5 bg-cyan-600 hover:bg-cyan-500 disabled:opacity-50 rounded-lg text-white font-bold text-sm transition-colors';
+  const AccountNotice = ({ error, message }) => (error || message) ? <p role={error ? 'alert' : 'status'} className={`text-sm p-3 rounded-lg border ${error ? 'text-red-300 bg-red-950/40 border-red-900' : 'text-emerald-300 bg-emerald-950/40 border-emerald-900'}`}>{error || message}</p> : null;
+  const AccountLanguage = ({ lang, setLang }) => <select aria-label="Language" value={lang} onChange={e => setLang(e.target.value)} className="bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-slate-300 outline-none"><option value="vi">🇻🇳 Tiếng Việt</option><option value="en">🇬🇧 English</option><option value="cn">🇨🇳 简体中文</option><option value="th">🇹🇭 ไทย</option></select>;
+  const authRedirect = () => /^https?:$/.test(location.protocol) ? `${location.origin}${location.pathname}` : undefined;
+  const AccountLogin = ({ lang, setLang }) => {
+   const a = accountCopy(lang);
+   const [mode, setMode] = useState('login');
+   const [email, setEmail] = useState(''), [password, setPassword] = useState(''), [confirmPassword, setConfirmPassword] = useState(''), [name, setName] = useState('');
+   const [busy, setBusy] = useState(false), [error, setError] = useState(''), [message, setMessage] = useState('');
+   const changeMode = next => { setMode(next); setError(''); setMessage(''); setPassword(''); setConfirmPassword(''); };
+   const submit = async e => {
+    e.preventDefault(); if (busy || !accountClient) return;
+    setError(''); setMessage('');
+    if (mode === 'register' && (password.length < 10 || password.length > 128)) return setError(a.minPassword);
+    if (mode === 'register' && password !== confirmPassword) return setError(a.mismatch);
+    setBusy(true);
+    try {
+     if (mode === 'login') {
+      const { error } = await accountClient.auth.signInWithPassword({ email:email.trim(), password });
+      if (error) throw error;
+     } else if (mode === 'register') {
+      const { data, error } = await accountClient.auth.signUp({ email:email.trim(), password, options:{ data:{ display_name:name.trim() }, emailRedirectTo:authRedirect() } });
+      if (error) throw error;
+      if (!data.session) { setMode('login'); setMessage(a.checkEmail); }
+      setPassword(''); setConfirmPassword('');
+     } else {
+      const { error } = await accountClient.auth.resetPasswordForEmail(email.trim(), { redirectTo:authRedirect() });
+      if (error) throw error;
+      setMessage(a.resetSent);
+     }
+    } catch (err) { setError(accountError(err, a)); }
+    finally { setBusy(false); }
+   };
+   return <main className="min-h-screen flex items-center justify-center p-4 bg-[#050510] relative"><div className="absolute top-4 right-4"><AccountLanguage lang={lang} setLang={setLang} /></div><section className="w-full max-w-md rounded-2xl bg-slate-900 border border-cyan-500/30 shadow-[0_0_60px_rgba(6,182,212,0.12)] p-6 md:p-8"><Flag size={32} className="text-red-500 mb-4"/><h1 className="font-black italic text-xl text-cyan-300 mb-2">{TRANSLATIONS[lang].title}</h1><p className="text-slate-400 text-sm mb-6">{a.signInNeeded}</p><h2 className="text-lg font-bold text-white mb-4">{mode === 'login' ? a.login : mode === 'register' ? a.register : a.reset}</h2><form onSubmit={submit} className="space-y-4">
+    {mode === 'register' && <label className="block text-sm text-slate-300">{a.name}<input className={`${accountInputClass} mt-1`} value={name} onChange={e => setName(e.target.value)} maxLength={80} autoComplete="nickname" /></label>}
+    <label className="block text-sm text-slate-300">{a.email}<input className={`${accountInputClass} mt-1`} type="email" autoComplete="email" required maxLength={254} value={email} onChange={e => setEmail(e.target.value)} /></label>
+    {mode !== 'forgot' && <label className="block text-sm text-slate-300">{a.password}<input className={`${accountInputClass} mt-1`} type="password" autoComplete={mode === 'register' ? 'new-password' : 'current-password'} required maxLength={128} minLength={mode === 'register' ? 10 : undefined} value={password} onChange={e => setPassword(e.target.value)} /></label>}
+    {mode === 'register' && <label className="block text-sm text-slate-300">{a.confirmPassword}<input className={`${accountInputClass} mt-1`} type="password" autoComplete="new-password" required maxLength={128} value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} /></label>}
+    <AccountNotice error={error || (!accountClient ? a.sdkMissing : '')} message={message}/><button disabled={busy || !accountClient} className={`${accountButtonClass} w-full`} type="submit">{busy ? a.wait : mode === 'login' ? a.login : mode === 'register' ? a.register : a.reset}</button>
+   </form><div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-400">{mode === 'login' ? <><button type="button" disabled={busy} onClick={() => changeMode('forgot')} className="hover:text-cyan-300">{a.forgot}</button><button type="button" disabled={busy} onClick={() => changeMode('register')} className="hover:text-cyan-300">{a.registration} {a.register}</button></> : <button type="button" disabled={busy} onClick={() => changeMode('login')} className="hover:text-cyan-300">{a.back}</button>}</div></section></main>;
+  };
+  const AccountPasswordForm = ({ lang, onDone }) => {
+   const a = accountCopy(lang), [password,setPassword] = useState(''), [confirm,setConfirm] = useState('');
+   const [busy,setBusy] = useState(false), [error,setError] = useState(''), [message,setMessage] = useState('');
+   const submit = async e => {
+    e.preventDefault(); if (busy) return; setError(''); setMessage('');
+    if (password.length < 10 || password.length > 128) return setError(a.minPassword);
+    if (password !== confirm) return setError(a.mismatch);
+    setBusy(true);
+    try { const {error} = await accountClient.auth.updateUser({password}); if(error) throw error; setPassword(''); setConfirm(''); setMessage(a.passwordChanged); }
+    catch(err) {setError(accountError(err,a));} finally {setBusy(false);}
+   };
+   return <form onSubmit={submit} className="space-y-4"><h2 className="font-black text-xl text-cyan-300">{a.changePassword}</h2><label className="block text-sm text-slate-300">{a.newPassword}<input type="password" className={`${accountInputClass} mt-1`} autoComplete="new-password" required minLength={10} maxLength={128} value={password} onChange={e=>setPassword(e.target.value)}/></label><label className="block text-sm text-slate-300">{a.confirmPassword}<input type="password" className={`${accountInputClass} mt-1`} autoComplete="new-password" required maxLength={128} value={confirm} onChange={e=>setConfirm(e.target.value)}/></label><AccountNotice error={error} message={message}/><div className="flex gap-2 justify-end"><button type="button" disabled={busy} className="text-slate-300 p-2 text-sm" onClick={onDone}>{a.close}</button><button type="submit" disabled={busy} className={accountButtonClass}>{busy?a.wait:a.save}</button></div></form>;
+  };
+  const callAccountAdmin = async body => {
+   const {data,error} = await accountClient.functions.invoke('zsm-accounts', {body});
+   if (error) {
+    let code = '';
+    try { const detail = await error.context?.json(); code = detail?.error || ''; } catch {}
+    throw {code:code || 'SERVER_ERROR'};
+   }
+   if (data?.error) throw {code:data.error};
+   return data;
+  };
+  const AccountRow = ({ user, currentId, lang, busy, onSave }) => {
+   const a=accountCopy(lang), [name,setName]=useState(user.display_name), [role,setRole]=useState(user.role), [status,setStatus]=useState(user.status);
+   useEffect(()=>{setName(user.display_name);setRole(user.role);setStatus(user.status);},[user]);
+   const self=user.id===currentId, changed=name!==user.display_name||role!==user.role||status!==user.status;
+   const date = value => value ? new Date(value).toLocaleString(({vi:'vi-VN',en:'en-GB',cn:'zh-CN',th:'th-TH'})[lang]) : a.never;
+   return <article className="bg-slate-950 border border-slate-700 rounded-xl p-4 space-y-3"><div className="flex flex-wrap justify-between gap-2"><strong className="text-white text-sm break-all">{user.email}{self ? ` (${a.me})` : ''}</strong><span className={`text-xs ${user.status==='active'?'text-emerald-400':'text-red-400'}`}>{a[user.status]}</span></div><div className="grid grid-cols-1 md:grid-cols-3 gap-3"><label className="text-xs text-slate-400">{a.name}<input aria-label={`${a.name}: ${user.email}`} className={`${accountInputClass} mt-1`} maxLength={80} value={name} disabled={busy} onChange={e=>setName(e.target.value)}/></label><label className="text-xs text-slate-400">{a.role}<select aria-label={`${a.role}: ${user.email}`} className={`${accountInputClass} mt-1`} disabled={busy||self} value={role} onChange={e=>setRole(e.target.value)}><option value="member">{a.member}</option><option value="admin">{a.admin}</option></select></label><label className="text-xs text-slate-400">{a.status}<select aria-label={`${a.status}: ${user.email}`} className={`${accountInputClass} mt-1`} disabled={busy||self} value={status} onChange={e=>setStatus(e.target.value)}><option value="active">{a.active}</option><option value="blocked">{a.blocked}</option></select></label></div><div className="flex flex-wrap gap-3 justify-between items-center"><div className="text-[10px] text-slate-500">{a.created}: {date(user.created_at)}<br/>{a.lastLogin}: {date(user.last_sign_in_at)}</div><button disabled={!changed||busy} onClick={()=>onSave({action:'update',id:user.id,display_name:name,role,status})} className={accountButtonClass}>{a.save}</button></div></article>;
+  };
+  const AccountAdminModal = ({ account, lang, onClose, showDialogConfirm, onAccountChanged }) => {
+   const a=accountCopy(lang), [users,setUsers]=useState([]), [page,setPage]=useState(1), [hasMore,setHasMore]=useState(false), [search,setSearch]=useState('');
+   const [busy,setBusy]=useState(false), [loading,setLoading]=useState(true), [error,setError]=useState(''), [message,setMessage]=useState('');
+   const [form,setForm]=useState({email:'',password:'',display_name:'',role:'member'}), sequence=useRef(0);
+   const load = async () => {
+    const id=++sequence.current;setLoading(true);setError('');
+    try {const data=await callAccountAdmin({action:'list',page});if(id!==sequence.current)return;setUsers(data.users);setHasMore(data.hasMore);}
+    catch(err){if(id===sequence.current)setError(accountError(err,a));}
+    finally{if(id===sequence.current)setLoading(false);}
+   };
+   useEffect(()=>{load();return()=>{sequence.current++;};},[page]);
+   const create = async e => {
+    e.preventDefault();if(busy)return;setError('');setMessage('');setBusy(true);
+    try {await callAccountAdmin({action:'create',...form});setForm({email:'',password:'',display_name:'',role:'member'});setMessage(a.createdOk);await load();}
+    catch(err){setError(accountError(err,a));}finally{setBusy(false);}
+   };
+   const save = body => showDialogConfirm(a.confirmUpdate, async()=>{
+    setBusy(true);setError('');setMessage('');
+    try {await callAccountAdmin(body);setMessage(a.saved);await load();onAccountChanged();}
+    catch(err){setError(accountError(err,a));}finally{setBusy(false);}
+   });
+   const visible=users.filter(u=>`${u.email} ${u.display_name}`.toLowerCase().includes(search.toLowerCase()));
+   return <div className="fixed inset-0 z-[2000] bg-black/80 backdrop-blur-md p-3 md:p-6 flex items-center justify-center"><section role="dialog" aria-modal="true" aria-label={a.manager} className="bg-slate-900 border border-cyan-500/40 rounded-2xl w-full max-w-4xl max-h-[90vh] flex flex-col shadow-2xl"><header className="flex justify-between items-center p-4 border-b border-slate-700"><h2 className="font-black text-cyan-300">{a.manager}</h2><button type="button" disabled={busy} onClick={onClose} aria-label={a.close} className="p-2 text-slate-400 hover:text-white"><XIcon size={22}/></button></header><div className="p-4 overflow-y-auto space-y-5"><form onSubmit={create} className="rounded-xl border border-slate-700 bg-slate-800/40 p-4 space-y-3"><h3 className="font-bold text-sm text-white">{a.create}</h3><div className="grid grid-cols-1 md:grid-cols-2 gap-3">{[['email','email',a.email],['display_name','text',a.name],['password','password',a.temporaryPassword]].map(([key,type,label])=><label key={key} className="block text-xs text-slate-400">{label}<input className={`${accountInputClass} mt-1`} type={type} required={key!=='display_name'} minLength={key==='password'?10:undefined} maxLength={key==='display_name'?80:key==='password'?128:254} autoComplete={key==='password'?'new-password':'off'} value={form[key]} disabled={busy} onChange={e=>setForm({...form,[key]:e.target.value})}/></label>)}<label className="text-xs text-slate-400">{a.role}<select className={`${accountInputClass} mt-1`} value={form.role} disabled={busy} onChange={e=>setForm({...form,role:e.target.value})}><option value="member">{a.member}</option><option value="admin">{a.admin}</option></select></label></div><p className="text-xs text-slate-500">{a.passwordHint}</p><button type="submit" className={accountButtonClass} disabled={busy||loading}>{busy?a.wait:a.create}</button></form><AccountNotice error={error} message={message}/><div className="flex gap-2"><input aria-label={a.search} placeholder={a.search} className={accountInputClass} value={search} onChange={e=>setSearch(e.target.value)}/><button type="button" onClick={load} disabled={busy||loading} className={accountButtonClass}>{a.refresh}</button></div>{loading?<p role="status" className="text-slate-400 text-sm">{a.loading}</p>:<div className="space-y-3">{visible.map(user=><AccountRow key={user.id} user={user} currentId={account.id} lang={lang} busy={busy} onSave={save}/>)}{!visible.length&&<p className="text-slate-400 text-sm text-center p-5">{a.empty}</p>}</div>}<div className="flex justify-between items-center gap-2"><button className={accountButtonClass} disabled={page===1||busy||loading} onClick={()=>{setPage(p=>p-1);setSearch('');}}>{a.previous}</button><span className="text-xs text-slate-400">{a.page} {page}</span><button className={accountButtonClass} disabled={!hasMore||busy||loading} onClick={()=>{setPage(p=>p+1);setSearch('');}}>{a.next}</button></div></div></section></div>;
+  };
+  const AccountBoundary = () => {
+   const [lang,setLanguage]=useState(()=>normalizeLanguage(readStorageValue('zsm_lang_v11_final')));
+   const setLang=value=>{setLanguage(value);writeStorageValue('zsm_lang_v11_final',value);};
+   const a=accountCopy(lang), [auth,setAuth]=useState({phase:'loading',user:null,profile:null}), [recovery,setRecovery]=useState(()=>new URLSearchParams(location.hash.slice(1)).get('type')==='recovery');
+   const authRef=useRef(auth), mounted=useRef(true), sequence=useRef(0);
+   authRef.current=auth;
+   const refresh = async () => {
+    if(!accountClient){setAuth({phase:'error',user:null,profile:null});return;}
+    const id=++sequence.current;
+    try {
+     const {data:{session},error:sessionError}=await accountClient.auth.getSession();
+     if(sessionError)throw sessionError;
+     if(!session){if(mounted.current&&id===sequence.current)setAuth({phase:'signedOut',user:null,profile:null});return;}
+     const {data:{user},error:userError}=await accountClient.auth.getUser(session.access_token);
+     if(userError||!user||user.is_anonymous)throw userError||new Error('AUTH_REQUIRED');
+     const {data:profile,error:profileError}=await accountClient.rpc('zsm_current_profile').single();
+     if(profileError||!profile)throw profileError||new Error('AUTH_REQUIRED');
+     if(!mounted.current||id!==sequence.current)return;
+     if(profile.status!=='active'){setAuth({phase:'blocked',user,profile});return;}
+     activateAccountStorage(profile);
+     setAuth({phase:'active',user,profile});
+    } catch(err) {if(mounted.current&&id===sequence.current)setAuth({phase:'error',user:null,profile:null});}
+   };
+   useEffect(()=>{
+    mounted.current=true;
+    if(!accountClient){setAuth({phase:'error',user:null,profile:null});return;}
+    const timers=new Set();
+    const {data:{subscription}}=accountClient.auth.onAuthStateChange((event,session)=>{
+     if(session?.user?.id && authRef.current.user?.id && session.user.id !== authRef.current.user.id){window.location.reload();return;}
+     if(event==='PASSWORD_RECOVERY')setRecovery(true);
+     if(event==='SIGNED_OUT'){sequence.current++;setRecovery(false);setAuth({phase:'signedOut',user:null,profile:null});return;}
+     if(!session&&event==='INITIAL_SESSION'){setAuth({phase:'signedOut',user:null,profile:null});return;}
+     // Defer Supabase calls until after the auth callback releases its lock.
+     const timer=setTimeout(()=>{timers.delete(timer);refresh();},0);timers.add(timer);
+    });
+    const onFocus=()=>{if(authRef.current.phase!=='signedOut')refresh();};
+    const interval=setInterval(()=>{if(authRef.current.phase==='active')refresh();},30000);
+    window.addEventListener('focus',onFocus);
+    const onLanguage=e=>{if(e.key==='zsm_lang_v11_final')setLanguage(normalizeLanguage(e.newValue));};
+    window.addEventListener('storage',onLanguage);
+    return()=>{mounted.current=false;sequence.current++;subscription.unsubscribe();timers.forEach(clearTimeout);clearInterval(interval);window.removeEventListener('focus',onFocus);window.removeEventListener('storage',onLanguage);};
+   },[]);
+   const logout=async()=>{
+    sequence.current++;
+    try{const {error}=await accountClient.auth.signOut({scope:'local'});if(error)throw error;}
+    catch{setAuth({phase:'error',user:null,profile:null});return;}
+    setRecovery(false);setAuth({phase:'signedOut',user:null,profile:null});
+   };
+   if(auth.phase==='signedOut')return <AccountLogin lang={lang} setLang={setLang}/>;
+   if(auth.phase==='active')return recovery?<main className="min-h-screen flex items-center justify-center p-4"><section className="bg-slate-900 border border-cyan-700 rounded-2xl p-6 w-full max-w-md"><AccountPasswordForm lang={lang} onDone={()=>setRecovery(false)}/></section></main>:<App key={auth.user.id} account={{...auth.user,...auth.profile}} onLogout={logout} onAccountChanged={refresh} onLanguageChange={setLang}/>;
+   return <main className="min-h-screen flex items-center justify-center p-6"><section className="w-full max-w-md bg-slate-900 border border-slate-700 rounded-2xl p-6 text-center space-y-5"><AccountLanguage lang={lang} setLang={setLang}/><p role="status" className="text-slate-300">{auth.phase==='loading'?a.loading:auth.phase==='blocked'?a.blockedMessage:!accountClient?a.sdkMissing:a.connection}</p>{auth.phase!=='loading'&&<div className="flex justify-center gap-3"><button className={accountButtonClass} onClick={refresh}>{a.retry}</button><button className="text-slate-400 text-sm" onClick={logout}>{a.logout}</button></div>}</section></main>;
+  };
+
+  function App({ account, onLogout, onAccountChanged, onLanguageChange }) {
    const urlParams = new URLSearchParams(window.location.search);
    const isBroadcastTab = urlParams.get('broadcast') === 'true';
    const initialTab = ['scoreboard', 'prematch', 'postmatch'].includes(urlParams.get('tab')) ? urlParams.get('tab') : 'scoreboard';
    const initialGameIndex = Math.max(0, Math.floor(Number(urlParams.get('gameIndex')) || 0));
    const [lang, setLang] = useState(() => normalizeLanguage(readStorageValue('zsm_lang_v11_final')));
    const t = TRANSLATIONS[lang] || TRANSLATIONS.vi;
+   const [showAccounts, setShowAccounts] = useState(false);
+   const [showPassword, setShowPassword] = useState(false);
+   const a = accountCopy(lang);
    const [showInfo, setShowInfo] = useState(false);
    const [showDbModal, setShowDbModal] = useState(false);
    const [showGroupModal, setShowGroupModal] = useState(false);
@@ -1476,7 +1665,10 @@
     return () => window.removeEventListener('zsm-storage-error', notify);
    }, [lang]);
    useEffect(() => {
-     const handleStorageChange = (e) => {
+     const handleStorageChange = (event) => {
+       const key = accountEventKey(event.key);
+       if (!key) return;
+       const e = { key, newValue: event.newValue };
        if (e.newValue === null) return;
        const value = readStorageValue(e.key);
        if (value === null) return;
@@ -1515,7 +1707,7 @@
      return p;
     }));
    }, [lang]);
-   useEffect(() => { writeStorageValue('zsm_lang_v11_final', lang); }, [lang]);
+   useEffect(() => { writeStorageValue('zsm_lang_v11_final', lang); onLanguageChange(lang); }, [lang]);
    useEffect(() => { writeStorageValue('zsm_tour_name', tournamentName); }, [tournamentName]);
    useEffect(() => { writeStorageValue('zsm_team1_name', team1Name); }, [team1Name]);
    useEffect(() => { writeStorageValue('zsm_team2_name', team2Name); }, [team2Name]);
@@ -1995,6 +2187,9 @@
    return (
     <div className="min-h-screen relative overflow-x-hidden pb-20 font-sans">
      <CustomDialog dialog={dialog} setDialog={setDialog} />
+     {showAccounts && account.role === 'admin' && <AccountAdminModal account={account} lang={lang} onClose={() => setShowAccounts(false)} showDialogConfirm={showDialogConfirm} onAccountChanged={onAccountChanged} />}
+     {showPassword && <div className="fixed inset-0 z-[2000] bg-black/80 backdrop-blur-md flex items-center justify-center p-4"><section role="dialog" aria-modal="true" aria-label={a.changePassword} className="bg-slate-900 border border-cyan-700 rounded-2xl p-6 w-full max-w-md"><AccountPasswordForm lang={lang} onDone={() => setShowPassword(false)}/></section></div>}
+
      <>
       <div className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-[199] transition-opacity duration-300 ${isSidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} onClick={() => setIsSidebarOpen(false)}></div>
       <div className={`fixed inset-y-0 left-0 w-72 md:w-80 bg-slate-900 border-r border-slate-700 shadow-[20px_0_50px_rgba(0,0,0,0.5)] z-[200] transform transition-transform duration-300 flex flex-col ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
@@ -2003,6 +2198,14 @@
           <button onClick={() => setIsSidebarOpen(false)} className="text-slate-400 hover:text-red-500 transition-colors"><XIcon size={24}/></button>
         </div>
         <div className="p-4 flex flex-col gap-2 flex-1 overflow-y-auto">
+          <div className="bg-slate-950 border border-slate-700 rounded-xl p-3 mb-2 space-y-2">
+           <div className="text-xs text-cyan-400 font-bold">{a.account} · {a[account.role]}</div>
+           <div className="text-sm text-white font-bold truncate" title={account.display_name || account.email}>{account.display_name || account.email}</div>
+           <div className="text-xs text-slate-500 truncate" title={account.email}>{account.email}</div>
+           {account.role === 'admin' && <button onClick={() => {setShowAccounts(true);setIsSidebarOpen(false);}} className="w-full text-left text-sm text-cyan-300 py-1 hover:text-white">{a.manager}</button>}
+           <button onClick={() => {setShowPassword(true);setIsSidebarOpen(false);}} className="w-full text-left text-sm text-slate-300 py-1 hover:text-white">{a.changePassword}</button>
+           <button onClick={onLogout} className="w-full text-left text-sm text-red-400 py-1 hover:text-red-300">{a.logout}</button>
+          </div>
           <button onClick={() => { setShowSaveGroupModal(true); setIsSidebarOpen(false); }} className="flex items-center gap-3 w-full p-3 bg-slate-800/50 hover:bg-emerald-900/30 text-slate-300 hover:text-emerald-300 border border-transparent hover:border-emerald-500/50 rounded-xl transition-all font-bold text-left group shadow-sm">
             <div className="w-10 h-10 rounded-lg bg-slate-900 border border-slate-700 flex items-center justify-center group-hover:bg-emerald-900 group-hover:border-emerald-500 group-hover:scale-110 transition-all text-xl"><SaveIcon size={20}/></div>
             <span className="tracking-wide uppercase text-xs md:text-sm">{t.saveCurrGroup}</span>
@@ -2330,7 +2533,7 @@
    );
   }
   const root = ReactDOM.createRoot(document.getElementById('root'));
-  root.render(<App />);
+  root.render(<AccountBoundary />);
   </script>
 </body>
 </html>
