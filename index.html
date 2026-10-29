@@ -121,18 +121,67 @@
   const Cat = (p) => <IconWrapper icon="ph-fill ph-cat" {...p} />;
   const UserCircle = (p) => <IconWrapper icon="ph-fill ph-user-circle" {...p} />;
   const Cpu = (p) => <IconWrapper icon="ph-fill ph-cpu" {...p} />;
-  const MAP_POOL=[{stars:7,maps:[{id:'m7_1',vi:'Sân Bay Siêu Tốc',en:'Space Station',cn:'极速空港'},{id:'m7_2',vi:'Sơn Hải Họa Cảnh',en:'Painted Landscape',cn:'山海画境'}]},{stars:6,maps:[{id:'m6_1',vi:'Hẻm Núi Lớn',en:'Grand Canyon',cn:'美洲大峡谷'},{id:'m6_2',vi:'Scotland',en:'Scotland Yard',cn:'苏格兰微风'}]},{stars:5,maps:[{id:'m5_1',vi:'Căn Cứ Sao Hỏa',en:'Mars Base',cn:'火星基地'},{id:'m5_2',vi:'Mạc Cao Quật',en:'Mogao Grottoes',cn:'莫高窟'},{id:'m5_3',vi:'Atlantis',en:'Atlantis',cn:'亚特兰蒂斯'},{id:'m5_4',vi:'Atlantis (Ngược)',en:'Atlantis(Reversed)',cn:'亚特兰蒂斯（反向）'},{id:'m5_5',vi:'Chuyến Đi Huyền Thoại',en:'Epic Legend',cn:'传奇之旅'},{id:'m5_6',vi:'Núi Mùa Thu',en:'Scenic Hills',cn:'秋之物语'},{id:'m5_7',vi:'Công Trường Phố Cổ',en:'Old Street Construction',cn:'老街工地'},{id:'m5_8',vi:'Thành Lá Đỏ',en:'Crimson Leaves Town',cn:'红叶城'},{id:'m5_9',vi:'Vực Sâu Băng Giá',en:'Snow Chasm',cn:'冰川深渊'}]},{stars:4,maps:[{id:'m4_1',vi:'Tây Hồ',en:'West Lake',cn:'西湖'},{id:'m4_2',vi:'Trường Thành',en:'Great Wall',cn:'长城'},{id:'m4_3',vi:'Đại Lộ 1',en:'Highway 1',cn:'1号公路'},{id:'m4_4',vi:'TROY-Sân Thử Nghiệm Số 0',en:'TROY - Experiment Field O',cn:'特洛伊-零号试验场'},{id:'m4_5',vi:'Thiên Hộ Miêu Trại',en:'Thousand-House Miaozhai',cn:'千户苗寨'},{id:'m4_6',vi:'Sân Bay Cuồng Phong',en:'Windy Airport',cn:'狂风机场'},{id:'m4_7',vi:'Quyết Chiến! Đỉnh Núi Tuyết',en:'Decisive Battle! Snow Mountain',cn:'决战！雪山之巅'},{id:'m4_8',vi:'Mơ Về Cổ Thục',en:'Back to Ancient Shu',cn:'梦回古蜀'},{id:'m4_9',vi:'Z-Space',en:'Z-Space',cn:'Z-Space'},{id:'m4_10',vi:'Cổ Đô Thiên Chiếu',en:'Eternal Ancient Capital',cn:'天照古都'},{id:'m4_11',vi:'Đua Thuyền Đoan Ngọ',en:'Dragon Boat Race',cn:'端午龙舟'},{id:'m4_12',vi:'Tiệc Rượu Bên Suối',en:'Utopia',cn:'沁园春'},{id:'m4_13',vi:'Đỉnh Titan',en:'Titan\'s Peak',cn:'泰坦巨峰'},{id:'m4_14',vi:'Mây Cuộn Cổng Trời',en:'Clouds Heavenly Gate',cn:'云游天府'},{id:'m4_15',vi:'Tâm Uyên',en:'Soul life',cn:'心渊'}]},{stars:3,maps:[{id:'m3_1',vi:'Thành Phố 11',en:'City 11',cn:'十一城'},{id:'m3_2',vi:'Ngư Trường',en:'North Sea',cn:'渔场'},{id:'m3_3',vi:'TROY-Xưởng Nung Chảy',en:'TROY - Smeltery',cn:'熔炉车间'},{id:'m3_4',vi:'Quý Châu Lộ',en:'All the way to Qian',cn:'一路向黔'},{id:'m3_5',vi:'Trụ Sở Chính Alpha',en:'Alpha Headquarters',cn:'阿尔法总部'},{id:'m3_6',vi:'Quyết chiến! Đôi Mắt Miền Biển',en:'Decisive Battle! Eye of the Sea',cn:'决战！海滨之眼'},{id:'m3_7',vi:'Thiên Cung Tầm Mộng',en:'Dream of Heavenly Palace',cn:'寻梦天宫'},{id:'m3_8',vi:'Căn Cứ Siêu Huyền',en:'超弦基地',cn:'超弦基地'},{id:'m3_9',vi:'Bóng Hình Eden',en:'Glimpses of Eden',cn:'伊甸幻象'},{id:'m3_10',vi:'Tuyệt Cảnh Giang Sơn',en:'Stunning Jiangxi',cn:'绝色江西'},{id:'m3_11',vi:'Vành Đai Troy',en:'The Circular City of Troy',cn:'特洛伊环城'},{id:'m3_12',vi:'Hồ Long Tinh',en:'Dragon Crystal Lake',cn:'龙晶湖'},{id:'m3_13',vi:'Vụ Sơn Ngũ Hành',en:'Wushan Five Elements',cn:'雾山五行'},{id:'m3_14',vi:'Bờ Biển Lãng Mạn',en:'Romantic Seaside',cn:'浪漫海岸'},{id:'m3_15',vi:'Đạp Tuyết Tầm Xuân',en:'Spring\'s Footsteps',cn:'踏雪寻春'},{id:'m3_16',vi:'Thuyền Nhỏ Giữa Tuyết',en:'Crimson Plum In Snow',cn:'兰舟听雪'}]}];
-  const MAP_BACKGROUNDS={'m7_1':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20190108/1e2681225a98cd914a54fc0765478dd3.jpg','m7_2':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20250113/17367779105688.png','m6_1':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/61_9394613.jpg','m6_2':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20211115/16369731693212.png','m5_1':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20250325/17428875469403.png','m5_2':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20180904/e4e67d4825b6cc7ecf1a5a3491488314.jpg','m5_3':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/54_976883.jpg','m5_4':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/55_9801857.jpg','m5_5':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/53_9496680.jpg','m5_6':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20171211/52_9429115.jpg','m5_7':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20220324/16481195029550.png','m5_8':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20230111/16734277903891.png','m5_9':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20240326/17114615429011.png','m4_1':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20180424/4ceb12a7da81fc78485cd451738f1ddf.jpg','m4_2':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20180326/ed0633a8e49bc3058e8eda3219440918.jpg','m4_3':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20180119/a4d8882662a3508ced77be491fd925ff.jpg','m4_4':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20190717/07b7aec16c1011992fb28c12a399092f.jpg','m4_5':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20200921/3265566121a19cae1d3546619b686fb0.jpg','m4_6':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20210312/16155457318502.jpg','m4_7':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20210715/16263281507258.jpg','m4_8':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20210915/16316995903827.jpg','m4_9':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20220516/16526869593306.png','m4_10':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20221011/16654598587252.png','m4_11':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20240526/17167362763162.png','m4_12':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20231221/17031734536016.png','m4_13':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20241126/17326359998189.png','m4_14':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20250919/17582127372131.png','m4_15':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20251118/17634577032615.png','m3_1':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps///image/20171211/31_8827468.jpg','m3_2':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20181011/b1b25310d6f371cf1a1d607a585e8d82.jpg','m3_3':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20190717/54ec6a4988a53867f527e2be8cb0f92b.jpg','m3_4':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps/image/20200921/25267e48557d7452e401e470886dc721.jpg','m3_5':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps///image/20210108/c4234de94254c7118bcd8c15517b42a6.jpg','m3_6':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20210823/16296862647665.jpg','m3_7':'https://i.ibb.co/VYXpsN9b/16526827657994.png','m3_8':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20221123/16692118937198.png','m3_9':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20231121/17005788209567.png','m3_10':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20230919/16951270513077.png','m3_11':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20230724/16901918219353.png','m3_12':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20230724/16901915868769.png','m3_13':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20240725/17218374934897.png','m3_14':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20250721/17530812968308.png','m3_15':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20260206/17703114652236.png','m3_16':'https://game.gtimg.cn/images/speedm/zlkdatasys/data/maps//image/20260206/17703122288303.png'};
-  const MAP_LAPS = {
-   'm7_1': 1, 'm7_2': 1,
-   'm6_1': 1, 'm6_2': 1,
-   'm5_1': 1, 'm5_2': 2, 'm5_3': 2, 'm5_4': 2, 'm5_5': 1, 'm5_6': 1, 'm5_7': 2, 'm5_8': 1, 'm5_9': 1,
-   'm4_1': 2, 'm4_2': 1, 'm4_3': 1, 'm4_4': 2, 'm4_5': 2, 'm4_6': 2, 'm4_7': 1, 'm4_8': 1, 'm4_9': 1, 'm4_10': 1, 'm4_11': 1, 'm4_12': 2, 'm4_13': 2, 'm4_14': 1, 'm4_15': 1,
-   'm3_1': 2, 'm3_2': 2, 'm3_3': 2, 'm3_4': 1, 'm3_5': 2, 'm3_6': 2, 'm3_7': 2, 'm3_8': 2, 'm3_9': 2, 'm3_10': 1, 'm3_11': 2, 'm3_12': 2, 'm3_13': 1, 'm3_14': 1, 'm3_15': 1, 'm3_16': 2
+  // The Maps tab is authoritative; cached inactive rows retain historical labels.
+  const MAP_COLUMNS = ['id', 'stars', 'vi', 'en', 'cn', 'img', 'laps', 'active'];
+  const normalizeMapRows = rows => {
+   if (!Array.isArray(rows)) throw new Error('Invalid Maps data');
+   const ids = new Set();
+   return rows.map((row, index) => {
+    if (!row || typeof row !== 'object' || Array.isArray(row)) throw new Error('Invalid Maps row ' + (index + 2));
+    const text = key => String(row[key] ?? '').trim();
+    const id = text('id'), vi = text('vi'), en = text('en'), cn = text('cn'), img = text('img');
+    const stars = Number(text('stars')), laps = text('laps') === '' ? 2 : Number(text('laps'));
+    const enabled = text('active').toLowerCase();
+    if (!id || !(vi || en || cn) || !Number.isInteger(stars) || stars < 1 || stars > 7 ||
+        !Number.isInteger(laps) || laps < 1 || laps > 99 ||
+        (img && !/^https?:\/\/[^\s]+$/i.test(img)) ||
+        !['', 'true', 'false', '1', '0'].includes(enabled) || ids.has(id)) {
+     throw new Error('Invalid or duplicate Maps row ' + (index + 2));
+    }
+    ids.add(id);
+    return { id, stars, vi, en, cn, img, laps, active: enabled !== 'false' && enabled !== '0' };
+   });
   };
-  const getMapLaps = (mapId) => {
-   if (!mapId) return 1;
-   return MAP_LAPS[mapId] !== undefined ? MAP_LAPS[mapId] : 2;
+  const parseMapsCSV = text => {
+   const rows = [];
+   let row = [], cell = '', quoted = false, closed = false;
+   const endCell = () => { row.push(cell); cell = ''; closed = false; };
+   const endRow = () => { endCell(); if (row.some(value => value.trim())) rows.push(row); row = []; };
+   text = String(text).replace(/^\uFEFF/, '');
+   for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (quoted) {
+     if (ch === '"' && text[i + 1] === '"') { cell += '"'; i++; }
+     else if (ch === '"') { quoted = false; closed = true; }
+     else cell += ch;
+    } else if (ch === '"') {
+     if (cell || closed) throw new Error('Invalid Maps CSV quotes');
+     quoted = true;
+    } else if (ch === ',') endCell();
+    else if (ch === '\r' || ch === '\n') {
+     if (ch === '\r' && text[i + 1] === '\n') i++;
+     endRow();
+    } else {
+     if (closed && !/\s/.test(ch)) throw new Error('Invalid Maps CSV value');
+     if (!closed) cell += ch;
+    }
+   }
+   if (quoted) throw new Error('Incomplete Maps CSV');
+   endRow();
+   const headers = (rows.shift() || []).map(value => value.trim().toLowerCase());
+   if (new Set(headers).size !== headers.length || MAP_COLUMNS.slice(0, 7).some(key => !headers.includes(key))) {
+    throw new Error('Missing Maps column headers');
+   }
+   // Unchecked checkboxes can export FALSE even on otherwise empty rows.
+   return normalizeMapRows(rows.filter(values => headers.some((key, i) => key !== 'active' && String(values[i] ?? '').trim())).map(values => {
+    if (values.length > headers.length) throw new Error('Invalid Maps CSV columns');
+    return Object.fromEntries(headers.map((key, i) => [key, values[i] ?? '']));
+   }));
+  };
+  const mergeMapRows = (previous, incoming) => {
+   const ids = new Set(incoming.map(map => map.id));
+   const merged = [...incoming, ...previous.filter(map => !ids.has(map.id)).map(map => ({ ...map, active: false }))];
+   return JSON.stringify(previous) === JSON.stringify(merged) ? previous : merged;
   };
   const TRANSLATIONS={
    vi:{title:"HỆ THỐNG TÍNH ĐIỂM THEO GIÂY",subtitle:"Thiết kế và phát triển bởi koi",postmatchHeader: "KẾT QUẢ",tourNamePh:"Nhập tên giải đấu...",addPlayer:"Thêm VĐV",addMatch:"Thêm Trận",reset:"Làm mới",export:"Xuất Excel",no:"STT",match:"TRẬN ĐẤU",kingMap:"King Map",total:"TỔNG ĐIỂM",leaderboard:"BẢNG XẾP HẠNG",pts:"PTS",errMaxP:"Giải đấu giới hạn tối đa 6 VĐV!",errMinP:"Bảng thi đấu cần ít nhất 2 VĐV!",errMaxG:"Giải đấu giới hạn tối đa 90 Trận!",delP:"Bạn muốn xóa {0} khỏi giải đấu?",errMinG:"Phải có ít nhất 1 Trận đấu!",delG:"Bạn có muốn xóa Trận {0}?",confirmReset:"🚨 LÀM MỚI BẢNG ĐIỂM?\nMọi dữ liệu sẽ bị xóa và quay về trạng thái mặc định.",defPlayer:"VDV",defGame:"Game",selectMap:"Tìm & Chọn Map",searchPh:"Nhập tên map...",infoBtn:"Hướng Dẫn",infoTitle:"CƠ CHẾ TÍNH ĐIỂM & SỬ DỤNG",i1:"Nhập nhanh: Gõ thẳng số (VD: nhập 10704 hệ thống sẽ hiểu là 1:07.04).",i2:"Về nhất: 11 điểm.",i3:"King Map: Mỗi người chơi được chỉ định King Map cho mình. Về nhất đúng King Map của mình sẽ được +12 điểm.",i4:"Người về sau sẽ bị trừ dần điểm theo độ trễ thời gian:",i5:"Không hoàn thành (nhập X): 0 điểm.",soloMode:"CÁ NHÂN (4P)",mode1v1:"SOLO 1vs1",teamMode:"Đua Đội",modeSolo:"CÁ NHÂN 1vs1vs1vs1",mode2v2:"ĐỒNG ĐỘI 2vs2",mode3v3:"ĐỒNG ĐỘI 3vs3",indivTotal:"ĐIỂM CÁ NHÂN",teamTotal:"TỔNG ĐIỂM ĐỘI",team1:"ĐỘI XANH",team2:"ĐỘI ĐỎ",i6:"Quyền chọn Map: Trận 2 đến N là King Map của từng VĐV/Đội (tự luân phiên). Các trận sau: Đua đơn -> VĐV hạng 2 chọn. Đua đội -> Đội có tổng điểm thấp hơn chọn. (Hòa điểm -> xét đội có điểm thấp hơn ở map liền trước).",map1Pick:"TRẬN 1: MAP CHỈ ĐỊNH (KHÔNG CÓ QUYỀN CHỌN)",kingMapPick:"TRẬN {0}: KING MAP CỦA {1}",normalPick:"TRẬN {0}: LƯỢT CHỌN MAP CỦA {1}",broadcastBtn:"Mở Tab Livestream",pick:"LƯỢT CHỌN",closeBtn:"Đóng Tab",preMatchTitleIndiv:"ĐUA TỐC ĐỘ CÁ NHÂN",preMatchTitleTeam:"ĐUA TỐC ĐỘ ĐỒNG ĐỘI",preMatchTitle1v1:"CÁ NHÂN 1VS1",preMatchMode:"MODE",preMatchBestRecord:"BEST RECORD",scoreboardTab:"BẢNG ĐIỂM",prematchTab:"TRƯỚC TRẬN",postmatchTab:"SAU TRẬN",matchResult:"KẾT QUẢ TRẬN ĐẤU",selectCar:"CHỌN XE",selectPet:"CHỌN PET",preMatchModeSolo:"CÁ NHÂN",preMatchMode2v2:"ĐỒNG ĐỘI 2VS2",preMatchMode3v3:"ĐỒNG ĐỘI 3VS3",setScore:"TỈ SỐ HIỆP (SET)",roundScore:"TỈ SỐ VÁN (ROUND)",dbBtn:"Ảnh VĐV",dbTitle:"QUẢN LÝ ẢNH VĐV",tabPlayers:"ẢNH VĐV",tabCars:"KHO XE",tabPets:"KHO PET",carName:"Tên Xe",petName:"Tên Pet",imgUrl:"Link Ảnh (URL)",addBtn:"Thêm Mới",emptyDb:"Chưa có dữ liệu",banMap:"Cấm Map",banned:"Đã Cấm", groupMgr: "Quản Lý Bảng Đấu", groupTitle: "QUẢN LÝ CÁC BẢNG ĐẤU", saveGroup: "Lưu Bảng Đấu", loadGroup: "Tải Lại", delGroup: "Xóa Bảng", groupNamePh: "Nhập tên bảng đấu mới...", groupSaved: "Đã lưu bảng đấu thành công!", groupLoaded: "Đã tải dữ liệu bảng đấu!", newGroup: "Tạo Bảng Mới", saveCurrGroup: "Lưu Bảng Này"},
@@ -142,15 +191,10 @@
   };
   const BROADCAST_BACKGROUND_IMAGE = 'https://i.ibb.co/TxWgMDKd/Untitled.png';
   const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbxkyzTtx4aOKoF8bg-irv2B5NNkHOBtoooJ4UFrifGdhbc-VU-Q3rrAGz-gITLTGtpDPg/exec";
+  const GOOGLE_MAPS_CSV_URL = 'https://docs.google.com/spreadsheets/d/13v2zJ8_hbkYGu6miZjh9zcq5XE3cQD4-JBhg3PlSR0M/export?format=csv&gid=239351115';
   const NORMAL_TOP_SCORE = 11;
   const KING_TOP_SCORE = 12;
   const MAX_PLAYERS = 6;
-  const MAP_INDEX = new Map(MAP_POOL.flatMap(group => group.maps.map(map => [map.id, { map, stars: group.stars }])));
-  const getMapName = (id, lang) => {
-   const entry = MAP_INDEX.get(id);
-   return entry ? (entry.map[lang === 'th' ? 'en' : lang] || entry.map.en || entry.map.vi || '') : '';
-  };
-  const getMapStars = id => MAP_INDEX.get(id)?.stars || 0;
   const parseTime = (val) => {
    val = String(val ?? '').trim();
    if (!val || val.toUpperCase() === 'X' || !/^[0-9:.,]+$/.test(val)) return null;
@@ -196,17 +240,31 @@
    const h2 = (h1 + 40) % 360;
    return `linear-gradient(135deg, hsl(${h1}, 40%, 30%), hsl(${h2}, 50%, 20%))`;
   };
-  const getMapBackgroundStyle = (mapId) => {
-   if (!mapId) return {};
-   if (MAP_BACKGROUNDS[mapId]) {
-    return {
-     backgroundImage: `url(${MAP_BACKGROUNDS[mapId]})`,
-     backgroundSize: 'cover',
-     backgroundPosition: 'center'
-    };
-   }
-   return { background: getMapGradient(mapId) };
+  const createMapCatalog = rows => {
+   const MAP_INDEX = new Map(rows.map(map => [map.id, { map, stars: map.stars }]));
+   const groups = new Map();
+   rows.filter(map => map.active).forEach(map => {
+    if (!groups.has(map.stars)) groups.set(map.stars, []);
+    groups.get(map.stars).push(map);
+   });
+   const MAP_POOL = [...groups].sort(([a], [b]) => b - a).map(([stars, maps]) => ({ stars, maps }));
+   const getMapName = (id, lang) => {
+    const map = MAP_INDEX.get(id)?.map;
+    return map ? (map[lang === 'th' ? 'en' : lang] || map.en || map.vi || map.cn || '') : '';
+   };
+   return {
+    MAP_POOL, MAP_INDEX, getMapName,
+    getMapStars: id => MAP_INDEX.get(id)?.stars || 0,
+    getMapLaps: id => !id ? 1 : MAP_INDEX.get(id)?.map.laps ?? 2,
+    getMapBackgroundStyle: id => {
+     if (!id) return {};
+     const img = MAP_INDEX.get(id)?.map.img;
+     return img ? { backgroundImage: 'url(' + img + ')', backgroundSize: 'cover', backgroundPosition: 'center' } : { background: getMapGradient(id) };
+    }
+   };
   };
+  const MapCatalogContext = React.createContext(null);
+  const useMapCatalog = () => React.useContext(MapCatalogContext);
   let accountStorageId = null;
   const accountStorageKey = key => accountStorageId && key !== 'zsm_lang_v11_final' ? `zsm_user:${accountStorageId}:${key}` : key;
   const accountEventKey = key => key === 'zsm_lang_v11_final' ? key : accountStorageId && key?.startsWith(`zsm_user:${accountStorageId}:`) ? key.slice(`zsm_user:${accountStorageId}:`.length) : null;
@@ -316,6 +374,7 @@
    );
   };
   const SearchableMapSelect = ({ currentMapId, selectedMaps = [], bannedMaps = [], onChange, lang, t, isBan = false }) => {
+   const { MAP_POOL, getMapName } = useMapCatalog();
    const [isOpen, setIsOpen] = useState(false);
    const [searchTerm, setSearchTerm] = useState('');
    const wrapperRef = useRef(null);
@@ -563,13 +622,14 @@
     );
   };
   const WheelModal = ({ lang, setActiveSidebarMenu, showDialogAlert }) => {
+    const { MAP_POOL, getMapName, getMapStars, getMapBackgroundStyle } = useMapCatalog();
     const wt = {
       vi: { title: "Vòng Quay Map Random", diff: "Độ khó", count: "Số lượng Map", countPh: "Tất cả", create: "🔄 Tạo Vòng Quay", spin: "QUAY NGAY", spinning: "Đang quay...", close: "Đóng", err: "Vui lòng chọn ít nhất 1 độ khó!" },
       en: { title: "Random Map Wheel", diff: "Difficulty", count: "Map Count", countPh: "All", create: "🔄 Create Wheel", spin: "SPIN NOW", spinning: "Spinning...", close: "Close", err: "Please select at least 1 difficulty!" },
       cn: { title: "随机赛道转盘", diff: "难度", count: "赛道数量", countPh: "全部", create: "🔄 创建转盘", spin: "开始旋转", spinning: "旋转中...", close: "关闭", err: "请至少选择1个难度！" },
       th: { title: "วงล้อแผนที่สุ่ม", diff: "ความยาก", count: "จำนวนแผนที่", countPh: "ทั้งหมด", create: "🔄 สร้างวงล้อ", spin: "หมุนเลย", spinning: "กำลังหมุน...", close: "ปิด", err: "โปรดเลือกความยากอย่างน้อย 1 ระดับ!" }
     }[lang] || { title: "Vòng Quay Map Random", diff: "Độ khó", count: "Số lượng Map", countPh: "Tất cả", create: "🔄 Tạo Vòng Quay", spin: "QUAY NGAY", spinning: "Đang quay...", close: "Đóng", err: "Vui lòng chọn ít nhất 1 độ khó!" };
-    const [selectedStars, setSelectedStars] = useState([7, 6, 5, 4, 3]);
+    const [selectedStars, setSelectedStars] = useState(() => MAP_POOL.map(group => group.stars));
     const [mapCount, setMapCount] = useState('');
     const [wheelMaps, setWheelMaps] = useState([]);
     const [isSpinning, setIsSpinning] = useState(false);
@@ -579,7 +639,7 @@
     const timersRef = useRef(new Set());
     const schedule = (callback, delay) => { const id = setTimeout(() => { timersRef.current.delete(id); callback(); }, delay); timersRef.current.add(id); };
     useEffect(() => () => { timersRef.current.forEach(clearTimeout); audioCtxRef.current?.close().catch(() => {}); }, []);
-    useEffect(() => { generateWheel(); }, []);
+    useEffect(() => { if (MAP_POOL.length) generateWheel(); }, []);
     const toggleStar = (star) => {
       if (selectedStars.includes(star)) setSelectedStars(selectedStars.filter(s => s !== star));
       else setSelectedStars([...selectedStars, star]);
@@ -652,7 +712,7 @@
               <div>
                 <h3 className="text-slate-400 font-bold text-xs uppercase tracking-widest mb-3">{wt.diff}</h3>
                 <div className="grid grid-cols-3 lg:grid-cols-2 gap-2">
-                  {[7, 6, 5, 4, 3].map(star => (
+                  {MAP_POOL.map(group => group.stars).map(star => (
                     <label key={star} className={`flex items-center justify-center lg:justify-start gap-2 p-2 rounded cursor-pointer border transition-colors ${selectedStars.includes(star) ? 'bg-cyan-900/30 border-cyan-500/50 text-cyan-300' : 'bg-slate-900 border-slate-700 text-slate-500'}`}>
                       <input type="checkbox" checked={selectedStars.includes(star)} onChange={() => toggleStar(star)} className="hidden" />
                       <span className="font-black text-sm">★ {star}</span>
@@ -677,7 +737,7 @@
                     const angle = 360 / wheelMaps.length;
                     return (
                       <div key={`${map.id}-${i}`} className="absolute inset-0 origin-center" style={{ transform: `rotate(${i * angle}deg)`, maskImage: `conic-gradient(from 0deg at 50% 50%, black ${angle}deg, transparent ${angle}deg)`, WebkitMaskImage: `conic-gradient(from 0deg at 50% 50%, black ${angle}deg, transparent ${angle}deg)` }}>
-                        <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${MAP_BACKGROUNDS[map.id]})` }} />
+                        <div className="absolute inset-0 bg-cover bg-center" style={getMapBackgroundStyle(map.id)} />
                         <div className="absolute inset-0 bg-black/50" />
                         <div className="absolute inset-y-0 right-1/2 w-[1px] bg-white/30" style={{ transformOrigin: 'right' }} />
                         <div className="absolute top-1/2 left-1/2 flex items-center justify-end px-3 md:px-8 font-black text-white drop-shadow-[0_2px_4px_rgba(0,0,0,1)] z-10" style={{ width: '50%', height: '40px', marginTop: '-20px', transformOrigin: 'left center', transform: `rotate(${angle / 2}deg)` }}>
@@ -698,7 +758,7 @@
                 <div className="absolute inset-0 z-40 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 animate-slide-up">
                   <div className="bg-slate-900/95 border border-cyan-500/50 backdrop-blur-xl rounded-2xl p-6 md:p-8 flex flex-col items-center max-w-lg w-full text-center shadow-[0_0_100px_rgba(6,182,212,0.4)]">
                     <div className="w-full aspect-video rounded-xl overflow-hidden mb-5 border-2 border-cyan-500 shadow-[0_0_30px_rgba(6,182,212,0.3)] relative">
-                      <div className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 scale-105 hover:scale-100" style={{ backgroundImage: `url(${MAP_BACKGROUNDS[winner.id]})` }} />
+                      <div className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 scale-105 hover:scale-100" style={getMapBackgroundStyle(winner.id)} />
                       <div className="absolute inset-0 border border-cyan-300/30 rounded-xl pointer-events-none"></div>
                     </div>
                     <div className="flex text-yellow-400 text-lg md:text-xl drop-shadow-[0_0_8px_rgba(250,204,21,0.8)] mb-2">{Array(getMapStars(winner.id)).fill(0).map((_, i) => <span key={i}>★</span>)}</div>
@@ -733,6 +793,7 @@
             </div>
           </div>);
   const BroadcastMapCard = ({ className = '', activeGame, mapName, mapStars, bgStyle, personalRecords, gameMode, modeText, kingMapOwnerName = '---', lang }) => {
+    const { getMapLaps } = useMapCatalog();
     const copy = ({
       vi: { holder: 'NGƯỜI GIỮ KỶ LỤC', best: 'KỶ LỤC TỐT NHẤT', empty: 'Chưa có kỷ lục ở map này' },
       en: { holder: 'MAP RECORD HOLDER', best: 'BEST RECORD', empty: 'No saved records for this map' },
@@ -881,6 +942,7 @@
   };
 
   const BroadcastOverlay = ({ broadcastState, setBroadcastState, viewSet, setViewSet, soloSetBO, soloMatchBO, players, personalRecords, games, totals, getGameCalculations, matchStatus1v1, lang, t, gameMode, tournamentName, team1Name, team2Name, onAssetSelect, onClose, carDatabase, petDatabase, ecuDatabase, playerPhotos }) => {
+   const { getMapName, getMapStars, getMapBackgroundStyle } = useMapCatalog();
    const isTeamMode = gameMode === '2v2' || gameMode === '3v3';
    let broadcastRounds = [];
    let broadcastIndices = [];
@@ -1637,6 +1699,11 @@
    const [activeSidebarMenu, setActiveSidebarMenu] = useState(null);
    const showDialogAlert = (msg) => setDialog({ isOpen: true, type: 'alert', message: msg, onConfirm: null });
    const showDialogConfirm = (msg, onConfirmCallback) => setDialog({ isOpen: true, type: 'confirm', message: msg, onConfirm: onConfirmCallback });
+   const [mapDatabase, setMapDatabase] = useState(() => {
+    try { return normalizeMapRows(readStoredJSON('zsm_maps_db_v1', () => [])); } catch (error) { return []; }
+   });
+   const mapCatalog = useMemo(() => createMapCatalog(mapDatabase), [mapDatabase]);
+   const { MAP_INDEX, getMapName } = mapCatalog;
    const [carDatabase, setCarDatabase] = useState(() => readStoredJSON('zsm_cars_db_v1', () => ([
        { id: 'c1', name: 'Dark Azure Dragon', img: 'https://i.ibb.co/3s6Vp6Z/car1.png' },
        { id: 'c2', name: 'Aston Martin', img: 'https://i.ibb.co/LdZxtDmV/8-E3240-F9-66-DA-4-BD7-A4-C0-5-BC41919946-F.png' },
@@ -1696,6 +1763,10 @@
          else if (e.key === 'zsm_lang_v11_final') setLang(normalizeLanguage(value));
          else if (e.key === 'zsm_saved_groups_v1') setSavedGroups(JSON.parse(value));
          else if (e.key === 'zsm_ecus_db_v1') setEcuDatabase(JSON.parse(value));
+         else if (e.key === 'zsm_maps_db_v1') {
+          const maps = normalizeMapRows(JSON.parse(value));
+          setMapDatabase(prev => JSON.stringify(prev) === JSON.stringify(maps) ? prev : maps);
+         }
        } catch(err) { console.error("Sync Error", err); }
      };
      window.addEventListener('storage', handleStorageChange);
@@ -1730,6 +1801,7 @@
    useEffect(() => { writeStorageValue('zsm_banned_maps_1v1_v11', JSON.stringify(bannedMaps)); }, [bannedMaps]);
    useEffect(() => { writeStorageValue('zsm_saved_groups_v1', JSON.stringify(savedGroups)); }, [savedGroups]);
    useEffect(() => { writeStorageValue('zsm_ecus_db_v1', JSON.stringify(ecuDatabase)); }, [ecuDatabase]);
+   useEffect(() => { writeStorageValue('zsm_maps_db_v1', JSON.stringify(mapDatabase)); }, [mapDatabase]);
    useEffect(() => {
      if (gameMode === '1v1') {
        const targetLen = soloMatchBO * soloSetBO;
@@ -1777,33 +1849,49 @@
      sheetSyncRef.current = controller;
      const timeout = setTimeout(() => controller.abort(), 15000);
      try {
-      const res = await fetch(GOOGLE_SHEET_API_URL, { signal: controller.signal });
-      if (!res.ok) throw new Error("HTTP error " + res.status);
-      const data = await res.json();
-      for (const [type, setData, key] of [
-       ['cars', setCarDatabase, 'zsm_cars_db_v1'],
-       ['pets', setPetDatabase, 'zsm_pets_db_v1'],
-       ['ecus', setEcuDatabase, 'zsm_ecus_db_v1']
-      ]) {
-       const items = data[type];
-       if (!items || !Array.isArray(items) || !items.length) continue;
-       const formatted = items.map(item => ({
-        id: String(item.id || item.Id || '').trim(),
-        name: String(item.name || item.Name || '').trim(),
-        img: String(item.img || item.Img || item.photo || '').trim()
-       })).filter(item => item.id && (type === 'ecus' ? item.img : item.name));
-       if (formatted.length) {
-        setData(formatted);
-        // The persistence effect saves the validated list.
-       }
-      }
+      const results = await Promise.allSettled([
+       (async () => {
+        const res = await fetch(GOOGLE_SHEET_API_URL, { signal: controller.signal });
+        if (!res.ok) throw new Error("HTTP error " + res.status);
+        const data = await res.json();
+        for (const [type, setData, key] of [
+         ['cars', setCarDatabase, 'zsm_cars_db_v1'],
+         ['pets', setPetDatabase, 'zsm_pets_db_v1'],
+         ['ecus', setEcuDatabase, 'zsm_ecus_db_v1']
+        ]) {
+         const items = data[type];
+         if (!items || !Array.isArray(items) || !items.length) continue;
+         const formatted = items.map(item => ({
+          id: String(item.id || item.Id || '').trim(),
+          name: String(item.name || item.Name || '').trim(),
+          img: String(item.img || item.Img || item.photo || '').trim()
+         })).filter(item => item.id && (type === 'ecus' ? item.img : item.name));
+         if (formatted.length) {
+          setData(formatted);
+          // The persistence effect saves the validated list.
+         }
+        }
+       })(),
+       (async () => {
+        const res = await fetch(GOOGLE_MAPS_CSV_URL + '&_=' + Date.now(), { signal: controller.signal, cache: 'no-store' });
+        if (!res.ok) throw new Error('Maps HTTP error ' + res.status);
+        const maps = parseMapsCSV(await res.text());
+        setMapDatabase(previous => mergeMapRows(previous, maps));
+       })()
+      ]);
+      const failed = results.flatMap((result, i) => {
+       if (result.status !== 'rejected') return [];
+       console.error(i === 0 ? 'Assets sync failed' : 'Maps sync failed', result.reason);
+       return [i === 0 ? 'Cars/Pets/ECU' : 'Maps'];
+      });
+      if (failed.length) throw new Error('Google Sheets: ' + failed.join(', '));
       if (isManual) {
        showDialogAlert(lang === 'vi' ? "Đồng bộ dữ liệu thành công!" : "Data synced successfully!");
       }
      } catch (err) {
       console.error("Lỗi đồng bộ Google Sheets:", err);
       if (isManual) {
-       showDialogAlert(lang === 'vi' ? "Lỗi: Không thể kết nối Google Sheets! Vui lòng kiểm tra quyền truy cập Web App." : "Error: Cannot connect to Google Sheets!");
+       showDialogAlert(lang === 'vi' ? "Lỗi: Chưa đồng bộ được đầy đủ dữ liệu Google Sheets! Phần tải lỗi sẽ giữ dữ liệu đã lưu. Vui lòng thử lại." : "Error: Some Google Sheets data could not be synced. Saved data is kept for failed lists. Please try again.");
       }
      } finally { clearTimeout(timeout); sheetSyncRef.current = null; }
     };
@@ -2185,13 +2273,14 @@
    }, [games, totals, players, isTeamMode, gameMode, lang, t, displayTeam1Name, displayTeam2Name, soloMatchBO, soloSetBO, matchStatus1v1]);
    if (isBroadcastTab) {
      return (
-      <>
+      <MapCatalogContext.Provider value={mapCatalog}>
         <style dangerouslySetInnerHTML={{__html: `html, body { zoom: 1 !important; transform: none !important; width: 100vw !important; height: 100vh !important; overflow: hidden !important; margin: 0; padding: 0; }`}} />
         <BroadcastOverlay broadcastState={broadcastState} setBroadcastState={setBroadcastState} viewSet={viewSet} setViewSet={setViewSet} soloSetBO={soloSetBO} soloMatchBO={soloMatchBO} players={players} personalRecords={personalRecords} games={games} totals={totals} getGameCalculations={getGameCalculations} matchStatus1v1={matchStatus1v1} lang={lang} t={t} gameMode={gameMode} tournamentName={tournamentName} team1Name={displayTeam1Name} team2Name={displayTeam2Name} carDatabase={carDatabase} petDatabase={petDatabase} ecuDatabase={ecuDatabase} playerPhotos={playerPhotos} onAssetSelect={handleAssetSelect} onClose={() => window.close()} />
-      </>
+      </MapCatalogContext.Provider>
      )
    }
    return (
+    <MapCatalogContext.Provider value={mapCatalog}>
     <div className="min-h-screen relative overflow-x-hidden pb-20 font-sans">
      <CustomDialog dialog={dialog} setDialog={setDialog} />
      {showAccounts && account.role === 'admin' && <AccountAdminModal account={account} lang={lang} onClose={() => setShowAccounts(false)} showDialogConfirm={showDialogConfirm} onAccountChanged={onAccountChanged} />}
@@ -2250,7 +2339,7 @@
         </div>
       </div>
      </>
-     {activeSidebarMenu === 'wheel' && <WheelModal lang={lang} setActiveSidebarMenu={setActiveSidebarMenu} showDialogAlert={showDialogAlert} />}
+     {activeSidebarMenu === 'wheel' && <WheelModal key={JSON.stringify(mapDatabase)} lang={lang} setActiveSidebarMenu={setActiveSidebarMenu} showDialogAlert={showDialogAlert} />}
      <SaveGroupModal show={showSaveGroupModal} setShow={setShowSaveGroupModal} onSave={handleSaveCurrentGroup} t={t} />
      <GroupManagerModal showGroupModal={showGroupModal} setShowGroupModal={setShowGroupModal} savedGroups={savedGroups} setSavedGroups={setSavedGroups} lang={lang} t={t} loadGroupState={loadGroupState} resetGroupState={resetGroupState} showDialogConfirm={showDialogConfirm} />
      <PlayerPhotoManagerModal showDbModal={showDbModal} setShowDbModal={setShowDbModal} lang={lang} t={t} players={players} playerPhotos={playerPhotos} setPlayerPhotos={setPlayerPhotos} />
@@ -2537,6 +2626,7 @@
       </div>
      </div>
     </div>
+    </MapCatalogContext.Provider>
    );
   }
   const root = ReactDOM.createRoot(document.getElementById('root'));
