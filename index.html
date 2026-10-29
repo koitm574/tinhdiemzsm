@@ -349,7 +349,8 @@
      if (result === 1) info.p2Rounds++;
      if (info.p1Rounds >= winCond || info.p2Rounds >= winCond) { info.finished = true; break; }
     }
-    sets.push(info); currentSet = set; p1Rounds = info.p1Rounds; p2Rounds = info.p2Rounds;
+    sets.push(info); currentSet = set;
+    if (set === 1 || info.lastGameIndex !== -1) { p1Rounds = info.p1Rounds; p2Rounds = info.p2Rounds; }
     if (!info.finished) break;
     if (info.p1Rounds >= winCond) p1Sets++; else p2Sets++;
     if (p1Sets >= matchWinCond || p2Sets >= matchWinCond) { winner = p1Sets >= matchWinCond ? 0 : 1; break; }
