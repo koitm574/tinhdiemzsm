@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>ZSM · Live Overlay</title>
+<script src="live-config.js"></script>
+<style>
+  :root {
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #f5f7ff;
+    --accent: #bcff46;
+    --muted: #aebed4;
+    --unit: min(1vw, 1.78vh);
+  }
+  :root[data-format="9x16"] { --unit: min(1vw, .563vh); }
+  * { box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: transparent; }
+  body.capture { background: #071121; }
+  main, .frame { position: absolute; inset: 0; }
+  .frame {
+    display: grid;
+    place-items: center;
+    padding: calc(5 * var(--unit));
+    background: radial-gradient(ellipse at 90% 8%, #1b3c49, transparent 46%), linear-gradient(135deg, #070f20, #111e36 68%, #132b33);
+  }
+  .frame.compact { align-items: end; background: transparent; }
+  .map-art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .26; }
+  .board {
+    position: relative;
+    width: min(100%, calc(77 * var(--unit)));
+    min-width: 0;
+    border: 1px solid #304259;
+    border-top: max(2px, calc(.33 * var(--unit))) solid var(--accent);
+    background: #0b1527;
+    box-shadow: 0 calc(1.2 * var(--unit)) calc(3.6 * var(--unit)) #02050d66;
+    padding: calc(2.5 * var(--unit)) calc(3 * var(--unit));
+  }
+  .compact .board { width: min(100%, calc(64 * var(--unit))); padding: calc(1.2 * var(--unit)) calc(1.7 * var(--unit)); }
+  .brand, .round { color: var(--accent); text-transform: uppercase; font-size: calc(1.3 * var(--unit)); font-weight: 750; letter-spacing: .12em; }
+  .brand { display: flex; justify-content: space-between; gap: .8em; }
+  .brand span:first-child { white-space: nowrap; }
+  .event, .name, .note, .round, .map { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .event { color: var(--muted); text-align: right; min-width: 0; }
+  h1 { font-size: calc(4.7 * var(--unit)); line-height: 1.08; margin: .22em 0 .14em; font-weight: 800; }
+  .round { margin-top: .8em; color: var(--muted); }
+  .map { margin: .24em 0 .7em; font-size: calc(2.05 * var(--unit)); font-weight: 700; }
+  .rows { margin-top: calc(1.05 * var(--unit)); display: grid; gap: calc(.37 * var(--unit)); }
+  .row {
+    display: grid;
+    grid-template-columns: minmax(1em, auto) minmax(0, 1fr) auto;
+    align-items: center;
+    gap: calc(1.25 * var(--unit));
+    min-width: 0;
+    padding: calc(.54 * var(--unit)) calc(1.2 * var(--unit));
+    background: #152239;
+    border-inline-start: 2px solid transparent;
+    font-size: calc(1.8 * var(--unit));
+  }
+  .row.leader { border-color: var(--accent); background: #243332; }
+  .rank, .value { font-variant-numeric: tabular-nums; font-weight: 750; }
+  .rank, .value span + span { color: var(--accent); }
+  .name { font-weight: 750; }
+  .note { color: var(--muted); font-size: .67em; font-weight: 600; }
+  .value { display: flex; align-items: baseline; gap: .65em; white-space: nowrap; }
+  .compact .rows { grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: calc(.55 * var(--unit)); }
+  .compact .row { gap: calc(.62 * var(--unit)); font-size: calc(1.53 * var(--unit)); }
+  .break { padding-block: calc(5.5 * var(--unit)); }
+  .break p { color: var(--muted); font-size: calc(1.8 * var(--unit)); }
+  :root[data-format="9x16"] .frame { padding: calc(7 * var(--unit)); padding-block-end: calc(18 * var(--unit)); }
+  :root[data-format="9x16"] .board { width: 100%; padding: calc(3.1 * var(--unit)); }
+  :root[data-format="9x16"] .compact { align-items: start; padding-block-start: calc(15 * var(--unit)); }
+  :root[data-format="9x16"] h1 { font-size: calc(7.1 * var(--unit)); }
+  :root[data-format="9x16"] .brand, :root[data-format="9x16"] .round { font-size: calc(2.6 * var(--unit)); }
+  :root[data-format="9x16"] .map, :root[data-format="9x16"] .break p { font-size: calc(3.6 * var(--unit)); }
+  :root[data-format="9x16"] .rows { gap: calc(.8 * var(--unit)); margin-top: calc(2 * var(--unit)); }
+  :root[data-format="9x16"] .compact .rows { grid-auto-flow: row; }
+  :root[data-format="9x16"] .row { font-size: calc(3.7 * var(--unit)); padding: calc(1.15 * var(--unit)); }
+  .next-match {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    gap: calc(1.5 * var(--unit));
+    margin-top: calc(1.6 * var(--unit));
+    padding: calc(1.3 * var(--unit));
+    border-inline-start: 3px solid var(--accent);
+    background: #192c38;
+    font-size: calc(2.65 * var(--unit));
+    font-weight: 750;
+  }
+  .next-match .away { text-align: right; }
+  .next-match .versus { color: var(--accent); font-size: .6em; letter-spacing: .12em; }
+  .next-time { margin-top: calc(.6 * var(--unit)); color: var(--muted); font-size: calc(1.5 * var(--unit)); }
+  .bracket {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) calc(4.3 * var(--unit)) minmax(0, 1fr);
+    align-items: center;
+    row-gap: calc(1.5 * var(--unit));
+    margin-top: calc(1.5 * var(--unit));
+  }
+  .bracket-match { grid-column: 1; min-width: 0; }
+  .bracket-match.final { grid-column: 3; grid-row: 1 / 3; }
+  .bracket-match h2 { margin: 0 0 .35em; color: var(--muted); font-size: calc(1.25 * var(--unit)); text-transform: uppercase; letter-spacing: .09em; }
+  .bracket-match .row { margin-top: .2em; font-size: calc(1.5 * var(--unit)); }
+  .bracket-link { grid-column: 2; grid-row: 1 / 3; width: 100%; height: 100%; min-height: 0; }
+  .champion {
+    margin-top: calc(1.1 * var(--unit));
+    padding: calc(.7 * var(--unit)) calc(1.2 * var(--unit));
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-size: calc(1.5 * var(--unit));
+    font-weight: 750;
+  }
+  :root[data-format="9x16"] .next-match { font-size: calc(5 * var(--unit)); padding: calc(2 * var(--unit)); }
+  :root[data-format="9x16"] .next-time,
+  :root[data-format="9x16"] .champion { font-size: calc(3.2 * var(--unit)); }
+  :root[data-format="9x16"] .bracket { grid-template-columns: minmax(0, 1fr); gap: calc(2.5 * var(--unit)); }
+  :root[data-format="9x16"] .bracket-match.final { grid-column: 1; grid-row: auto; border-top: 2px solid #304259; padding-top: calc(2 * var(--unit)); }
+  :root[data-format="9x16"] .bracket-match h2 { font-size: calc(2.6 * var(--unit)); }
+  :root[data-format="9x16"] .bracket-match .row { font-size: calc(3.3 * var(--unit)); }
+  :root[data-format="9x16"] .bracket-link { display: none; }
+  @media (prefers-reduced-motion: no-preference) {
+    .frame { animation: appear .18s ease-out; }
+    @keyframes appear { from { opacity: .86; } to { opacity: 1; } }
+  }
+</style>
+</head>
+<body>
+<main id="output"></main>
+<script>
+(() => {
+  const params = new URLSearchParams(location.search);
+  document.documentElement.dataset.format = params.get('format') === '9x16' ? '9x16' : '16x9';
+  document.body.classList.toggle('capture', params.has('capture'));
+  const output = document.getElementById('output');
+  const scenes = ['prematch', 'postmatch', 'standings', 'break', 'upcoming', 'playoffs'];
+  const copy = {
+    vi: ['Trước trận', 'Kết quả ván', 'Bảng xếp hạng', 'Tạm nghỉ', 'Giải đấu sẽ tiếp tục trong ít phút.'],
+    en: ['Coming up', 'Race results', 'Standings', 'Intermission', 'The tournament will resume shortly.'],
+    cn: ['赛前预览', '本局结果', '排行榜', '中场休息', '比赛即将继续。'],
+    th: ['ก่อนการแข่งขัน', 'ผลการแข่งขัน', 'ตารางอันดับ', 'พักการแข่งขัน', 'การแข่งขันจะเริ่มต่อในอีกสักครู่']
+  };
+  const eventCopy = {
+    vi: ['Trận tiếp theo', 'Nhánh playoffs', 'Bán kết', 'Chung kết', 'Vô địch', 'Chờ kết quả'],
+    en: ['Next match', 'Playoff bracket', 'Semifinal', 'Final', 'Champion', 'Pending'],
+    cn: ['下一场比赛', '淘汰赛对阵', '半决赛', '决赛', '冠军', '待定'],
+    th: ['การแข่งขันถัดไป', 'ผังรอบเพลย์ออฟ', 'รอบรองชนะเลิศ', 'รอบชิงชนะเลิศ', 'แชมป์', 'รอผล']
+  };
+  const node = (tag, className, value) => {
+    const el = document.createElement(tag);
+    el.className = className;
+    if (typeof value === 'string' || typeof value === 'number') el.textContent = value;
+    return el;
+  };
+  const drawNext = (board, next) => {
+    if (!next || typeof next.home !== 'string' || typeof next.away !== 'string') return;
+    const match = node('div', 'next-match');
+    match.append(node('span', 'name', next.home), node('span', 'versus', 'VS'), node('span', 'name away', next.away));
+    board.append(match);
+    if (next.when) board.append(node('div', 'next-time', next.when));
+  };
+  const drawBracket = (board, bracket, labels) => {
+    if (!Array.isArray(bracket?.matches)) return;
+    const layout = node('div', 'bracket');
+    bracket.matches.slice(0, 3).forEach((match, index) => {
+      if (!Array.isArray(match)) return;
+      const card = node('section', index === 2 ? 'bracket-match final' : 'bracket-match');
+      card.append(node('h2', '', index === 2 ? labels[3] : labels[2] + ' ' + (index + 1)));
+      for (const entry of match.slice(0, 2)) {
+        const row = node('div', entry?.winner ? 'row leader' : 'row');
+        row.append(node('span', 'rank', Number.isInteger(entry?.seed) ? '#' + entry.seed : '—'),
+          node('span', 'name', entry?.name || labels[5]));
+        card.append(row);
+      }
+      layout.append(card);
+    });
+    const ns = 'http://www.w3.org/2000/svg';
+    const connector = document.createElementNS(ns, 'svg');
+    connector.setAttribute('viewBox', '0 0 100 200');
+    connector.setAttribute('preserveAspectRatio', 'none');
+    connector.setAttribute('class', 'bracket-link');
+    connector.setAttribute('aria-hidden', 'true');
+    const line = document.createElementNS(ns, 'path');
+    line.setAttribute('d', 'M0 50 H50 V150 H0 M50 100 H100');
+    line.setAttribute('fill', 'none');
+    line.setAttribute('stroke', '#607892');
+    line.setAttribute('stroke-width', '2');
+    line.setAttribute('vector-effect', 'non-scaling-stroke');
+    connector.append(line);
+    layout.append(connector);
+    board.append(layout);
+    if (typeof bracket.champion === 'string' && bracket.champion) {
+      board.append(node('div', 'champion name', labels[4] + ' · ' + bracket.champion));
+    }
+  };
+  const draw = frame => {
+    const compact = frame?.scene === 'scorebug';
+    const sceneIndex = scenes.indexOf(frame?.scene);
+    if (frame?.version !== 1 || (!compact && sceneIndex < 0) || !Array.isArray(frame.rows)) {
+      output.replaceChildren();
+      return;
+    }
+    const language = Object.hasOwn(copy, frame.lang) ? frame.lang : 'vi';
+    const labels = copy[language];
+    const eventLabels = eventCopy[language];
+    const layer = node('section', compact ? 'frame compact' : 'frame');
+    if (!compact && typeof frame.mapImage === 'string' && /^https:\/\/[^\s]+$/i.test(frame.mapImage)) {
+      const image = node('img', 'map-art');
+      image.alt = '';
+      image.referrerPolicy = 'no-referrer';
+      image.addEventListener('error', () => image.remove(), { once: true });
+      image.src = frame.mapImage;
+      layer.append(image);
+    }
+    const board = node('div', frame.scene === 'break' ? 'board break' : 'board');
+    const brand = node('div', 'brand');
+    brand.append(node('span', '', 'ZSM / ' + frame.mode), node('span', 'event', frame.event));
+    board.append(brand);
+    if (!compact) {
+      const title = frame.scene === 'upcoming' ? eventLabels[0] : frame.scene === 'playoffs' ? eventLabels[1] : labels[sceneIndex];
+      board.append(node('h1', '', title));
+    }
+    if (frame.scene === 'upcoming') drawNext(board, frame.next);
+    if (frame.scene === 'playoffs') drawBracket(board, frame.bracket, eventLabels);
+    if (frame.round && !compact) board.append(node('div', 'round', frame.round));
+    if (frame.map && !compact) board.append(node('div', 'map', frame.map));
+    if (frame.scene === 'break') board.append(node('p', '', labels[4]));
+    const rows = node('div', 'rows');
+    for (const row of frame.rows.slice(0, compact ? 3 : 6)) {
+      if (!row || typeof row.name !== 'string') continue;
+      const line = node('div', row.leader ? 'row leader' : 'row');
+      const title = node('div', 'name', row.name);
+      if (row.note) title.append(node('div', 'note', row.note));
+      const value = node('div', 'value');
+      for (const part of [row.value, row.extra]) {
+        if (typeof part === 'number' || (typeof part === 'string' && part)) value.append(node('span', '', part));
+      }
+      const rank = typeof row.rank === 'number' ? String(row.rank).padStart(2, '0') : '';
+      line.append(node('div', 'rank', rank), title, value);
+      rows.append(line);
+    }
+    if (rows.childElementCount) board.append(rows);
+    if (frame.round && compact) board.append(node('div', 'round', frame.round));
+    layer.append(board);
+    output.replaceChildren(layer);
+  };
+
+  if (params.has('preview')) {
+    window.addEventListener('message', event => {
+      if (event.origin === location.origin && event.source === window.parent && event.data?.type === 'zsm-live-preview') {
+        draw(event.data.frame);
+      }
+    });
+    return;
+  }
+
+  const room = location.hash.slice(1);
+  if (!/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i.test(room)) return;
+  if (params.has('local')) {
+    const key = 'zsm_live_frame:' + room;
+    const read = () => {
+      try { draw(JSON.parse(localStorage.getItem(key))); }
+      catch { draw(null); }
+    };
+    window.addEventListener('storage', event => {
+      if (event.key === key || event.key === null) read();
+    });
+    read();
+    return;
+  }
+
+  // Always read as a viewer, even in the operator's browser.
+  const config = window.ZSM_SUPABASE;
+  if (!config) return;
+  let lastFrame = '';
+  let expiryTimer;
+  const display = frame => {
+    const next = JSON.stringify(frame ?? null);
+    if (next === lastFrame) return;
+    lastFrame = next;
+    draw(frame);
+  };
+  const poll = async () => {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 6000);
+    let interval = 2500;
+    try {
+      const response = await fetch(config.url + '/rest/v1/rpc/zsm_read_live_frame', {
+        method: 'POST',
+        cache: 'no-store',
+        credentials: 'omit',
+        headers: { apikey: config.key, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ p_room: room }),
+        signal: controller.signal
+      });
+      if (!response.ok) throw new Error('Overlay unavailable');
+      const [entry] = await response.json();
+      clearTimeout(expiryTimer);
+      const remaining = Date.parse(entry?.expires_at) - Date.now();
+      if (remaining > 0) {
+        display(entry.frame);
+        expiryTimer = setTimeout(() => display(null), remaining);
+      } else {
+        display(null);
+      }
+    } catch {
+      // Keep the last received frame while the network recovers.
+      interval = 5000;
+    } finally {
+      clearTimeout(timeout);
+      setTimeout(poll, interval);
+    }
+  };
+  poll();
+})();
+</script>
+</body>
+</html>

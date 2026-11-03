@@ -14,6 +14,8 @@
   </script>
 
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="live-config.js"></script>
+  <script src="live-operations.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -365,13 +367,13 @@
     return { ...item, rank };
    });
   };
-  const BufferedInput = ({ value, onSave, className = "", placeholder = "" }) => {
+  const BufferedInput = ({ value, onSave, className = "", placeholder = "", maxLength }) => {
    const [localVal, setLocalVal] = useState(value || '');
    useEffect(() => {
     setLocalVal(value || '');
    }, [value]);
    return (
-    <input type="text" value={localVal} placeholder={placeholder} className={className} onChange={e => setLocalVal(e.target.value)} onBlur={() => { if (localVal !== value) onSave(localVal); }} onKeyDown={e => { if (e.key === 'Enter') { e.target.blur(); } }} />
+    <input type="text" value={localVal} maxLength={maxLength} placeholder={placeholder} className={className} onChange={e => setLocalVal(e.target.value)} onBlur={() => { if (localVal !== value) onSave(localVal); }} onKeyDown={e => { if (e.key === 'Enter') { e.target.blur(); } }} />
    );
   };
   const SearchableMapSelect = ({ currentMapId, selectedMaps = [], bannedMaps = [], onChange, lang, t, isBan = false }) => {
@@ -1506,9 +1508,7 @@
   const isAccountOwner = account => account?.id === ACCOUNT_OWNER_ID;
   const canManageAccount = (actor, target) => actor?.role === 'admin' && actor?.status === 'active' &&
    (actor.id === target.id || isAccountOwner(actor) || (!isAccountOwner(target) && target.role !== 'admin'));
-  const SUPABASE_URL = 'https://aoqxlqakamjyrybxqmby.supabase.co';
-  const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_6FYRU_tTf7NeLy2QkkLE_Q_7V7kBBjg';
-  const accountClient = window.supabase?.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+  const accountClient = window.ZSM_SUPABASE && window.supabase?.createClient(window.ZSM_SUPABASE.url, window.ZSM_SUPABASE.key);
   const ACCOUNT_COPY = {
    vi: { account:'Tài khoản', login:'Đăng nhập', register:'Đăng ký', logout:'Đăng xuất', email:'Email', password:'Mật khẩu', name:'Tên hiển thị', confirmPassword:'Nhập lại mật khẩu', forgot:'Quên mật khẩu?', reset:'Gửi liên kết đặt lại', back:'Quay lại đăng nhập', newPassword:'Mật khẩu mới', changePassword:'Đổi mật khẩu', save:'Lưu', close:'Đóng', wait:'Đang xử lý…', loading:'Đang kiểm tra tài khoản…', admin:'Quản trị viên', member:'Thành viên', active:'Hoạt động', blocked:'Đã khóa', manager:'Quản trị tài khoản', create:'Tạo tài khoản', refresh:'Làm mới', role:'Quyền', status:'Trạng thái', actions:'Thao tác', search:'Tìm email hoặc tên trong trang này…', empty:'Không có tài khoản phù hợp.', previous:'Trang trước', next:'Trang sau', page:'Trang', created:'Ngày tạo', lastLogin:'Đăng nhập gần nhất', never:'Chưa đăng nhập', checkEmail:'Hãy kiểm tra email để xác nhận tài khoản.', resetSent:'Nếu email tồn tại, bạn sẽ nhận được liên kết đặt lại mật khẩu.', passwordChanged:'Đã đổi mật khẩu.', createdOk:'Đã tạo tài khoản. Hãy cung cấp mật khẩu riêng cho người dùng.', saved:'Đã lưu thay đổi.', minPassword:'Mật khẩu cần từ 10 đến 128 ký tự.', mismatch:'Hai mật khẩu không trùng nhau.', blockedMessage:'Tài khoản đã bị khóa. Vui lòng liên hệ quản trị viên.', connection:'Chưa thể xác minh tài khoản. Kiểm tra kết nối rồi thử lại.', retry:'Thử lại', signInNeeded:'Đăng nhập để sử dụng bảng tính điểm.', confirmUpdate:'Lưu thay đổi tên, quyền và trạng thái cho tài khoản này?', selfProtected:'Bạn không thể tự hạ quyền hoặc tự khóa tài khoản.', noAdmin:'Chỉ quản trị viên đang hoạt động mới được quản lý tài khoản.', invalid:'Thông tin chưa hợp lệ.', authFailed:'Email hoặc mật khẩu không đúng, hoặc tài khoản chưa được kích hoạt.', emailUnconfirmed:'Bạn cần xác nhận email trước khi đăng nhập.', rateLimit:'Bạn thao tác quá nhanh. Vui lòng thử lại sau.', failed:'Thao tác chưa thành công. Vui lòng thử lại.', createFailed:'Không thể tạo tài khoản. Kiểm tra email đã tồn tại và yêu cầu mật khẩu.', lastAdmin:'Phải còn ít nhất một quản trị viên hoạt động.', notFound:'Không tìm thấy tài khoản.', sdkMissing:'Không tải được phần đăng nhập. Kiểm tra mạng rồi tải lại trang.', registration:'Chưa có tài khoản?', existing:'Đã có tài khoản?', temporaryPassword:'Mật khẩu ban đầu (10–128 ký tự)', passwordHint:'Bạn có thể đổi mật khẩu trong menu tài khoản.', me:'Bạn', cancel:'Hủy' },
    en: { account:'Account', login:'Sign in', register:'Sign up', logout:'Sign out', email:'Email', password:'Password', name:'Display name', confirmPassword:'Confirm password', forgot:'Forgot password?', reset:'Send reset link', back:'Back to sign in', newPassword:'New password', changePassword:'Change password', save:'Save', close:'Close', wait:'Working…', loading:'Checking account…', admin:'Administrator', member:'Member', active:'Active', blocked:'Blocked', manager:'Account administration', create:'Create account', refresh:'Refresh', role:'Role', status:'Status', actions:'Actions', search:'Find email or name on this page…', empty:'No matching accounts.', previous:'Previous', next:'Next', page:'Page', created:'Created', lastLogin:'Last sign in', never:'Never', checkEmail:'Check your email to confirm your account.', resetSent:'If this email exists, a password reset link will be sent.', passwordChanged:'Password changed.', createdOk:'Account created. Share its password privately with the user.', saved:'Changes saved.', minPassword:'Use 10 to 128 characters for the password.', mismatch:'The passwords do not match.', blockedMessage:'Your account is blocked. Contact an administrator.', connection:'Your account could not be verified. Check your connection and retry.', retry:'Retry', signInNeeded:'Sign in to use the scoreboard.', confirmUpdate:'Save the name, role and status changes for this account?', selfProtected:'You cannot demote or block your own account.', noAdmin:'Only active administrators may manage accounts.', invalid:'Please check the supplied information.', authFailed:'Incorrect email or password, or the account is not active.', emailUnconfirmed:'Confirm your email before signing in.', rateLimit:'Too many requests. Please try again later.', failed:'The operation failed. Please retry.', createFailed:'Could not create account. Check for an existing email and password requirements.', lastAdmin:'At least one active administrator is required.', notFound:'Account not found.', sdkMissing:'Sign-in could not load. Check your connection and reload.', registration:'No account yet?', existing:'Already have an account?', temporaryPassword:'Initial password (10–128 characters)', passwordHint:'You can change the password in the account menu.', me:'You', cancel:'Cancel' },
@@ -1686,6 +1686,451 @@
    return <main className="min-h-screen flex items-center justify-center p-6 relative isolate"><AccountBackdrop /><section className="relative z-10 w-full max-w-md bg-slate-900/70 backdrop-blur-md border border-slate-700 rounded-2xl p-6 text-center space-y-5"><AccountLanguage lang={lang} setLang={setLang}/><p role="status" className="text-slate-300">{auth.phase==='loading'?a.loading:auth.phase==='blocked'?a.blockedMessage:!accountClient?a.sdkMissing:a.connection}</p>{auth.phase!=='loading'&&<div className="flex justify-center gap-3"><button className={accountButtonClass} onClick={refresh}>{a.retry}</button><button className="text-slate-400 text-sm" onClick={logout}>{a.logout}</button></div>}</section></main>;
   };
 
+  const RESULT_COPY = {
+   vi: {
+    title: 'Lịch sử kết quả', race: 'Ván', close: 'Đóng', undo: 'Hoàn tác lần sửa gần nhất',
+    edit: 'Đã sửa', restored: 'Đã hoàn tác', empty: 'Ván này chưa có lịch sử chỉnh kết quả.',
+    note: 'Lưu 24 thao tác gần nhất của mỗi ván. Điểm được tính lại ngay sau khi hoàn tác.',
+    badTime: 'Thời gian chưa hợp lệ. Nhập thành tích, X (DNF) hoặc để trống để xóa kết quả.',
+    stale: 'Kết quả đã đổi ở cửa sổ khác. Kiểm tra lại rồi nhập tiếp.'
+   },
+   en: {
+    title: 'Result history', race: 'Race', close: 'Close', undo: 'Undo latest edit',
+    edit: 'Edited', restored: 'Undone', empty: 'This race has no result edits yet.',
+    note: 'The last 24 actions are kept per race. Undo recalculates the scores immediately.',
+    badTime: 'Invalid time. Enter a finish time, X (DNF), or leave it blank to clear the result.',
+    stale: 'This result changed in another window. Review it and try again.'
+   }
+  };
+  const RaceTimeInput = ({ value, onCommit, className, label }) => {
+   const [draft, setDraft] = useState(null);
+   const baseline = useRef(value);
+   return <input type="text" value={draft ?? value} placeholder="X" className={className} aria-label={label}
+    onFocus={() => { baseline.current = value; }}
+    onChange={event => setDraft(event.target.value)}
+    onBlur={event => {
+     if (draft !== null) onCommit(event.currentTarget.value, baseline.current);
+     setDraft(null);
+    }}
+    onKeyDown={event => { if (event.key === 'Enter') event.currentTarget.blur(); }} />;
+  };
+
+  const ResultHistory = ({ games, selected, onSelect, onClose, onUndo, lang, playerCount, matchStatus1v1 }) => {
+   const c = RESULT_COPY[lang] || RESULT_COPY.en;
+   const ref = useRef(null);
+   useEffect(() => { ref.current.showModal(); }, []);
+   const game = games.find(item => String(item.id) === String(selected)) || games[0];
+   const entries = ZSM_OPERATIONS.historyFor(game);
+   const undo = ZSM_OPERATIONS.findUndo(game, playerCount);
+   const label = index => {
+    const assignment = matchStatus1v1?.gameAssignments[index];
+    return assignment ? 'Set ' + assignment.set + ' / ' + c.race + ' ' + assignment.round : c.race + ' ' + (index + 1);
+   };
+   const time = value => value.trim().toUpperCase() === 'X' ? 'DNF' : value || '—';
+   return (
+    <dialog ref={ref} aria-labelledby="result-history-title" onCancel={event => { event.preventDefault(); onClose(); }}
+     className="w-[calc(100%-1.5rem)] max-w-xl max-h-[85vh] overflow-auto rounded-2xl border border-slate-600 bg-slate-900 p-5 text-slate-100 backdrop:bg-black/80">
+     <header className="flex items-start justify-between gap-3">
+      <div><h2 id="result-history-title" className="text-xl font-black text-cyan-200">{c.title}</h2><p className="mt-1 text-sm text-slate-400">{c.note}</p></div>
+      <button onClick={onClose} aria-label={c.close} className="rounded bg-slate-800 p-2 hover:bg-slate-700"><XIcon size={18}/></button>
+     </header>
+     <div className="my-4 flex flex-wrap items-center justify-between gap-3">
+      <label className="flex items-center gap-2 text-sm">{c.race}
+       <select aria-label={c.race} value={game?.id ?? ''} onChange={event => onSelect(event.target.value)} className="rounded-lg border border-slate-600 bg-slate-950 p-2">
+        {games.map((item, index) => <option key={item.id} value={item.id}>{label(index)}</option>)}
+       </select>
+      </label>
+      <button disabled={!undo} onClick={() => onUndo(game.id, undo.id)}
+       className="rounded-lg bg-cyan-300 px-3 py-2 text-sm font-bold text-slate-950 hover:bg-cyan-200 disabled:opacity-40">{c.undo}</button>
+     </div>
+     {entries.length ? <ol aria-live="polite" className="space-y-2">
+      {[...entries].reverse().map(entry => <li key={entry.id} className="grid grid-cols-[minmax(0,1fr)_auto] gap-x-3 rounded-lg bg-slate-800 px-3 py-2 text-sm">
+       <strong className="truncate">{entry.player}</strong>
+       <span className={entry.kind === 'undo' ? 'text-cyan-200' : 'text-slate-400'}>{entry.kind === 'undo' ? c.restored : c.edit}</span>
+       <span className="font-mono tabular-nums">{time(entry.before)} → {time(entry.after)}</span>
+       <time dateTime={entry.at} className="text-xs text-slate-400">{new Date(entry.at).toLocaleString()}</time>
+      </li>)}
+     </ol> : <p className="text-sm text-slate-400">{c.empty}</p>}
+    </dialog>
+   );
+  };
+
+  const RUNDOWN_COPY = {
+   vi: {
+    next: 'Trận tiếp theo', playoffs: 'Nhánh playoffs', add: 'Thêm trận', match: 'Trận', time: 'Giờ / ghi chú',
+    sideA: 'Bên A', sideB: 'Bên B', done: 'Đã xong', up: 'Đưa lên', down: 'Đưa xuống', remove: 'Xóa',
+    queueHelp: 'Phát theo thứ tự từ trên xuống. Đánh dấu trận đã xong để chuyển lịch sang trận kế tiếp.',
+    queueEmpty: 'Thêm một cặp đấu chưa kết thúc để xem trước cảnh này.',
+    seed: 'Hạt giống', semi: 'Bán kết', final: 'Chung kết', winner: 'Chọn người thắng',
+    bracketHelp: 'Nhập tên 4 hạt giống. Chọn người thắng để đưa họ vào chung kết.',
+    bracketIncomplete: 'Nhập đủ 4 tên khác nhau để phát nhánh playoffs.'
+   },
+   en: {
+    next: 'Next match', playoffs: 'Playoff bracket', add: 'Add match', match: 'Match', time: 'Time / note',
+    sideA: 'Side A', sideB: 'Side B', done: 'Finished', up: 'Move up', down: 'Move down', remove: 'Remove',
+    queueHelp: 'Matches follow the list order. Mark a match finished to advance the rundown.',
+    queueEmpty: 'Add a pending matchup to preview this scene.',
+    seed: 'Seed', semi: 'Semifinal', final: 'Final', winner: 'Select winner',
+    bracketHelp: 'Enter all four seeds. Select each winner to fill the final.',
+    bracketIncomplete: 'Enter four distinct names before publishing the bracket.'
+   }
+  };
+
+  const RundownEditor = ({ rundown, setRundown, scene, c }) => {
+   const { fixtures, bracket } = rundown;
+   const { FIXTURE_LIMIT, SEMIS, setSeed, setWinner } = ZSM_OPERATIONS;
+   const inputClass = 'mt-1 w-full min-w-0 rounded-md border border-slate-600 bg-slate-950 px-2 py-1.5 text-slate-100';
+   const iconButton = 'rounded bg-slate-700 px-2 py-1 hover:bg-slate-600 disabled:opacity-35';
+   const changeFixtures = update => setRundown(prev => ({ ...prev, fixtures: update(prev.fixtures) }));
+   const updateFixture = (id, key, value) => changeFixtures(rows => rows.map(row => row.id === id ? { ...row, [key]: value } : row));
+   const moveFixture = (id, step) => changeFixtures(rows => {
+    const from = rows.findIndex(row => row.id === id);
+    const to = from + step;
+    if (from < 0 || to < 0 || to >= rows.length) return rows;
+    const next = [...rows];
+    [next[from], next[to]] = [next[to], next[from]];
+    return next;
+   });
+   const addFixture = () => {
+    const row = { id: crypto.randomUUID(), home: '', away: '', when: '', done: false };
+    changeFixtures(rows => rows.length < FIXTURE_LIMIT ? [...rows, row] : rows);
+   };
+   const changeBracket = update => setRundown(prev => ({ ...prev, bracket: update(prev.bracket) }));
+   return <section className="mt-4 rounded-xl border border-slate-700 bg-slate-950/60 p-3 text-sm">
+    {scene === 'upcoming' ? <>
+     <div className="flex items-center justify-between gap-2">
+      <h3 className="font-bold text-lime-200">{c.next}</h3>
+      <button disabled={fixtures.length >= FIXTURE_LIMIT} onClick={addFixture} className={iconButton}>+ {c.add}</button>
+     </div>
+     <p className="my-2 text-xs text-slate-400">{c.queueHelp}</p>
+     <ol className="max-h-64 space-y-2 overflow-auto">
+      {fixtures.map((row, index) => <li key={row.id} className="rounded-lg border border-slate-700 p-2">
+       <div className="mb-1 flex flex-wrap items-center justify-between gap-2">
+        <strong>{c.match} {index + 1}</strong>
+        <div className="flex items-center gap-2">
+         <label className="flex items-center gap-1"><input type="checkbox" checked={row.done} onChange={event => updateFixture(row.id, 'done', event.target.checked)} /> {c.done}</label>
+         <button disabled={index === 0} onClick={() => moveFixture(row.id, -1)} aria-label={c.up + ' ' + (index + 1)} className={iconButton}>↑</button>
+         <button disabled={index === fixtures.length - 1} onClick={() => moveFixture(row.id, 1)} aria-label={c.down + ' ' + (index + 1)} className={iconButton}>↓</button>
+         <button onClick={() => changeFixtures(rows => rows.filter(item => item.id !== row.id))} aria-label={c.remove + ' ' + (index + 1)} className={iconButton}>×</button>
+        </div>
+       </div>
+       <div className="grid gap-2 sm:grid-cols-3">
+        {[[c.sideA, 'home', 48], [c.sideB, 'away', 48], [c.time, 'when', 28]].map(([label, field, limit]) =>
+         <label key={field} className="text-xs text-slate-300">{label}
+          <BufferedInput value={row[field]} maxLength={limit} onSave={value => updateFixture(row.id, field, value.trim())} className={inputClass} />
+         </label>)}
+       </div>
+      </li>)}
+     </ol>
+    </> : <>
+     <h3 className="font-bold text-lime-200">{c.playoffs}</h3>
+     <p className="my-2 text-xs text-slate-400">{c.bracketHelp}</p>
+     <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+      {bracket.seeds.map((name, i) => <label key={i} className="text-xs text-slate-300">{c.seed} {i + 1}
+       <BufferedInput value={name} maxLength={48} onSave={value => changeBracket(prev => setSeed(prev, i, value))} className={inputClass} />
+      </label>)}
+     </div>
+     <div className="mt-3 grid gap-2 sm:grid-cols-3">
+      {[...SEMIS, bracket.winners].map((pair, i) => {
+       const winner = i === 2 ? bracket.champion : bracket.winners[i];
+       const enabled = pair.every(seed => Number.isInteger(seed) && bracket.seeds[seed]);
+       return <label key={i} className="text-xs text-slate-300">{i === 2 ? c.final : c.semi + ' ' + (i + 1)}
+        <select aria-label={i === 2 ? c.final : c.semi + ' ' + (i + 1)} disabled={!enabled} value={winner ?? ''} className={inputClass + ' disabled:opacity-40'}
+         onChange={event => {
+          const value = event.target.value === '' ? null : Number(event.target.value);
+          changeBracket(prev => setWinner(prev, i, value));
+         }}>
+         <option value="">{c.winner}</option>
+         {enabled && pair.map(seed => <option key={seed} value={seed}>{bracket.seeds[seed]}</option>)}
+        </select>
+       </label>;
+      })}
+     </div>
+    </>}
+   </section>;
+  };
+
+  const LIVE_SCENES = ['scorebug', 'prematch', 'postmatch', 'standings', 'break', 'upcoming', 'playoffs'];
+  const LIVE_STUDIO_COPY = {
+   vi: {
+    title: 'Phòng phát sóng', subtitle: 'Kiểm tra bản xem trước rồi bấm Lên sóng để cập nhật hình phát.',
+    preview: 'Xem trước', scene: 'Cảnh', race: 'Ván', format: 'Khung hình', destination: 'Nguồn phát',
+    names: ['Tỷ số trên gameplay', 'Trước trận', 'Kết quả ván', 'Bảng xếp hạng', 'Tạm nghỉ'],
+    local: 'Cửa sổ cùng trình duyệt', cloud: 'Link OBS / TikTok', ready: 'Chưa phát cảnh nào', go: 'Lên sóng',
+    hide: 'Ẩn hình', open: 'Mở hình phát', copy: 'Sao chép link', copied: 'Đã sao chép link.',
+    localHelp: 'Mở hình phát rồi dùng Window Capture. Giữ cửa sổ trong cùng hồ sơ trình duyệt.',
+    cloudHelp: 'Thêm Browser Source trong OBS hoặc nguồn Link trong TikTok LIVE Studio nếu có. Ai có link đều xem được hình phát.',
+    incomplete: 'Nhập đủ thời gian hoặc X (DNF) cho mọi tay đua ở ván hợp lệ để phát kết quả.',
+    live: 'Đã phát lúc', hidden: 'Đã ẩn hình phát.', revoke: 'Thu hồi link', revoked: 'Đã thu hồi link phát.',
+    expired: 'Link đã hết hạn. Lên sóng lại để kích hoạt.', noBackend: 'Link OBS / TikTok cần cài migration Supabase. Có thể phát qua cửa sổ trình duyệt.',
+    failed: 'Chưa xác nhận được cập nhật. Kiểm tra kết nối hoặc bộ nhớ và thử lại.',
+    manual: 'Chọn và sao chép link trong ô bên dưới.', close: 'Đóng', working: 'Đang cập nhật…'
+   },
+   en: {
+    title: 'Live Studio', subtitle: 'Review the preview, then take it live to update the program.',
+    preview: 'Preview', scene: 'Scene', race: 'Race', format: 'Canvas', destination: 'Output',
+    names: ['Gameplay scorebug', 'Pre-match', 'Race results', 'Standings', 'Intermission'],
+    local: 'Same-browser window', cloud: 'OBS / TikTok link', ready: 'Nothing published yet', go: 'Take live',
+    hide: 'Hide graphic', open: 'Open program', copy: 'Copy URL', copied: 'Overlay URL copied.',
+    localHelp: 'Open the program and use Window Capture. Keep it in the same browser profile.',
+    cloudHelp: 'Add a Browser Source in OBS or a Link source in TikTok LIVE Studio if available. Anyone with the URL can view the program.',
+    incomplete: 'Enter a valid time or X (DNF) for every racer in an eligible race before publishing results.',
+    live: 'Last published at', hidden: 'Program graphic hidden.', revoke: 'Revoke URL', revoked: 'Program URL revoked.',
+    expired: 'The link expired. Publish again to activate it.', noBackend: 'Install the Supabase migration to enable OBS / TikTok links. Window capture is available.',
+    failed: 'Update could not be confirmed. Check your connection or storage and retry.',
+    manual: 'Select and copy the URL below.', close: 'Close', working: 'Updating…'
+   }
+  };
+
+  const makeLiveFrame = ({
+   scene, gameIndex, games, players, lang, t, gameMode, tournamentName, team1Name, team2Name,
+   getMapName, mapIndex, getGameCalculations, matchStatus1v1, rundown
+  }) => {
+   const game = games[gameIndex];
+   const soloMatch = gameMode === '1v1';
+   const teamMatch = gameMode === '2v2' || gameMode === '3v3';
+   const names = players.map((name, i) => name.trim() || t.defPlayer + ' ' + (i + 1));
+   const clean = value => String(value ?? '').trim().slice(0, 100);
+   const complete = race => names.length >= 2 && !!race && names.every((_, i) => isFinalTime(race.times[i]));
+   const mode = ({ solo: t.modeSolo, '1v1': t.mode1v1, '2v2': t.mode2v2, '3v3': t.mode3v3 })[gameMode];
+   const frame = { version: 1, scene, lang, mode: clean(mode), event: clean(tournamentName), round: '', map: '', mapImage: '', rows: [] };
+   if (scene === 'upcoming') {
+    const [next, ...following] = ZSM_OPERATIONS.upcoming(rundown.fixtures);
+    if (!next) return null;
+    return { ...frame, mode: 'TOURNAMENT', next: { home: next.home, away: next.away, when: next.when }, rows: following.map((match, i) => ({
+     rank: i + 2, name: match.home + ' · ' + match.away, value: match.when
+    })) };
+   }
+   if (scene === 'playoffs') {
+    const { seeds, winners, champion } = rundown.bracket;
+    const match = (pair, winner) => pair.map(seed => ({
+     seed: Number.isInteger(seed) ? seed + 1 : null,
+     name: seeds[seed] || '',
+     winner: Number.isInteger(winner) && seed === winner
+    }));
+    return { ...frame, mode: 'TOURNAMENT', bracket: {
+     matches: ZSM_OPERATIONS.SEMIS.map((pair, i) => match(pair, winners[i])).concat([match(winners, champion)]),
+     champion: seeds[champion] || ''
+    } };
+   }
+   const teams = [team1Name, team2Name];
+   const halfway = Math.floor(names.length / 2);
+   const raceLabel = i => (lang === 'vi' ? 'Ván ' : 'Race ') + (i + 1);
+   if (scene === 'prematch' || scene === 'postmatch') {
+    const assignment = matchStatus1v1?.gameAssignments[gameIndex];
+    frame.round = assignment ? 'Set ' + assignment.set + ' · ' + raceLabel(assignment.round - 1) : raceLabel(gameIndex);
+    frame.map = game?.mapId ? clean(getMapName(game.mapId, lang)) : '';
+    const mapImage = mapIndex.get(game?.mapId)?.map.img;
+    if (/^https:\/\/[^\s]+$/i.test(mapImage || '')) frame.mapImage = mapImage.slice(0, 1200);
+    const entries = names.map((name, i) => ({
+     name: clean(name), note: teamMatch ? clean(teams[i < halfway ? 0 : 1]) : ''
+    }));
+    if (scene === 'prematch') return { ...frame, rows: entries };
+    if (!complete(game) || (soloMatch && !matchStatus1v1.countedGames.includes(gameIndex))) return null;
+    const scores = getGameCalculations(gameIndex, game.times);
+    const results = entries.map((entry, i) => {
+     const time = parseTime(game.times[i]);
+     const won = scores[i].isBest && time !== null;
+     return { ...entry, time, value: time === null ? 'DNF' : formatTimeDisplay(game.times[i]),
+      extra: soloMatch ? (won ? (lang === 'vi' ? 'THẮNG' : 'WIN') : '') : '+' + scores[i].score,
+      leader: won };
+    }).sort((a, b) => (a.time ?? Infinity) - (b.time ?? Infinity));
+    frame.rows = results.map(({ time, ...result }) => ({
+     ...result, rank: time === null ? null : results.findIndex(row => row.time === time) + 1
+    }));
+    return frame;
+   }
+   if (scene === 'break' || scene === 'blank') return frame;
+   if (soloMatch) {
+    const set = matchStatus1v1.sets.find(item => item.set === matchStatus1v1.currentSet);
+    const sets = [matchStatus1v1.p1Sets, matchStatus1v1.p2Sets];
+    const rounds = [set?.p1Rounds ?? 0, set?.p2Rounds ?? 0];
+    frame.round = 'Set ' + matchStatus1v1.currentSet + ' · ' + rounds[0] + '–' + rounds[1] + (lang === 'vi' ? ' ván' : ' rounds');
+    frame.rows = names.slice(0, 2).map((name, i) => ({
+     name: clean(name), value: sets[i] + (sets[i] === 1 ? ' set' : ' sets'), leader: sets[i] > sets[1 - i]
+    }));
+    return frame;
+   }
+   const sums = names.map(() => 0);
+   let completed = 0;
+   games.forEach((race, i) => {
+    if (!complete(race)) return;
+    completed++;
+    getGameCalculations(i, race.times).forEach(({ score }, j) => { sums[j] += score; });
+   });
+   const entries = teamMatch
+    ? teams.map((name, i) => {
+      const start = i * halfway, end = i === 0 ? halfway : names.length;
+      return { name: clean(name), score: sums.slice(start, end).reduce((a, b) => a + b, 0),
+       note: clean(names.slice(start, end).join(' · ')) };
+     })
+    : names.map((name, i) => ({ name: clean(name), score: sums[i] }));
+   frame.round = lang === 'vi' ? completed + ' ván có kết quả' : completed + ' completed ' + (completed === 1 ? 'race' : 'races');
+   frame.rows = rankByScore(entries).map(({ name, note, score, rank }) => ({
+    name, note, rank: completed ? rank : null, value: score, leader: rank === 1 && score > 0
+   }));
+   return frame;
+  };
+
+  const LiveStudio = ({ open, onClose, account, ...data }) => {
+   const { games, lang, getMapName, matchStatus1v1 } = data;
+   const c = LIVE_STUDIO_COPY[lang] || LIVE_STUDIO_COPY.en;
+   const scheduleCopy = RUNDOWN_COPY[lang] || RUNDOWN_COPY.en;
+   const [rundown, setRundown] = useState(() => ZSM_OPERATIONS.normalizeRundown(readStoredJSON('zsm_live_rundown_v1', () => ({}))));
+   useEffect(() => { writeStorageValue('zsm_live_rundown_v1', JSON.stringify(rundown)); }, [rundown]);
+   useEffect(() => {
+    const readRundown = event => {
+     if (accountEventKey(event.key) === 'zsm_live_rundown_v1' && event.newValue) {
+      const next = ZSM_OPERATIONS.normalizeRundown(readStoredJSON('zsm_live_rundown_v1', () => ({})));
+      setRundown(prev => JSON.stringify(prev) === JSON.stringify(next) ? prev : next);
+     }
+    };
+    window.addEventListener('storage', readRundown);
+    return () => window.removeEventListener('storage', readRundown);
+   }, []);
+   const [scene, setScene] = useState('scorebug');
+   const [raceId, setRaceId] = useState('');
+   const [format, setFormat] = useState('16x9');
+   const [channel, setChannel] = useState(() => readStorageValue('zsm_live_channel_v1') || '');
+   const [localProgram, setLocalProgram] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('zsm_live_frame:' + channel)); }
+    catch { return null; }
+   });
+   const [remote, setRemote] = useState(() => readStoredJSON('zsm_live_remote_v1', () => ({})));
+   const [destination, setDestination] = useState(() => remote.room_id ? 'cloud' : 'local');
+   const [working, setWorking] = useState(false);
+   const [notice, setNotice] = useState('');
+   const busy = useRef(false);
+   const dialogRef = useRef(null);
+   const previewRef = useRef(null);
+   const gameIndex = Math.max(0, games.findIndex(game => game.id === raceId));
+   const frame = open ? makeLiveFrame({ ...data, scene, gameIndex, rundown }) : null;
+   const canPublish = !!frame && (scene !== 'playoffs' || ZSM_OPERATIONS.bracketReady(rundown.bracket));
+   const sendPreview = () => {
+    previewRef.current?.contentWindow?.postMessage({ type: 'zsm-live-preview', frame }, location.origin);
+   };
+   useEffect(sendPreview);
+   useEffect(() => {
+    if (open) dialogRef.current.showModal();
+   }, [open]);
+
+   const room = destination === 'local' ? channel : remote.room_id;
+   const outputURL = room ? new URL('live-overlay.html?format=' + format + (destination === 'local' ? '&local=1&capture=1' : '') + '#' + room, location.href).href : '';
+   const rememberRemote = info => {
+    setRemote(info);
+    writeStorageValue('zsm_live_remote_v1', JSON.stringify(info));
+   };
+   const run = async action => {
+    if (busy.current) return;
+    busy.current = true;
+    setWorking(true);
+    setNotice('');
+    try { await action(); }
+    catch (error) {
+     const missing = ['PGRST202', 'PGRST205', '42P01', '42883'].includes(error?.code);
+     setNotice(missing ? c.noBackend : c.failed);
+    } finally {
+     busy.current = false;
+     setWorking(false);
+    }
+   };
+   const publish = next => run(async () => {
+    if (destination === 'local') {
+     const room = readStorageValue('zsm_live_channel_v1') || channel || crypto.randomUUID();
+     const entry = { ...next, publishedAt: new Date().toISOString() };
+     localStorage.setItem('zsm_live_frame:' + room, JSON.stringify(entry));
+     setChannel(room);
+     setLocalProgram(entry);
+     writeStorageValue('zsm_live_channel_v1', room);
+    } else {
+     const { data: info, error } = await accountClient.rpc('zsm_publish_live_frame', { p_frame: next }).single();
+     if (error) throw error;
+     rememberRemote(info);
+    }
+    if (next.scene === 'blank') setNotice(c.hidden);
+   });
+   const revoke = () => run(async () => {
+    const { error } = await accountClient.from('zsm_live_frames').delete().eq('owner_id', account.id);
+    if (error) throw error;
+    rememberRemote({});
+    setNotice(c.revoked);
+   });
+   const openCapture = event => {
+    event.preventDefault();
+    const size = format === '9x16' ? 'width=396,height=704' : 'width=960,height=540';
+    window.open(outputURL, '_blank', 'popup,noopener,' + size);
+   };
+   const copyLink = async () => {
+    try { await navigator.clipboard.writeText(outputURL); setNotice(c.copied); }
+    catch { setNotice(c.manual); }
+   };
+
+   if (!open) return null;
+   const raceScene = scene === 'prematch' || scene === 'postmatch';
+   const publishedAt = destination === 'local' ? localProgram?.publishedAt : remote.updated_at;
+   const expired = destination === 'cloud' && Date.parse(remote.expires_at) <= Date.now();
+   const controlClass = 'w-full mt-1 rounded-lg border border-slate-600 bg-slate-950 text-white p-2';
+   const buttonClass = 'inline-flex items-center justify-center rounded-lg px-3 py-2 text-sm font-bold bg-slate-700 hover:bg-slate-600 disabled:opacity-40';
+   return (
+    <dialog ref={dialogRef} onCancel={event => { event.preventDefault(); onClose(); }} aria-labelledby="live-studio-title"
+     className="w-[calc(100%-1.5rem)] max-w-6xl max-h-[94vh] overflow-auto rounded-2xl border border-slate-600 bg-slate-900 p-4 text-slate-100 backdrop:bg-black/80 sm:p-6">
+     <header className="flex items-start justify-between gap-3 border-b border-slate-700 pb-4">
+      <div><h2 id="live-studio-title" className="text-2xl font-black text-lime-300">{c.title}</h2><p className="mt-1 text-sm text-slate-300">{c.subtitle}</p></div>
+      <button className={buttonClass} onClick={onClose} aria-label={c.close}><XIcon size={20}/></button>
+     </header>
+     <div className="mt-4 grid gap-5 lg:grid-cols-[minmax(0,1fr)_19rem]">
+      <section className="min-w-0">
+       <div className="mb-2 flex items-center justify-between text-xs font-bold uppercase tracking-wider">
+        <span>{c.preview}</span><span className="text-slate-400">{format === '9x16' ? '1080 × 1920' : '1920 × 1080'}</span>
+       </div>
+       <div className="mx-auto grid max-w-full place-items-center rounded-xl border border-slate-700 bg-[#070f20]"
+        style={format === '9x16' ? { aspectRatio: '9/16', width: 'min(100%, 34vh)' } : { aspectRatio: '16/9' }}>
+        {frame ? <iframe ref={previewRef} onLoad={sendPreview} src={'live-overlay.html?preview=1&format=' + format} title={c.preview} className="h-full w-full rounded-xl pointer-events-none" />
+         : <p role="status" className="px-5 text-center text-sm text-amber-200">{scene === 'upcoming' ? scheduleCopy.queueEmpty : c.incomplete}</p>}
+       </div>
+       {(scene === 'upcoming' || scene === 'playoffs') && <RundownEditor rundown={rundown} setRundown={setRundown} scene={scene} c={scheduleCopy} />}
+      </section>
+      <section className="space-y-3 text-sm">
+       <label className="block">{c.scene}
+        <select aria-label={c.scene} className={controlClass} value={scene} onChange={e => setScene(e.target.value)}>
+         {LIVE_SCENES.map((item, i) => <option key={item} value={item}>{c.names[i] || (item === 'upcoming' ? scheduleCopy.next : scheduleCopy.playoffs)}</option>)}
+        </select>
+       </label>
+       {raceScene && <label className="block">{c.race}
+        <select aria-label={c.race} className={controlClass} value={gameIndex} onChange={e => setRaceId(games[Number(e.target.value)].id)}>
+         {games.map((game, i) => {
+          const set = matchStatus1v1?.gameAssignments[i];
+          const label = set ? 'Set ' + set.set + ' / ' + set.round : String(i + 1);
+          return <option key={game.id} value={i}>{label}{game.mapId ? ' · ' + getMapName(game.mapId, lang) : ''}</option>;
+         })}
+        </select>
+       </label>}
+       <div className="grid grid-cols-[5.5rem_minmax(0,1fr)] gap-2">
+        <label>{c.format}<select aria-label={c.format} className={controlClass} value={format} onChange={e => setFormat(e.target.value)}><option value="16x9">16:9</option><option value="9x16">9:16</option></select></label>
+        <label>{c.destination}<select aria-label={c.destination} className={controlClass} value={destination} disabled={working} onChange={e => { setDestination(e.target.value); setNotice(''); }}><option value="local">{c.local}</option><option value="cloud">{c.cloud}</option></select></label>
+       </div>
+       <div className="flex flex-wrap gap-2">
+        <button disabled={working || !canPublish} onClick={() => publish(frame)} className="rounded-lg bg-lime-300 px-3 py-2 font-black text-slate-950 hover:bg-lime-200 disabled:opacity-40">{c.go}</button>
+        <button disabled={working || !outputURL} onClick={() => publish({ version: 1, scene: 'blank', rows: [] })} className={buttonClass}>{c.hide}</button>
+       </div>
+       <p role="status" className="min-h-5 text-slate-300">
+        {working ? c.working : notice || (scene === 'playoffs' && !canPublish ? scheduleCopy.bracketIncomplete : '') || (expired ? c.expired : publishedAt ? c.live + ' ' + new Date(publishedAt).toLocaleTimeString() : c.ready)}
+       </p>
+       {outputURL && <div className="space-y-2">
+        <div className="flex flex-wrap gap-2">
+         <a href={outputURL} target="_blank" rel="noopener noreferrer" onClick={destination === 'local' ? openCapture : undefined} className={buttonClass}>{c.open}</a>
+         {destination === 'cloud' && <button onClick={copyLink} className={buttonClass}>{c.copy}</button>}
+        </div>
+        {destination === 'cloud' && <input value={outputURL} readOnly onFocus={e => e.target.select()} aria-label={c.copy} className={controlClass}/>}
+       </div>}
+       {destination === 'cloud' && <button disabled={working} className="text-rose-300 underline disabled:opacity-40" onClick={revoke}>{c.revoke}</button>}
+       <p className="text-xs leading-relaxed text-slate-400">{destination === 'local' ? c.localHelp : c.cloudHelp}</p>
+      </section>
+     </div>
+    </dialog>
+   );
+  };
+
   function App({ account, onLogout, onAccountChanged, onLanguageChange }) {
    const urlParams = new URLSearchParams(window.location.search);
    const isBroadcastTab = urlParams.get('broadcast') === 'true';
@@ -1694,6 +2139,8 @@
    const [lang, setLang] = useState(() => normalizeLanguage(readStorageValue('zsm_lang_v11_final')));
    const t = TRANSLATIONS[lang] || TRANSLATIONS.vi;
    const [showAccounts, setShowAccounts] = useState(false);
+   const [showLiveStudio, setShowLiveStudio] = useState(false);
+   const [historyRaceId, setHistoryRaceId] = useState(null);
    const [showPassword, setShowPassword] = useState(false);
    const a = accountCopy(lang);
    const [showInfo, setShowInfo] = useState(false);
@@ -1841,7 +2288,7 @@
          if (prev.length <= 9) return prev;
          let lastUsed = -1;
          for (let i = prev.length - 1; i >= 0; i--) {
-           if (prev[i].mapId || prev[i].times.some(t => t && t.trim() !== '')) {
+           if (prev[i].mapId || prev[i].times.some(t => t && t.trim() !== '') || ZSM_OPERATIONS.historyFor(prev[i]).length) {
              lastUsed = i;
              break;
            }
@@ -1914,7 +2361,6 @@
    const displayTeam1Name = team1Name.trim() || t.team1;
    const displayTeam2Name = team2Name.trim() || t.team2;
    const updateGame = (gIndex, updater) => setGames(prev => prev.map((game, index) => index === gIndex ? updater(game) : game));
-   const handleTimeChange = (gIndex, pIndex, val) => updateGame(gIndex, game => ({ ...game, times: game.times.map((time, i) => i === pIndex ? val : time) }));
    const handleAssetSelect = (gIndex, pIndex, type, assetId) => {
     const field = { car: 'cars', ecu: 'ecus', pet: 'pets' }[type];
     if (!field) return;
@@ -1930,16 +2376,50 @@
    });
    const getBannedMapsForSet = setNum => [...(bannedMaps[setNum]?.[0] || []), ...(bannedMaps[setNum]?.[1] || [])].filter(Boolean);
    const currentSetBans = useMemo(() => getBannedMapsForSet(viewSet), [bannedMaps, viewSet]);
-   const handleTimeBlur = (gIndex, pIndex, inputValue) => {
-    const game = games[gIndex];
-    if (!game) return;
-    const rawTime = String(inputValue ?? game.times[pIndex] ?? '');
-    const formattedTime = formatTimeDisplay(rawTime);
-    updateGame(gIndex, current => ({ ...current, times: current.times.map((time, i) => i === pIndex ? formattedTime : time) }));
-    const timeMs = parseTime(formattedTime);
-    if (game.mapId && timeMs !== null) {
-     const pbKey = `${players[pIndex]}_${game.mapId}`;
-     setPersonalRecords(prev => !prev[pbKey] || timeMs < prev[pbKey].timeMs ? { ...prev, [pbKey]: { timeMs, timeStr: formattedTime } } : prev);
+   const handleTimeCommit = (gameId, slot, rawTime, baseline) => {
+    const game = games.find(item => item.id === gameId);
+    if (!game || game.times[slot] === rawTime) return;
+    const copy = RESULT_COPY[lang] || RESULT_COPY.en;
+    if (game.times[slot] !== baseline) return showDialogAlert(copy.stale);
+    const after = formatTimeDisplay(rawTime);
+    if (after && !isFinalTime(after)) return showDialogAlert(copy.badTime);
+    if (after === baseline) return;
+    const change = {
+     id: crypto.randomUUID(), kind: 'edit', slot, player: players[slot], at: new Date().toISOString(),
+     before: baseline, after
+    };
+    const timeMs = parseTime(after);
+    const pbKey = players[slot] + '_' + game.mapId;
+    const best = personalRecords[pbKey];
+    if (game.mapId && timeMs !== null && (!best || timeMs < best.timeMs)) {
+     change.bestMap = game.mapId;
+     change.bestBefore = best || null;
+     setPersonalRecords(prev => !prev[pbKey] || timeMs < prev[pbKey].timeMs
+      ? { ...prev, [pbKey]: { timeMs, timeStr: after, resultEdit: change.id } } : prev);
+    }
+    setGames(prev => prev.map(item => item.id === gameId ? ZSM_OPERATIONS.applyTimeChange(item, change) : item));
+   };
+   const undoResult = (gameId, editId) => {
+    const game = games.find(item => item.id === gameId);
+    const edit = ZSM_OPERATIONS.findUndo(game, players.length);
+    if (edit?.id !== editId) return;
+    const change = {
+     id: crypto.randomUUID(), kind: 'undo', undoOf: edit.id, slot: edit.slot, player: players[edit.slot],
+     at: new Date().toISOString(), before: edit.after, after: edit.before
+    };
+    setGames(prev => prev.map(item => item.id === gameId ? ZSM_OPERATIONS.applyTimeChange(item, change) : item));
+    if (edit.bestMap) {
+     const pbKey = players[edit.slot] + '_' + edit.bestMap;
+     setPersonalRecords(prev => {
+      if (prev[pbKey]?.resultEdit !== edit.id) return prev;
+      const next = { ...prev };
+      const earlier = edit.bestBefore;
+      const wasUndone = earlier?.resultEdit && games.some(item =>
+       ZSM_OPERATIONS.historyFor(item).some(entry => entry.undoOf === earlier.resultEdit));
+      if (earlier && !wasUndone) next[pbKey] = earlier;
+      else delete next[pbKey];
+      return next;
+     });
     }
    };
    const renamePlayer = (pIndex, name) => {
@@ -1960,6 +2440,10 @@
    const changeMode = (nextMode) => {
      if (nextMode === gameMode) return;
      setGameMode(nextMode);
+     const activeSlots = nextMode === '1v1' ? 2 : nextMode === '3v3' ? 6 : 4;
+     if (players.length > activeSlots) {
+      setGames(prev => prev.map(game => ZSM_OPERATIONS.remapHistory(game, slot => slot < activeSlots ? slot : null)));
+     }
      if (nextMode === 'solo' || nextMode === '2v2') {
       let newP = [...players];
       if (newP.length < 4) while(newP.length < 4) newP.push(`${t.defPlayer} ${newP.length + 1}`);
@@ -1988,7 +2472,7 @@
      setPlayers(prev => prev.filter((_, i) => i !== pIndex));
      setPlayerPhotos(prev => normalizeSlots(prev.filter((_, i) => i !== pIndex)));
      setGames(prev => prev.map(g => ({
-       ...g,
+       ...ZSM_OPERATIONS.remapHistory(g, slot => slot === pIndex ? null : slot > pIndex ? slot - 1 : slot),
        times: normalizeSlots(g.times.filter((_, i) => i !== pIndex)),
        cars: normalizeSlots((g.cars || []).filter((_, i) => i !== pIndex)),
        ecus: normalizeSlots((g.ecus || []).filter((_, i) => i !== pIndex)),
@@ -2295,6 +2779,13 @@
     <MapCatalogContext.Provider value={mapCatalog}>
     <div className="min-h-screen relative overflow-x-hidden pb-20 font-sans">
      <CustomDialog dialog={dialog} setDialog={setDialog} />
+     {historyRaceId !== null && <ResultHistory games={games} selected={historyRaceId} onSelect={setHistoryRaceId}
+      onClose={() => setHistoryRaceId(null)} onUndo={undoResult} lang={lang} playerCount={players.length}
+      matchStatus1v1={matchStatus1v1} />}
+     <LiveStudio open={showLiveStudio} onClose={() => setShowLiveStudio(false)} account={account}
+      games={games} players={players} lang={lang} t={t} gameMode={gameMode} tournamentName={tournamentName}
+      team1Name={displayTeam1Name} team2Name={displayTeam2Name} getMapName={getMapName} mapIndex={MAP_INDEX}
+      getGameCalculations={getGameCalculations} matchStatus1v1={matchStatus1v1} />
      {showAccounts && account.role === 'admin' && <AccountAdminModal account={account} lang={lang} onClose={() => setShowAccounts(false)} showDialogConfirm={showDialogConfirm} onAccountChanged={onAccountChanged} />}
      {showPassword && <div className="fixed inset-0 z-[2000] bg-black/80 backdrop-blur-md flex items-center justify-center p-4"><section role="dialog" aria-modal="true" aria-label={a.changePassword} className="bg-slate-900 border border-cyan-700 rounded-2xl p-6 w-full max-w-md"><AccountPasswordForm lang={lang} onDone={() => setShowPassword(false)}/></section></div>}
 
@@ -2409,6 +2900,13 @@
         <BufferedInput value={tournamentName} onSave={val => setTournamentName(val.toUpperCase())} className="bg-transparent text-center text-cyan-400 font-black tracking-[0.2em] md:tracking-[0.3em] text-sm md:text-lg outline-none border-b border-dashed border-cyan-800/50 focus:border-cyan-400 transition-colors w-full max-w-[300px] md:max-w-[500px] pb-1 placeholder:text-cyan-900/50 font-sans" placeholder={t.tourNamePh} />
        </div>
        <div className="mt-6 inline-flex flex-wrap items-center justify-center gap-1.5 p-1.5 bg-[#0f172a]/80 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] z-20 relative mx-4">
+        <button onClick={() => setShowLiveStudio(true)} className="flex items-center gap-1.5 rounded-xl bg-lime-300 px-3 py-2 text-xs font-black uppercase text-slate-950 hover:bg-lime-200">
+         <MonitorPlay size={16}/> {lang === 'vi' ? 'PHÒNG PHÁT SÓNG' : 'LIVE STUDIO'}
+        </button>
+        <button onClick={() => setHistoryRaceId(games.findLast(game => ZSM_OPERATIONS.historyFor(game).length)?.id || games[0]?.id || '')}
+         className="flex items-center gap-1.5 rounded-xl bg-slate-700 px-3 py-2 text-xs font-bold uppercase text-white hover:bg-slate-600">
+         <i className="ph-bold ph-clock-counter-clockwise" aria-hidden="true"></i> {(RESULT_COPY[lang] || RESULT_COPY.en).title}
+        </button>
         <button onClick={() => window.open(window.location.pathname + '?broadcast=true&tab=scoreboard', '_blank')} className="flex items-center gap-1.5 px-3 py-2 md:py-2.5 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-black rounded-xl hover:scale-105 active:scale-95 transition-all shadow-[0_0_15px_rgba(6,182,212,0.4)] text-[10px] md:text-xs uppercase tracking-wider">
          <MonitorPlay size={14}/>{" "}<span>BẢNG ĐIỂM</span>
         </button>
@@ -2546,7 +3044,8 @@
                 <td key={pIndex} className={`px-1 md:px-2 py-2 relative z-10 ${(isTeamMode || gameMode === '1v1') && pIndex === Math.floor(players.length / 2) ? 'border-l-2 border-slate-700/50 bg-black/10' : ''}`}>
                  <div className={`relative flex flex-col gap-0.5 md:gap-1 p-1 md:p-2 rounded md:rounded-lg border transition-all duration-300 hover:bg-white/[0.05] hover:-translate-y-[1px] ${colorClass}`}>
                   {isKingMap && (<div className="absolute -top-2 md:-top-3 left-1/2 -translate-x-1/2 flex items-center gap-0.5 bg-red-600 px-1 md:px-2 rounded text-[7px] md:text-[9px] uppercase font-bold tracking-widest text-white shadow-[0_0_15px_#dc2626] z-10 whitespace-nowrap animate-pulse"><Crown size={8} className="md:w-[10px] md:h-[10px]" />{" "}<span className="hidden sm:inline">{t.kingMap}</span></div>)}
-                  <input type="text" value={time} onChange={(e) => handleTimeChange(gIndex, pIndex, e.target.value)} onBlur={e => handleTimeBlur(gIndex, pIndex, e.target.value)} onKeyDown={e => { if (e.key === 'Enter') e.currentTarget.blur(); }} placeholder="X" className={`w-full text-center bg-black/40 border border-slate-700 rounded px-1 py-1 outline-none tracking-widest text-xs md:text-sm transition-all duration-300 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 hover:border-slate-500 hover:bg-black/60 ${time ? 'text-white' : 'text-slate-600'}`} />
+                  <RaceTimeInput value={time} label={players[pIndex] + ' · ' + t.defGame + ' ' + (gIndex + 1)}
+                   onCommit={(value, baseline) => handleTimeCommit(game.id, pIndex, value, baseline)} className={`w-full text-center bg-black/40 border border-slate-700 rounded px-1 py-1 outline-none tracking-widest text-xs md:text-sm transition-all duration-300 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 hover:border-slate-500 hover:bg-black/60 ${time ? 'text-white' : 'text-slate-600'}`} />
                   <div className="mt-0.5 text-center py-0.5 rounded text-[10px] md:text-sm tracking-wider font-bold">{time ? `+${score}` : '-'}</div>
                  </div>
                 </td>
