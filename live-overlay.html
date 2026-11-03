@@ -77,6 +77,49 @@
   :root[data-format="9x16"] .rows { gap: calc(.8 * var(--unit)); margin-top: calc(2 * var(--unit)); }
   :root[data-format="9x16"] .compact .rows { grid-auto-flow: row; }
   :root[data-format="9x16"] .row { font-size: calc(3.7 * var(--unit)); padding: calc(1.15 * var(--unit)); }
+  .next-match {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    gap: calc(1.5 * var(--unit));
+    margin-top: calc(1.6 * var(--unit));
+    padding: calc(1.3 * var(--unit));
+    border-inline-start: 3px solid var(--accent);
+    background: #192c38;
+    font-size: calc(2.65 * var(--unit));
+    font-weight: 750;
+  }
+  .next-match .away { text-align: right; }
+  .next-match .versus { color: var(--accent); font-size: .6em; letter-spacing: .12em; }
+  .next-time { margin-top: calc(.6 * var(--unit)); color: var(--muted); font-size: calc(1.5 * var(--unit)); }
+  .bracket {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) calc(4.3 * var(--unit)) minmax(0, 1fr);
+    align-items: center;
+    row-gap: calc(1.5 * var(--unit));
+    margin-top: calc(1.5 * var(--unit));
+  }
+  .bracket-match { grid-column: 1; min-width: 0; }
+  .bracket-match.final { grid-column: 3; grid-row: 1 / 3; }
+  .bracket-match h2 { margin: 0 0 .35em; color: var(--muted); font-size: calc(1.25 * var(--unit)); text-transform: uppercase; letter-spacing: .09em; }
+  .bracket-match .row { margin-top: .2em; font-size: calc(1.5 * var(--unit)); }
+  .bracket-link { grid-column: 2; grid-row: 1 / 3; width: 100%; height: 100%; min-height: 0; }
+  .champion {
+    margin-top: calc(1.1 * var(--unit));
+    padding: calc(.7 * var(--unit)) calc(1.2 * var(--unit));
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-size: calc(1.5 * var(--unit));
+    font-weight: 750;
+  }
+  :root[data-format="9x16"] .next-match { font-size: calc(5 * var(--unit)); padding: calc(2 * var(--unit)); }
+  :root[data-format="9x16"] .next-time,
+  :root[data-format="9x16"] .champion { font-size: calc(3.2 * var(--unit)); }
+  :root[data-format="9x16"] .bracket { grid-template-columns: minmax(0, 1fr); gap: calc(2.5 * var(--unit)); }
+  :root[data-format="9x16"] .bracket-match.final { grid-column: 1; grid-row: auto; border-top: 2px solid #304259; padding-top: calc(2 * var(--unit)); }
+  :root[data-format="9x16"] .bracket-match h2 { font-size: calc(2.6 * var(--unit)); }
+  :root[data-format="9x16"] .bracket-match .row { font-size: calc(3.3 * var(--unit)); }
+  :root[data-format="9x16"] .bracket-link { display: none; }
   @media (prefers-reduced-motion: no-preference) {
     .frame { animation: appear .18s ease-out; }
     @keyframes appear { from { opacity: .86; } to { opacity: 1; } }
@@ -91,18 +134,65 @@
   document.documentElement.dataset.format = params.get('format') === '9x16' ? '9x16' : '16x9';
   document.body.classList.toggle('capture', params.has('capture'));
   const output = document.getElementById('output');
-  const scenes = ['prematch', 'postmatch', 'standings', 'break'];
+  const scenes = ['prematch', 'postmatch', 'standings', 'break', 'upcoming', 'playoffs'];
   const copy = {
     vi: ['Trước trận', 'Kết quả ván', 'Bảng xếp hạng', 'Tạm nghỉ', 'Giải đấu sẽ tiếp tục trong ít phút.'],
     en: ['Coming up', 'Race results', 'Standings', 'Intermission', 'The tournament will resume shortly.'],
     cn: ['赛前预览', '本局结果', '排行榜', '中场休息', '比赛即将继续。'],
     th: ['ก่อนการแข่งขัน', 'ผลการแข่งขัน', 'ตารางอันดับ', 'พักการแข่งขัน', 'การแข่งขันจะเริ่มต่อในอีกสักครู่']
   };
+  const eventCopy = {
+    vi: ['Trận tiếp theo', 'Nhánh playoffs', 'Bán kết', 'Chung kết', 'Vô địch', 'Chờ kết quả'],
+    en: ['Next match', 'Playoff bracket', 'Semifinal', 'Final', 'Champion', 'Pending'],
+    cn: ['下一场比赛', '淘汰赛对阵', '半决赛', '决赛', '冠军', '待定'],
+    th: ['การแข่งขันถัดไป', 'ผังรอบเพลย์ออฟ', 'รอบรองชนะเลิศ', 'รอบชิงชนะเลิศ', 'แชมป์', 'รอผล']
+  };
   const node = (tag, className, value) => {
     const el = document.createElement(tag);
     el.className = className;
     if (typeof value === 'string' || typeof value === 'number') el.textContent = value;
     return el;
+  };
+  const drawNext = (board, next) => {
+    if (!next || typeof next.home !== 'string' || typeof next.away !== 'string') return;
+    const match = node('div', 'next-match');
+    match.append(node('span', 'name', next.home), node('span', 'versus', 'VS'), node('span', 'name away', next.away));
+    board.append(match);
+    if (next.when) board.append(node('div', 'next-time', next.when));
+  };
+  const drawBracket = (board, bracket, labels) => {
+    if (!Array.isArray(bracket?.matches)) return;
+    const layout = node('div', 'bracket');
+    bracket.matches.slice(0, 3).forEach((match, index) => {
+      if (!Array.isArray(match)) return;
+      const card = node('section', index === 2 ? 'bracket-match final' : 'bracket-match');
+      card.append(node('h2', '', index === 2 ? labels[3] : labels[2] + ' ' + (index + 1)));
+      for (const entry of match.slice(0, 2)) {
+        const row = node('div', entry?.winner ? 'row leader' : 'row');
+        row.append(node('span', 'rank', Number.isInteger(entry?.seed) ? '#' + entry.seed : '—'),
+          node('span', 'name', entry?.name || labels[5]));
+        card.append(row);
+      }
+      layout.append(card);
+    });
+    const ns = 'http://www.w3.org/2000/svg';
+    const connector = document.createElementNS(ns, 'svg');
+    connector.setAttribute('viewBox', '0 0 100 200');
+    connector.setAttribute('preserveAspectRatio', 'none');
+    connector.setAttribute('class', 'bracket-link');
+    connector.setAttribute('aria-hidden', 'true');
+    const line = document.createElementNS(ns, 'path');
+    line.setAttribute('d', 'M0 50 H50 V150 H0 M50 100 H100');
+    line.setAttribute('fill', 'none');
+    line.setAttribute('stroke', '#607892');
+    line.setAttribute('stroke-width', '2');
+    line.setAttribute('vector-effect', 'non-scaling-stroke');
+    connector.append(line);
+    layout.append(connector);
+    board.append(layout);
+    if (typeof bracket.champion === 'string' && bracket.champion) {
+      board.append(node('div', 'champion name', labels[4] + ' · ' + bracket.champion));
+    }
   };
   const draw = frame => {
     const compact = frame?.scene === 'scorebug';
@@ -111,7 +201,9 @@
       output.replaceChildren();
       return;
     }
-    const labels = Object.hasOwn(copy, frame.lang) ? copy[frame.lang] : copy.vi;
+    const language = Object.hasOwn(copy, frame.lang) ? frame.lang : 'vi';
+    const labels = copy[language];
+    const eventLabels = eventCopy[language];
     const layer = node('section', compact ? 'frame compact' : 'frame');
     if (!compact && typeof frame.mapImage === 'string' && /^https:\/\/[^\s]+$/i.test(frame.mapImage)) {
       const image = node('img', 'map-art');
@@ -125,7 +217,12 @@
     const brand = node('div', 'brand');
     brand.append(node('span', '', 'ZSM / ' + frame.mode), node('span', 'event', frame.event));
     board.append(brand);
-    if (!compact) board.append(node('h1', '', labels[sceneIndex]));
+    if (!compact) {
+      const title = frame.scene === 'upcoming' ? eventLabels[0] : frame.scene === 'playoffs' ? eventLabels[1] : labels[sceneIndex];
+      board.append(node('h1', '', title));
+    }
+    if (frame.scene === 'upcoming') drawNext(board, frame.next);
+    if (frame.scene === 'playoffs') drawBracket(board, frame.bracket, eventLabels);
     if (frame.round && !compact) board.append(node('div', 'round', frame.round));
     if (frame.map && !compact) board.append(node('div', 'map', frame.map));
     if (frame.scene === 'break') board.append(node('p', '', labels[4]));
