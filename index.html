@@ -200,6 +200,8 @@
   const BROADCAST_BACKGROUND_IMAGE = 'https://i.ibb.co/TxWgMDKd/Untitled.png';
   const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbxkyzTtx4aOKoF8bg-irv2B5NNkHOBtoooJ4UFrifGdhbc-VU-Q3rrAGz-gITLTGtpDPg/exec";
   const GOOGLE_MAPS_CSV_URL = 'https://docs.google.com/spreadsheets/d/13v2zJ8_hbkYGu6miZjh9zcq5XE3cQD4-JBhg3PlSR0M/export?format=csv&gid=239351115';
+  const CATALOG_SYNC_KEY = 'zsm_catalog_sync_v1';
+  const CATALOG_REUSE_MS = 60 * 1000;
   const NORMAL_TOP_SCORE = 11;
   const KING_TOP_SCORE = 12;
   const MAX_PLAYERS = 6;
@@ -1982,6 +1984,7 @@
      if (sheetSyncRef.current) return;
      const controller = new AbortController();
      sheetSyncRef.current = controller;
+     writeStorageValue(CATALOG_SYNC_KEY, '0');
      const timeout = setTimeout(() => controller.abort(), 15000);
      try {
       const results = await Promise.allSettled([
@@ -2006,6 +2009,7 @@
           // The persistence effect saves the validated list.
          }
         }
+        return ['cars', 'pets', 'ecus'].every(type => Array.isArray(data[type]));
        })(),
        (async () => {
         const res = await fetch(GOOGLE_MAPS_CSV_URL + '&_=' + Date.now(), { signal: controller.signal, cache: 'no-store' });
@@ -2020,6 +2024,7 @@
        return [i === 0 ? 'Cars/Pets/ECU' : 'Maps'];
       });
       if (failed.length) throw new Error('Google Sheets: ' + failed.join(', '));
+      if (results[0].value) writeStorageValue(CATALOG_SYNC_KEY, String(Date.now()));
       if (isManual) {
        showDialogAlert(lang === 'vi' ? "Đồng bộ dữ liệu thành công!" : "Data synced successfully!");
       }
@@ -2039,8 +2044,9 @@
         openerUrl.searchParams.get('broadcast') !== 'true';
       } catch {}
      }
-     // The scoring page refreshes the catalog. Its capture windows already follow storage updates.
-     if (!openedByScoring) syncFromGoogleSheet(false);
+     // Reuse a confirmed catalog refresh. A failed or missing refresh needs an independent attempt.
+     const age = Date.now() - Number(readStorageValue(CATALOG_SYNC_KEY));
+     if (!openedByScoring || !(age >= 0 && age < CATALOG_REUSE_MS)) syncFromGoogleSheet(false);
      return () => sheetSyncRef.current?.abort();
     }, []);
    const displayTeam1Name = team1Name.trim() || t.team1;
