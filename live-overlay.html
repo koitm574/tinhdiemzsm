@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>ZSM · Live Overlay</title>
+<script src="live-config.js"></script>
+<style>
+  :root {
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #f5f7ff;
+    --accent: #bcff46;
+    --muted: #aebed4;
+    --unit: min(1vw, 1.78vh);
+  }
+  :root[data-format="9x16"] { --unit: min(1vw, .563vh); }
+  * { box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: transparent; }
+  body.capture { background: #071121; }
+  main, .frame { position: absolute; inset: 0; }
+  .frame {
+    display: grid;
+    place-items: center;
+    padding: calc(5 * var(--unit));
+    background: radial-gradient(ellipse at 90% 8%, #1b3c49, transparent 46%), linear-gradient(135deg, #070f20, #111e36 68%, #132b33);
+  }
+  .frame.compact { align-items: end; background: transparent; }
+  .map-art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .26; }
+  .board {
+    position: relative;
+    width: min(100%, calc(77 * var(--unit)));
+    min-width: 0;
+    border: 1px solid #304259;
+    border-top: max(2px, calc(.33 * var(--unit))) solid var(--accent);
+    background: #0b1527;
+    box-shadow: 0 calc(1.2 * var(--unit)) calc(3.6 * var(--unit)) #02050d66;
+    padding: calc(2.5 * var(--unit)) calc(3 * var(--unit));
+  }
+  .compact .board { width: min(100%, calc(64 * var(--unit))); padding: calc(1.2 * var(--unit)) calc(1.7 * var(--unit)); }
+  .brand, .round { color: var(--accent); text-transform: uppercase; font-size: calc(1.3 * var(--unit)); font-weight: 750; letter-spacing: .12em; }
+  .brand { display: flex; justify-content: space-between; gap: .8em; }
+  .brand span:first-child { white-space: nowrap; }
+  .event, .name, .note, .round, .map { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .event { color: var(--muted); text-align: right; min-width: 0; }
+  h1 { font-size: calc(4.7 * var(--unit)); line-height: 1.08; margin: .22em 0 .14em; font-weight: 800; }
+  .round { margin-top: .8em; color: var(--muted); }
+  .map { margin: .24em 0 .7em; font-size: calc(2.05 * var(--unit)); font-weight: 700; }
+  .rows { margin-top: calc(1.05 * var(--unit)); display: grid; gap: calc(.37 * var(--unit)); }
+  .row {
+    display: grid;
+    grid-template-columns: minmax(1em, auto) minmax(0, 1fr) auto;
+    align-items: center;
+    gap: calc(1.25 * var(--unit));
+    min-width: 0;
+    padding: calc(.54 * var(--unit)) calc(1.2 * var(--unit));
+    background: #152239;
+    border-inline-start: 2px solid transparent;
+    font-size: calc(1.8 * var(--unit));
+  }
+  .row.leader { border-color: var(--accent); background: #243332; }
+  .rank, .value { font-variant-numeric: tabular-nums; font-weight: 750; }
+  .rank, .value span + span { color: var(--accent); }
+  .name { font-weight: 750; }
+  .note { color: var(--muted); font-size: .67em; font-weight: 600; }
+  .value { display: flex; align-items: baseline; gap: .65em; white-space: nowrap; }
+  .compact .rows { grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: calc(.55 * var(--unit)); }
+  .compact .row { gap: calc(.62 * var(--unit)); font-size: calc(1.53 * var(--unit)); }
+  .break { padding-block: calc(5.5 * var(--unit)); }
+  .break p { color: var(--muted); font-size: calc(1.8 * var(--unit)); }
+  :root[data-format="9x16"] .frame { padding: calc(7 * var(--unit)); padding-block-end: calc(18 * var(--unit)); }
+  :root[data-format="9x16"] .board { width: 100%; padding: calc(3.1 * var(--unit)); }
+  :root[data-format="9x16"] .compact { align-items: start; padding-block-start: calc(15 * var(--unit)); }
+  :root[data-format="9x16"] h1 { font-size: calc(7.1 * var(--unit)); }
+  :root[data-format="9x16"] .brand, :root[data-format="9x16"] .round { font-size: calc(2.6 * var(--unit)); }
+  :root[data-format="9x16"] .map, :root[data-format="9x16"] .break p { font-size: calc(3.6 * var(--unit)); }
+  :root[data-format="9x16"] .rows { gap: calc(.8 * var(--unit)); margin-top: calc(2 * var(--unit)); }
+  :root[data-format="9x16"] .compact .rows { grid-auto-flow: row; }
+  :root[data-format="9x16"] .row { font-size: calc(3.7 * var(--unit)); padding: calc(1.15 * var(--unit)); }
+  @media (prefers-reduced-motion: no-preference) {
+    .frame { animation: appear .18s ease-out; }
+    @keyframes appear { from { opacity: .86; } to { opacity: 1; } }
+  }
+</style>
+</head>
+<body>
+<main id="output"></main>
+<script>
+(() => {
+  const params = new URLSearchParams(location.search);
+  document.documentElement.dataset.format = params.get('format') === '9x16' ? '9x16' : '16x9';
+  document.body.classList.toggle('capture', params.has('capture'));
+  const output = document.getElementById('output');
+  const scenes = ['prematch', 'postmatch', 'standings', 'break'];
+  const copy = {
+    vi: ['Trước trận', 'Kết quả ván', 'Bảng xếp hạng', 'Tạm nghỉ', 'Giải đấu sẽ tiếp tục trong ít phút.'],
+    en: ['Coming up', 'Race results', 'Standings', 'Intermission', 'The tournament will resume shortly.'],
+    cn: ['赛前预览', '本局结果', '排行榜', '中场休息', '比赛即将继续。'],
+    th: ['ก่อนการแข่งขัน', 'ผลการแข่งขัน', 'ตารางอันดับ', 'พักการแข่งขัน', 'การแข่งขันจะเริ่มต่อในอีกสักครู่']
+  };
+  const node = (tag, className, value) => {
+    const el = document.createElement(tag);
+    el.className = className;
+    if (typeof value === 'string' || typeof value === 'number') el.textContent = value;
+    return el;
+  };
+  const draw = frame => {
+    const compact = frame?.scene === 'scorebug';
+    const sceneIndex = scenes.indexOf(frame?.scene);
+    if (frame?.version !== 1 || (!compact && sceneIndex < 0) || !Array.isArray(frame.rows)) {
+      output.replaceChildren();
+      return;
+    }
+    const labels = Object.hasOwn(copy, frame.lang) ? copy[frame.lang] : copy.vi;
+    const layer = node('section', compact ? 'frame compact' : 'frame');
+    if (!compact && typeof frame.mapImage === 'string' && /^https:\/\/[^\s]+$/i.test(frame.mapImage)) {
+      const image = node('img', 'map-art');
+      image.alt = '';
+      image.referrerPolicy = 'no-referrer';
+      image.addEventListener('error', () => image.remove(), { once: true });
+      image.src = frame.mapImage;
+      layer.append(image);
+    }
+    const board = node('div', frame.scene === 'break' ? 'board break' : 'board');
+    const brand = node('div', 'brand');
+    brand.append(node('span', '', 'ZSM / ' + frame.mode), node('span', 'event', frame.event));
+    board.append(brand);
+    if (!compact) board.append(node('h1', '', labels[sceneIndex]));
+    if (frame.round && !compact) board.append(node('div', 'round', frame.round));
+    if (frame.map && !compact) board.append(node('div', 'map', frame.map));
+    if (frame.scene === 'break') board.append(node('p', '', labels[4]));
+    const rows = node('div', 'rows');
+    for (const row of frame.rows.slice(0, compact ? 3 : 6)) {
+      if (!row || typeof row.name !== 'string') continue;
+      const line = node('div', row.leader ? 'row leader' : 'row');
+      const title = node('div', 'name', row.name);
+      if (row.note) title.append(node('div', 'note', row.note));
+      const value = node('div', 'value');
+      for (const part of [row.value, row.extra]) {
+        if (typeof part === 'number' || (typeof part === 'string' && part)) value.append(node('span', '', part));
+      }
+      const rank = typeof row.rank === 'number' ? String(row.rank).padStart(2, '0') : '';
+      line.append(node('div', 'rank', rank), title, value);
+      rows.append(line);
+    }
+    if (rows.childElementCount) board.append(rows);
+    if (frame.round && compact) board.append(node('div', 'round', frame.round));
+    layer.append(board);
+    output.replaceChildren(layer);
+  };
+
+  if (params.has('preview')) {
+    window.addEventListener('message', event => {
+      if (event.origin === location.origin && event.source === window.parent && event.data?.type === 'zsm-live-preview') {
+        draw(event.data.frame);
+      }
+    });
+    return;
+  }
+
+  const room = location.hash.slice(1);
+  if (!/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i.test(room)) return;
+  if (params.has('local')) {
+    const key = 'zsm_live_frame:' + room;
+    const read = () => {
+      try { draw(JSON.parse(localStorage.getItem(key))); }
+      catch { draw(null); }
+    };
+    window.addEventListener('storage', event => {
+      if (event.key === key || event.key === null) read();
+    });
+    read();
+    return;
+  }
+
+  // Always read as a viewer, even in the operator's browser.
+  const config = window.ZSM_SUPABASE;
+  if (!config) return;
+  let lastFrame = '';
+  let expiryTimer;
+  const display = frame => {
+    const next = JSON.stringify(frame ?? null);
+    if (next === lastFrame) return;
+    lastFrame = next;
+    draw(frame);
+  };
+  const poll = async () => {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 6000);
+    let interval = 2500;
+    try {
+      const response = await fetch(config.url + '/rest/v1/rpc/zsm_read_live_frame', {
+        method: 'POST',
+        cache: 'no-store',
+        credentials: 'omit',
+        headers: { apikey: config.key, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ p_room: room }),
+        signal: controller.signal
+      });
+      if (!response.ok) throw new Error('Overlay unavailable');
+      const [entry] = await response.json();
+      clearTimeout(expiryTimer);
+      const remaining = Date.parse(entry?.expires_at) - Date.now();
+      if (remaining > 0) {
+        display(entry.frame);
+        expiryTimer = setTimeout(() => display(null), remaining);
+      } else {
+        display(null);
+      }
+    } catch {
+      // Keep the last received frame while the network recovers.
+      interval = 5000;
+    } finally {
+      clearTimeout(timeout);
+      setTimeout(poll, interval);
+    }
+  };
+  poll();
+})();
+</script>
+</body>
+</html>
